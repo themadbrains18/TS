@@ -1,27 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.8);
+  transition: opacity 300ms ease;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.modal-content {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  transition: transform 300ms ease, opacity 300ms ease;
+  transform: scale(0.95) translateY(1rem);
+  opacity: 0;
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.modal-open .modal-content {
+  transform: scale(1) translateY(0);
+  opacity: 1;
 }

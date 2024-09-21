@@ -32,7 +32,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, className, ove
 
     return (
         <div
-            className={`fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-65 ${overlayClass}`}
+            className={`fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-75 ${overlayClass}`}
             onClick={handleOverlayClick}
         >
             <div
