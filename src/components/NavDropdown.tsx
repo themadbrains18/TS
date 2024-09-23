@@ -1,0 +1,27 @@
+import React from "react";
+import Icon from "./ui/Icon";
+import NavTabs from "./ui/NavTabs";
+import { navdropdownprops } from "@/types/type";
+
+const NavDropdown: React.FC<navdropdownprops> = ({ tittle }) => {
+  return (
+    <>
+      <section className=" group">
+        <div className="inline-block gap-[7px]  cursor-pointer after:content-[''] after:absolute after:bottom-[-6px]  after:h-[1px] after:bg-primary-100 after:w-0 after:left-[50%] after:transition-all after:duration-[0.5s] group-hover:after:w-full group-hover:after:left-0 relative px-[7px]">
+          <h2 className='text-textheading leading-6 font-[ "Inter", sans-serif] font-medium transition-all duration-[0.5s] group-hover:text-primary-100 cursor-pointer inline-block'>
+            {tittle}
+          </h2>
+          <Icon
+            className="inline-block w-5 h-5 py-1 stroke-textheading  rotate-90 leading-6 transition-all duration-[0.5s] group-hover:stroke-primary-100 group-hover:rotate-[270deg]  "
+            name="soliddownicon"
+          />
+        </div>
+        <div className=" max-w-[1132px] w-full flex absolute top-[110px] left-[24.8%] transition-all duration-[0.5] opacity-0 invisible    group-hover:visible group-hover:opacity-[1] cursor-pointer ">
+          <NavTabs />
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default NavDropdown;

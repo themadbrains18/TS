@@ -9,15 +9,15 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        Subheading: "#282046",
-        Subparagraph: "#5D5775",
-        BGcolor: "#FAFAFA",
+        subheading: "#282046",
+        subparagraph: "#5D5775",
+        bgcolor: "#FAFAFA",
         bgblack: "#0D0C0D",
         lightsilver: "#C1C1C1",
-        Textheading: "#110833",
-        Textparagraph: "#544E4E",
-        Primarycyan: "#00BCFF",
-        Primarygreen: "#00CF7F",
+        textheading: "#110833",
+        textparagraph: "#544E4E",
+        primarycyan: "#00BCFF",
+        primarygreen: "#00CF7F",
         divider: {
           100: "#F2EEFE",
           200: "#F2EEFE",
@@ -44,6 +44,9 @@ const config: Config = {
         action: {
           900: "#0A394F",
         },
+      },
+      boxShadow: {
+        1: "0px 0px 30px 0px rgba(182, 89, 255, 0.04), 0px 8px 40px 0px rgba(0, 0, 0, 0.06);",
       },
     },
   },

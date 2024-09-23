@@ -1,32 +1,65 @@
-import React from 'react';
-import { cn } from '@/libs/utils';
+import React from "react";
+import { cn } from "@/libs/utils";
+import Icon from "./Icon";
+import Link from "next/link";
+import { ButtonProps } from "@/types/type";
 
-interface ButtonProps {
-    variant?: 'primary' | 'secondary' | 'danger';
-    size?: 'sm' | 'md' | 'lg';
-    isLoading?: boolean;
-    children: React.ReactNode;
-    onClick?: () => void;
-}
 
-const Button: React.FC<ButtonProps> = ({ variant = 'primary', size = 'md', isLoading = false, children, onClick }) => {
-    const buttonClasses = cn(
-        'rounded focus:outline-none focus:ring',
-        {
-            'bg-blue-500 hover:bg-blue-600 text-white': variant === 'primary',
-            'bg-gray-500 hover:bg-gray-600 text-white': variant === 'secondary',
-            'bg-red-500 hover:bg-red-600 text-white': variant === 'danger',
-            'px-2 py-1 text-sm': size === 'sm',
-            'px-4 py-2 text-md': size === 'md',
-            'px-6 py-3 text-lg': size === 'lg',
-        }
-    );
 
-    return (
-        <button className={buttonClasses} onClick={onClick} disabled={isLoading}>
-            {isLoading ? 'Loading...' : children}
+const Button: React.FC<ButtonProps> = ({
+  variant = "primary",
+  isLoading = false,
+  children,
+  onClick,
+  icon,
+  iconClass,
+  link,
+  className
+}) => {
+  const buttonClasses = cn({
+    "bg-primary-100  text-white capitalize font-semibold leading-6":
+      variant === "primary",
+    "bg-primary-300  text-subheading capitalize ": variant === "secondary",
+    "bg-white trasition-all duration-[0.3s] font-semibold leading-6 border-[1px] border-divider-100 hover:border-transparent hover:text-primary-100 capitalize py-2 px-5":
+      variant === "liquid",
+    "bg-white text-primary-100 capitalize leading-5 font-semibold":
+      variant === "solidicon",
+  });
+
+  return (
+    <>
+    {
+      link === undefined ?
+    
+        <button
+          className={`${buttonClasses} ${className} flex items-center gap-x-[2px] cursor-pointer`}
+          onClick={onClick}
+          disabled={isLoading}
+        >
+          {isLoading ? "Loading..." : children}
+
+          {icon === true ? (
+            <Icon className={`${iconClass}`} name="soliddownicon" />
+          ) : (
+            ""
+          )}
         </button>
-    );
+      :  
+      <Link href={`${link}`}>  <button
+          className={`${buttonClasses} flex items-center gap-x-[2px] cursor-pointer`}
+          onClick={onClick}
+          disabled={isLoading}
+        >
+          {isLoading ? "Loading..." : children}
+
+          {icon === true ? (
+            <Icon className={`${iconClass}`} name="soliddownicon" />
+          ) : (
+            ""
+          )}
+        </button> </Link>}
+    </>
+  );
 };
 
 export default Button;
