@@ -20,7 +20,7 @@ const Button: React.FC<ButtonProps> = ({
     "bg-primary-100  text-white capitalize font-semibold leading-6":
       variant === "primary",
     "bg-primary-300  text-subheading capitalize ": variant === "secondary",
-    "bg-white trasition-all duration-[0.3s] font-semibold leading-6 border-[1px] border-divider-100 hover:border-transparent hover:text-primary-100 capitalize py-2 px-5":
+    "bg-white trasition-all duration-[0.3s] font-semibold leading-6 border-[1px] border-divider-100 hover:border-transparent hover:text-primary-100 capitalize py-2 px-5 hover:border-primary-100":
       variant === "liquid",
     "bg-white text-primary-100 capitalize leading-5 font-semibold":
       variant === "solidicon",
@@ -32,28 +32,28 @@ const Button: React.FC<ButtonProps> = ({
       link === undefined ?
     
         <button
-          className={`${buttonClasses} ${className} flex items-center gap-x-[2px] cursor-pointer`}
+          className={cn`${buttonClasses} ${className} flex items-center gap-x-[2px] cursor-pointer`}
           onClick={onClick}
           disabled={isLoading}
         >
           {isLoading ? "Loading..." : children}
 
           {icon === true ? (
-            <Icon className={`${iconClass}`} name="soliddownicon" />
+            <Icon className={cn`${iconClass}`} name="soliddownicon" />
           ) : (
             ""
           )}
         </button>
       :  
       <Link href={`${link}`}>  <button
-          className={`${buttonClasses} flex items-center gap-x-[2px] cursor-pointer`}
+          className={cn`${buttonClasses} flex items-center gap-x-[2px] cursor-pointer`}
           onClick={onClick}
           disabled={isLoading}
         >
           {isLoading ? "Loading..." : children}
 
           {icon === true ? (
-            <Icon className={`${iconClass}`} name="soliddownicon" />
+            <Icon className={cn`${iconClass}`} name="soliddownicon" />
           ) : (
             ""
           )}

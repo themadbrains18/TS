@@ -1,3 +1,4 @@
+import { cn } from '@/libs/utils';
 import React, { useEffect, useRef } from 'react';
 
 interface ModalProps {
@@ -32,12 +33,12 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, className, ove
 
     return (
         <div
-            className={`fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-75 ${overlayClass}`}
+            className={cn`fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-75 ${overlayClass}`}
             onClick={handleOverlayClick}
         >
             <div
                 ref={modalRef}
-                className={`bg-white rounded-lg overflow-hidden shadow-xl max-w-fit w-full mx-4 px-5 py-4 md:px-[32px] md:py-4 ${className}`}
+                className={cn`bg-white rounded-lg overflow-hidden shadow-xl max-w-fit w-full mx-4 px-5 py-4 md:px-[32px] md:py-4 ${className}`}
             >
                 {children}
             </div>
