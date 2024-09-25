@@ -26,7 +26,7 @@ export interface dropdownprops {
   export interface ButtonProps {
     variant?: "primary" | "secondary" | "liquid" | "solidicon";
     isLoading?: boolean;
-    children: React.ReactNode;
+    children?: React.ReactNode;
     onClick?: () => void;
     icon?: boolean;
     iconClass?: string;
@@ -36,4 +36,9 @@ export interface dropdownprops {
 
   export interface navdropdownprops {
     tittle: string;
+  }
+
+  export interface AccordionProps {
+    title: string;
+    children: ReactNode;
   }

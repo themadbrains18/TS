@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import Icon from "./ui/Icon";
+import Icon from "./Icon";
 import { cn } from "@/libs/utils";
 
 const SearchDropdown = () => {

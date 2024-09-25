@@ -1,6 +1,6 @@
 import React from "react";
 import { cn } from "@/libs/utils";
-import Icon from "./Icon";
+import Icon from "../Icon";
 import Link from "next/link";
 import { ButtonProps } from "@/types/type";
 

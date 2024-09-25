@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import Icon from "./Icon";
+import Icon from "../Icon";
 import Image from "next/image";
 import Navimg from "@/../public/images/navimg.png";
 import { navcardprops } from "@/types/type";
@@ -12,43 +12,12 @@ const NavCard: React.FC<navcardprops> = ({
   tittle,
   tittleclass,
 }) => {
-  const data = [
-    {
-      tittle: "Room Sharing - UI Kit Te UI Kit Te UI Kit Te",
-      image: "navimg.png",
-      icon: "figma.svg",
-    },
-    {
-      tittle: "Room Sharing - UI Kit Te UI Kit Te UI Kit Te",
-      image: "navimg.png",
-      icon: "figma.svg",
-    },
-    {
-      tittle: "Room Sharing - UI Kit Te UI Kit Te UI Kit Te",
-      image: "navimg.png",
-      icon: "figma.svg",
-    },
-    {
-      tittle: "Room Sharing - UI Kit Te UI Kit Te UI Kit Te",
-      image: "navimg.png",
-      icon: "figma.svg",
-    },
-    {
-      tittle: "Room Sharing - UI Kit Te UI Kit Te UI Kit Te",
-      image: "navimg.png",
-      icon: "figma.svg",
-    },
-  ];
-
   return (
     <>
-      {data?.splice(0, 4)?.map((item, index) => {
-        return (
-          <Fragment key={index}>
-            <div className="max-w-[248px]  cursor-pointer drop-shadow-md">
+            <div className="max-w-[248px]  cursor-pointer border border-divider-100">
               <div className="relative">
                 <Image
-                  src={`/images/${item.image}`}
+                  src={`/images/${image}`}
                   width={248}
                   height={122}
                   alt="cardimage"
@@ -65,21 +34,18 @@ const NavCard: React.FC<navcardprops> = ({
               </div>
               <div className="flex items-center py-[10px] px-[15px]">
                 <h4 className="mr-[2px] text-sm text-subheading leading-5 font-semibold text-ellipsis overflow-hidden text-nowrap">
-                  {item.tittle}
+                  {tittle}
                 </h4>
                 <div className="px-1 py-[3.2px]">
                   <Image
                     width={20}
                     height={20}
-                    src={`/icons/${item.icon}`}
+                    src={`/icons/${icon}`}
                     alt="icon"
                   />
                 </div>
               </div>
             </div>
-          </Fragment>
-        );
-      })}
     </>
   );
 };

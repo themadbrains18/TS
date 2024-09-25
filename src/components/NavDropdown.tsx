@@ -1,8 +1,10 @@
 import React from "react";
-import Icon from "./ui/Icon";
-import NavTabs from "./ui/NavTabs";
+import Icon from "./Icon";
+import NavTabs from "./NavTabs";
 import { navdropdownprops } from "@/types/type";
 import { sidebarAccordion } from "@/libs/Accordion";
+
+import headerdata from "@/json/header.json"
 
 const NavDropdown: React.FC<navdropdownprops> = ({ tittle }) => {
   return (
@@ -17,7 +19,7 @@ const NavDropdown: React.FC<navdropdownprops> = ({ tittle }) => {
             name="soliddownicon"
           />
         </div>
-        <div className="hiddenscroll max-w-[60.3vw] w-full overflow-scroll flex absolute top-[110px] left-[24.8%] transition-all duration-[0.5] opacity-0 invisible    group-hover:visible group-hover:opacity-[1] cursor-pointer shadow-md bg-white">
+        <div className="hiddenscroll max-w-[60.3vw]  overflow-scroll flex absolute top-[110px] left-[24.8%] transition-all duration-[0.5] opacity-0 invisible    group-hover:visible group-hover:opacity-[1] cursor-pointer shadow-md">
           <NavTabs />
         </div>
       </section>

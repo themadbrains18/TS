@@ -1,14 +1,15 @@
 'use client'
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import NavDropdown from "../NavDropdown";
-import Icon from "./Icon";
-import Button from "./Button";
+import Icon from "../Icon";
+import Button from "../ui/Button";
 import SearchDropdown from "../SearchDropdown";
 import { cn } from "@/libs/utils";
-import Input from "./Input";
+import Input from "../ui/Input";
 import { sidebarAccordion } from "@/libs/Accordion";
-import NavTabs from "./NavTabs";
+import NavTabs from "../NavTabs";
+import Accordion from "../ui/Accordion";
 
 const Header = () => {
 
@@ -16,11 +17,23 @@ const Header = () => {
 
   const [sidebar, setSidebar] = useState(false); // managing side bar
 
-  const [ rotate , setRoate] = useState(false)
+  const [rotate, setRoate] = useState(false)
+
+  const [activeIndex, setActiveIndex] = useState<null | number>(null);
+
+  const sidebarAccordion1 = (index: number) => {
+    setActiveIndex(activeIndex === index ? null : index);
+  };
+  const sections = [
+    { title: "UI Templates" },
+    { title: "HTML Templates" },
+    { title: "Studio Specials" },
+  ];
+
   return (
     <>
       {/* destop header */}
-      <header className=" bg-[#ffffff80] backdrop:blur-xl relative">
+      <header className=" bg-[#ffffff80] backdrop:blur-xl relative border-b-[1px] border-[#11083319] z-10">
         <div className="container hidden lg:block">
           <div className="py-[35px] flex items-center justify-between">
             <div className="flex items-center justify-between max-w-[809px] w-full cursor-pointer">
@@ -44,7 +57,7 @@ const Header = () => {
                     <SearchDropdown />
                   </div>
                   <input type="text" placeholder="Search all templates...." className="my-[10px] placeholder:text-sm placeholder:text-subparagraph leading-5 outline-none " />
-                  <Icon name="crossicon" className=" cursor-pointer" onClick={() => setOpensearch(!opensearch)} />
+                  <Icon name="crossicon" className={`cursor-pointer fill-primary-100  ${opensearch !== false ? "opacity-100" : "opacity-0"}`} onClick={() => setOpensearch(!opensearch)} />
                 </div>
               </div>
               <Button variant="primary" className=" py-[13px] px-[30px] w-full max-w-[126px]" children="sign up" />
@@ -56,23 +69,37 @@ const Header = () => {
 
         <div className="container lg:hidden ">
           <div className="flex items-center justify-between py-4 relative">
-            {!sidebar  && <div onClick={()=> setSidebar(!sidebar)}> <Icon name="menuicon" className="w-8 h-8" /></div>}
+            <div onClick={() => setSidebar(!sidebar)}> <Icon name="menuicon" className="w-8 h-8" /></div>
             <div><Image className="cursor-pointer h-9" width={193} height={38} src={'/icons/logo.svg'} alt="logo" /></div>
-            <div className="" onClick={()=>setSidebar(!sidebar)}>{sidebar ? <Icon className="w-8 h-5" name="crossicon" /> :  <Icon name="solidsearch" className="w-9 h-9" />} </div>
+            <div className="" onClick={() => setSidebar(!sidebar)}> <Icon name="solidsearch" className="w-9 h-9" /></div>
           </div>
-          <div className={cn`flex flex-col absolute bg-white w-full transition-all duration-[0.5s] h-screen p-5 ${sidebar ? "left-0" : "left-[-100%]"}`}>
+          <div className={cn`flex flex-col absolute bg-white w-full transition-all duration-[0.5s] h-auto p-5 top-0 ${sidebar ? "left-0" : "left-[-100%]"}`}>
+            <div className="flex items-center justify-between pb-5">
+              <Image className="cursor-pointer h-9" width={193} height={38} src={'/icons/logo.svg'} alt="logo" />
+              <div onClick={() => { setSidebar(!sidebar) }}>
+                <Icon className="w-8 h-5 fill-primary-100" name="crossicon" />
+              </div>
+            </div>
             <div className="p-[10px] flex items-center justify-center gap-x-1 w-full border border-divider-100">
               <Image width={30} height={30} src={'/icons/solidsearch.svg'} alt="searchicon" />
               <Input placeholder="Search" className="" />
             </div>
-            <div className="flex flex-col px-[10px] mt-8">
-              <div onClick={(e)=>{sidebarAccordion(e) , setRoate(!rotate)}} className="flex justify-between items-center pb-[10px] border-b-[1px] border-divider-100]">
-            <h2>Ui Templates</h2>
-            <Icon name="soliddownicon" className={cn`fill-subheading rotate-90 w-2 transition-all duration-[0.5s] ${rotate && "rotate-[270deg]"}`}/>
-              </div>
-              <div className="overflow-hidden h-0 duration-[0.5s]">
-             <NavTabs/>
-              </div>
+
+            <div className="flex flex-col mt-8">
+
+              {
+                sections.map((item, index) => {
+                  return (<Fragment key={index}>
+                    <Accordion title={`${item.title}`}>
+                      <NavTabs />
+                    </Accordion>
+                  </Fragment>)
+                })
+              }
+            </div>
+
+            <div className="flex justify-center items-center mt-8">
+              <Button variant="primary" className=" py-2 px-[18px] w-full max-w-[139px] flex justify-center" children="sign up" />
             </div>
           </div>
         </div>

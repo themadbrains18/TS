@@ -49,6 +49,13 @@ const config: Config = {
         1: "0px 0px 30px 0px rgba(182, 89, 255, 0.04), 0px 8px 40px 0px rgba(0, 0, 0, 0.06);",
       },
     },
+    gridTemplateAreas:{
+      'layout': [
+        'header header',
+        'sidebar content',
+        'footer footer',
+      ],
+    }
   },
   plugins: [],
 };
