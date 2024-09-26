@@ -8,16 +8,17 @@ import Appdata from "@/components/dummy";
 import HeroSection from "./home/components/HeroSection";
 import TrendingTechnology from "./home/components/TrendingTechnology";
 import FeatureSection from "./home/components/FeatureSection";
+import BuissnessProducts from "./home/components/BuissnessProducts";
+import PopularSection from "./home/components/PopularSection";
 
 const Home  = () =>{
 return(
   <>
- <Header/>
  <HeroSection/>
  <TrendingTechnology/>
  <FeatureSection/>
- <Footer/>
- {/* <Appdata /> */}
+ <BuissnessProducts/>
+ <PopularSection/>
   </>
 )
 }

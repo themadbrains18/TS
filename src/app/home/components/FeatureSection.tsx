@@ -1,4 +1,5 @@
 import FeatureCard from '@/components/cards/FeatureCard'
+import Button from '@/components/ui/Button'
 import React, { Fragment } from 'react'
 
 const FeatureSection = () => {
@@ -78,13 +79,13 @@ const FeatureSection = () => {
     ]
     return (
         <>
-            <section className='bg-bgcolor py-[100px] '>
+            <section className='bg-bgcolor py-10 md:py-[100px] '>
                 <div className='bg-[url("/images/featurecolor.png")] bg-no-repeat bg-cover bg-right'>
 
                 <div className="container">
                     <div>
                         <h2 className='text-subheading leading-9 font-bold text-[28px]'>Feature Products</h2>
-                        <div className='mt-5 grid grid-cols-3 gap-[30px] '>
+                        <div className='mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-[30px] '>
 {
     data.map((item,index)=>{
         return(
@@ -94,6 +95,9 @@ const FeatureSection = () => {
         )
     })
 }
+                        </div>
+                        <div className='mt-10 flex w-full items-center justify-center'>
+                            <Button className='text-primary-100 py-3 px-[30px] bg-white shadow-sm' children='View All Products'/>
                         </div>
                     </div>
                 </div>
