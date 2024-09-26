@@ -9,6 +9,8 @@ import SolidSearch from "/public/icons/solidsearch.svg";
 import Menuicon from "/public/icons/Menu.svg";
 import XD from "/public/icons/diamondlogo.svg";
 import Diamond from "/public/icons/XDlogo.svg";
+import Share from "/public/icons/share.svg";
+import Mdb from "/public/icons/mdb.svg";
 // Map icon names to components
 const icons = {
   search: Search,
@@ -18,7 +20,9 @@ const icons = {
   solidsearch:SolidSearch,
   menuicon:Menuicon,
   xd:XD,
-  diamond:Diamond
+  diamond:Diamond,
+  share:Share,
+  mdb:Mdb
 };
 
 export type IconName = keyof typeof icons;
