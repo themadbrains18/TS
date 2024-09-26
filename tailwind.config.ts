@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+"tab":"500px"
+      },
       colors: {
         subheading: "#282046",
         subparagraph: "#5D5775",
