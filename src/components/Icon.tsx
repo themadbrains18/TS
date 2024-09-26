@@ -13,6 +13,8 @@ import Share from "/public/icons/share.svg";
 import Mdb from "/public/icons/mdb.svg";
 import filter from "/public/icons/filtericon.svg";
 import arrow from "/public/icons/arrow.svg";
+import closeicon from "/public/icons/closeicon.svg";
+import closeiconfilter from "/public/icons/closeiconfilter.svg";
 // Map icon names to components
 const icons = {
   search: Search,
@@ -26,7 +28,9 @@ const icons = {
   share: Share,
   mdb: Mdb,
   filter: filter,
-  arrow: arrow
+  arrow: arrow,
+  closeicon: closeicon,
+  closeiconfilter: closeiconfilter
 };
 
 export type IconName = keyof typeof icons;
