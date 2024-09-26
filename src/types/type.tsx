@@ -63,3 +63,8 @@ export interface dropdownprops {
     totalimages?:number,
     currentimage?:number
   }
+
+  export interface buissnesscardprops {
+    tittle?:string,
+    logo?:string
+  }

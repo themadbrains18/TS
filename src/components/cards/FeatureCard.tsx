@@ -20,17 +20,17 @@ const FeatureCard: React.FC<featurecardprops> = ({ buttonprops, category, curren
                     </div>
                 </div>
                 <div>
-                    <div className='px-5 pt-5 bg-white '>
-                        <div className=' flex items-center justify-between w-full border-b border-divider-100 pb-5'>
+                    <div className='px-[10px] pt-[10px] md:px-5 md:pt-5 bg-white '>
+                        <div className=' flex items-center justify-between w-full border-b border-divider-100 pb-[10px] md:pb-5'>
 
                             <h3 className='text-subparagraph font-semibold leading-6 capitalize'>{`${tittle}`}</h3>
                             <Image src={`/icons/${themeicon}`} width={20} height={20} alt='themeicon' />
                         </div>
                     </div>
-                    <div className='flex items-center justify-between bg-white px-5 py-3 ' >
+                    <div className='flex items-center justify-between bg-white p-[10px] md:px-5 md:py-3 ' >
                         <div className='flex items-center gap-x-2'>
                             <Image src={`/icons/${uploadericon}`} width={20} height={20} alt='uploadericon' />
-                            <p className='text-subparagraph text-sx leading-5 capitalize'>by <span className='text-xs text-subheading font-semibold leading-5 capitalize'>{`${uploadername}`}</span> <span className='text-xs text-subheading font-semibold leading-5 capitalize'>{`${category}`}</span></p>
+                            <p className='text-subparagraph text-sx leading-5 capitalize text-nowrap text-ellipsis overflow-hidden'>by <span className='text-xs text-subheading font-semibold leading-5 capitalize'>{`${uploadername}`}</span> <span className='text-xs text-subheading font-semibold leading-5 capitalize'>{`${category}`}</span></p>
                         </div>
                         <Button variant='primary' className='py-[5px] px-[10px] text-sm leading-5 font-semibold capitalize' children={`${buttonprops}`} />
                     </div>
