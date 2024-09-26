@@ -44,8 +44,8 @@ const Footer = () => {
 
   return (
     <>
-      <footer className="bg-white pt-20 pb-10">
-        <div className="footer-container">
+      <footer className="bg-white pt-10 md:pt-20 pb-10">
+        <div className="container">
           <div className="flex flex-col lg:flex-row items-center justify-between">
             <div className=" lg:max-w-[368px] lg:h-[293px] w-full flex flex-col justify-between items-start">
               <div>
@@ -66,7 +66,7 @@ const Footer = () => {
                 }
               </div>
             </div>
-            <div className="lg:max-w-[670px] my-5 lg:my-0 grid grid-cols-2  grid-areas-layout gap-5 w-full md:flex md:justify-between">
+            <div className="lg:max-w-[874px] my-5 lg:my-0 grid grid-cols-2  grid-areas-layout gap-5 w-full md:flex md:justify-between">
               <div>
                 <h3 className="text-xl font-semibold leading-7 text-subheading">Design </h3>
                 <ul className="flex flex-col gap-y-[10px] md:gap-y-[25px] mt-5 md:mt-10">
