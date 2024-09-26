@@ -97,7 +97,7 @@ const PopularSection = () => {
                                 }
                             </div>
                             <div className='mt-10 flex w-full items-center justify-center'>
-                                <Button className='text-primary-100 py-3 px-[30px] bg-white shadow-sm' children='View All Products' />
+                                <Button link='/productdetail' className='text-primary-100 py-3 px-[30px] bg-white shadow-sm hover:text-white' children='View All Products' />
                             </div>
                         </div>
                     </div>

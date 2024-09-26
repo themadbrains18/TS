@@ -3,6 +3,7 @@ import Image from 'next/image'
 import React from 'react'
 import Icon from '../Icon'
 import Button from '../ui/Button'
+import Link from 'next/link'
 
 const FeatureCard: React.FC<featurecardprops> = ({ buttonprops, category, currentimage, poster, themeicon, tittle, totalimages, uploadericon, uploadername }) => {
 
@@ -11,6 +12,7 @@ const FeatureCard: React.FC<featurecardprops> = ({ buttonprops, category, curren
             <div>
                 <div className='relative group'>
                     <Image src={`/images/${poster}`} className='w-full' width={370} height={278} alt='productimg' />
+                    <Link href={`/productdetail`}>
                     <div className='absolute top-0 right-0 left-0 bottom-0 bg-subheading opacity-0 transition-all duration-[0.5s] group-hover:opacity-50 flex items-center justify-center gap-x-1 cursor-pointer'>
                         <div className='flex items-center justify-center cursor-pointer'>
                             <h3 className='capitalize text-white text-lg font-bold leading-7'>view details</h3>
@@ -18,6 +20,7 @@ const FeatureCard: React.FC<featurecardprops> = ({ buttonprops, category, curren
                         </div>
                         <span className='py-[5px] px-10px rounded-[30px] absolute top-5 right-5 text-white z-10 inline-block bg-[#00000019]'>{`${currentimage}/${totalimages}`}</span>
                     </div>
+                    </Link>
                 </div>
                 <div>
                     <div className='px-[10px] pt-[10px] md:px-5 md:pt-5 bg-white '>
