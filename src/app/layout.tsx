@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import { Open_Sans } from 'next/font/google'
 import "./globals.css";
-import StoreProvider from "@/providers/StoreProvider";
-import { cn } from "@/libs/utils";
 import Header from "@/components/header-footer/Header";
 import Footer from "@/components/header-footer/Footer";
+import StoreProvider from "@/providers/StoreProvider";
 
 const openSans = Open_Sans({
   weight: ['400', '700'],
@@ -31,7 +30,9 @@ export default function RootLayout({
       >
         <Header/>
         <StoreProvider>
+          <Header />
           {children}
+          <Footer />
         </StoreProvider>
         <Footer/>
       </body>

@@ -11,18 +11,22 @@ import XD from "/public/icons/diamondlogo.svg";
 import Diamond from "/public/icons/XDlogo.svg";
 import Share from "/public/icons/share.svg";
 import Mdb from "/public/icons/mdb.svg";
+import filter from "/public/icons/filtericon.svg";
+import arrow from "/public/icons/arrow.svg";
 // Map icon names to components
 const icons = {
   search: Search,
   crossicon: Cross,
   soliddownicon: Soliddownicon,
   figma: Figma,
-  solidsearch:SolidSearch,
-  menuicon:Menuicon,
-  xd:XD,
-  diamond:Diamond,
-  share:Share,
-  mdb:Mdb
+  solidsearch: SolidSearch,
+  menuicon: Menuicon,
+  xd: XD,
+  diamond: Diamond,
+  share: Share,
+  mdb: Mdb,
+  filter: filter,
+  arrow: arrow
 };
 
 export type IconName = keyof typeof icons;
@@ -32,19 +36,19 @@ type IconProps = {
   size?: number;
   className?: string;
   color?: string;
-  onClick?:() => void
+  onClick?: () => void
 };
 
-const Icon: React.FC<IconProps> = ({ name, size = 20, color, className , onClick }) => {
+const Icon: React.FC<IconProps> = ({ name, size = 20, color, className, onClick }) => {
   const IconComponent = icons[name];
   return (
-      <IconComponent
-        width={size}
-        height={size}
-        fill={color ? color : "transparent"}
-        className={className}
-        onClick={onClick}
-      />
+    <IconComponent
+      width={size}
+      height={size}
+      fill={color ? color : "transparent"}
+      className={className}
+      onClick={onClick}
+    />
   );
 };
 

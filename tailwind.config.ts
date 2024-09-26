@@ -2,14 +2,13 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
       screens: {
-"tab":"500px"
+        "tab": "500px"
       },
       colors: {
         subheading: "#282046",
@@ -52,7 +51,7 @@ const config: Config = {
         1: "0px 0px 30px 0px rgba(182, 89, 255, 0.04), 0px 8px 40px 0px rgba(0, 0, 0, 0.06);",
       },
     },
-    gridTemplateAreas:{
+    gridTemplateAreas: {
       'layout': [
         'header header',
         'sidebar content',
