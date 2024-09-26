@@ -2,62 +2,90 @@
 @tailwind components;
 @tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
 @layer utilities {
   * {
     @apply m-0 p-0 box-border;
   }
-body{
-  @apply overflow-x-hidden
-}
+
+  body {
+    @apply overflow-x-hidden
+  }
+
   .container {
     @apply max-w-[1560px] w-full py-0 px-5 my-0 mx-auto;
   }
-  .footer-container{
+
+  .footer-container {
     @apply max-w-[1210px] w-full py-0 px-5 my-0 mx-auto
   }
 
-/*
+  /*
  *  Scroll bar Designed =====
  */
 
- .navsearch::-webkit-scrollbar-track {
-  @apply bg-divider-200   rounded-[6px];
-}
+  .navsearch::-webkit-scrollbar-track {
+    @apply bg-divider-200 rounded-[6px];
+  }
 
-.navsearch::-webkit-scrollbar {
-  @apply bg-divider-200 w-1 rounded-[6px];
-}
+  .navsearch::-webkit-scrollbar {
+    @apply bg-divider-200 w-1 rounded-[6px];
+  }
 
-.navsearch::-webkit-scrollbar-thumb {
+  .navsearch::-webkit-scrollbar-thumb {
 
-  @apply bg-primary-800 rounded-[6px] w-[4px];
-}
+    @apply bg-primary-800 rounded-[6px] w-[4px];
+  }
 
-.hiddenscroll::-webkit-scrollbar{
-  @apply hidden
-}
+  .hiddenscroll::-webkit-scrollbar {
+    @apply hidden
+  }
 
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgba(0, 0, 0, 0.8);
-  transition: opacity 300ms ease;
-}
 
-.modal-content {
-  background: white;
-  border-radius: 8px;
-  padding: 1rem;
-  transition: transform 300ms ease, opacity 300ms ease;
-  transform: scale(0.95) translateY(1rem);
-  opacity: 0;
-}
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.8);
+    transition: opacity 300ms ease;
+  }
 
-.modal-open .modal-content {
-  transform: scale(1) translateY(0);
-  opacity: 1;
-}
+  .modal-content {
+    background: white;
+    border-radius: 8px;
+    padding: 1rem;
+    transition: transform 300ms ease, opacity 300ms ease;
+    transform: scale(0.95) translateY(1rem);
+    opacity: 0;
+  }
+
+  .modal-open .modal-content {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+
+
+  @keyframes scroll {
+    0% {
+      transform: translateX(-10%);
+    }
+
+    100% {
+      transform: translateX(-110%);
+    }
+  }
+
+  .slider {
+    @apply cursor-pointer;
+  }
+
+  .slide-track {
+    animation: scroll 5s linear infinite alternate forwards running;
+  }
+
+  .slider:hover .slide-track {
+    animation-play-state: paused;
+  }
 }

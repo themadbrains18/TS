@@ -40,6 +40,7 @@ const NavTabs = () => {
               variant="solidicon"
               icon={true}
               iconClass="w-5 h-5 py-1 fill-primary-100"
+              link="/product"
             >
               view all products
             </Button>

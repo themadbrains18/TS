@@ -10,6 +10,7 @@ import Input from "../ui/Input";
 import { sidebarAccordion } from "@/libs/Accordion";
 import NavTabs from "../NavTabs";
 import Accordion from "../ui/Accordion";
+import Link from "next/link";
 
 const Header = () => {
 
@@ -37,12 +38,14 @@ const Header = () => {
         <div className="container hidden lg:block">
           <div className="py-[35px] flex items-center justify-between">
             <div className="flex items-center justify-between max-w-[809px] w-full cursor-pointer">
-              <Image
-                src={"/icons/Logo.svg"}
-                width={276}
-                height={40}
-                alt="Logo"
-              />
+              <Link href={'/'}>
+                <Image
+                  src={"/icons/Logo.svg"}
+                  width={276}
+                  height={40}
+                  alt="Logo"
+                />
+              </Link>
               <div className="flex items-center max-w-[473px] w-full justify-between">
                 <NavDropdown tittle="Ui Templates" />
                 <NavDropdown tittle="HTML Templates" />
@@ -70,12 +73,16 @@ const Header = () => {
         <div className="container lg:hidden ">
           <div className="flex items-center justify-between py-4 relative">
             <div onClick={() => setSidebar(!sidebar)}> <Icon name="menuicon" className="w-8 h-8" /></div>
-            <div><Image className="cursor-pointer h-9" width={193} height={38} src={'/icons/logo.svg'} alt="logo" /></div>
+            <div> <Link href={'/'}>
+              <Image className="cursor-pointer h-9" width={193} height={38} src={'/icons/logo.svg'} alt="logo" /> </Link>
+            </div>
             <div className="" onClick={() => setSidebar(!sidebar)}> <Icon name="solidsearch" className="w-9 h-9" /></div>
           </div>
           <div className={cn`flex flex-col absolute bg-white w-full transition-all duration-[0.5s] h-auto p-5 top-0 ${sidebar ? "left-0" : "left-[-100%]"}`}>
             <div className="flex items-center justify-between pb-5">
-              <Image className="cursor-pointer h-9" width={193} height={38} src={'/icons/logo.svg'} alt="logo" />
+              <Link href={'/'}>
+                <Image className="cursor-pointer h-9" width={193} height={38} src={'/icons/logo.svg'} alt="logo" />
+              </Link>
               <div onClick={() => { setSidebar(!sidebar) }}>
                 <Icon className="w-8 h-5 fill-primary-100" name="crossicon" />
               </div>

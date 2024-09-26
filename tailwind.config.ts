@@ -57,8 +57,9 @@ const config: Config = {
         'sidebar content',
         'footer footer',
       ],
-    }
+    },
   },
+
   plugins: [],
 };
 export default config;

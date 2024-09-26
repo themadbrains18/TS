@@ -28,13 +28,11 @@ export default function RootLayout({
       <body
         className={`${openSans.variable} antialiased`}
       >
-        <Header/>
         <StoreProvider>
           <Header />
           {children}
           <Footer />
         </StoreProvider>
-        <Footer/>
       </body>
     </html>
   );
