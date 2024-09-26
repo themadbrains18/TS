@@ -42,3 +42,24 @@ export interface dropdownprops {
     title: string;
     children: ReactNode;
   }
+
+  export interface techcardprops{
+    image?:string,
+    tittle?:string,
+    tittleclass?:string,
+    imageclass?:string,
+    className?:string,
+    container?:string
+  }
+
+  export interface featurecardprops{
+    poster?:string,
+    tittle?:string,
+    themeicon?:string,
+    uploadericon?:string,
+    uploadername?:string,
+    category?:string,
+    buttonprops?:string,
+    totalimages?:number,
+    currentimage?:number
+  }
