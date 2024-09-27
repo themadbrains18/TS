@@ -80,11 +80,17 @@ export interface ProductFiltersidetype {
 
 
 
- export interface CheckboxProps {
+export interface CheckboxProps {
   value: string;
   id: string;
   setItems: (items: string[]) => void;
   items: string[];
   className?: string;
   labelClass?: string;
+}
+
+export interface whatsnewprops {
+  icons?: string,
+  tittle?: string,
+  description?: string
 }

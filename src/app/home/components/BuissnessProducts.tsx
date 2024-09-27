@@ -38,7 +38,7 @@ const BuissnessProducts = () => {
     ]
     return (
         <>
-            <section className='py-10 md:py-[100px] bg-[url("/images/buissnessbg.png")] bg-no-repeat bg-contain bg-right'>
+            <section className='py-10 lg:py-[100px] bg-[url("/images/buissnessbg.png")] bg-no-repeat bg-contain bg-right'>
                 <div className="container">
                     <div>
                         <h2 className='text-subheading leading-9 font-bold text-[28px]'>Products For Your Business Free of Cost</h2>

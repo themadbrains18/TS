@@ -16,6 +16,10 @@ import arrow from "/public/icons/arrow.svg";
 import closeicon from "/public/icons/closeicon.svg";
 import closeiconfilter from "/public/icons/closeiconfilter.svg";
 import sortaroow from "/public/icons/sortaroow.svg";
+import Whatsnew from "/public/icons/whatsnew.svg";
+import Publish from "/public/icons/publish.svg";
+import Update from "/public/icons/update.svg";
+import Star from "/public/icons/star.svg";
 // Map icon names to components
 const icons = {
   search: Search,
@@ -32,7 +36,11 @@ const icons = {
   arrow: arrow,
   closeicon: closeicon,
   closeiconfilter: closeiconfilter,
-  sortaroow: sortaroow
+  sortaroow: sortaroow,
+  whatsnew:Whatsnew,
+  publish:Publish,
+  update:Update,
+  star:Star
 };
 
 export type IconName = keyof typeof icons;

@@ -79,7 +79,7 @@ const PopularSection = () => {
     ]
     return (
         <>
-            <section className='bg-bgcolor py-10 md:py-[100px] '>
+            <section className='bg-bgcolor py-10 lg:py-[100px] '>
                 <div className='bg-[url("/images/featurecolor.png")] bg-no-repeat bg-cover bg-right'>
 
                     <div className="container">
