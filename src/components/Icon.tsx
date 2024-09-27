@@ -15,6 +15,7 @@ import filter from "/public/icons/filtericon.svg";
 import arrow from "/public/icons/arrow.svg";
 import closeicon from "/public/icons/closeicon.svg";
 import closeiconfilter from "/public/icons/closeiconfilter.svg";
+import sortaroow from "/public/icons/sortaroow.svg";
 // Map icon names to components
 const icons = {
   search: Search,
@@ -30,7 +31,8 @@ const icons = {
   filter: filter,
   arrow: arrow,
   closeicon: closeicon,
-  closeiconfilter: closeiconfilter
+  closeiconfilter: closeiconfilter,
+  sortaroow: sortaroow
 };
 
 export type IconName = keyof typeof icons;

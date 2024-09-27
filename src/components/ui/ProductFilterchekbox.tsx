@@ -1,15 +1,20 @@
 "use client";
 
+import { CheckboxProps } from "@/types/type";
 import React from "react";
 
-interface CheckboxProps {
-    value: string;
-    id: string;
-    setItems: (items: string[]) => void;
-    items: string[];
-    className?: string;
-    labelClass?: string;
-}
+
+/**
+ * CheckboxFilter is a custom checkbox component that allows users to select or deselect items for filtering.
+ * The selected items are stored in the parent component's state.
+ * 
+ * @param {string} value - The label for the checkbox.
+ * @param {string} id - The unique identifier for the checkbox.
+ * @param {Function} setItems - Function to update the selected items in the parent component.
+ * @param {string[]} items - Array of currently selected items.
+ * @param {string} [className] - Optional class name for the checkbox.
+ * @param {string} [labelClass] - Optional class name for the label.
+ */
 
 const CheckboxFilter = ({
     labelClass,
@@ -19,10 +24,17 @@ const CheckboxFilter = ({
     setItems,
     items,
 }: CheckboxProps) => {
-    // Determine if the checkbox is checked based on whether value is in items array
+    /**
+       * Determines if the checkbox should be checked based on whether the `value` exists in the `items` array.
+       * 
+       * @type {boolean}
+       */
     const isChecked = items.includes(value);
 
-    // Handle checkbox change event
+    /**
+     * Handles the checkbox state change. If the checkbox is checked, it removes the item from the `items` array,
+     * otherwise, it adds the item to the array.
+     */
     const handleCheckboxChange = () => {
         if (isChecked) {
             // Remove item from filter if already checked
@@ -40,7 +52,9 @@ const CheckboxFilter = ({
                 htmlFor={id}
             >
                 {/* Render checkbox label */}
-                {value}
+                <h2 className={`text-[16px] font-normal leading-6 ${isChecked ? "text-subheading" : "text-subparagraph"}  `} >
+                    {value}
+                </h2>
                 <div
                     className={`relative ${isChecked ? "checked" : ""}
                          w-[20px] h-[20px] border-solid border

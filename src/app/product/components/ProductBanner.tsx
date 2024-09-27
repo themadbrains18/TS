@@ -1,5 +1,18 @@
 import React from 'react'
 
+
+
+/**
+ * ProductBanner is a React component that renders a banner section 
+ * with a background image and text promoting free high-quality UI kits 
+ * and design resources. The banner is responsive and adjusts for different 
+ * screen sizes.
+ * 
+ * @returns {JSX.Element} The rendered ProductBanner component.
+ */
+
+
+
 const ProductBanner = () => {
     return (
         <>

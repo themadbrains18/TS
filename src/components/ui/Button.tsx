@@ -28,36 +28,36 @@ const Button: React.FC<ButtonProps> = ({
 
   return (
     <>
-    {
-      link === undefined ?
-    
-        <button
-          className={cn`${buttonClasses} ${className} flex items-center gap-x-[2px] cursor-pointer `}
-          onClick={onClick}
-          disabled={isLoading}
-        >
-          {isLoading ? "Loading..." : children}
+      {
+        link === undefined ?
 
-          {icon === true ? (
-            <Icon className={cn`${iconClass}`} name="soliddownicon" />
-          ) : (
-            ""
-          )}
-        </button>
-      :  
-      <Link href={`${link}`}>  <button
-          className={cn`${buttonClasses} ${className} flex items-center gap-x-[2px] cursor-pointer`}
-          onClick={onClick}
-          disabled={isLoading}
-        >
-          {isLoading ? "Loading..." : children}
+          <button
+            className={cn`${buttonClasses} ${className} flex items-center gap-x-[2px] cursor-pointer `}
+            onClick={onClick}
+            disabled={isLoading}
+          >
+            {isLoading ? "Loading..." : children}
 
-          {icon === true ? (
-            <Icon className={cn`${iconClass}`} name="soliddownicon" />
-          ) : (
-            ""
-          )}
-        </button> </Link>}
+            {icon === true ? (
+              <Icon className={cn`${iconClass}`} name="soliddownicon" />
+            ) : (
+              ""
+            )}
+          </button>
+          :
+          <Link href={`${link}`}>  <button
+            className={cn`${buttonClasses} ${className} flex items-center gap-x-[2px] cursor-pointer`}
+            onClick={onClick}
+            disabled={isLoading}
+          >
+            {isLoading ? "Loading..." : children}
+
+            {icon === true ? (
+              <Icon className={cn`${iconClass}`} name="soliddownicon" />
+            ) : (
+              ""
+            )}
+          </button> </Link>}
     </>
   );
 };

@@ -76,3 +76,15 @@ export interface ProductFiltersidetype {
   setItems: any;
   closefilter: () => void;
 }
+
+
+
+
+ export interface CheckboxProps {
+  value: string;
+  id: string;
+  setItems: (items: string[]) => void;
+  items: string[];
+  className?: string;
+  labelClass?: string;
+}
