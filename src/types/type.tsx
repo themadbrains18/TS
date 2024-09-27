@@ -76,3 +76,9 @@ export interface ProductFiltersidetype {
   setItems: any;
   closefilter: () => void;
 }
+
+export interface whatsnewprops{
+  icons?:string,
+  tittle?:string,
+  description?:string
+}
