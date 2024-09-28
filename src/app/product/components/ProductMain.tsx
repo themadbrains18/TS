@@ -189,7 +189,7 @@ const ProductMain = () => {
                             </div>
                             <div className='w-full' >
                                 <div className=" flex  max-[768px]:flex-col-reverse   md:flex justify-between pb-5 border-b mb-[30px]  items-center">
-                                    <div className='md:max-w-[600px] w-full overflow-x-scroll md:overflow-hidden flex-nowrap flex md:flex-wrap gap-[10px] ' >
+                                    {/* <div className='md:max-w-[600px] w-full overflow-x-scroll md:overflow-hidden flex-nowrap flex md:flex-wrap gap-[10px] ' >
                                         {items.map((item, index) => {
                                             return (
                                                 <>
@@ -201,7 +201,6 @@ const ProductMain = () => {
                                                             <span className="whitespace-nowrap  text-[14px] font-normal leading-4 text-subparagraph ">
                                                                 {item}
                                                             </span>
-                                                            {/* Remove icon for each item */}
                                                             <div
                                                                 className="cursor-pointer"
                                                                 onClick={() => removeItem(index)}
@@ -215,21 +214,54 @@ const ProductMain = () => {
 
                                             );
                                         })}
-
+                                    </div> */}
+                                    <div className='md:max-w-[600px] w-full overflow-x-scroll md:overflow-hidden flex-nowrap flex md:flex-wrap gap-[10px]'>
+                                        {/* Check if there are items and show the "Clear All" button */}
+                                        {items.length > 0 && (
+                                            <div className="mb-2">
+                                                <button
+                                                    className="bg-red-500 text-white py-2 px-4 rounded"
+                                                    onClick={() => setItems([])} // Clear all items when clicked
+                                                >
+                                                    Clear All
+                                                </button>
+                                            </div>
+                                        )}
+                                        {items.map((item, index) => {
+                                            return (
+                                                <div key={Date.now() + index}>
+                                                    <div
+                                                        className="border-[1px] py-[6px] px-[14px] flex items-center w-full max-w-max bg-primary-300 gap-[5px]"
+                                                    >
+                                                        <span className="whitespace-nowrap text-[14px] font-normal leading-4 text-subparagraph">
+                                                            {item}
+                                                        </span>
+                                                        {/* Remove icon for each item */}
+                                                        <div
+                                                            className="cursor-pointer"
+                                                            onClick={() => removeItem(index)}
+                                                        >
+                                                            <Icon color='#5D5775' name="closeicon" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
                                     </div>
+
                                     <div className='text-end md:text-inherit flex justify-between pb-[10px] md:pb-0 items-center md:items-start max-[768px]:w-full ' >
                                         <div onClick={openFilter} className='flex gap-[5px] items-center md:hidden '>
                                             <Icon name='filter' />
                                             <h3 className='lg:text-[18px] leading-[28px] font-normal text-subparagraph '>Filters</h3>
                                         </div>
-                                        <div ref={dropdownRef} className='relative' >
+                                        <div className='relative' >
                                             <div onClick={sorthandledropdown} className='pr-[15px] pl-5 py-[8px] flex gap-[6px] items-center  ' >
                                                 <h2 className='text-primary text-4 font-semibold leading-6 text-primary-100  text-nowrap' >Sort by</h2>
                                                 <div className={` ${sort === true ? "rotate-0" : "rotate-[180deg]"} duration-[0.5s] `}>
                                                     <Icon className='p-1' name='sortaroow' />
                                                 </div>
                                             </div>
-                                            <div className={`absolute  right-0 ${sort === true ? "opacity-1" : "opacity-0"}  duration-[0.5s] top-[45px] z-10 bg-white`}>
+                                            <div className={`absolute  right-0 ${sort === true ? "opacity-1 visible " : "opacity-0 invisible"}  duration-[0.5s] top-[45px] z-10 bg-white`}>
                                                 {Sortdata?.map((item, index) => {
                                                     return (
                                                         <h4
@@ -245,7 +277,7 @@ const ProductMain = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className='grid gap-[10px] lg:gap-5 lg:grid-cols-2  xl:grid-cols-3  xl:gap-[30px] '  >
+                                <div className='grid  gap-5 lg:grid-cols-2  xl:grid-cols-3  xl:gap-[30px] '  >
                                     {
                                         data.map((item, index) => {
                                             return (
