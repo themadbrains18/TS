@@ -49,7 +49,9 @@ const Footer = () => {
           <div className="flex flex-col lg:flex-row items-center justify-between">
             <div className=" lg:max-w-[368px] lg:h-[293px] w-full flex flex-col justify-between items-start">
               <div>
+                <Link href={'/'}>
                 <Image className="cursor-pointer" src={'/icons/footerlogo.svg'} width={247} height={35} alt="logo" />
+                </Link>
                 <p className="mt-8 text-subparagraph text-sm leading-5">Template Studio is the place to find free of cost high-quality design resources for designers, creative agencies and developers</p>
               </div>
               <div className="flex items-center lg:max-w-[250px] w-full justify-between mt-10 lg:mt-0">

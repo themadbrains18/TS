@@ -8,7 +8,7 @@ import WhatsNewTab from './WhatsNewTab'
 import AuthorTab from './AuthorTab'
 
 const ProductDescription = () => {
-    const [activetab, setActivetab] = useState(0)
+    const [activetab, setActivetab] = useState(0);
 
     const btndata = [
         { tittle: "Description" },
@@ -45,9 +45,9 @@ const ProductDescription = () => {
                             <Fragment key={index}>
                                 <button
                                     onClick={() => setActivetab(index)}
-                                    className={`text-nowrap flex items-center gap-x-[6px] py-[6px] px-5 leading-l font-semibold text-subparagraph capitalize bg-divider-100 border-b transition-all duration-200 ${activetab === index ? ' border-primary-100' : ' border-transparent'}`}>
+                                    className={`text-nowrap flex items-center gap-x-[6px] py-[6px] px-5 leading-l font-semibold text-subparagraph capitalize bg-divider-100 border-b transition-all duration-200 hover:border-primary-100 ${activetab === index ? ' border-primary-100' : ' border-transparent'}`}>
                                     {item.tittle}
-                                    {item.icon && <Icon name={'whatsnew'}  />}
+                                    {item.icon && <Icon name={'whatsnew'} />}
                                 </button>
                             </Fragment>
                         ))}
