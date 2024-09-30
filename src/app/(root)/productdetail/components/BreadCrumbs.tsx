@@ -1,4 +1,5 @@
 import Icon from '@/components/Icon'
+import Link from 'next/link'
 import React from 'react'
 
 
@@ -18,7 +19,11 @@ const BreadCrumbs = () => {
     <>
       <div className='container' >
         <div className='flex items-center justify-between pb-[20px] md:pb-[40px] pt-[40px] '>
-          <h2 className='text-[16px] font-normal leading-6 text-subparagraph' >Home / Products / Product Details</h2>
+          <h2 className='text-[16px] font-normal leading-6 text-subparagraph'>
+            <Link href="/" >Home</Link> /
+            <Link href="/product" > Products</Link> /
+            <Link href="/productdetail" > Product Details</Link>
+          </h2>
           <div className='flex gap-[6px] items-center' >
             <p className='text-sm text-subparagraph leading-5 '>4.9</p>
             <Icon className='inline-block w-6 h-6' name='star' />

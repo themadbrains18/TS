@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 
@@ -20,7 +21,11 @@ const ProductBanner = () => {
                 <div className='bg-[url(/images/productbanner.png)]  h-[363px] bg-cover bg-no-repeat'>
                     <div className='container' >
                         <div className='lg:pt-10 lg:pb-20 pt-[50px] pb-[50px] ' >
-                            <h3 className='text-4 font-normal leading-6 inline text-divider-100' >Home / Products </h3>
+                            <h3 className='text-4 font-normal leading-6 inline text-divider-100' >
+                                <Link href={"/"} >Home </Link>
+                                /
+                                <Link href={'/Product'} >  Products </Link>
+                            </h3>
                             <div className='flex min-[991px]:flex-row flex-col gap-4  max-[1024px]:pt-4  justify-between ' >
                                 <h2 className=' text-[36px] xl:text-[40px]  2xl:text-[55px] font-bold 2xl:leading-[70px]  lg:leading-[50px] text-[#FFF]  min-[991px]:pt-20 max-w-[662px] w-full  leading-[1.3]' >
                                     Free High-quality UI kits

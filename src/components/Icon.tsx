@@ -21,6 +21,10 @@ import Publish from "/public/icons/publish.svg";
 import Update from "/public/icons/update.svg";
 import Star from "/public/icons/star.svg";
 import Rightarrow from "/public/icons/rightarrow.svg";
+import Facebook from "/public/icons/facebook.svg";
+import Twitter from "/public/icons/twitterlogo.svg";
+import Goggle from "/public/icons/goggle.svg";
+import { cn } from "@/libs/utils";
 // Map icon names to components
 const icons = {
   search: Search,
@@ -42,7 +46,11 @@ const icons = {
   publish: Publish,
   update: Update,
   star: Star,
-  rightarrow: Rightarrow
+  rightarrow: Rightarrow,
+  facebook: Facebook,
+  twitter: Twitter,
+  goggle: Goggle,
+
 };
 
 export type IconName = keyof typeof icons;
@@ -62,7 +70,7 @@ const Icon: React.FC<IconProps> = ({ name, size = 20, color, className, onClick 
       width={size}
       height={size}
       fill={color ? color : "transparent"}
-      className={className}
+      className={cn`${className}`}
       onClick={onClick}
     />
   );

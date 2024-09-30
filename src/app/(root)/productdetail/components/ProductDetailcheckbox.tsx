@@ -27,7 +27,7 @@ const ProductDetailcheckbox: React.FC<CheckBoxComponentProps> = ({ label, detail
     };
 
     return (
-        <div onClick={handleCheckboxChange} className="grid grid-cols-2 w-full justify-between items-center border border-transparent border-gray-200 p-2.5 md:p-4 rounded-lg shadow-sm cursor-pointer">
+        <div onClick={handleCheckboxChange} className="grid grid-cols-2 w-full justify-between items-center border  border-gray-200 p-2.5 md:p-4 rounded-lg  cursor-pointer">
             <div className="flex items-center space-x-2">
                 {/* Custom Checkbox */}
                 <div
@@ -51,8 +51,10 @@ const ProductDetailcheckbox: React.FC<CheckBoxComponentProps> = ({ label, detail
                 <span className="text-subparagraph font-semibold text-[14px] leading-5 text-center max-w-[217px] w-full">
                     {detailText}
                 </span>
-                <Image className={`${isChecked ? 'opacity-1  scale-[1]' : 'opacity-[0.5] scale-[0.8]  '} duration-[0.5s] `} src={`${image}`} height={15} width={22} alt={image}
-                />
+                <div className='bg-bgcolor flex justify-center w-[30px] h-[30px] '>
+                    <Image className={`${isChecked ? 'opacity-1  ' : 'opacity-[0.5]'} duration-[0.5s] object-contain `} src={`${image}`} height={22} width={15} alt={image}
+                    />
+                </div>
             </div>
         </div>
     );

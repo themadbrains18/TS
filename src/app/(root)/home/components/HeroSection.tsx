@@ -33,26 +33,26 @@ const HeroSection = () => {
                             </div>
                             <div className='max-w-[200px] w-full overflow-hidden slider'>
 
-                            <div className='flex gap-x-5 slide-track'>
-                                <div className='py-[10px] px-4 bg-[#cce0a519] slide'>
-                                    <Icon className='w-[14px] h-6' name='figma' />
+                                <div className='flex gap-x-5 slide-track'>
+                                    <div className='py-[10px] px-4 bg-[#cce0a519] slide'>
+                                        <Icon className='w-[14px] h-6' name='figma' />
+                                    </div>
+                                    <div className='p-[10px] bg-[#cce0a519] slide'>
+                                        <Icon className='w-6 h-6' name='xd' />
+                                    </div>
+                                    <div className='p-[10px] bg-[#cce0a519] slide'>
+                                        <Icon className='w-6 h-6' name='diamond' />
+                                    </div>
+                                    <div className='py-[10px] px-4 bg-[#cce0a519] slide'>
+                                        <Icon className='w-[14px] h-6' name='figma' />
+                                    </div>
+                                    <div className='p-[10px] bg-[#cce0a519] slide'>
+                                        <Icon className='w-6 h-6' name='xd' />
+                                    </div>
+                                    <div className='p-[10px] bg-[#cce0a519] slide'>
+                                        <Icon className='w-6 h-6' name='diamond' />
+                                    </div>
                                 </div>
-                                <div className='p-[10px] bg-[#cce0a519] slide'>
-                                    <Icon className='w-6 h-6' name='xd' />
-                                </div>
-                                <div className='p-[10px] bg-[#cce0a519] slide'>
-                                    <Icon className='w-6 h-6' name='diamond' />
-                                </div>
-                                <div className='py-[10px] px-4 bg-[#cce0a519] slide'>
-                                    <Icon className='w-[14px] h-6' name='figma' />
-                                </div>
-                                <div className='p-[10px] bg-[#cce0a519] slide'>
-                                    <Icon className='w-6 h-6' name='xd' />
-                                </div>
-                                <div className='p-[10px] bg-[#cce0a519] slide'>
-                                    <Icon className='w-6 h-6' name='diamond' />
-                                </div>
-                            </div>
                             </div>
                         </div>
                         <div className='relative pl-5 flex lg:max-w-[657px] w-full items-end mt-8 lg:mt-0'>
@@ -60,12 +60,12 @@ const HeroSection = () => {
                             <div className='lg:max-w-[635px] w-full relative'>
                                 <div className='p-[10px] rounded-2xl  bg-white relative z-[4] inline-block max-w-[262px] tab:max-w-full mt-[50px] lg:mt-0 md:w-[70%] lg:max-w-[490px] lg:w-full  group cursor-pointer'>
                                     <div className='overflow-hidden h-[187px] tab:h-[344px]'>
-                                    <Image className='relative z-[4] max-w-full lg:max-w-[470px] w-full transition-all duration-[2s] group-hover:translate-y-[-81%]' src={'/images/heroscroll.png'} width={470} height={324} alt='purplebg' />
+                                        <Image className='relative z-[4] max-w-full lg:max-w-[470px] w-full transition-all duration-[15s] group-hover:translate-y-[-81%]' src={'/images/heroscroll.png'} width={470} height={324} alt='purplebg' />
                                     </div>
 
                                 </div>
                                 <p className='text-xs leading-5 text-subparagraph flex items-center gap-x-[6px] mt-[10px] mb-6 md:mb-[50px]'><span className='max-w-10 md:max-w-[129px] w-full h-[1px] bg-subheading'></span> NFT (Buy & Sell) <span className='text-textheading font-semibold'>Enefty</span> Template</p>
-                            <Image className='lg:hidden absolute top-[1rem] tab:top-0 right-0 h-[167px] w-[200px] tab:w-auto tab:h-auto ' src={'/images/transparentbg.png'} width={382} height={229} alt='transparentbg' />
+                                <Image className='lg:hidden absolute top-[1rem] tab:top-0 right-0 h-[167px] w-[200px] tab:w-auto tab:h-auto ' src={'/images/transparentbg.png'} width={382} height={229} alt='transparentbg' />
                             </div>
                             <Image className='hidden lg:block absolute top-[5rem] right-0 h-[167px] w-[200px] tab:w-auto tab:h-auto ' src={'/images/transparentbg.png'} width={382} height={229} alt='transparentbg' />
                         </div>

@@ -1,9 +1,89 @@
-import React from 'react'
+"use client";
 
-const page = () => {
+import Icon from '@/components/Icon';
+import Button from '@/components/ui/Button';
+import CheckBox from '@/components/ui/checkbox';
+import Input from '@/components/ui/Input';
+import Image from 'next/image';
+import Link from 'next/link';
+import React, { useState } from 'react';
+
+const Page = () => {
+    const [isChecked1, setIsChecked1] = useState(false);
+
     return (
-        <div>new password</div>
-    )
-}
+        <div className="grid grid-cols-1 lg:grid-cols-2 ">
+            {/* Left Section with Image and Text */}
+            <div className=" bg-[url('/images/authsideimage.png')] lg:bg-[url('/images/authsideimage.png')] bg-no-repeat bg-cover h-[280px] lg:h-screen lg:sticky top-0 left-0 bottom-0 ">
+                <div className=" py-[30px] px-5 lg:p-[30px] lg:h-screen flex  items-center lg:items-start  justify-between flex-col ">
+                    <Image
+                        className=" lg:ml-[70px]"
+                        src={'/images/Logowhite.png'}
+                        alt="Madbrains Logo"
+                        width={276}
+                        height={40}
+                    />
+                    <h2 className=" text-[32px] md:text-[50px] xl:text-[62px] text-center lg:text-start font-normal pt-[30px] lg:pt-0 text-white lg:max-w-[700px] lg:m-auto">
+                        Free High-quality UI kits and design resources
+                    </h2>
+                    <p className=" hidden lg:block ml-[70px] text-[14px] font-medium leading-5 text-white">
+                        By Madbrains Technologies LLP.
+                    </p>
+                </div>
+            </div>
 
-export default page
+            {/* Right Section with Form */}
+            <div className="pt-20 pb-10 px-2  w-full">
+                <div className='max-w-[599px] m-auto ' >
+                    <h2 className="text-[36px] font-bold leading-[44px] pb-[218px]">Enter New Password</h2>
+                    <div className='space-y-[30px]' >
+                        {/* Password Input with Show Password Option */}
+                        <Input
+                            type={isChecked1 ? "text" : "password"}
+                            placeholder="Password"
+                            label="Password"
+                            className=" placeholder:text-neutral-400 py-[18px] px-5 bg-divider-100"
+                        />
+
+                        {/* Password Input with Show Password Option */}
+                        <Input
+                            type={isChecked1 ? "text" : "password"}
+                            placeholder="Your Password Again"
+                            label="Confirm Password"
+                            className=" placeholder:text-neutral-400 py-[18px] px-5 bg-divider-100"
+                        />
+
+                        {/* Checkbox to Toggle Password Visibility */}
+                        <CheckBox
+                            id="checkbox1"
+                            label="Show Password"
+                            checked={isChecked1}
+                            onChange={() => setIsChecked1(!isChecked1)}
+                            labelPosition="left"
+                            customClass="my-custom-checkbox"
+                        />
+                    </div>
+
+                    <h3 className='py-[60px] text-sm font-normal leading-5 ' >
+                        New Password Must Be Different From Previous Used Password.
+                    </h3>
+
+
+                    {/* Register Button */}
+                    <Button className="w-full items-center py-[13px] justify-center" variant="primary">
+                        Save New Password
+                    </Button>
+
+
+                    {/* Registration Prompt */}
+                    <h3 className="text-[16px] font-normal leading-6 text-textparagraph pt-[240px]">
+                        Not a member yet?{' '}
+                        <span className="text-textheading font-semibold">Register Now</span>
+                    </h3>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default Page;

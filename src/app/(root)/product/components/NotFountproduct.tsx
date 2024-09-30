@@ -20,7 +20,7 @@ const NotFoundProduct = (): JSX.Element => {
             {/* Not found image */}
             <Image width={197} height={140} alt='notfound' src="/images/notfoundproducts.png" />
 
-            <div className='flex justify-between w-full lg:flex-row flex-col gap-5'>
+            <div className='flex justify-between w-full lg:flex-row flex-col gap-5 items-center '>
                 {/* Suggest clearing filters */}
                 <h3 className='text-[16px] font-normal leading-6 text-subparagraph'>
                     Try <span className='text-primary-100'>clearing some filters</span> and try again.

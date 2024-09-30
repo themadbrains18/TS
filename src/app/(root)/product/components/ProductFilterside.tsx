@@ -3,7 +3,7 @@
 import Icon from '@/components/Icon'
 import Accordion from '@/components/ui/Accordion';
 import { ProductFiltersidetype } from '@/types/type';
-import React from 'react'
+import React, { useState } from 'react'
 import CheckboxFilter from './ProductFilterchekbox';
 
 /**
@@ -21,6 +21,11 @@ import CheckboxFilter from './ProductFilterchekbox';
 
 const ProductFilterside = ({ items, setItems, closefilter }: ProductFiltersidetype) => {
     // Define filter data for different categories
+
+
+    const [openIndex, setOpenIndex] = useState<number>(0); // 0 means the first section is open by default
+
+
     const filterData = [
         {
             title: "Price Range",
@@ -83,7 +88,7 @@ const ProductFilterside = ({ items, setItems, closefilter }: ProductFiltersidety
     ];
     return (
         <>
-            <div className='max-w-full sm:max-w-[357px] w-full py-[30px] px-[20px] bg-white h-full' >
+            {/* <div className='max-w-full sm:max-w-[357px] w-full py-[30px] px-[20px] bg-white h-full' >
                 <div className='flex justify-between items-center border-b border-divider-100  pb-5 mb-5' >
                     <div className='flex gap-[5px] items-center   '  >
                         <Icon name='filter' />
@@ -113,7 +118,45 @@ const ProductFilterside = ({ items, setItems, closefilter }: ProductFiltersidety
                         </Accordion>
                     ))}
                 </div>
+            </div> */}
+            <div className="max-w-full sm:max-w-[357px] w-full py-[30px] px-[20px] bg-white h-full">
+                <div className="flex justify-between items-center border-b border-divider-100 pb-5 mb-5">
+                    <div className="flex gap-[5px] items-center">
+                        <Icon name="filter" />
+                        <h3 className="lg:text-[18px] leading-[28px] font-normal text-subparagraph">Filters</h3>
+                    </div>
+                    <div className="md:bl border-l h-[30px] hidden md:block"></div>
+                    <div onClick={closefilter} className="md:hidden">
+                        <Icon name="closeiconfilter" />
+                    </div>
+                </div>
+                <div className="overflow-y-scroll h-[calc(100%_-_100px)] hiddenscroll">
+                    {filterData.map((section, sectionIndex) => (
+                        <Accordion
+                            key={sectionIndex}
+                            className="border-none"
+                            title={section.title}
+                            isOpen={openIndex === sectionIndex} // Check if the section should be open
+                            onToggle={() => setOpenIndex(openIndex === sectionIndex ? -1 : sectionIndex)} // Toggle accordion
+                        >
+                            <div className="border-b pb-5 mb-5">
+                                {section.items.map((item, index) => (
+                                    <div key={index + item.value} className="py-[5px] px-5 mb-1 hover:bg-primary-300">
+                                        <CheckboxFilter
+                                            value={item.value}
+                                            id={item.value}
+                                            setItems={setItems}
+                                            items={items}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        </Accordion>
+                    ))}
+                </div>
             </div>
+
+
         </>
     )
 }

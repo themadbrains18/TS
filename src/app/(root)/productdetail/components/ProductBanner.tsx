@@ -14,6 +14,7 @@ import { Navigation } from 'swiper/modules';
 import Button from '@/components/ui/Button';
 import Icon from '@/components/Icon';
 import ProductDetailcheckbox from './ProductDetailcheckbox';
+import Link from 'next/link';
 
 // Import Swiper styles and any other modules
 
@@ -31,19 +32,22 @@ import ProductDetailcheckbox from './ProductDetailcheckbox';
 const ProductBanner = () => {
 
     const images = [
-        '/images/product1.png',
-        '/images/product2.png',
-        '/images/product3.png',
-        '/images/product4.png',
-        '/images/product5.png',
-        '/images/product6.png',
-        '/images/product6.png',
-        '/images/product6.png',
-        '/images/product6.png',
+        { id: 'product1', src: '/images/product1.png' },
+        { id: 'product2', src: '/images/product2.png' },
+        { id: 'product3', src: '/images/product3.png' },
+        { id: 'product4', src: '/images/product4.png' },
+        { id: 'product5', src: '/images/product5.png' },
+        { id: 'product6', src: '/images/product6.png' },
+        { id: 'product7', src: '/images/product6.png' },
+        { id: 'product8', src: '/images/product6.png' },
+        { id: 'product9', src: '/images/product6.png' },
+        { id: 'product10', src: '/images/product6.png' },
     ];
 
-    // State to manage the currently active image
-    const [activeImage, setActiveImage] = useState(images[0]);
+
+    // State to manage the currently active image ID
+    const [activeImageId, setActiveImageId] = useState(images[0].id);
+    const activeImage = images.find(image => image.id === activeImageId)?.src; // Get the active image src
 
     // Reference to Swiper instance for custom navigation
     const swiperRef = useRef<any>(null);
@@ -53,36 +57,44 @@ const ProductBanner = () => {
             <section className='pb-10'>
                 <div className="container">
                     <div>
-                        <div className='flex items-center gap-x-2 pt-2.5 border-t md:mt-5 mb-5'>
+                        <div className='flex items-center gap-x-2 pt-2.5 md:pt-5 border-t md:mt-5 mb-5'>
                             <Image src={`/icons/mdb.svg`} width={20} height={20} alt='uploadericon' />
                             <p className='text-subparagraph text-sx leading-5 capitalize text-nowrap text-ellipsis overflow-hidden'>by <span className='text-[12px] font-semibold leading-5 text-subheading  capitalize'>{`themadbrains`}</span> <span className='text-primary-100' >|</span> <span className='text-xs text-subheading font-semibold leading-5 capitalize'>{`UI templates`}</span></p>
                         </div>
 
                         {/* Main Grid Section */}
                         <div className='grid grid-cols-1 gap-5 lg:grid-cols-[57.5%,40.5%] lg:gap-x-[30px]'>
-                            <div    >
+                            <div>
                                 <div className="lg:max-w-[874px] w-full">
                                     {/* Large Image */}
-                                    <div className="p-[10px] md:p-5">
-                                        <img
-                                            src={activeImage}
-                                            alt="Selected"
-                                            className="  lg:max-w-[874px]  w-full h-96 lg:object-cover rounded-lg shadow-md"
-                                        />
+                                    <div className="p-[10px] relative md:p-5 h-[540px] group overflow-hidden border border-divider-100">
+                                        <div className="overflow-hidden  h-[500px]  ">
+                                            <div className='absolute z-10 top-5 left-5 right-5 bottom-5 group-hover:bg-black opacity-[0.5] duration-[0.5s]'>
+                                                <div className='w-full h-full flex justify-center items-center overflow-hidden '>
+                                                    <Link href='/productdetail' className='text-white text-[25px] group-hover:opacity-100'>Preview</Link>
+                                                </div>
+                                            </div>
+                                            <img
+                                                src={activeImage}
+                                                alt="Selected"
+                                                className="overflow-hidden group-hover:scale-[1.1] duration-[0.5s] lg:max-w-[874px] w-full h-full lg:object-cover rounded-lg shadow-md"
+                                            />
+                                        </div>
                                     </div>
-                                    <div className="flex items-center gap-2 lg:gap-7">
+
+                                    <div className="flex items-center gap-2 lg:gap-7 md:p-5 md:border pt-2.5  border-divider-100">
                                         {/* Custom Previous Button */}
-                                        {
-                                            images.length > 0 &&
-                                            <div onClick={() => swiperRef.current?.slidePrev()} >
+                                        {images.length > 0 && (
+                                            <div className='rotate-[180deg]' onClick={() => swiperRef.current?.slidePrev()}>
                                                 <Icon name='rightarrow' />
                                             </div>
+                                        )}
 
-                                        }
                                         <Swiper
                                             navigation={false}
                                             modules={[Navigation]}
                                             slidesPerView={6}
+                                            spaceBetween={10}
                                             breakpoints={{
                                                 315: {
                                                     slidesPerView: 3,
@@ -99,30 +111,26 @@ const ProductBanner = () => {
                                             }}
                                             className="mySwiper"
                                         >
-                                            {
-                                                images.map((image, index) => (
-                                                    <SwiperSlide key={index}>
-                                                        <div
-                                                            onClick={() => setActiveImage(image)}
-                                                            className={`cursor-pointer  min-w-[50px]  md:max-w-[120px] w-full border-2 ${activeImage === image ? 'border-w-[2px] p-[5px] border-primary-900' : 'border-w-[2px] p-1 border-transparent'
-                                                                } rounded-lg`}
-                                                        >
-                                                            <img
-                                                                src={image}
-                                                                alt={`Thumbnail ${index}`}
-                                                                className="  w-full object-cover rounded-lg"
-                                                            />
-                                                        </div>
-                                                    </SwiperSlide>
-                                                ))
-                                            }
+                                            {images.map(({ id, src }) => (
+                                                <SwiperSlide key={id}>
+                                                    <div
+                                                        onClick={() => setActiveImageId(id)} // Set active image by ID
+                                                        className={`cursor-pointer min-w-[50px] md:max-w-[120px] w-full border-2 ${activeImageId === id ? 'border-primary-900' : 'border-transparent'} rounded-lg`}
+                                                    >
+                                                        <img
+                                                            src={src}
+                                                            alt={`Thumbnail ${id}`}
+                                                            className="w-full object-cover rounded-lg"
+                                                        />
+                                                    </div>
+                                                </SwiperSlide>
+                                            ))}
                                         </Swiper>
 
                                         {/* Custom Next Button */}
-                                        <div onClick={() => swiperRef.current?.slideNext()} >
+                                        <div onClick={() => swiperRef.current?.slideNext()}>
                                             <Icon name='rightarrow' />
                                         </div>
-
                                     </div>
                                 </div>
                             </div>

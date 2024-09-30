@@ -90,7 +90,7 @@ const Footer = () => {
                         <Fragment key={index}>
                           <Link href={'#'}><li className="h-6  overflow-hidden group inline-block"><p className="flex flex-col transition-all duration-500 group-hover:-translate-y-[26px]">
                             <span className="text-subparagraph leading-6 capitalize ">{item}</span>
-                            <span className=" capitalize transition-all duration-500 text-subheading group-hover:border-b-[1px] group-hover:border-subheading">{item}</span>
+                            <span className=" capitalize transition-all duration-500 text-subheading group-hover:border-b-[1px] group-hover:border-primary-100">{item}</span>
                           </p></li></Link>
                         </Fragment>
                       )

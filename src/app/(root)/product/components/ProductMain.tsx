@@ -6,7 +6,6 @@ import ProductFilterside from './ProductFilterside'
 import FeatureCard from '@/components/cards/FeatureCard'
 import Icon from '@/components/Icon'
 import ProductTags from './ProductTags'
-import { cn } from '@/libs/utils'
 import NotFountproduct from './NotFountproduct'
 import useOnClickOutside from '@/hooks/useOnClickOutside'
 
@@ -164,11 +163,20 @@ const ProductMain = () => {
         },
     ];
 
-    const [sort, setSort] = useState(false)
+    const [sort, setSort] = useState(false); // Dropdown visibility state
+    const [selectedSort, setSelectedSort] = useState("Sort by"); // State to store selected item
 
+    // Toggle the dropdown visibility
     const sorthandledropdown = () => {
-        setSort(!sort)
-    }
+        setSort(!sort);
+    };
+
+    // Handle item click and update selected item
+    const handleItemClick = (itemTitle: string) => {
+        setSelectedSort(itemTitle); // Update selected item text
+        setSort(false); // Close dropdown after selection
+    };
+
 
     const dropdownRef = useRef<HTMLDivElement>(null); // Reference to the dropdown element
 
@@ -217,39 +225,55 @@ const ProductMain = () => {
                                                 className="py-[2px] px-[15px] flex gap-1 items-center "
                                                 onClick={() => setItems([])} // Clear all items when clicked
                                             >
-                                                <h2 className=' text-[14px] font-normal  text-subparagraph' >Clear All</h2>
+                                                <h2 className=' text-[14px] font-normal  text-subparagraph text-nowrap ' >Clear All</h2>
                                                 <Icon color='#5D5775' name="closeicon" />
                                             </button>
                                         )}
                                     </div>
-
-                                    <div className='text-end md:text-inherit flex justify-between pb-[10px] md:pb-0 items-center md:items-start max-[768px]:w-full ' >
-                                        <div onClick={openFilter} className='flex gap-[5px] items-center md:hidden '>
+                                    {/* sort by */}
+                                    <div className='text-end md:text-inherit flex justify-between pb-[10px] md:pb-0 items-center md:items-start max-[768px]:w-full'>
+                                        {/* Filters Button */}
+                                        <div onClick={openFilter} className='flex gap-[5px] items-center md:hidden'>
                                             <Icon name='filter' />
-                                            <h3 className='lg:text-[18px] leading-[28px] font-normal text-subparagraph '>Filters</h3>
+                                            <h3 className='lg:text-[18px] leading-[28px] font-normal text-subparagraph'>Filters</h3>
                                         </div>
-                                        <div className='relative' >
-                                            <div onClick={sorthandledropdown} className='pr-[15px] pl-5 py-[8px] flex gap-[6px] items-center  ' >
-                                                <h2 className='text-primary text-4 font-semibold leading-6 text-primary-100  text-nowrap' >Sort by</h2>
-                                                <div className={` ${sort === true ? "rotate-0" : "rotate-[180deg]"} duration-[0.5s] `}>
-                                                    <Icon className='p-1' name='sortaroow' />
+
+                                        {/* Sort Dropdown */}
+                                        <div
+                                            className='relative'
+                                            onMouseEnter={() => setSort(true)}  // Open on mouse enter
+                                            onMouseLeave={() => setSort(false)} // Close on mouse leave
+                                        >
+                                            <div
+                                                onClick={sorthandledropdown}
+                                                className={` border ${sort ? "border-primary-100 " : " border-transparent hover:border-subparagraph"} group pr-[15px] pl-5 py-[8px] flex gap-[6px] items-center`}
+                                            >
+                                                {/* Display selected item or default "Sort by" text */}
+                                                <h2 className={`text-primary text-4 font-semibold  leading-6  duration-[0.5s] ${sort ? "text-primary-100" : "text-subheading"}  text-nowrap`}>
+                                                    {selectedSort}
+                                                </h2>
+                                                <div className={`${sort ? "rotate-0" : "rotate-[180deg]"} duration-[0.5s]`}>
+                                                    <Icon className={`p-1 ${sort ? "[&>*]:fill-primary-100" : "[&>*]:fill-[#5D5775]"}`} name="sortaroow" />
+
                                                 </div>
                                             </div>
-                                            <div className={`absolute  right-0 ${sort === true ? "opacity-1 visible " : "opacity-0 invisible"}  duration-[0.5s] top-[45px] z-10 bg-white`}>
-                                                {Sortdata?.map((item, index) => {
-                                                    return (
-                                                        <h4
-                                                            key={index + item.tittle}
-                                                            className={cn`text-subparagraph  text-start leading-6 py-2 px-[30px] capitalize cursor-pointer text-nowrap  hover:bg-primary-200 border-l-[2px] hover:border-primary-100`}
-
-                                                        >
-                                                            {item.tittle}
-                                                        </h4>
-                                                    );
-                                                })}
+                                            {/* Dropdown items */}
+                                            <div
+                                                className={`absolute right-0 ${sort ? "opacity-1 visible" : "opacity-0 invisible"} duration-[0.5s] top-[45px] z-10 bg-white`}
+                                            >
+                                                {Sortdata?.map((item, index) => (
+                                                    <h4
+                                                        key={index + item.tittle}
+                                                        onClick={() => handleItemClick(item.tittle)} // Update text on click
+                                                        className={`text-subparagraph text-start leading-6 py-2 px-[30px] capitalize cursor-pointer text-nowrap hover:bg-primary-200 border-l-[2px] hover:border-primary-100`}
+                                                    >
+                                                        {item.tittle}
+                                                    </h4>
+                                                ))}
                                             </div>
                                         </div>
                                     </div>
+                                    {/* sort by */}
                                 </div>
                                 <div className='grid  gap-5 lg:grid-cols-2  xl:grid-cols-3  xl:gap-[30px] '  >
                                     {

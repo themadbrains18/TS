@@ -1,5 +1,6 @@
 import BuissnessCard from '@/components/cards/BuissnessCard'
 import React, { Fragment } from 'react'
+
 /**
  * Component for rendering business products.
  *
@@ -9,13 +10,16 @@ import React, { Fragment } from 'react'
  *   <BuissnessProducts />
  * )
  */
+
 const BuissnessProducts = () => {
+
     /**
    * An array of product data for business services.
    * Each object contains the title and logo of a product.
    * 
    * @type {Array<{tittle: string, logo: string}>}
    */
+
     const data = [
         {
             tittle: "Website Design",

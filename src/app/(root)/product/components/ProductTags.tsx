@@ -80,7 +80,10 @@ const ProductTags = () => {
                     {tags.map((item, index) => {
                         const isActive = index === activeIndex; // Determine if this tag is active
                         return (
-                            <div key={index} onClick={() => setActiveIndex(index)} className={` gap-[7px] cursor-pointer relative mx-[7px] text-nowrap after:content-[''] after:absolute after:bottom-[2px] after:h-[1px] after:bg-primary-100 after:w-0 after:left-[50%] after:transition-all after:duration-[0.5s] hover:after:left-0 hover:after:w-full ${isActive ? 'after:w-full after:left-0' : 'after:w-0 after:left-[50%]'}`}>
+                            <div key={index} onClick={() => setActiveIndex(index)} className={`
+                             gap-[7px] cursor-pointer relative mx-[7px] text-nowrap after:content-[''] after:absolute after:bottom-[2px] after:h-[1px] after:bg-primary-100 after:w-0 after:left-[50%] after:transition-all after:duration-[0.5s] hover:after:left-0 hover:after:w-full
+                              ${isActive ? 'after:w-full after:left-[-0%] ' : 'after:w-0 after:left-[50%]'}`}
+                            >
                                 <h2 className={` px-[10px] py-[5px] leading-7 font-normal transition-all  duration-[0.5s] ${isActive ? 'text-primary-100' : 'text-subparagraph'} cursor-pointer `}>
                                     {item.tagname}
                                 </h2>
