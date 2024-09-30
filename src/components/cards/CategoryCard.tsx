@@ -3,6 +3,25 @@ import { techcardprops } from '@/types/type'
 import Image from 'next/image'
 import React from 'react'
 
+
+
+/**
+ * CategoryCard component displays a category image and title.
+ * It includes hover effects for better user interaction.
+ *
+ * @component
+ * @param {techcardprops} props - The properties passed to the component.
+ * @param {string} props.className - Additional CSS classes for the card.
+ * @param {string} props.image - The image file name to be displayed.
+ * @param {string} props.imageclass - Additional CSS classes for the image.
+ * @param {string} props.tittle - The title of the category.
+ * @param {string} props.tittleclass - Additional CSS classes for the title.
+ * @param {string} props.container - Additional CSS classes for the container.
+ * @returns {JSX.Element} The rendered CategoryCard component.
+ */
+
+
+
 const CategoryCard: React.FC<techcardprops> = ({ className, image, imageclass, tittle, tittleclass, container }) => {
 
 

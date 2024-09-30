@@ -94,3 +94,17 @@ export interface whatsnewprops {
   tittle?: string,
   description?: string
 }
+
+
+export interface CheckBoxComponentProps {
+  label: string;
+  detailText: string;
+  image: string
+}
+
+
+
+export interface AccordionData {
+  title: string;
+  content: string;
+}

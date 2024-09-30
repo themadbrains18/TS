@@ -3,6 +3,18 @@ import Link from "next/link";
 import React, { Fragment } from "react";
 import Button from "../ui/Button";
 
+
+
+
+/**
+ * Footer component that displays site branding, social icons, design and coding tags, 
+ * newsletter signup, and legal agreements.
+ *
+ * @component
+ * @returns {JSX.Element} The rendered Footer component.
+ */
+
+
 const Footer = () => {
   const socialicons = [
     {
@@ -50,7 +62,7 @@ const Footer = () => {
             <div className=" lg:max-w-[368px] lg:h-[293px] w-full flex flex-col justify-between items-start">
               <div>
                 <Link href={'/'}>
-                <Image className="cursor-pointer" src={'/icons/footerlogo.svg'} width={247} height={35} alt="logo" />
+                  <Image className="cursor-pointer" src={'/icons/footerlogo.svg'} width={247} height={35} alt="logo" />
                 </Link>
                 <p className="mt-8 text-subparagraph text-sm leading-5">Template Studio is the place to find free of cost high-quality design resources for designers, creative agencies and developers</p>
               </div>
@@ -60,7 +72,7 @@ const Footer = () => {
                     return (
                       <Fragment key={index}>
                         <Link href={'#'}>
-                          <Image className="transition-all duration-300 hover:translate-y-[-5px] hover:scale-[1.1] hover:rotate-6"  width={30} height={30} src={`/icons/${item.icon}`} alt="icons" />
+                          <Image className="transition-all duration-300 hover:translate-y-[-5px] hover:scale-[1.1] hover:rotate-6" width={30} height={30} src={`/icons/${item.icon}`} alt="icons" />
                         </Link>
                       </Fragment>
                     )

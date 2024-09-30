@@ -20,6 +20,7 @@ import Whatsnew from "/public/icons/whatsnew.svg";
 import Publish from "/public/icons/publish.svg";
 import Update from "/public/icons/update.svg";
 import Star from "/public/icons/star.svg";
+import Rightarrow from "/public/icons/rightarrow.svg";
 // Map icon names to components
 const icons = {
   search: Search,
@@ -37,10 +38,11 @@ const icons = {
   closeicon: closeicon,
   closeiconfilter: closeiconfilter,
   sortaroow: sortaroow,
-  whatsnew:Whatsnew,
-  publish:Publish,
-  update:Update,
-  star:Star
+  whatsnew: Whatsnew,
+  publish: Publish,
+  update: Update,
+  star: Star,
+  rightarrow: Rightarrow
 };
 
 export type IconName = keyof typeof icons;

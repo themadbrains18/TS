@@ -3,6 +3,13 @@ import React, { useState } from "react";
 import Icon from "./Icon";
 import { cn } from "@/libs/utils";
 
+/**
+ * SearchDropdown component allows users to select a product category from a dropdown menu.
+ *
+ * @returns {JSX.Element} The rendered SearchDropdown component.
+ */
+
+
 const SearchDropdown = () => {
   const [open, setOpen] = useState(false);
   const [prodcuts, setProducts] = useState("all products");

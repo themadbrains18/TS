@@ -12,19 +12,38 @@ import NavTabs from "../NavTabs";
 import Accordion from "../ui/Accordion";
 import Link from "next/link";
 
+
+
+/**
+ * Header component for the website that contains navigation links,
+ * search functionality, and a sign-up button. 
+ *
+ * It features a responsive design that adapts for desktop and mobile views.
+ *
+ * @component
+ * @returns {JSX.Element} The rendered Header component.
+ */
+
 const Header = () => {
+  // State to manage desktop search bar visibility
+  const [opensearch, setOpensearch] = useState(false)
 
-  const [opensearch, setOpensearch] = useState(false) /* state to manage desktop searchbar */
+  // State to manage sidebar visibility
+  const [sidebar, setSidebar] = useState(false);
 
-  const [sidebar, setSidebar] = useState(false); // managing side bar
-
-  const [rotate, setRoate] = useState(false)
-
+  // State to manage active index for accordion
   const [activeIndex, setActiveIndex] = useState<null | number>(null);
 
+  /**
+  * Toggles the active index for the accordion.
+  *
+  * @param {number} index - The index of the accordion to toggle.
+  */
   const sidebarAccordion1 = (index: number) => {
     setActiveIndex(activeIndex === index ? null : index);
   };
+  // Sections for the accordion in the sidebar
+
   const sections = [
     { title: "UI Templates" },
     { title: "HTML Templates" },
@@ -33,7 +52,7 @@ const Header = () => {
 
   return (
     <>
-      {/* destop header */}
+      {/* Destop header */}
       <header className=" bg-[#ffffff80] backdrop:blur-xl relative border-b-[1px] border-[#11083319] z-10">
         <div className="container hidden lg:block">
           <div className="py-[35px] flex items-center justify-between">

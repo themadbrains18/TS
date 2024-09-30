@@ -2,9 +2,16 @@ import React from "react";
 import Icon from "./Icon";
 import NavTabs from "./NavTabs";
 import { navdropdownprops } from "@/types/type";
-import { sidebarAccordion } from "@/libs/Accordion";
 
-import headerdata from "@/json/header.json"
+
+/**
+ * NavDropdown component displays a dropdown menu for navigation,
+ * including a title and a set of navigation tabs.
+ *
+ * @param {navdropdownprops} props - The props for the NavDropdown component.
+ * @param {string} props.tittle - The title of the dropdown.
+ * @returns {JSX.Element} The rendered NavDropdown component.
+ */
 
 const NavDropdown: React.FC<navdropdownprops> = ({ tittle }) => {
   return (

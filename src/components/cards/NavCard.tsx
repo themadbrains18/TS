@@ -4,6 +4,25 @@ import Image from "next/image";
 import Navimg from "@/../public/images/navimg.png";
 import { navcardprops } from "@/types/type";
 import Link from "next/link";
+
+
+
+/**
+ * NavCard component displays a navigation card with an image, title, and icon.
+ * It includes a hover effect that shows a link to view details.
+ *
+ * @component
+ * @param {navcardprops} props - The properties passed to the component.
+ * @param {string} props.icon - The filename of the icon to be displayed.
+ * @param {string} props.iconclass - Additional CSS classes for the icon (not used in the current implementation).
+ * @param {string} props.image - The filename of the image to be displayed.
+ * @param {string} props.imageclass - Additional CSS classes for the image (not used in the current implementation).
+ * @param {string} props.tittle - The title of the navigation card.
+ * @param {string} props.tittleclass - Additional CSS classes for the title (not used in the current implementation).
+ * @returns {JSX.Element} The rendered NavCard component.
+ */
+
+
 const NavCard: React.FC<navcardprops> = ({
   icon,
   iconclass,
@@ -14,38 +33,38 @@ const NavCard: React.FC<navcardprops> = ({
 }) => {
   return (
     <>
-            <div className="max-w-[248px]  cursor-pointer border border-divider-100">
-              <div className="relative">
-                <Image
-                  src={`/images/${image}`}
-                  width={248}
-                  height={122}
-                  alt="cardimage"
-                />
-                <div className="bg-subheading opacity-[0] absolute top-0 right-0 left-0 bottom-0 transition-all duration-200 hover:opacity-[0.45] flex justify-center items-center">
-                  <Link
-                    className="text-white leading-5 font-semibold opacity-[1] capitalize"
-                    href={""}
-                  >
-                    {" "}
-                    view details
-                  </Link>
-                </div>
-              </div>
-              <div className="flex items-center py-[10px] px-[15px]">
-                <h4 className="mr-[2px] text-sm text-subheading leading-5 font-semibold text-ellipsis overflow-hidden text-nowrap">
-                  {tittle}
-                </h4>
-                <div className="px-1 py-[3.2px]">
-                  <Image
-                    width={20}
-                    height={20}
-                    src={`/icons/${icon}`}
-                    alt="icon"
-                  />
-                </div>
-              </div>
-            </div>
+      <div className="max-w-[248px]  cursor-pointer border border-divider-100">
+        <div className="relative">
+          <Image
+            src={`/images/${image}`}
+            width={248}
+            height={122}
+            alt="cardimage"
+          />
+          <div className="bg-subheading opacity-[0] absolute top-0 right-0 left-0 bottom-0 transition-all duration-200 hover:opacity-[0.45] flex justify-center items-center">
+            <Link
+              className="text-white leading-5 font-semibold opacity-[1] capitalize"
+              href={""}
+            >
+              {" "}
+              view details
+            </Link>
+          </div>
+        </div>
+        <div className="flex items-center py-[10px] px-[15px]">
+          <h4 className="mr-[2px] text-sm text-subheading leading-5 font-semibold text-ellipsis overflow-hidden text-nowrap">
+            {tittle}
+          </h4>
+          <div className="px-1 py-[3.2px]">
+            <Image
+              width={20}
+              height={20}
+              src={`/icons/${icon}`}
+              alt="icon"
+            />
+          </div>
+        </div>
+      </div>
     </>
   );
 };

@@ -4,10 +4,17 @@ import Button from "./ui/Button";
 import NavCard from "./cards/NavCard";
 import { cn } from "@/libs/utils";
 import headerdata from "@/json/header.json";
+/**
+ * NavTabs component displays a set of navigation tabs for product categories.
+ * It allows users to select a tab and view related products.
+ *
+ * @returns {JSX.Element} The rendered NavTabs component.
+ */
+
+
 
 const NavTabs = () => {
-  const [activetab, setActivetab] = useState(0);
-
+  const [activetab, setActivetab] = useState(0); // Track the currently active tab
   return (
     <>
       {/* Tabs Section */}
@@ -16,11 +23,10 @@ const NavTabs = () => {
           {headerdata?.map((item, index) => (
             <Fragment key={index}>
               <Button
-                className={cn`py-[6px] px-[10px] lg:py-2 lg:px-5 text-sm lg:text-base text-nowrap ${
-                  index === activetab
-                    ? "border-[1px] border-primary-100 text-primary-100"
-                    : "text-subparagraph"
-                }`}
+                className={cn`py-[6px] px-[10px] lg:py-2 lg:px-5 text-sm lg:text-base text-nowrap ${index === activetab
+                  ? "border-[1px] border-primary-100 text-primary-100"
+                  : "text-subparagraph"
+                  }`}
                 onClick={() => setActivetab(index)}
                 variant="liquid"
               >
