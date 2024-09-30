@@ -1,7 +1,6 @@
 "use client"
 
 import React, { useState } from 'react'
-import InputOtp from './components/inputotp'
 import Input from '@/components/ui/Input'
 import CheckBox from '@/components/ui/checkbox'
 
@@ -21,7 +20,7 @@ const page = () => {
     return (
         <div>otp
             <Input className='bg-[#F2EEFE] p-5 ' placeholder='efererere' label='sdsdsdsdsdsd' />
-            <InputOtp />
+            {/* <InputOtp /> */}
             <CheckBox
                 id="html"
                 label="HTML"
