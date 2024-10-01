@@ -57,10 +57,12 @@ const ProductBanner = () => {
 
     const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-    const openPopup = () => setIsPopupOpen(true);
-    const closePopup = () => setIsPopupOpen(false);
+    const openPopup = () => {
+        setIsPopupOpen(true);
+        setIsFirstPopupOpen(true)
+    }
 
-
+    const [isFirstPopupOpen, setIsFirstPopupOpen] = useState(true);
 
     return (
         <>
@@ -159,14 +161,10 @@ const ProductBanner = () => {
                                 </div>
                                 <Button onClick={openPopup} className='w-full mb-2.5 mt-5  md:mt-[30px] md:mb-5 justify-center py-2 md:py-[13px]' variant='primary' >Free — Download</Button>
                                 <Button className='w-full justify-center py-[13px]' variant='liquid' >Preview</Button>
-                                {/* <Modal isOpen={isPopupOpen} onClose={closePopup}>
-                                    <h2 className="text-xl font-bold mb-4">This is a Popup!</h2>
-                                    <p>Click outside or press the close button to dismiss.</p>
-                                </Modal> */}
-
-                                <DownloadTemplete />
-
-
+                                {
+                                    isPopupOpen &&
+                                    <DownloadTemplete isFirstPopupOpen={isFirstPopupOpen} setIsFirstPopupOpen={setIsFirstPopupOpen} />
+                                }
                             </div>
                         </div>
                     </div>

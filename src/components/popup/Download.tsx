@@ -7,8 +7,15 @@ import Button from '../ui/Button'
 import Link from 'next/link'
 import Modal from '../ui/Modal'
 
-const Download = ({ isPopupOpen, closePopup }: any) => {
 
+interface Downloadpopup {
+    isPopupOpen: boolean,
+    closePopup: () => void;
+    opensecoundpopup: () => void;
+}
+
+
+const Download = ({ isPopupOpen, closePopup, opensecoundpopup }: Downloadpopup) => {
 
     const socialicons = [
         {
@@ -29,19 +36,21 @@ const Download = ({ isPopupOpen, closePopup }: any) => {
     ];
     return (
         <>
-            <Modal className='bg-[#E5EFFF]' isOpen={isPopupOpen} onClose={closePopup} >
-                <div className="  ">
-                    <div className='flex pb-5 border border-subparagraph '>
+            <Modal className='bg-[#E5EFFF]  py-[30px]' isOpen={isPopupOpen} onClose={closePopup} >
+                <div className="max-w-[500px] w-full">
+                    <div className='flex pb-5 border-b border-subparagraph  items-center px-[30px]'>
                         <h2 className='text-[20px] leading-7 font-semibold ' >Enefty - NFT Marketplace UI Template Designed With Figma</h2>
-                        <Icon name='crossicon' />
+                        <div className='cursor-pointer' >
+                            <Icon onClick={closePopup} name='closeicon' className='' />
+                        </div>
                     </div>
-                    <div className="">
-                        <Image className='my-[35px]' alt='img' src={'/images/popimg.png'} width={437} height={270} />
-                        <Button variant='primary' className='py-[13px]' >Download Now</Button>
-                        <p className='text-[16p] text-subparagraph font-normal leading-6' >Complete your 1st Free Download</p>
+                    <div className="px-[30px]">
+                        <Image className='my-[35px] w-full' alt='img' src={'/images/popimg.png'} width={437} height={270} />
+                        <Button onClick={opensecoundpopup} variant='primary' className='py-[13px] w-full justify-center' >Download Now</Button>
+                        <p className='text-[16p] text-subparagraph font-normal leading-6 pt-[15px] text-center' >Complete your 1st Free Download</p>
                     </div>
-                    <div>
-                        <h3 className='text-[16p] text-subheading font-normal leading-6' >Help us to expand the designer's community</h3>
+                    <div className='flex justify-center items-center flex-col pt-[60px]' >
+                        <h3 className='text-[16p] text-subheading font-normal leading-6 pb-[15px]' >Help us to expand the designer's community</h3>
                         <div className="flex items-center lg:max-w-[250px] w-full justify-between mt-10 lg:mt-0">
                             {
                                 socialicons?.map((item, index) => {
