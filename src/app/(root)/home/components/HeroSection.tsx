@@ -60,7 +60,7 @@ const HeroSection = () => {
                             <div className='lg:max-w-[635px] w-full relative'>
                                 <div className='p-[10px] rounded-2xl  bg-white relative z-[4] inline-block max-w-[262px] tab:max-w-full mt-[50px] lg:mt-0 md:w-[70%] lg:max-w-[490px] lg:w-full  group cursor-pointer'>
                                     <div className='overflow-hidden h-[187px] tab:h-[344px]'>
-                                        <Image className='relative z-[4] max-w-full lg:max-w-[470px] w-full transition-all duration-[15s] group-hover:translate-y-[-81%]' src={'/images/heroscroll.png'} width={470} height={324} alt='purplebg' />
+                                        <Image className='relative z-[4] max-w-full lg:max-w-[470px] w-full transition-all ease-in-out duration-[7s] group-hover:translate-y-[-81%]' src={'/images/heroscroll.png'} width={470} height={324} alt='purplebg' />
                                     </div>
 
                                 </div>

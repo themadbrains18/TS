@@ -71,7 +71,9 @@ const AuthorTab = () => {
                         </div>
                     </div>
                     <div className='mt-[10px] md:mt-0'>
-                        <Button variant='primary' children="view profile" className='py-2 px-[18px] md:py-3 md:px-[30px]' />
+                        <Button variant='primary' className='py-2 px-[18px] md:py-3 md:px-[30px]' >
+                            view profile
+                        </Button>
                     </div>
                 </div>
                 <div className='md:border-y md:border-divider-100 my-5 md:py-10 md:my-10'>
@@ -82,7 +84,7 @@ const AuthorTab = () => {
                     <div className='flex justify-between items-center'>
                         <h3 className='text-xl font-bold leading-7'>36 Projects</h3>
                         <Button variant="solidicon" icon={true} iconClass="w-5 h-5 py-1 fill-primary-100" link="/product" >
-                            view all products
+                                view all products
                         </Button>
                     </div>
                     <div className='max-w-[1560px] overflow-scroll hiddenscroll'>
@@ -91,7 +93,7 @@ const AuthorTab = () => {
                             {
                                 data?.map((item, index) => {
                                     return (
-                                        <Fragment key={index}>
+                                        <Fragment key={Date.now() + item.tittle + index}>
                                             <NavCard icon={item.icon} image={item.image} imageclass='max-w-full' tittle={item.tittle} />
                                         </Fragment>
                                     )

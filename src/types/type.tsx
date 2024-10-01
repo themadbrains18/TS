@@ -1,18 +1,18 @@
 import { ReactNode } from "react";
 
-export interface dropdownprops {
-  testclass?: string;
-  heading: string;
-  children: ReactNode;
-  image?: string;
-  className?: string;
-  directionshovercontent?: string;
-  arrow?: string;
-  allcateDropdown?: any;
-  onclick?: boolean;
-  arrowimageclass?: string;
-  positionsta?: boolean;
-}
+// export interface dropdownprops {
+//   testclass?: string;
+//   heading: string;
+//   children: ReactNode;
+//   image?: string;
+//   className?: string;
+//   directionshovercontent?: string;
+//   arrow?: string;
+//   allcateDropdown?: any;
+//   onclick?: boolean;
+//   arrowimageclass?: string;
+//   positionsta?: boolean;
+// }
 
 export interface navcardprops {
   tittle?: string,
@@ -72,8 +72,8 @@ export interface buissnesscardprops {
 
 
 export interface ProductFiltersidetype {
-  items: any;
-  setItems: any;
+  items: string[];
+  setItems: (items: string[]) => void;
   closefilter: () => void;
 }
 
@@ -107,4 +107,10 @@ export interface CheckBoxComponentProps {
 export interface AccordionData {
   title: string;
   content: string;
+}
+
+
+export interface Downloadpopuptype {
+  openPopup: () => void;
+  closePopup: () => void;
 }

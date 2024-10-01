@@ -1,5 +1,4 @@
 import FeatureCard from '@/components/cards/FeatureCard'
-import Button from '@/components/ui/Button'
 import React, { Fragment } from 'react'
 
 /**

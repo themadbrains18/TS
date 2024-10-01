@@ -1,5 +1,4 @@
 import React from 'react'
-import Icon from '../Icon'
 import { whatsnewprops } from '@/types/type'
 import Image from 'next/image'
 

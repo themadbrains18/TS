@@ -1,6 +1,5 @@
 "use client";
 
-import Icon from '@/components/Icon';
 import Button from '@/components/ui/Button';
 import CheckBox from '@/components/ui/checkbox';
 import Input from '@/components/ui/Input';
@@ -33,52 +32,52 @@ const Page = () => {
             </div>
 
             {/* Right Section with Form */}
-            <div className="pt-20 pb-10 px-2  w-full">
-                <div className='max-w-[599px] m-auto ' >
-                    <h2 className="text-[36px] font-bold leading-[44px] pb-[218px]">Enter New Password</h2>
-                    <div className='space-y-[30px]' >
-                        {/* Password Input with Show Password Option */}
-                        <Input
-                            type={isChecked1 ? "text" : "password"}
-                            placeholder="Password"
-                            label="Password"
-                            className=" placeholder:text-neutral-400 py-[18px] px-5 bg-divider-100"
-                        />
+            <div className="md:pt-20 pt-10 pb-10 px-4  w-full bg-[#FDFCFF]">
+                <div className='max-w-[599px] m-auto flex flex-col ' >
+                    <h2 className="text-[36px] font-bold leading-[44px]  pb-[30px] md:pb-[60px]">Enter New Password</h2>
+                    <div className="flex flex-col justify-center h-[559px] md:h-[759px]">
+                        <div className='  md:space-y-[30px] space-y-[15px] ' >
+                            {/* Password Input with Show Password Option */}
+                            <Input
+                                type={isChecked1 ? "text" : "password"}
+                                placeholder="Password"
+                                label="Password"
+                                className=" placeholder:text-neutral-400 py-3 md:py-[18px] px-5 bg-divider-100"
+                            />
+                            <Input
+                                type={isChecked1 ? "text" : "password"}
+                                placeholder="Your Password Again"
+                                label="Confirm Password"
+                                className=" placeholder:text-neutral-400 py-3 md:py-[18px] px-5 bg-divider-100"
+                            />
 
-                        {/* Password Input with Show Password Option */}
-                        <Input
-                            type={isChecked1 ? "text" : "password"}
-                            placeholder="Your Password Again"
-                            label="Confirm Password"
-                            className=" placeholder:text-neutral-400 py-[18px] px-5 bg-divider-100"
-                        />
 
-                        {/* Checkbox to Toggle Password Visibility */}
-                        <CheckBox
-                            id="checkbox1"
-                            label="Show Password"
-                            checked={isChecked1}
-                            onChange={() => setIsChecked1(!isChecked1)}
-                            labelPosition="left"
-                            customClass="my-custom-checkbox"
-                        />
+                            {/* Checkbox to Toggle Password Visibility */}
+                            <CheckBox
+                                id="checkbox1"
+                                label="Show Password"
+                                checked={isChecked1}
+                                onChange={() => setIsChecked1(!isChecked1)}
+                                labelPosition="left"
+                                customClass="my-custom-checkbox"
+                            />
+                        </div>
+
+                        <h2 className='text-[14px] font-normal leading-5 text-neutral-600  pt-[60px] ' >New Password Must Be Different From Previous Used Password.</h2>
+
+
+                        {/* Register Button */}
+                        <div className='my-[60px]' >
+                            <Button className="w-full items-center  py-[13px] justify-center" variant="primary">
+                                Save New Password
+                            </Button>
+                        </div>
                     </div>
-
-                    <h3 className='py-[60px] text-sm font-normal leading-5 ' >
-                        New Password Must Be Different From Previous Used Password.
-                    </h3>
-
-
-                    {/* Register Button */}
-                    <Button className="w-full items-center py-[13px] justify-center" variant="primary">
-                        Save New Password
-                    </Button>
-
-
                     {/* Registration Prompt */}
-                    <h3 className="text-[16px] font-normal leading-6 text-textparagraph pt-[240px]">
+                    <h3 className="text-[16px] font-normal leading-6 text-textparagraph pt-[30px] ">
                         Not a member yet?{' '}
-                        <span className="text-textheading font-semibold">Register Now</span>
+                        <Link href={"/register"} className="text-textheading font-semibold">Register Now</Link>
+
                     </h3>
                 </div>
             </div>

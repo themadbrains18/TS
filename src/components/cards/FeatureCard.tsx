@@ -29,8 +29,8 @@ const FeatureCard: React.FC<featurecardprops> = ({ buttonprops, category, curren
 
     return (
         <>
-            <div>
-                <div className='relative group'>
+            <div className='group' >
+                <div className='relative'>
                     <Image src={`/images/${poster}`} className='w-full' width={370} height={278} alt='productimg' />
                     <Link href={`/productdetail`}>
                         <div className='absolute top-0 right-0 left-0 bottom-0 bg-subheading opacity-0 transition-all duration-[0.5s] group-hover:opacity-50 flex items-center justify-center gap-x-1 cursor-pointer'>
@@ -55,7 +55,9 @@ const FeatureCard: React.FC<featurecardprops> = ({ buttonprops, category, curren
                             <Image src={`/icons/${uploadericon}`} width={20} height={20} alt='uploadericon' />
                             <p className='text-subparagraph text-sx leading-5 capitalize text-nowrap text-ellipsis overflow-hidden'>by <span className='text-xs text-subheading font-semibold leading-5 capitalize'>{`${uploadername}`}</span> <span className='text-xs text-subheading font-semibold leading-5 capitalize'>{`${category}`}</span></p>
                         </div>
-                        <Button variant='primary' className='py-[5px] px-[10px] text-sm leading-5 font-semibold capitalize' children={`${buttonprops}`} />
+                        <Button variant='primary' className='py-[5px] px-[10px] text-sm leading-5 font-semibold capitalize' >
+                            {`${buttonprops}`}
+                        </Button>
                     </div>
                 </div>
             </div>

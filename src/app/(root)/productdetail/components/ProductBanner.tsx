@@ -4,6 +4,7 @@ import Image from 'next/image'
 import React, { useRef, useState } from 'react'
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper as SwiperType } from 'swiper';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -15,9 +16,8 @@ import Button from '@/components/ui/Button';
 import Icon from '@/components/Icon';
 import ProductDetailcheckbox from './ProductDetailcheckbox';
 import Link from 'next/link';
-
-// Import Swiper styles and any other modules
-
+import Modal from '@/components/ui/Modal';
+import DownloadTemplete from '@/components/popup/DownloadTemplete';
 
 /**
  * ProductBanner component displays the main product image and allows users to 
@@ -31,17 +31,18 @@ import Link from 'next/link';
 
 const ProductBanner = () => {
 
+    // swiper images
     const images = [
         { id: 'product1', src: '/images/product1.png' },
-        { id: 'product2', src: '/images/product2.png' },
-        { id: 'product3', src: '/images/product3.png' },
-        { id: 'product4', src: '/images/product4.png' },
-        { id: 'product5', src: '/images/product5.png' },
-        { id: 'product6', src: '/images/product6.png' },
-        { id: 'product7', src: '/images/product6.png' },
-        { id: 'product8', src: '/images/product6.png' },
-        { id: 'product9', src: '/images/product6.png' },
-        { id: 'product10', src: '/images/product6.png' },
+        { id: 'product2', src: '/images/product1.png' },
+        { id: 'product3', src: '/images/product1.png' },
+        { id: 'product4', src: '/images/product1.png' },
+        { id: 'product5', src: '/images/product1.png' },
+        { id: 'product6', src: '/images/product1.png' },
+        { id: 'product7', src: '/images/product1.png' },
+        { id: 'product8', src: '/images/product1.png' },
+        { id: 'product9', src: '/images/product1.png' },
+        { id: 'product10', src: '/images/product1.png' },
     ];
 
 
@@ -50,7 +51,16 @@ const ProductBanner = () => {
     const activeImage = images.find(image => image.id === activeImageId)?.src; // Get the active image src
 
     // Reference to Swiper instance for custom navigation
-    const swiperRef = useRef<any>(null);
+    const swiperRef = useRef<SwiperType | null>(null);
+
+    // pop up handler
+
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+    const openPopup = () => setIsPopupOpen(true);
+    const closePopup = () => setIsPopupOpen(false);
+
+
 
     return (
         <>
@@ -67,15 +77,17 @@ const ProductBanner = () => {
                             <div>
                                 <div className="lg:max-w-[874px] w-full">
                                     {/* Large Image */}
-                                    <div className="p-[10px] relative md:p-5 h-[540px] group overflow-hidden border border-divider-100">
-                                        <div className="overflow-hidden  h-[500px]  ">
-                                            <div className='absolute z-10 top-5 left-5 right-5 bottom-5 group-hover:bg-black opacity-[0.5] duration-[0.5s]'>
-                                                <div className='w-full h-full flex justify-center items-center overflow-hidden '>
-                                                    <Link href='/productdetail' className='text-white text-[25px] group-hover:opacity-100'>Preview</Link>
+                                    <div className="p-[10px]  md:p-5 h-[250px]  md:h-[540px] group overflow-hidden border border-divider-100">
+                                        <div className="overflow-hidden relative   h-[225px]  md:h-[500px] ">
+                                            <div className='absolute z-10 top-0 left-0 right-0 bottom-0 group-hover:bg-primary-100 opacity-[0.3] duration-[0.5s]'>
+                                                <div className='w-full h-full flex justify-center items-center overflow-hidden  '>
+                                                    <Link href='/productdetail' className='text-white text-[18px] font-bold leading-7 group-hover:opacity-100'>Preview</Link>
                                                 </div>
                                             </div>
-                                            <img
-                                                src={activeImage}
+                                            <Image
+                                                src={`${activeImage}`}
+                                                width={850}
+                                                height={500}
                                                 alt="Selected"
                                                 className="overflow-hidden group-hover:scale-[1.1] duration-[0.5s] lg:max-w-[874px] w-full h-full lg:object-cover rounded-lg shadow-md"
                                             />
@@ -117,11 +129,7 @@ const ProductBanner = () => {
                                                         onClick={() => setActiveImageId(id)} // Set active image by ID
                                                         className={`cursor-pointer min-w-[50px] md:max-w-[120px] w-full border-2 ${activeImageId === id ? 'border-primary-900' : 'border-transparent'} rounded-lg`}
                                                     >
-                                                        <img
-                                                            src={src}
-                                                            alt={`Thumbnail ${id}`}
-                                                            className="w-full object-cover rounded-lg"
-                                                        />
+                                                        <Image className="w-full object-cover rounded-lg" src={`${src}`} height={100} width={120} alt={`Thumbnail ${id}`} />
                                                     </div>
                                                 </SwiperSlide>
                                             ))}
@@ -139,8 +147,8 @@ const ProductBanner = () => {
                                 <p className=' text-[14px] md:text-[16px] font-normal leading-6 text-subparagraph'>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. <span className=' text-[14px] font-normal leading-5 text-subheading'>View more</span></p>
                                 <div className=' py-5 md:py-10 flex gap-2.5 md:gap-[18px] flex-col' >
                                     <ProductDetailcheckbox image='/images/figmalogo.png' label="Figma Design File" detailText="View Detail" />
-                                    <ProductDetailcheckbox image='/images/figmalogo.png' label="XD Design File" detailText="View Detail" />
-                                    <ProductDetailcheckbox image='/images/figmalogo.png' label="Sketch Design File" detailText="View Detail" />
+                                    <ProductDetailcheckbox image='/images/XD.png' label="XD Design File" detailText="View Detail" />
+                                    <ProductDetailcheckbox image='/images/diamond.png' label="Sketch Design File" detailText="View Detail" />
                                 </div>
                                 <div className='p-2.5 md:p-5 flex items-center bg-divider-100 justify-between ' >
                                     <Button className='px-2.5' variant='primary' >FREE</Button>
@@ -149,8 +157,16 @@ const ProductBanner = () => {
                                         <span className='text-[20px] leading-7 text-subparagraph font-bold' >$0.00</span>
                                     </div>
                                 </div>
-                                <Button className='w-full mb-2.5 mt-5  md:mt-[30px] md:mb-5 justify-center py-2 md:py-[13px]' variant='primary' >Free — Download</Button>
+                                <Button onClick={openPopup} className='w-full mb-2.5 mt-5  md:mt-[30px] md:mb-5 justify-center py-2 md:py-[13px]' variant='primary' >Free — Download</Button>
                                 <Button className='w-full justify-center py-[13px]' variant='liquid' >Preview</Button>
+                                {/* <Modal isOpen={isPopupOpen} onClose={closePopup}>
+                                    <h2 className="text-xl font-bold mb-4">This is a Popup!</h2>
+                                    <p>Click outside or press the close button to dismiss.</p>
+                                </Modal> */}
+
+                                <DownloadTemplete />
+
+
                             </div>
                         </div>
                     </div>

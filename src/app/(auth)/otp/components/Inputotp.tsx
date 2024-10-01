@@ -82,18 +82,20 @@ const InputOtp: React.FC = () => {
     };
 
     return (
-        <div className="flex flex-col items-center">
-            <div className="flex space-x-2 mb-4">
+        <div className="flex flex-col items-center bg-primary-200 p-[15px]">
+            <div className="flex space-x-[30px]">
                 {otp?.map((digit, index) => (
                     <input
                         key={index}
                         type="text"
-                        className="w-[60px] h-[50px] text-center border border-gray-300 rounded"
+                        className=" max-w-[60px] w-full h-[30px] md:h-[50px] text-center border placeholder:text-[#110833] shadow-[0px_1px_2px_0px_rgba(10,57,79,0.05)]  rounded bg-divider-100 border-none outline-none"
                         value={digit}
                         onChange={(e) => handleChange(e.target, index)}
                         onKeyDown={(e) => handleKeyDown(e, index)}
                         onFocus={() => setActiveInput(index)}
-                        ref={(el: any) => (inputsRef.current[index] = el)}
+                        ref={(el: HTMLInputElement | null) => {
+                            inputsRef.current[index] = el;
+                        }}
                         onPaste={handlePaste}
                         maxLength={1}
                     />

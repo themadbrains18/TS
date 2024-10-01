@@ -14,14 +14,13 @@ import React, { Fragment } from 'react'
 
 
 const FeatureSection = () => {
+    /**
+    * An array of featured product data.
+    * Each object contains details about the featured product, such as the poster, title, theme icon, uploader information, and more.
+    * 
+    * @type {Array<{poster: string, tittle: string, themeicon: string, uploadericon: string, uploadername: string, category: string, buttonprops: string, currentimage: number, totalimage: number}>}
+    */
 
-
-     /**
-     * An array of featured product data.
-     * Each object contains details about the featured product, such as the poster, title, theme icon, uploader information, and more.
-     * 
-     * @type {Array<{poster: string, tittle: string, themeicon: string, uploadericon: string, uploadername: string, category: string, buttonprops: string, currentimage: number, totalimage: number}>}
-     */
     const data = [
         {
             poster: "featureimg.png",
@@ -115,7 +114,9 @@ const FeatureSection = () => {
                                 }
                             </div>
                             <div className='mt-10 flex w-full items-center justify-center'>
-                                <Button link='/productdetail' className='text-primary-100 py-3 px-[30px] bg-white shadow-sm hover:text-white' children='View All Products' />
+                                <Button link='/productdetail' className='text-primary-100 py-3 px-[30px] bg-white shadow-sm hover:text-white'>
+                                    View All Products
+                                </Button>
                             </div>
                         </div>
                     </div>

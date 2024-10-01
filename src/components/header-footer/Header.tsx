@@ -7,41 +7,19 @@ import Button from "../ui/Button";
 import SearchDropdown from "../SearchDropdown";
 import { cn } from "@/libs/utils";
 import Input from "../ui/Input";
-import { sidebarAccordion } from "@/libs/Accordion";
 import NavTabs from "../NavTabs";
 import Accordion from "../ui/Accordion";
 import Link from "next/link";
 
 
 
-/**
- * Header component for the website that contains navigation links,
- * search functionality, and a sign-up button. 
- *
- * It features a responsive design that adapts for desktop and mobile views.
- *
- * @component
- * @returns {JSX.Element} The rendered Header component.
- */
-
 const Header = () => {
   // State to manage desktop search bar visibility
   const [opensearch, setOpensearch] = useState(false)
 
   // State to manage sidebar visibility
-  const [sidebar, setSidebar] = useState(false);
+  const [sidebar, setSidebar] = useState<boolean>(false);
 
-  // State to manage active index for accordion
-  const [activeIndex, setActiveIndex] = useState<null | number>(null);
-
-  /**
-  * Toggles the active index for the accordion.
-  *
-  * @param {number} index - The index of the accordion to toggle.
-  */
-  const sidebarAccordion1 = (index: number) => {
-    setActiveIndex(activeIndex === index ? null : index);
-  };
   // Sections for the accordion in the sidebar
 
   const sections = [
@@ -82,7 +60,12 @@ const Header = () => {
                   <Icon name="crossicon" className={`cursor-pointer fill-primary-100  ${opensearch !== false ? "opacity-100" : "opacity-0"}`} onClick={() => setOpensearch(!opensearch)} />
                 </div>
               </div>
-              <Button variant="primary" className=" py-[13px] px-[30px] w-full max-w-[126px]" children="sign up" />
+              <Button link="/register" variant="primary" className=" py-[13px] px-[30px] w-full max-w-[126px] justify-center" >
+                sign up
+              </Button>
+              <Button link="/login" variant="primary" className=" py-[13px] px-[30px] w-full max-w-[126px] justify-center" >
+                Log in
+              </Button>
             </div>
           </div>
         </div>
@@ -95,9 +78,9 @@ const Header = () => {
             <div> <Link href={'/'}>
               <Image className="cursor-pointer h-9" width={193} height={38} src={'/icons/logo.svg'} alt="logo" /> </Link>
             </div>
-            <div className="" onClick={() => setSidebar(!sidebar)}> <Icon name="solidsearch" className="w-9 h-9" /></div>
+            <div onClick={() => setSidebar(!sidebar)}> <Icon name="solidsearch" className="w-9 h-9" /></div>
           </div>
-          <div className={cn`flex flex-col absolute bg-white w-full transition-all duration-[0.5s] h-auto p-5 top-0 ${sidebar ? "left-0" : "left-[-100%]"}`}>
+          <div className={cn`flex flex-col fixed bg-white w-full transition-all duration-[1s] h-screen p-5 top-0 ${sidebar ? "left-0" : "left-[-100%]"}`}>
             <div className="flex items-center justify-between pb-5">
               <Link href={'/'}>
                 <Image className="cursor-pointer h-9" width={193} height={38} src={'/icons/logo.svg'} alt="logo" />
@@ -106,26 +89,29 @@ const Header = () => {
                 <Icon className="w-8 h-5 fill-primary-100" name="crossicon" />
               </div>
             </div>
-            <div className="p-[10px] flex items-center justify-center gap-x-1 w-full border border-divider-100">
-              <Image width={30} height={30} src={'/icons/solidsearch.svg'} alt="searchicon" />
-              <Input placeholder="Search" className="" />
+            <div className="overflow-scroll hiddenscroll" >
+              <div className="p-[10px] flex items-center justify-center gap-x-1 w-full border border-divider-100">
+                <Image width={30} height={30} src={'/icons/solidsearch.svg'} alt="searchicon" />
+                <Input placeholder="Search" />
+              </div>
+
+              <div className="flex flex-col mt-8">
+
+                {
+                  sections.map((item, index) => {
+                    return (<Fragment key={index}>
+                      <Accordion title={`${item.title}`}>
+                        <NavTabs />
+                      </Accordion>
+                    </Fragment>)
+                  })
+                }
+              </div>
             </div>
-
-            <div className="flex flex-col mt-8">
-
-              {
-                sections.map((item, index) => {
-                  return (<Fragment key={index}>
-                    <Accordion title={`${item.title}`}>
-                      <NavTabs />
-                    </Accordion>
-                  </Fragment>)
-                })
-              }
-            </div>
-
             <div className="flex justify-center items-center mt-8">
-              <Button variant="primary" className=" py-2 px-[18px] w-full max-w-[139px] flex justify-center" children="sign up" />
+              <Button variant="primary" className=" py-2 px-[18px] w-full max-w-[139px] flex justify-center">
+                  sign up
+              </Button>
             </div>
           </div>
         </div>

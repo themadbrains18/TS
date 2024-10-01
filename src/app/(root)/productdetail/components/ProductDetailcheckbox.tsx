@@ -37,7 +37,7 @@ const ProductDetailcheckbox: React.FC<CheckBoxComponentProps> = ({ label, detail
 
                     <div className={` duration-[0.5s]  bg-primary-300 p-1 ${isChecked ? "translate-y-[0px]  " : "translate-y-[-20px]"}`}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="11" height="9" viewBox="0 0 11 9" fill="none">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M10.9881 1.92853L3.91703 8.99959L0.0119401 5.09451L1.42615 3.68029L3.91703 6.17117L9.57388 0.514312L10.9881 1.92853Z" fill="#AD54F2" />
+                            <path fillRule="evenodd" clipRule="evenodd" d="M10.9881 1.92853L3.91703 8.99959L0.0119401 5.09451L1.42615 3.68029L3.91703 6.17117L9.57388 0.514312L10.9881 1.92853Z" fill="#AD54F2" />
                         </svg>
                     </div>
                 </div>

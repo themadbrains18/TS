@@ -82,18 +82,17 @@ const SearchDropdown = () => {
         >
           {category?.map((item, index) => {
             return (
-              <>
-                <h4
-                  className={cn`text-subparagraph leading-6 py-2 px-[30px] capitalize cursor-pointer text-nowrap  hover:bg-primary-200 border-l-[2px] hover:border-primary-100`}
-                  onClick={() => {
-                    setProducts(item.tittle)
-                    setOpen(!open)
-                  }
-                  }
-                >
-                  {item.tittle}
-                </h4>
-              </>
+              <h4
+                key={Date.now() + index + item.tittle}
+                className={cn`text-subparagraph leading-6 py-2 px-[30px] capitalize cursor-pointer text-nowrap  hover:bg-primary-200 border-l-[2px] hover:border-primary-100`}
+                onClick={() => {
+                  setProducts(item.tittle)
+                  setOpen(!open)
+                }
+                }
+              >
+                {item.tittle}
+              </h4>
             );
           })}
         </div>

@@ -120,7 +120,9 @@ const Footer = () => {
                 <p className="text-subparagraph text-sm leading-5 mt-5 md:mt-10">Sign Up Our Newsletter And Get Notified About Exclusive Freebies!</p>
                 <div className="flex items-center border border-primary-100 mt-5">
                   <input className="placeholder:leading-6 placeholder:text-subparagraph ml-[15px] w-full outline-none" type="text" name="" id="" placeholder="Enter your email" />
-                  <Button children="Submit" variant="primary" className="py-2 px-4 md:py-3 md:px-9" />
+                  <Button variant="primary" className="py-2 px-4 md:py-3 md:px-9" >
+                      Submit
+                  </Button>
                 </div>
               </div>
             </div>

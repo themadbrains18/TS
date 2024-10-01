@@ -6,8 +6,8 @@ import ProductFilterside from './ProductFilterside'
 import FeatureCard from '@/components/cards/FeatureCard'
 import Icon from '@/components/Icon'
 import ProductTags from './ProductTags'
-import NotFountproduct from './NotFountproduct'
 import useOnClickOutside from '@/hooks/useOnClickOutside'
+import Button from '@/components/ui/Button'
 
 /**
  * Renders the main product page layout with filters, tags, sorting, and product grid.
@@ -197,7 +197,7 @@ const ProductMain = () => {
                             </div>
                             <div className='w-full' >
                                 <div className=" flex  max-[768px]:flex-col-reverse   md:flex justify-between pb-5 border-b mb-[30px]  items-center">
-                                    <div className='md:max-w-[600px] w-full overflow-x-scroll md:overflow-hidden flex-nowrap flex md:flex-wrap gap-[10px]'>
+                                    <div className='md:max-w-[600px] w-full overflow-x-scroll md:overflow-hidden flex-nowrap flex md:flex-wrap gap-[10px] hiddenscroll'>
                                         {/* Check if there are items and show the "Clear All" button */}
 
                                         {items.map((item, index) => {
@@ -230,7 +230,9 @@ const ProductMain = () => {
                                             </button>
                                         )}
                                     </div>
+
                                     {/* sort by */}
+
                                     <div className='text-end md:text-inherit flex justify-between pb-[10px] md:pb-0 items-center md:items-start max-[768px]:w-full'>
                                         {/* Filters Button */}
                                         <div onClick={openFilter} className='flex gap-[5px] items-center md:hidden'>
@@ -246,18 +248,16 @@ const ProductMain = () => {
                                         >
                                             <div
                                                 onClick={sorthandledropdown}
-                                                className={` border ${sort ? "border-primary-100 " : " border-transparent hover:border-subparagraph"} group pr-[15px] pl-5 py-[8px] flex gap-[6px] items-center`}
+                                                className={` border duration-[0.5s] ${sort ? "border-primary-100 " : " border-transparent hover:border-subparagraph"} group pr-[15px] pl-5 py-[8px] flex gap-[6px] items-center`}
                                             >
                                                 {/* Display selected item or default "Sort by" text */}
-                                                <h2 className={`text-primary text-4 font-semibold  leading-6  duration-[0.5s] ${sort ? "text-primary-100" : "text-subheading"}  text-nowrap`}>
+                                                <h2 className={`text-primary text-4 font-semibold  leading-6  duration-[0.2s] ${sort ? "text-primary-100" : "text-subheading"}  text-nowrap`}>
                                                     {selectedSort}
                                                 </h2>
                                                 <div className={`${sort ? "rotate-0" : "rotate-[180deg]"} duration-[0.5s]`}>
                                                     <Icon className={`p-1 ${sort ? "[&>*]:fill-primary-100" : "[&>*]:fill-[#5D5775]"}`} name="sortaroow" />
-
                                                 </div>
                                             </div>
-                                            {/* Dropdown items */}
                                             <div
                                                 className={`absolute right-0 ${sort ? "opacity-1 visible" : "opacity-0 invisible"} duration-[0.5s] top-[45px] z-10 bg-white`}
                                             >
@@ -275,18 +275,25 @@ const ProductMain = () => {
                                     </div>
                                     {/* sort by */}
                                 </div>
-                                <div className='grid  gap-5 lg:grid-cols-2  xl:grid-cols-3  xl:gap-[30px] '  >
-                                    {
-                                        data.map((item, index) => {
-                                            return (
-                                                <Fragment key={index}>
-                                                    <FeatureCard buttonprops={item.buttonprops} category={item.category} poster={item.poster} themeicon={item.themeicon} tittle={item.tittle} uploadericon={item.uploadericon} uploadername={item.uploadername} currentimage={item.currentimage} totalimages={item.totalimage} />
-                                                </Fragment>
-                                            )
-                                        })
-                                    }
+                                <div className='flex flex-col gap-[30px] justify-center items-center' >
+                                    <div className='grid  gap-5 lg:grid-cols-2  xl:grid-cols-3  xl:gap-[30px] '  >
+                                        {
+                                            data.map((item, index) => {
+                                                return (
+                                                    <Fragment key={index}>
+                                                        <FeatureCard buttonprops={item.buttonprops} category={item.category} poster={item.poster} themeicon={item.themeicon} tittle={item.tittle} uploadericon={item.uploadericon} uploadername={item.uploadername} currentimage={item.currentimage} totalimages={item.totalimage} />
+                                                    </Fragment>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                    <Button className='w-fit py-[13px] mt-[30px] px-[30px] hover:bg-primary-100 hover:text-white duration-[0.5s] ' variant='solidicon'  >
+                                        Load More Products
+                                    </Button>
                                 </div>
-                                <NotFountproduct />
+                                {/* not found templete */}
+                                {/* <NotFountproduct /> */}
+                                {/* not found templete */}
                             </div>
                         </div>
                     </div>

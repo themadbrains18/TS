@@ -76,21 +76,38 @@ const ProductTags = () => {
                 <div className='max-w-[357px] w-full md:border-r '>
                     <h2 className='text-5 font-semibold left-7 text-[#110833]' >Catagory Tags</h2>
                 </div>
-                <div className='flex overflow-x-scroll xl:overflow-hidden hiddenscroll  '>
+                <div className='flex overflow-x-scroll xl:overflow-hidden hiddenscroll'>
                     {tags.map((item, index) => {
                         const isActive = index === activeIndex; // Determine if this tag is active
                         return (
-                            <div key={index} onClick={() => setActiveIndex(index)} className={`
-                             gap-[7px] cursor-pointer relative mx-[7px] text-nowrap after:content-[''] after:absolute after:bottom-[2px] after:h-[1px] after:bg-primary-100 after:w-0 after:left-[50%] after:transition-all after:duration-[0.5s] hover:after:left-0 hover:after:w-full
-                              ${isActive ? 'after:w-full after:left-[-0%] ' : 'after:w-0 after:left-[50%]'}`}
+                            <div
+                                key={index}
+                                onClick={() => setActiveIndex(index)}
+                                className={`relative mx-[7px] cursor-pointer text-nowrap group`}
                             >
-                                <h2 className={` px-[10px] py-[5px] leading-7 font-normal transition-all  duration-[0.5s] ${isActive ? 'text-primary-100' : 'text-subparagraph'} cursor-pointer `}>
+                                <h2
+                                    className={`
+                                        px-[10px] py-[5px] leading-7 font-normal transition-all duration-500 
+                                        ${isActive ? 'text-primary-100' : 'text-subparagraph'}
+                                    `}
+                                >
                                     {item.tagname}
                                 </h2>
+
+                                {/* Bottom border effect */}
+                                <span
+                                    className={`
+                                                absolute bottom-[2px] left-1/2 transform -translate-x-1/2 h-[1px] bg-primary-100 transition-all duration-500
+                                                ${isActive ? 'w-full' : 'w-0 group-hover:w-full'}
+                                            `}
+                                />
                             </div>
                         );
                     })}
                 </div>
+
+
+
             </div>
         </div>
     )

@@ -20,11 +20,9 @@ import CheckboxFilter from './ProductFilterchekbox';
  */
 
 const ProductFilterside = ({ items, setItems, closefilter }: ProductFiltersidetype) => {
+
     // Define filter data for different categories
-
-
-    const [openIndex, setOpenIndex] = useState<number>(0); // 0 means the first section is open by default
-
+    const [openIndexes, setOpenIndexes] = useState<number[]>([0]); // Track multiple open sections, default to first open
 
     const filterData = [
         {
@@ -86,39 +84,20 @@ const ProductFilterside = ({ items, setItems, closefilter }: ProductFiltersidety
             ],
         },
     ];
+
+
+    const toggleAccordion = (sectionIndex: number) => {
+        if (openIndexes.includes(sectionIndex)) {
+            // If section is open, remove it from the openIndexes array
+            setOpenIndexes(openIndexes.filter(index => index !== sectionIndex));
+        } else {
+            // Otherwise, add it to the array
+            setOpenIndexes([...openIndexes, sectionIndex]);
+        }
+    };
+
     return (
         <>
-            {/* <div className='max-w-full sm:max-w-[357px] w-full py-[30px] px-[20px] bg-white h-full' >
-                <div className='flex justify-between items-center border-b border-divider-100  pb-5 mb-5' >
-                    <div className='flex gap-[5px] items-center   '  >
-                        <Icon name='filter' />
-                        <h3 className='lg:text-[18px] leading-[28px] font-normal text-subparagraph' >Filters</h3>
-                    </div>
-                    <div className=' md:bl border-l  h-[30px] hidden md:block ' ></div>
-                    <div onClick={closefilter} className='md:hidden' >
-                        <Icon name='closeiconfilter' />
-                    </div>
-                </div>
-                <div className='overflow-y-scroll h-[calc(100%_-_100px)] hiddenscroll ' >
-                    {filterData.map((section, sectionIndex) => (
-                        <Accordion key={sectionIndex} className="border-none" title={section.title}>
-                            <div className="border-b pb-5 mb-5">
-                                {section.items.map((item, index) => (
-                                    <div key={index + item.value} className="py-[5px] mb-1">
-                                        <CheckboxFilter
-                                            // labelclass="gap-[10px]"
-                                            value={item.value}
-                                            id={item.value}
-                                            setItems={setItems}
-                                            items={items}
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-                        </Accordion>
-                    ))}
-                </div>
-            </div> */}
             <div className="max-w-full sm:max-w-[357px] w-full py-[30px] px-[20px] bg-white h-full">
                 <div className="flex justify-between items-center border-b border-divider-100 pb-5 mb-5">
                     <div className="flex gap-[5px] items-center">
@@ -136,8 +115,8 @@ const ProductFilterside = ({ items, setItems, closefilter }: ProductFiltersidety
                             key={sectionIndex}
                             className="border-none"
                             title={section.title}
-                            isOpen={openIndex === sectionIndex} // Check if the section should be open
-                            onToggle={() => setOpenIndex(openIndex === sectionIndex ? -1 : sectionIndex)} // Toggle accordion
+                            isOpen={openIndexes.includes(sectionIndex)} // Check if the section is open
+                            onToggle={() => toggleAccordion(sectionIndex)} // Toggle the accordion
                         >
                             <div className="border-b pb-5 mb-5">
                                 {section.items.map((item, index) => (
@@ -155,11 +134,8 @@ const ProductFilterside = ({ items, setItems, closefilter }: ProductFiltersidety
                     ))}
                 </div>
             </div>
-
-
         </>
-    )
+    );
 }
 
-export default ProductFilterside
-
+export default ProductFilterside;

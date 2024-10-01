@@ -1,7 +1,5 @@
-import React, { Fragment } from "react";
-import Icon from "../Icon";
+import React  from "react";
 import Image from "next/image";
-import Navimg from "@/../public/images/navimg.png";
 import { navcardprops } from "@/types/type";
 import Link from "next/link";
 
@@ -25,11 +23,8 @@ import Link from "next/link";
 
 const NavCard: React.FC<navcardprops> = ({
   icon,
-  iconclass,
   image,
-  imageclass,
   tittle,
-  tittleclass,
 }) => {
   return (
     <>
