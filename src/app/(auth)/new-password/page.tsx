@@ -24,7 +24,7 @@ const Page = () => {
                         height={40}
                     />
                     </Link>
-                    <h2 className=" text-[32px] md:text-[50px] xl:text-[62px] text-center lg:text-start font-normal pt-[30px] lg:pt-0 text-white lg:max-w-[700px] lg:m-auto">
+                    <h2 className=" text-[32px] md:text-[50px] xl:text-[62px] text-center lg:text-start font-normal pt-[30px] lg:pt-0 text-white lg:max-w-[700px] lg:m-auto ">
                         Free High-quality UI kits and design resources
                     </h2>
                     <p className=" hidden lg:block ml-[70px] text-[14px] font-medium leading-5 text-white">
@@ -36,7 +36,7 @@ const Page = () => {
             {/* Right Section with Form */}
             <div className="md:pt-20 pt-10 pb-10 px-4  w-full bg-[#FDFCFF]">
                 <div className='max-w-[599px] m-auto flex flex-col ' >
-                    <h2 className="text-[36px] font-bold leading-[44px]  pb-[30px] md:pb-[60px]">Enter New Password</h2>
+                    <h2 className="text-[22px] tab:text-[36px] font-bold leading-[44px]  pb-[30px] md:pb-[60px]">Enter New Password</h2>
                     <div className="flex flex-col justify-center h-[559px] md:h-[759px]">
                         <div className='  md:space-y-[30px] space-y-[15px] ' >
                             {/* Password Input with Show Password Option */}
