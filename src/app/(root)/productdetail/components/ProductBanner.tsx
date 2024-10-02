@@ -80,7 +80,7 @@ const ProductBanner = () => {
                                     {/* Large Image */}
                                     <div className="p-[10px]  md:p-5 h-[250px]  md:h-[540px] group overflow-hidden border border-divider-100">
                                         <div className="overflow-hidden relative   h-[225px]  md:h-[500px] ">
-                                            <div className='absolute z-10 top-0 left-0 right-0 bottom-0 group-hover:bg-[#28204699]  duration-[0.5s]'>
+                                            <div className='absolute z-[1] top-0 left-0 right-0 bottom-0 group-hover:bg-[#28204699]  duration-[0.5s]'>
                                                 <div className='w-full h-full flex justify-center items-center overflow-hidden  '>
                                                     <Link href='/productdetail' className='text-white text-[18px] font-bold leading-7 group-hover:opacity-100'>Preview</Link>
                                                 </div>
