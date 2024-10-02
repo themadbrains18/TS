@@ -102,7 +102,7 @@ const Header = () => {
             </div>
             <div onClick={() => setSidebar(!sidebar)}> <Icon name="solidsearch" className="w-9 h-9" /></div>
           </div>
-          <div className={cn`flex flex-col fixed bg-white w-full transition-all duration-[1s] h-screen p-5 top-0 ${sidebar ? "left-0" : "left-[-100%]"}`}>
+          <div className={cn`flex z-[2] flex-col fixed bg-white w-full transition-all duration-[1s] h-screen p-5 top-0 ${sidebar ? "left-0" : "left-[-100%]"}`}>
             <div className="flex items-center justify-between pb-5">
               <Link href={'/'}>
                 <Image className="cursor-pointer h-9" width={193} height={38} src={'/icons/logo.svg'} alt="logo" />
@@ -148,3 +148,4 @@ const Header = () => {
 };
 
 export default Header;
+			

@@ -1,91 +1,84 @@
-'use client'
+'use client';
 
-import React, { Fragment, useRef, useState } from 'react';
-// Import Swiper React components
+import React, { useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Swiper as SwiperType } from 'swiper';
 import 'swiper/css';
-import 'swiper/css/pagination';
-// import 'swiper/css/navigation';
-
-// import required modules
-import { Pagination, Navigation } from 'swiper/modules';
+import 'swiper/css/navigation';
+import { Navigation } from 'swiper/modules';
 import Image from 'next/image';
 import Icon from '@/components/Icon';
 import { useRouter } from 'next/navigation';
-const page = () => {
+
+const Page = () => {
     const router = useRouter();
+    const swiperRef = useRef<SwiperType | null>(null);
+    const [activeIndex, setActiveIndex] = useState(0); // Track the current active slide
+
+    const desktopImages = [
+        'templete2.png', 'templete1.png', 'templete2.png', 'templete1.png', 'templete3.png', 'templete1.png',
+    ];
 
     const handleGoBack = () => {
-      router.back(); // Goes back one step in the history
+        router.back();
     };
-    const swiperRef = useRef<SwiperType | null>(null);
-    const desktop = [
-        'prev1.png',
-        'prev2.png',
-        'prev3.png',
-        'prev4.png',
-        'prev5.png',
-        'prev6.png',
-        'prev7.png',
-        'prev8.png',
-        'prev9.png',
-        'prev10.png',
-        'prev11.png',
-        'prev12.png',
-        'prev13.png',
-        'prev14.png',
-        'prev15.png',
-        'prev16.png',
-        'prev17.png',
-        'prev18.png',
-        'prev19.png',
-        'prev20.png',
-        'prev21.png',
-        'prev22.png',
-    ]
-    return (
-        <>
-            <section className='pt-10'>
-                <div className="container">
-                    <div>
-                        <div onClick={handleGoBack} className='flex items-center gap-x-[2px] cursor-pointer'><Icon name='soliddownicon' className='fill-subparagraph rotate-180 h-3 w-3' /> <p className='text-sm font-semibold leading-5 text-textparagraph capitalize'>back</p></div>
-                        <div>
 
-                        </div>
+    // Handle custom pagination click
+    const handlePaginationClick = (index: number) => {
+        swiperRef.current?.slideTo(index); // Slide to the selected slide
+    };
+
+    return (
+        <section className="pt-10 relative h-fit">
+            <div className="container">
+                <div onClick={handleGoBack} className=" flex  items-center gap-x-[2px] justify-between cursor-pointer pb-[6px]">
+                    <div className='flex  items-center  gap-1' >
+                        <Icon name="soliddownicon" className="fill-subparagraph rotate-180 h-3 w-3" />
+                        <p className="text-sm font-semibold leading-5 text-textparagraph capitalize">Back</p>
                     </div>
-                    <div className='relative'>
-                        <Icon className='w-10 h-10 absolute top-[360px] right-0  cursor-pointer z-10' onClick={() => swiperRef.current?.slideNext()} name='swipericon' />
-                        <Icon className='w-10 h-10 absolute top-[360px] left-0  cursor-pointer z-10 rotate-180' onClick={() => swiperRef.current?.slidePrev()} name='swipericon' />
-                        <Swiper
-                            pagination={{
-                                type: 'fraction',
-                            }}
-                            navigation={true}
-                            modules={[Pagination, Navigation]}
-                            className="mySwiper"
-                            onBeforeInit={(swiper) => {
-                                swiperRef.current = swiper;
-                            }}
-                        >
-                            {
-                                desktop?.map((item, index) => {
-                                    return (
-                                        <Fragment key={index}>
-                                            <SwiperSlide>
-                                                <Image className='select-none h-fit' src={`/images/${item}`} width={1500} height={10} alt='image' />
-                                            </SwiperSlide>
-                                        </Fragment>
-                                    )
-                                })
-                            }
-                        </Swiper>
+                    {/* Custom Number Pagination */}
+                    <div className=" text-sm text-subparagraph">
+                        {activeIndex + 1}/{desktopImages.length}
                     </div>
                 </div>
+            </div>
+            <div className="container h-fit">
+                <Swiper
+                    modules={[Navigation]}
+                    className="mySwiper"
+                    onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
+                    onBeforeInit={(swiper) => (swiperRef.current = swiper)}
+                    autoHeight={true} // Automatically adjusts height based on slide content
+                >
+                    {desktopImages.map((image, index) => (
+                        <SwiperSlide key={index}>
+                            <div className="flex justify-center">
+                                <Image
+                                    className="select-none w-full h-auto" // Ensure the image adjusts its height automatically
+                                    src={`/images/${image}`}
+                                    width={1500}
+                                    height={1111}
+                                    alt={`Slide image ${index + 1}`}
+                                    priority={index === 0} // Optimizes loading for the first image
+                                />
+                            </div>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            </div>
+            <Icon
+                className="w-10 fixed right-[40px] z-10 h-10 top-[40%] cursor-pointer"
+                onClick={() => swiperRef.current?.slideNext()}
+                name="swipericon"
+            />
+            <Icon
+                className="w-10 h-10 fixed z-10 top-[40%] left-[15px] md:left-[40px] rotate-180 cursor-pointer"
+                onClick={() => swiperRef.current?.slidePrev()}
+                name="swipericon"
+            />
 
-            </section>
-        </>
-    )
-}
+        </section>
+    );
+};
 
-export default page
+export default Page;
