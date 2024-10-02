@@ -121,4 +121,4 @@ const PopularSection = () => {
     )
 }
 
-export default PopularSection
+export default PopularSection;
