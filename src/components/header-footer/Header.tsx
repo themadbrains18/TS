@@ -52,7 +52,7 @@ const Header = () => {
     <>
       {/* Destop header */}
       <header className=" bg-[#ffffff80] backdrop:blur-xl relative border-b-[1px] border-[#11083319] z-10">
-        <div className="container hidden lg:block">
+        <div className="container hidden min-[1028px]:block">
           <div className="py-[35px] flex items-center justify-between">
             <div className="flex items-center justify-between max-w-[809px] w-full cursor-pointer">
               <Link className="w-[276px]" href={'/'}>
@@ -94,7 +94,7 @@ const Header = () => {
 
         {/* responsive header  */}
 
-        <div className="container lg:hidden ">
+        <div className="container min-[1028px]:hidden ">
           <div className="flex items-center justify-between py-4 relative">
             <div onClick={() => setSidebar(!sidebar)}> <Icon name="menuicon" className="w-8 h-8" /></div>
             <div> <Link href={'/'}>
