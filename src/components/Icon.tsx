@@ -27,6 +27,7 @@ import Goggle from "/public/icons/goggle.svg";
 import Iconleft from "/public/icons/Iconleft.svg";
 import Rating from "/public/icons/Rating.svg";
 import Ratingbottom from "/public/icons/ratingbottom.svg";
+import Swipericon from "/public/icons/swipericon.svg";
 import { cn } from "@/libs/utils";
 // Map icon names to components
 const icons = {
@@ -56,6 +57,7 @@ const icons = {
   iconleft: Iconleft,
   rating: Rating,
   ratingbottom: Ratingbottom,
+  swipericon:Swipericon
 };
 
 export type IconName = keyof typeof icons;
