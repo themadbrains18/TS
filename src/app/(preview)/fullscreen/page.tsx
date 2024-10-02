@@ -23,11 +23,6 @@ const Page = () => {
         router.back();
     };
 
-    // Handle custom pagination click
-    const handlePaginationClick = (index: number) => {
-        swiperRef.current?.slideTo(index); // Slide to the selected slide
-    };
-
     return (
         <section className="pt-10 relative h-fit">
             <div className="container">
@@ -76,7 +71,6 @@ const Page = () => {
                 onClick={() => swiperRef.current?.slidePrev()}
                 name="swipericon"
             />
-
         </section>
     );
 };

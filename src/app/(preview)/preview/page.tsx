@@ -1,14 +1,11 @@
 'use client'
 
 import React, { Fragment, useState } from 'react'
-import MobileView from '../components/MobileView'
-import WebView from '../components/WebView'
 import Button from '@/components/ui/Button'
 import Image from 'next/image'
 
-const page = () => {
-    const [activebutton, setActiveButton] = useState(0)
-
+const Page = () => {
+    const [activebutton, setActiveButton] = useState<number>(0)
     const views = [
         'desktop',
         'mobile responsive'
@@ -66,7 +63,6 @@ const page = () => {
             ]
         }
     ]
-    console.log(activebutton)
     return (
         <>
             <section className='pt-10 md:pt-20 bg-bgcolor'>
@@ -77,7 +73,9 @@ const page = () => {
                                 return (
                                     <Fragment key={index}>
                                         <Button onClick={() => { setActiveButton(index) }} className={` capitalize py-2 px-5 ${activebutton === index ? 'bg-primary-100 text-white ' : ' bg-primary-200 text-textparagraph hover:bg-white hover:text-primary-100'
-                                            }`} children={item} />
+                                            }`}  >
+                                            {item}
+                                        </Button>
                                     </Fragment>
                                 )
                             })
@@ -93,8 +91,8 @@ const page = () => {
                                                 {
                                                     item.desktop.map((item, index) => {
                                                         return (
-                                                            <Fragment key={index}>
-                                                                <Image className='cursor-pointer' key={index} src={`/images/${item}`} width={358} height={1000} style={{ width: "100%", }} alt='images' />
+                                                            <Fragment key={Date.now() + index + "imagesdesktop"}>
+                                                                <Image className='cursor-pointer' src={`/images/${item}`} width={358} height={1000} style={{ width: "100%", }} alt='images' />
                                                             </Fragment>
                                                         )
                                                     })
@@ -104,17 +102,14 @@ const page = () => {
                                                     {
                                                         item.mobile.map((item, index) => {
                                                             return (
-                                                                <Fragment key={index}>
-                                                                    <Image className='cursor-pointer' key={index} src={`/images/${item}`} width={358} height={1000} style={{ width: "100%", }} alt='images' />
+                                                                <Fragment key={Date.now() + index + "imagesmobile"}>
+                                                                    <Image className='cursor-pointer' src={`/images/${item}`} width={358} height={1000} style={{ width: "100%", }} alt='images' />
                                                                 </Fragment>
                                                             )
                                                         })
                                                     }
                                                 </>)
                                         }
-
-
-
                                     </Fragment>
                                 )
                             })
@@ -126,4 +121,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page
