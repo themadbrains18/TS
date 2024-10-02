@@ -17,7 +17,7 @@ const page = () => {
     const dummyimages = [
         {
             desktop: [
-                'fullscreen.png',
+                'prev1.png',
                 'prev2.png',
                 'prev3.png',
                 'prev4.png',
