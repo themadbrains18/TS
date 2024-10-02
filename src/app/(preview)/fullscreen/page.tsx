@@ -67,7 +67,7 @@ const Page = () => {
                 </Swiper>
             </div>
             <Icon
-                className="w-10 fixed right-[40px] z-10 h-10 top-[40%] cursor-pointer"
+                className="w-10 fixed md:right-[40px] right-[15px]  z-10 h-10 top-[40%] cursor-pointer"
                 onClick={() => swiperRef.current?.slideNext()}
                 name="swipericon"
             />
