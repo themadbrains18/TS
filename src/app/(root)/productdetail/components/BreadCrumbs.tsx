@@ -72,17 +72,17 @@ const BreadCrumbs = () => {
             <Link href="/product"> Products</Link> /
             <Link href="/productdetail"> Product Details</Link>
           </h2>
-          <div className='relative group flex gap-[6px] items-center'>
+          <div className='relative group flex gap-[6px] items-center cursor-pointer'>
             <p className='text-sm text-subparagraph leading-5'>4.9</p>
             <Icon className='inline-block w-6 h-6' name='star' />
 
             {/* The button and ratingbottom icon */}
-            <div className='absolute z-[11] duration-500 transition-all opacity-0 invisible group-hover:visible group-hover:opacity-100 left-[-46px] group-hover:translate-y-[-40px] translate-y-[20px]'>
-              <button className='bg-subparagraph text-nowrap rounded-[30px] flex gap-2 items-center px-5 py-2 text-white'>
+            <div className='absolute z-[11] duration-500 transition-all opacity-0 invisible group-hover:visible group-hover:opacity-100 max-[1700px]:right-0 min-[1700px]:left-[-46px]  group-hover:translate-y-[-40px] translate-y-[20px]'>
+              <button className='bg-subparagraph whitespace-nowrap rounded-full flex gap-2 items-center px-5 py-2 text-white'>
                 <Icon name='rating' />
                 Rate Product
               </button>
-              <div className='absolute z-[12] bottom-[-19px] right-[48%]' >
+              <div className='absolute z-[12] bottom-[-19px] max-[1700px]:right-[10%] right-[48%]' >
                 <Icon name='ratingbottom' />
               </div>
             </div>
