@@ -25,6 +25,7 @@ import Facebook from "/public/icons/facebook.svg";
 import Twitter from "/public/icons/twitterlogo.svg";
 import Goggle from "/public/icons/goggle.svg";
 import Iconleft from "/public/icons/Iconleft.svg";
+import Swipericon from "/public/icons/swipericon.svg";
 import { cn } from "@/libs/utils";
 // Map icon names to components
 const icons = {
@@ -52,6 +53,7 @@ const icons = {
   twitter: Twitter,
   goggle: Goggle,
   iconleft: Iconleft,
+  swipericon:Swipericon
 };
 
 export type IconName = keyof typeof icons;

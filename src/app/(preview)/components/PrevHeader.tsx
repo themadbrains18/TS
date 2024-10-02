@@ -3,6 +3,7 @@
 import Icon from '@/components/Icon'
 import Button from '@/components/ui/Button'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 
@@ -14,14 +15,16 @@ const PrevHeader = () => {
     };
     return (
         <>
-            <header className='bg-white border-b border-divider-100 backdrop:blur-[20px]'>
+            <header className='bg-bgcolor border-b border-divider-100 backdrop:blur-xl sticky top-0 z-20'>
                 <div className='container'>
-                    <div className='py-[30px] flex flex-col md:flex-row justify-center gap-y-10 md:gap-0 md:justify-between items-center'>
+                    <div className='py-[30px] flex flex-col md:flex-row justify-center gap-y-5  md:gap-0 md:justify-between items-center'>
                         <div>
+                            <Link href={'/'}>
                             <Image src={'/icons/Logo.svg'} width={276} height={40} alt='logo' />
+                            </Link>
                         </div>
                         <div className='flex items-center gap-x-5'>
-                            <Button className='py-[13px] px-[30px]' children='Free — Download' />
+                            <Button className='py-2 px-5 tab:py-[13px] tab:px-[30px]' children='Free — Download' />
                             <Icon onClick={handleGoBack} name='crossicon' className='fill-subparagraph cursor-pointer' />
                         </div>
                     </div>

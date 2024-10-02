@@ -92,4 +92,11 @@
   .slider:hover .slide-track {
     animation-play-state: paused;
   }
+
+  /* swiper button */
+  .swiper-button-next::after{
+    position: absolute !important;
+    right: 0 !important;
+    top: 0 !important;
+  }
 }
