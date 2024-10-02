@@ -12,6 +12,7 @@ const Page = () => {
             {/* Left Section with Image and Text */}
             <div className=" bg-[url('/images/authsideimage.png')] lg:bg-[url('/images/authsideimage.png')] bg-no-repeat bg-cover h-[280px] lg:h-screen lg:sticky top-0 left-0 bottom-0 ">
                 <div className=" py-[30px] px-5 lg:p-[30px] lg:h-screen flex  items-center lg:items-start  justify-between flex-col ">
+                    <Link href={'/'}>
                     <Image
                         className=" lg:ml-[70px]"
                         src={'/images/Logowhite.png'}
@@ -19,6 +20,7 @@ const Page = () => {
                         width={276}
                         height={40}
                     />
+                    </Link>
                     <h2 className=" text-[32px] md:text-[50px] xl:text-[62px] text-center lg:text-start font-normal pt-[30px] lg:pt-0 text-white lg:max-w-[700px] lg:m-auto">
                         Free High-quality UI kits and design resources
                     </h2>
