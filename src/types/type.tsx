@@ -114,3 +114,12 @@ export interface Downloadpopuptype {
   openPopup: () => void;
   closePopup: () => void;
 }
+
+
+
+
+
+export interface DownloadTemplatetype {
+  isFirstPopupOpen: boolean
+  setIsFirstPopupOpen: React.Dispatch<React.SetStateAction<boolean>>
+}

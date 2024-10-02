@@ -16,7 +16,6 @@ import Button from '@/components/ui/Button';
 import Icon from '@/components/Icon';
 import ProductDetailcheckbox from './ProductDetailcheckbox';
 import Link from 'next/link';
-import Modal from '@/components/ui/Modal';
 import DownloadTemplete from '@/components/popup/DownloadTemplete';
 
 /**
@@ -55,14 +54,14 @@ const ProductBanner = () => {
 
     // pop up handler
 
-    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
 
     const openPopup = () => {
         setIsPopupOpen(true);
         setIsFirstPopupOpen(true)
     }
 
-    const [isFirstPopupOpen, setIsFirstPopupOpen] = useState(true);
+    const [isFirstPopupOpen, setIsFirstPopupOpen] = useState<boolean>(true);
 
     return (
         <>
@@ -81,7 +80,7 @@ const ProductBanner = () => {
                                     {/* Large Image */}
                                     <div className="p-[10px]  md:p-5 h-[250px]  md:h-[540px] group overflow-hidden border border-divider-100">
                                         <div className="overflow-hidden relative   h-[225px]  md:h-[500px] ">
-                                            <div className='absolute z-10 top-0 left-0 right-0 bottom-0 group-hover:bg-primary-100 opacity-[0.3] duration-[0.5s]'>
+                                            <div className='absolute z-10 top-0 left-0 right-0 bottom-0 group-hover:bg-[#28204699]  duration-[0.5s]'>
                                                 <div className='w-full h-full flex justify-center items-center overflow-hidden  '>
                                                     <Link href='/productdetail' className='text-white text-[18px] font-bold leading-7 group-hover:opacity-100'>Preview</Link>
                                                 </div>

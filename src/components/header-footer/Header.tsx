@@ -28,6 +28,26 @@ const Header = () => {
     { title: "Studio Specials" },
   ];
 
+
+  const [openAccordions, setOpenAccordions] = useState<boolean[]>(
+    Array(sections.length).fill(true) // Set all accordions to open by default
+  );
+
+  /**
+   * Toggles the accordion for a specific index.
+   * If the accordion is open, it will close. If it is closed, it will open.
+   * 
+   * @param {number} index - The index of the accordion item.
+   */
+  const handleAccordionClick = (index: number) => {
+    setOpenAccordions((prev) => {
+      const newOpenAccordions = [...prev];
+      newOpenAccordions[index] = !newOpenAccordions[index]; // Toggle the state of the specific accordion
+      return newOpenAccordions;
+    });
+  };
+
+
   return (
     <>
       {/* Destop header */}
@@ -35,7 +55,7 @@ const Header = () => {
         <div className="container hidden lg:block">
           <div className="py-[35px] flex items-center justify-between">
             <div className="flex items-center justify-between max-w-[809px] w-full cursor-pointer">
-              <Link href={'/'}>
+              <Link className="w-[276px]" href={'/'}>
                 <Image
                   src={"/icons/Logo.svg"}
                   width={276}
@@ -51,7 +71,9 @@ const Header = () => {
             </div>
             <div className={cn`max-w-[576px] w-full flex items-center justify-end gap-x-5 `}>
               <div className={cn`flex items-center relative  justify-end ${opensearch !== false ? "" : "overflow-hidden"}`}>
-                <Icon name="search" className={cn`w-9 h-9 cursor-pointer transition-all duration-[0.3s] ${opensearch !== false ? " opacity-0 invisible" : "visible opacity-[1]"}`} onClick={() => setOpensearch(!opensearch)} />
+                <div className="p-[11px]" >
+                  <Icon name="search" className={cn` cursor-pointer transition-all duration-[0.3s] ${opensearch !== false ? " opacity-0 invisible" : "visible opacity-[1]"}`} onClick={() => setOpensearch(!opensearch)} />
+                </div>
                 <div className={cn` flex items-center justify-between max-w-[410px] opacity-0 border-[1px] bg-white border-primary-100 mr-5 transition-all duration-[0.5s] absolute   ${opensearch !== false ? "opacity-[1] visible  p-[10px] right-0 " : "opacity-0 invisible right-[-100%] p-0 "}`}>
                   <div className="border-r-[1px] border-divider-200 pr-[10px] mr-[10px]">
                     <SearchDropdown />
@@ -60,10 +82,10 @@ const Header = () => {
                   <Icon name="crossicon" className={`cursor-pointer fill-primary-100  ${opensearch !== false ? "opacity-100" : "opacity-0"}`} onClick={() => setOpensearch(!opensearch)} />
                 </div>
               </div>
-              <Button link="/register" variant="primary" className=" py-[13px] px-[30px] w-full max-w-[126px] justify-center" >
+              <Button link="/register" variant="primary" className=" py-[13px] px-3 xl:px-[30px] w-full max-w-[126px] justify-center" >
                 sign up
               </Button>
-              <Button link="/login" variant="primary" className=" py-[13px] px-[30px] w-full max-w-[126px] justify-center" >
+              <Button link="/login" variant="primary" className=" py-[13px] px-3 xl:px-[30px] w-full max-w-[126px] justify-center" >
                 Log in
               </Button>
             </div>
@@ -94,13 +116,15 @@ const Header = () => {
                 <Image width={30} height={30} src={'/icons/solidsearch.svg'} alt="searchicon" />
                 <Input placeholder="Search" />
               </div>
-
               <div className="flex flex-col mt-8">
-
                 {
                   sections.map((item, index) => {
                     return (<Fragment key={index}>
-                      <Accordion title={`${item.title}`}>
+                      <Accordion
+                        isOpen={openAccordions[index]} // Check if this specific accordion is open
+                        onToggle={() => handleAccordionClick(index)} // Toggle the accordion on click
+                        title={`${item.title}`}
+                      >
                         <NavTabs />
                       </Accordion>
                     </Fragment>)
@@ -108,9 +132,12 @@ const Header = () => {
                 }
               </div>
             </div>
-            <div className="flex justify-center items-center mt-8">
-              <Button variant="primary" className=" py-2 px-[18px] w-full max-w-[139px] flex justify-center">
-                  sign up
+            <div className="flex justify-center items-center mt-8 gap-2">
+              <Button variant="primary" className=" py-2 px-[18px] w-full max-w-[50%] flex justify-center">
+                sign up
+              </Button>
+              <Button variant="primary" className=" py-2 px-[18px] w-full max-w-[50%] flex justify-center">
+                log in
               </Button>
             </div>
           </div>

@@ -1,9 +1,8 @@
 "use client"
 
-import React, { Fragment, useState } from 'react'
+import React, { Fragment } from 'react'
 import Icon from '../Icon'
 import Image from 'next/image'
-import Button from '../ui/Button'
 import Link from 'next/link'
 import Modal from '../ui/Modal'
 
@@ -33,22 +32,22 @@ const Checkinbox = ({ isPopupOpen, closePopup }: Downloadpopup) => {
     ];
     return (
         <>
-            <Modal className='bg-[#E5EFFF]  py-[30px]' isOpen={isPopupOpen} onClose={closePopup} >
+            <Modal className='bg-[#E5EFFF]  py-[30px]' isOpen={isPopupOpen} onClose={closePopup}>
                 <div className="max-w-[500px] w-full">
-                    <div className='flex pb-5 border-b border-subparagraph  items-center px-[30px]'>
-                        <h2 className='text-[20px] leading-7 font-semibold ' >Enefty - NFT Marketplace UI Template Designed With Figma</h2>
-                        <Icon onClick={closePopup} name='closeicon' className='cursor-pointer' />
+                    <div className='flex pb-5 border-b border-[#878787]  items-center px-5 md:px-[30px]'>
+                        <h2 className='text-base md:text-xl leading-7 font-semibold open_sans text-subheading' >Enefty - NFT Marketplace UI Template Designed With Figma</h2>
+                        <div className='w-6 h-6' >
+                            <Icon onClick={closePopup} name='closeicon' className='cursor-pointer ' />
+                        </div>
                     </div>
-                    <div className="px-[30px] flex justify-center items-center  flex-col gap-[39px] mt-[50px] ">
-                        <p className='text-[16px] font-normal leading-6 text-subparagraph' >You have just completed your 3 free downloads per day
-                            Do not worry! Enter your email to get this product free.</p>
-                        <Image className='my-[35px] max-w-[232px] w-full' alt='img' src={'/images/sendemailpopimage.png'} width={232} height={148} />
-                        <input type="text" placeholder='Enter your email' className='py-[18px] px-[15px] bg-white rounded-[5px] w-full placeholder:text-subparagraph outline-none ' />
-                        <Button variant='primary' className='py-[13px] w-full justify-center' >Send Link</Button>
+                    <div className="px-5 flex justify-center items-center  flex-col gap-y-5 md:gap-y-[35px] ">
+                        <Image className=' max-w-[150px] md:max-w-[232px]  w-full mt-5 md:mt-[35px]' alt='img' src={'/icons/checkinboxicon.svg'} width={217} height={217} />
+                        <h2 className='text-center leading-9 text-subheading capitalize font-bold text-xl md:text-[28px] open_sans'>Please Check Your Inbox</h2>
+                        <p className='text-center text-lg md:text-base leading-[25px] text-subparagraph open_sans'>You have just received an download link via email. Open the given link for free download </p>
                     </div>
-                    <div className='flex justify-center items-center flex-col pt-[60px]' >
-                        <h3 className='text-[16p] text-subheading font-normal leading-6 pb-[15px]' >Help us to expand the designer's community</h3>
-                        <div className="flex items-center lg:max-w-[250px] w-full justify-between mt-10 lg:mt-0">
+                    <div className='flex justify-center items-center flex-col mt-5 md:mt-[50px] px-5' >
+                        <h3 className='text-base text-subparagraph font-normal leading-6 pb-[15px] open_sans text-center' >Help us to expand the designer&apos;s community</h3>
+                        <div className="  flex items-center lg:max-w-[250px] w-full justify-between mt-5 md:mt-10 lg:mt-0">
                             {
                                 socialicons?.map((item, index) => {
                                     return (

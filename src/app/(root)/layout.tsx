@@ -13,10 +13,10 @@ export default function customerLayout({
     }>) {
     return (
         <>
-            {/* <Header /> */}
-            <Header />
+
+            <Header />  {/* <Header /> */}
             {children}
-            <Footer />
+            <Footer /> {/* footer */}
         </>
     );
 }
