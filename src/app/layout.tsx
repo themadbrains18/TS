@@ -4,7 +4,7 @@ import "./globals.css";
 import StoreProvider from "@/providers/StoreProvider";
 
 const openSans = Open_Sans({
-  weight: ['400', '700'],
+  weight: ["400", "500", "600", "700","800"],
   style: ['normal', 'italic'],
   subsets: ['latin'],
   display: 'swap',
@@ -12,7 +12,7 @@ const openSans = Open_Sans({
 })
 
 const inter = Inter({
-  weight: ['400', '700'],
+  weight: ["400", "500", "600", "700",'800'],
   style: ['normal'],
   subsets: ['latin'],
   display: 'swap',
