@@ -14,7 +14,7 @@ const NotFoundProduct = (): JSX.Element => {
         <div className='p-5 flex md:p-10 flex-col gap-[80px] text-center items-center'>
             {/* Message to the user */}
             <h2 className='text-lg tab:text-[20px] font-semibold leading-7 text-subheading'>
-                Sorry, we couldn't find any results for this search. Maybe give one of these a try?
+                Sorry, we could not find any results for this search. Maybe give one of these a try?
             </h2>
 
             {/* Not found image */}
