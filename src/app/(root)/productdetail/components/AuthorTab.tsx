@@ -62,7 +62,7 @@ const AuthorTab = () => {
                             <Image className='max-w-11 max-h-11 tab:max-w-full tab:max-h-full ' src={'/icons/mdbbiglogo.svg'} width={94} height={94} alt='logo' />
                         </div>
                         <div>
-                            <h3 className='text-xl text-subheading leading-7 font-bold' >Themadbrains</h3>
+                            <h3 className='text-lg tab:text-xl text-subheading leading-7 font-bold' >Themadbrains</h3>
                             <p className='pt-[6px] text-sm md:text-base pb-[14px] text-subparagraph font-semibold'>Id gravida magna sed ultrices facilisi nullam cursus pretium et.</p>
                             <div className='pr-[10px] border-r border-divider-100 inline-block'>
                                 <p className='font-semibold leading-6 inline-block'>4.9</p>
@@ -78,7 +78,7 @@ const AuthorTab = () => {
                 </div>
                 <div className='md:border-y md:border-divider-100 my-5 md:py-10 md:my-10'>
                     <h3 className='text-xl font-bold leading-7'>About Author</h3>
-                    <p className='py-5 leading-6 text-subparagraph'>Eget massa, urna, nisi, pellentesque sit blandit donec ut non. Ut enim velit nec lectus suscipit sed. Turpis viverra et tortor amet, suspendisse odio risus dolor nunc. Eget amet, eu augue lectus purus aliquam at semper libero. Mauris facilisi neque, tortor, dolor, dui nibh lectus convallis consequat. Vel consequat nibh vitae lacus. Ultrices et, nibh volutpat nullam turpis.</p>
+                    <p className='py-5 leading-6 text-subparagraph text-sm tab:text-base'>Eget massa, urna, nisi, pellentesque sit blandit donec ut non. Ut enim velit nec lectus suscipit sed. Turpis viverra et tortor amet, suspendisse odio risus dolor nunc. Eget amet, eu augue lectus purus aliquam at semper libero. Mauris facilisi neque, tortor, dolor, dui nibh lectus convallis consequat. Vel consequat nibh vitae lacus. Ultrices et, nibh volutpat nullam turpis.</p>
                 </div>
                 <div>
                     <div className='flex justify-between items-center'>

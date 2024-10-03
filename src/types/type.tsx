@@ -31,7 +31,8 @@ export interface ButtonProps {
   icon?: boolean;
   iconClass?: string;
   link?: string;
-  className?: string
+  className?: string;
+  linkclass?:string
 }
 
 export interface navdropdownprops {

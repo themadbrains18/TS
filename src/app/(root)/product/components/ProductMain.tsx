@@ -287,7 +287,7 @@ const ProductMain = () => {
                                             })
                                         }
                                     </div>
-                                    <Button className='w-fit py-[13px] mt-[30px] px-[30px] hover:bg-primary-100 hover:text-white duration-[0.5s] ' variant='solidicon'  >
+                                    <Button className='w-fit mt-[30px]   ' variant='solidicon'  >
                                         Load More Products
                                     </Button>
                                 </div>

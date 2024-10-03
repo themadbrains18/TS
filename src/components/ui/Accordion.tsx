@@ -2,16 +2,18 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import Icon from '../Icon';
+import { cn } from '@/libs/utils';
 
 interface AccordionProps {
   title: string;
   children: React.ReactNode;
   className?: string;
   isOpen?: boolean;          // Prop to control if the accordion is open
-  onToggle?: () => void;     // Function to handle accordion toggling
+  onToggle?: () => void; 
+  tittleclass?:string    // Function to handle accordion toggling
 }
 
-const Accordion: React.FC<AccordionProps> = ({ title, children, className, isOpen = false, onToggle }) => {
+const Accordion: React.FC<AccordionProps> = ({ title, children, className, tittleclass ,isOpen = false, onToggle }) => {
   const [internalOpen, setInternalOpen] = useState<boolean>(isOpen); // Internal state for managing open/close
   const [height, setHeight] = useState<string>('0px');
   const contentRef = useRef<HTMLDivElement>(null);
@@ -43,7 +45,7 @@ const Accordion: React.FC<AccordionProps> = ({ title, children, className, isOpe
         onClick={toggleAccordion}
         className={`bg-white cursor-pointer pb-[10px] flex justify-between items-center border-b border-divider-100`}
       >
-        <h2 className="font-medium text-subheading leading-6">{title}</h2>
+        <h2 className={cn`text-subheading leading-6 font-medium ${tittleclass}`}>{title}</h2>
         <Icon
           name='soliddownicon'
           className={`fill-subheading w-2 transition-transform duration-[0.5s] ${internalOpen ? 'rotate-[270deg]' : 'rotate-90'}`}

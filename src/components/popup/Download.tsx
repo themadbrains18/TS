@@ -46,7 +46,7 @@ const Download = ({ isPopupOpen, closePopup, opensecoundpopup }: Downloadpopup) 
                     </div>
                     <div className="px-5 md:px-[30px]">
                         <Image className='my-[35px] w-full' alt='img' src={'/images/popimg.png'} width={437} height={270} />
-                        <Button onClick={opensecoundpopup} variant='primary' className='py-[13px] w-full justify-center open_sans' >Download Now</Button>
+                        <Button onClick={opensecoundpopup} variant='primary' className='w-full justify-center open_sans' >Download Now</Button>
                         <p className='text-[16p]  font-normal leading-6 pt-[15px] text-center text-subparagraph open_sans' >Complete your 1st Free Download</p>
                     </div>
                     <div className='flex justify-center items-center flex-col pt-5 md:pt-[60px] px-5' >

@@ -45,7 +45,7 @@ const Page = () => {
                         </div>
                         {/* Send OTP  Button */}
                         <div className='mt-[40px] mb-[60px] ' >
-                            <Button className="w-full items-center   py-[13px] justify-center" variant="primary">
+                            <Button className="w-full items-center  justify-center" variant="primary">
                                 Verify Now
                             </Button>
                         </div>

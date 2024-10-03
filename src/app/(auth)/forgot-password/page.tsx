@@ -51,7 +51,7 @@ const Page = () => {
                         </div>
                         {/* Send OTP  Button */}
                         <div className='my-[60px]' >
-                            <Button className="w-full items-center   py-[13px] justify-center" variant="primary">
+                            <Button className="w-full items-center justify-center" variant="primary">
                                 Send OTP
                             </Button>
                         </div>

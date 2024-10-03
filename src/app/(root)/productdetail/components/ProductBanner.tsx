@@ -159,7 +159,7 @@ const ProductBanner = () => {
                                     </div>
                                 </div>
                                 <Button onClick={openPopup} className='w-full mb-2.5 mt-5  md:mt-[30px] md:mb-5 justify-center py-2 md:py-[13px]' variant='primary' >Free — Download</Button>
-                                <Button className='w-full justify-center py-[13px]' variant='liquid' >Preview</Button>
+                                <Button className='w-full justify-center' variant='liquid' >Preview</Button>
                                 {
                                     isPopupOpen &&
                                     <DownloadTemplete isFirstPopupOpen={isFirstPopupOpen} setIsFirstPopupOpen={setIsFirstPopupOpen} />
