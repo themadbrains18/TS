@@ -1,19 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
 @layer utilities {
   * {
     @apply m-0 p-0 box-border;
   }
 
-  .open_sans{
-    font-family: "Open Sans", sans-serif;
-  }
-
   body {
-    @apply overflow-x-hidden
+    @apply overflow-x-hidden font-open;
   }
 
   .container {
@@ -47,32 +42,6 @@
     @apply hidden
   }
 
-
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.8);
-    transition: opacity 300ms ease;
-  }
-
-  .modal-content {
-    background: white;
-    border-radius: 8px;
-    padding: 1rem;
-    transition: transform 300ms ease, opacity 300ms ease;
-    transform: scale(0.95) translateY(1rem);
-    opacity: 0;
-  }
-
-  .modal-open .modal-content {
-    transform: scale(1) translateY(0);
-    opacity: 1;
-  }
-
-
   @keyframes scroll {
     0% {
       transform: translateX(-10%);
@@ -93,5 +62,12 @@
 
   .slider:hover .slide-track {
     animation-play-state: paused;
+  }
+
+  /* swiper button */
+  .swiper-button-next::after{
+    position: absolute !important;
+    right: 0 !important;
+    top: 0 !important;
   }
 }

@@ -16,6 +16,7 @@ const Page = () => {
             {/* Left Section with Image and Text */}
             <div className=" bg-[url('/images/authsideimage.png')] lg:bg-[url('/images/authsideimage.png')] bg-no-repeat bg-cover h-[280px] lg:h-screen lg:sticky top-0 left-0 bottom-0 ">
                 <div className=" py-[30px] px-5 lg:p-[30px] lg:h-screen flex  items-center lg:items-start  justify-between flex-col ">
+                    <Link href={'/'}>
                     <Image
                         className=" lg:ml-[70px]"
                         src={'/images/Logowhite.png'}
@@ -23,7 +24,8 @@ const Page = () => {
                         width={276}
                         height={40}
                     />
-                    <h2 className=" text-[32px] md:text-[50px] xl:text-[62px] text-center lg:text-start font-normal pt-[30px] lg:pt-0 text-white lg:max-w-[700px] lg:m-auto">
+                    </Link>
+                    <h2 className="text-[32px] md:text-[50px] xl:text-[62px] text-center lg:text-start font-normal pt-[30px] lg:pt-0 text-white lg:max-w-[700px] lg:m-auto ">
                         Free High-quality UI kits and design resources
                     </h2>
                     <p className=" hidden lg:block ml-[70px] text-[14px] font-medium leading-5 text-white">
@@ -35,7 +37,7 @@ const Page = () => {
             {/* Right Section with Form */}
             <div className="md:pt-20 pt-10 pb-10 px-4  w-full bg-[#FDFCFF]">
                 <div className='max-w-[599px] m-auto flex flex-col ' >
-                    <h2 className="text-[36px] font-bold leading-[44px]  pb-[30px] md:pb-[60px]">Hi, Welcome Back!</h2>
+                    <h2 className="text-[22px] tab:text-[36px] font-bold leading-[44px]  pb-[30px] md:pb-[60px]">Hi, Welcome Back!</h2>
                     <div className="flex flex-col justify-center h-[759px]">
                         {/* Name Input */}
                         <div className='  md:space-y-[30px] space-y-[15px] ' >

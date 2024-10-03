@@ -1,3 +1,4 @@
+import { Open_Sans } from "next/font/google";
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -7,6 +8,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        open: ['var(--font-open)'],
+        inter:['var(--font-inter)'],
+      },
       screens: {
         "tab": "500px"
       },

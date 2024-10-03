@@ -52,7 +52,7 @@ const Header = () => {
     <>
       {/* Destop header */}
       <header className=" bg-[#ffffff80] backdrop:blur-xl relative border-b-[1px] border-[#11083319] z-10">
-        <div className="container hidden lg:block">
+        <div className="container hidden min-[1028px]:block">
           <div className="py-[35px] flex items-center justify-between">
             <div className="flex items-center justify-between max-w-[809px] w-full cursor-pointer">
               <Link className="w-[276px]" href={'/'}>
@@ -82,10 +82,10 @@ const Header = () => {
                   <Icon name="crossicon" className={`cursor-pointer fill-primary-100  ${opensearch !== false ? "opacity-100" : "opacity-0"}`} onClick={() => setOpensearch(!opensearch)} />
                 </div>
               </div>
-              <Button link="/register" variant="primary" className=" py-[13px] px-3 xl:px-[30px] w-full max-w-[126px] justify-center" >
+              <Button link="/register">
                 sign up
               </Button>
-              <Button link="/login" variant="primary" className=" py-[13px] px-3 xl:px-[30px] w-full max-w-[126px] justify-center" >
+              <Button link="/login">
                 Log in
               </Button>
             </div>
@@ -94,7 +94,7 @@ const Header = () => {
 
         {/* responsive header  */}
 
-        <div className="container lg:hidden ">
+        <div className="container min-[1028px]:hidden ">
           <div className="flex items-center justify-between py-4 relative">
             <div onClick={() => setSidebar(!sidebar)}> <Icon name="menuicon" className="w-8 h-8" /></div>
             <div> <Link href={'/'}>
@@ -102,7 +102,7 @@ const Header = () => {
             </div>
             <div onClick={() => setSidebar(!sidebar)}> <Icon name="solidsearch" className="w-9 h-9" /></div>
           </div>
-          <div className={cn`flex flex-col fixed bg-white w-full transition-all duration-[1s] h-screen p-5 top-0 ${sidebar ? "left-0" : "left-[-100%]"}`}>
+          <div className={cn`flex z-[2] flex-col fixed bg-white w-full transition-all duration-[1s] h-screen p-5 top-0 ${sidebar ? "left-0" : "left-[-100%]"}`}>
             <div className="flex items-center justify-between pb-5">
               <Link href={'/'}>
                 <Image className="cursor-pointer h-9" width={193} height={38} src={'/icons/logo.svg'} alt="logo" />
