@@ -82,10 +82,10 @@ const Header = () => {
                   <Icon name="crossicon" className={`cursor-pointer fill-primary-100  ${opensearch !== false ? "opacity-100" : "opacity-0"}`} onClick={() => setOpensearch(!opensearch)} />
                 </div>
               </div>
-              <Button link="/register" variant="primary" className=" py-[13px] px-3 xl:px-[30px] w-full max-w-[126px] justify-center" >
+              <Button link="/register">
                 sign up
               </Button>
-              <Button link="/login" variant="primary" className=" py-[13px] px-3 xl:px-[30px] w-full max-w-[126px] justify-center" >
+              <Button link="/login">
                 Log in
               </Button>
             </div>
@@ -148,4 +148,3 @@ const Header = () => {
 };
 
 export default Header;
-			

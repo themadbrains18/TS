@@ -5,7 +5,6 @@ import Link from "next/link";
 import { ButtonProps } from "@/types/type";
 
 
-
 const Button: React.FC<ButtonProps> = ({
   variant = "primary",
   isLoading = false,
@@ -17,7 +16,7 @@ const Button: React.FC<ButtonProps> = ({
   className
 }) => {
   const buttonClasses = cn({
-    "bg-primary-100  text-white capitalize font-semibold leading-6 transition-all duration-300 hover:bg-[#872fcb]":
+    "bg-primary-100 text-white capitalize font-semibold leading-6 transition-all duration-300 hover:bg-[#872fcb] py-[13px] px-[30px]":
       variant === "primary",
     "bg-primary-300  text-subheading capitalize ": variant === "secondary",
     "bg-white trasition-all duration-[0.3s] font-semibold leading-6 border-[1px] border-divider-100 hover:border-transparent hover:text-primary-100 capitalize py-2 px-5 hover:border-primary-100":

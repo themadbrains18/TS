@@ -9,8 +9,8 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        Open_Sans: '"Open Sans", sans-serif',
-        inter: '"Inter", sans-serif'
+        open: ['var(--font-open)'],
+        inter:['var(--font-inter)'],
       },
       screens: {
         "tab": "500px"
