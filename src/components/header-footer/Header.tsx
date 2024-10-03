@@ -65,7 +65,7 @@ const Header = () => {
               </Link>
               <div className="flex items-center max-w-[473px] w-full justify-between">
                 <NavDropdown tittle="Ui Templates" />
-                <NavDropdown tittle="HTML Templates" />
+                <NavDropdown tittle="HTML Templatess" />
                 <NavDropdown tittle="Studio Spacials" />
               </div>
             </div>
