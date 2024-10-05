@@ -43,7 +43,7 @@ const FeatureCard: React.FC<featurecardprops> = ({ buttonprops, category, curren
                     </Link>
                 </div>
                 <div>
-                    <div className='px-[10px] pt-[10px] md:px-5 md:pt-5 bg-white '>
+                    <div className='px-[10px] pt-[10px] md:px-5 md:pt-3 bg-white '>
                         <div className=' flex items-center justify-between w-full border-b border-divider-100 pb-[10px] md:pb-5'>
 
                             <h3 className='text-subparagraph font-semibold leading-6 capitalize text-xs tab:text-base'>{`${tittle}`}</h3>

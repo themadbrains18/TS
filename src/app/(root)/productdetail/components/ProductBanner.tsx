@@ -152,7 +152,7 @@ const ProductBanner = () => {
                                     <ProductDetailcheckbox image='/images/diamond.png' label="Sketch Design File" detailText="View Detail" />
                                 </div>
                                 <div className='p-2.5 md:p-5 flex items-center bg-divider-100 justify-between ' >
-                                    <Button className='px-2.5' variant='primary' >FREE</Button>
+                                    <Button className='py-[5px] px-2.5' variant='primary' >FREE</Button>
                                     <div className='flex gap-5 items-center' >
                                         <h3 className='text-[14px] font-normal leading-5 text-subparagraph' >Total Price</h3>
                                         <span className='text-[20px] leading-7 text-subparagraph font-bold' >$0.00</span>

@@ -78,7 +78,7 @@ const AuthorTab = () => {
                 </div>
                 <div className='md:border-y md:border-divider-100 my-5 md:py-10 md:my-10'>
                     <h3 className='text-xl font-bold leading-7'>About Author</h3>
-                    <p className='py-5 leading-6 text-subparagraph text-sm tab:text-base'>Eget massa, urna, nisi, pellentesque sit blandit donec ut non. Ut enim velit nec lectus suscipit sed. Turpis viverra et tortor amet, suspendisse odio risus dolor nunc. Eget amet, eu augue lectus purus aliquam at semper libero. Mauris facilisi neque, tortor, dolor, dui nibh lectus convallis consequat. Vel consequat nibh vitae lacus. Ultrices et, nibh volutpat nullam turpis.</p>
+                    <p className='pt-5 leading-6 text-subparagraph text-sm tab:text-base'>Eget massa, urna, nisi, pellentesque sit blandit donec ut non. Ut enim velit nec lectus suscipit sed. Turpis viverra et tortor amet, suspendisse odio risus dolor nunc. Eget amet, eu augue lectus purus aliquam at semper libero. Mauris facilisi neque, tortor, dolor, dui nibh lectus convallis consequat. Vel consequat nibh vitae lacus. Ultrices et, nibh volutpat nullam turpis.</p>
                 </div>
                 <div>
                     <div className='flex justify-between items-center'>
