@@ -44,7 +44,7 @@ const Page = () => {
                             <InputOtp />
                         </div>
                         <div className='my-10 md:my-[60px]'>
-                            <p className='text-sm leading-5 text-neutral-600'>Please check your mobile, 6-digit confirmation code to (+1234567890), please enter the confirmation code to verify it's you.</p>
+                            <p className='text-sm leading-5 text-neutral-600'>Please check your mobile, 6-digit confirmation code to (+1234567890), please enter the confirmation code to verify it&apos;s you.</p>
                         </div>
                         {/* Send OTP  Button */}
                         <div className=' mb-[60px] ' >
