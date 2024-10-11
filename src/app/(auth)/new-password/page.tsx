@@ -1,7 +1,7 @@
 "use client";
 
 import Button from '@/components/ui/Button';
-import CheckBox from '@/components/ui/checkbox';
+import CheckBox from '@/components/ui/Checkbox';
 import Input from '@/components/ui/Input';
 import Image from 'next/image';
 import Link from 'next/link';

@@ -29,6 +29,7 @@ import Rating from "/public/icons/Rating.svg";
 import Ratingbottom from "/public/icons/ratingbottom.svg";
 import Swipericon from "/public/icons/swipericon.svg";
 import { cn } from "@/libs/utils";
+
 // Map icon names to components
 const icons = {
   search: Search,

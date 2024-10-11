@@ -4,7 +4,6 @@ import Icon from "../Icon";
 import Link from "next/link";
 import { ButtonProps } from "@/types/type";
 
-
 const Button: React.FC<ButtonProps> = ({
   variant = "primary",
   isLoading = false,
@@ -29,7 +28,6 @@ const Button: React.FC<ButtonProps> = ({
     <>
       {
         link === undefined ?
-
           <button
             className={cn`${buttonClasses} ${className} flex items-center gap-x-[2px] cursor-pointer `}
             onClick={onClick}

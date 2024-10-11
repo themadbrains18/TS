@@ -16,7 +16,7 @@ import Button from '@/components/ui/Button';
 import Icon from '@/components/Icon';
 import ProductDetailcheckbox from './ProductDetailcheckbox';
 import Link from 'next/link';
-import DownloadTemplete from '@/components/popup/DownloadTemplete';
+import DownloadTemplete from '@/components/popups/DownloadTemplete';
 
 /**
  * ProductBanner component displays the main product image and allows users to 
