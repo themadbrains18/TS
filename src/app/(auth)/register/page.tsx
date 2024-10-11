@@ -122,7 +122,6 @@ const Page = () => {
                     <h3 className="text-[16px] font-normal leading-6 text-textparagraph pt-[30px] md:pt-[60px]">
                         Not a member yet?{' '}
                         <Link href={"/register"} className="text-textheading font-semibold">Register Now</Link>
-
                     </h3>
                 </div>
             </div>
