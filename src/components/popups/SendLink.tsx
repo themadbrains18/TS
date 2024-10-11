@@ -47,7 +47,7 @@ const SendLink = ({ isPopupOpen, closePopup, openthirdpopup }: Downloadpopup) =>
                             Do not worry! Enter your email to get this product free.</p>
                         <Image className=' md:my-[35px] max-w-[232px] w-full' alt='img' src={'/images/sendemailpopimage.png'} width={232} height={148} />
                         <input type="text" placeholder='Enter your email' className='py-[18px] px-[15px] bg-white rounded-[5px] w-full placeholder:text-subparagraph outline-none ' />
-                        <Button onClick={openthirdpopup} variant='primary' className='py-[13px] w-full justify-center' >Send Link</Button>
+                        <Button onClick={openthirdpopup} variant='primary' className=' w-full justify-center' >Send Link</Button>
                     </div>
                     <div className='flex justify-center items-center flex-col pt-5 md:pt-[60px] px-5' >
                         <h3 className='text-[16p]font-normal leading-6 pb-[15px] open_sans text-subparagraph text-center' >Help us to expand the designer&apos;s community</h3>

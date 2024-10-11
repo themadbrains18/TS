@@ -22,8 +22,8 @@ const WhatsnewCard: React.FC<whatsnewprops> = ({ icons, tittle, description }) =
           <Image src={`/icons/${icons}`} width={30} height={30} alt='icons' />
         </div>
         <div>
-          <h3 className='text-subheading leading-6 font-semibold'>{tittle}</h3>
-          <p className='text-subparagraph mt-[10px] leading-6'>{description}</p>
+          <h3 className='text-subheading leading-6 font-semibold text-sm tab:text-base'>{tittle}</h3>
+          <p className='text-subparagraph mt-[10px] leading-6 text-sm tab:text-base'>{description}</p>
         </div>
       </div>
     </>

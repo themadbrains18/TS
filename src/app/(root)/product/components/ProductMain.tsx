@@ -248,7 +248,7 @@ const ProductMain = () => {
                                         >
                                             <div
                                                 onClick={sorthandledropdown}
-                                                className={` border duration-[0.5s] ${sort ? "border-primary-100 " : " border-transparent hover:border-subparagraph"} group pr-[15px] pl-5 py-[8px] flex gap-[6px] items-center`}
+                                                className={` border duration-[0.5s]  ${sort ? "border-primary-100 " : " border-divider-100 "} group pr-[15px] pl-5 py-[8px] flex gap-[6px] items-center`}
                                             >
                                                 {/* Display selected item or default "Sort by" text */}
                                                 <h2 className={`text-primary text-4 font-semibold  leading-6  duration-[0.2s] ${sort ? "text-primary-100" : "text-subheading"}  text-nowrap`}>
@@ -287,7 +287,7 @@ const ProductMain = () => {
                                             })
                                         }
                                     </div>
-                                    <Button className='w-fit py-[13px] mt-[30px] px-[30px] hover:bg-primary-100 hover:text-white duration-[0.5s] ' variant='solidicon'  >
+                                    <Button className='w-fit mt-[30px]   ' variant='solidicon'  >
                                         Load More Products
                                     </Button>
                                 </div>

@@ -98,7 +98,7 @@ const PopularSection = () => {
 
                     <div className="container">
                         <div>
-                            <h2 className='text-subheading leading-9 font-bold text-[28px]'>Popular Template</h2>
+                            <h2 className='text-subheading leading-9 font-bold text-[22px] tab:text-[28px]'>Popular Template</h2>
                             <div className='mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-[30px] '>
                                 {
                                     data.map((item, index) => {
@@ -111,7 +111,7 @@ const PopularSection = () => {
                                 }
                             </div>
                             <div className='mt-10 flex w-full items-center justify-center'>
-                                <Button link='/productdetail' className='text-primary-100 py-3 px-[30px] bg-white shadow-sm hover:text-white'>View All Products</Button>
+                                <Button link='/productdetail' linkclass='w-full md:w-auto' className='w-full' variant='secondary'>View All Products</Button>
                             </div>
                         </div>
                     </div>

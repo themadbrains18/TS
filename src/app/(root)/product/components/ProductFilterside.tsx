@@ -113,6 +113,7 @@ const ProductFilterside = ({ items, setItems, closefilter }: ProductFiltersidety
                     {filterData.map((section, sectionIndex) => (
                         <Accordion
                             key={sectionIndex}
+                            tittleclass=' tab:text-xl font-semibold leading-7'
                             className="border-none"
                             title={section.title}
                             isOpen={openIndexes.includes(sectionIndex)} // Check if the section is open

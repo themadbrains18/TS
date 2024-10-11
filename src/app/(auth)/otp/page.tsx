@@ -43,9 +43,12 @@ const Page = () => {
                             <h2 className='text-[18px] font-normal leading-7 text-neutral-900 pb-[30px]' >Please enter one time OTP</h2>
                             <InputOtp />
                         </div>
+                        <div className='my-10 md:my-[60px]'>
+                            <p className='text-sm leading-5 text-neutral-600'>Please check your mobile, 6-digit confirmation code to (+1234567890), please enter the confirmation code to verify it&apos;s you.</p>
+                        </div>
                         {/* Send OTP  Button */}
-                        <div className='mt-[40px] mb-[60px] ' >
-                            <Button className="w-full items-center   py-[13px] justify-center" variant="primary">
+                        <div className=' mb-[60px] ' >
+                            <Button className="w-full items-center  justify-center" variant="primary">
                                 Verify Now
                             </Button>
                         </div>

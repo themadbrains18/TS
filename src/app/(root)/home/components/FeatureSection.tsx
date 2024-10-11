@@ -101,7 +101,7 @@ const FeatureSection = () => {
                 <div className='bg-[url("/images/featurecolor.png")] bg-no-repeat bg-cover bg-right'>
                     <div className="container">
                         <div>
-                            <h2 className='text-subheading leading-9 font-bold text-[28px]'>Feature Products</h2>
+                            <h2 className='text-subheading leading-9 font-bold text-[22px] tab:text-[28px]'>Feature Products</h2>
                             <div className='mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-[30px] '>
                                 {
                                     data.map((item, index) => {
@@ -114,7 +114,7 @@ const FeatureSection = () => {
                                 }
                             </div>
                             <div className='mt-10 flex w-full items-center justify-center'>
-                                <Button link='/productdetail' className='text-primary-100 py-3 px-[30px] bg-white shadow-sm hover:text-white'>
+                                <Button link='/productdetail' linkclass='w-full md:w-auto' className='w-full' variant='secondary' >
                                     View All Products
                                 </Button>
                             </div>
