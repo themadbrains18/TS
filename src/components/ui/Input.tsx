@@ -35,7 +35,7 @@ const Input: React.FC<InputFieldProps> = ({
                 value={value}
                 onChange={onChange}
                 placeholder={placeholder}
-                className={` flex text-subparagraph w-full outline-none sm:text-sm placeholder:text-sm placeholder:text-subparagraph placeholder:leading-5  ${error ? 'border-red-500' : ''} ${className}`}
+                className={`flex text-subparagraph w-full outline-none sm:text-sm placeholder:text-sm  placeholder:leading-5 placeholder:text-neutral-400 py-3 md:py-[18px] px-5 bg-divider-100  ${error ? 'border-red-500' : ''} ${className}`}
             />
             {error && <p className="mt-1 text-xs text-red-600">{error}</p>}
         </div>
