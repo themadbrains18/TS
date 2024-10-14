@@ -1,12 +1,13 @@
 'use client'
 import Input from '@/components/ui/Input'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CustomDropdown from './components/customtab';
 import CheckBox from '@/components/ui/checkbox';
 import QuillEditor from '@/components/ui/Quilleditor';
 import DashInput from './components/DashInput';
 import Button from '@/components/ui/Button';
 import FileUpload from './components/InputFile';
+import useFetch from '@/hooks/useFetch';
 const page = () => {
 
     const [selectedValue, setSelectedValue] = useState<string | null>(null);
@@ -31,6 +32,29 @@ const page = () => {
 
     const indusrtdata = ["fintech", "health care", "e-commerce", "real estate", "technology", "crypto", "education"]
 
+    const { data, loading, error, fetchData } = useFetch<any>(); // Replace 'any' with the expected data type
+
+    useEffect(() => {
+      // Call the fetchData function when the component mounts
+      fetchData(`${process.env.NEXT_PUBLIC_APIURL}/template-types`);
+    }, [fetchData]);
+
+    // const templateTypes = async () => {
+    //     try {
+    //         let response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/template-types`);
+    //         let json = await response.json();
+    //         console.log(json,"===============json");
+            
+    //     } catch (error) {
+    //         console.log('There was an error', error);
+    //     }
+    // }
+    
+    // useEffect(()=>{
+    //     templateTypes();
+    // },[])
+    
+
     return (
         <>
             <section className='py-10 md:py-20'>
@@ -47,12 +71,12 @@ const page = () => {
                             <div className='w-full'>
                                 <CustomDropdown placeholder='software type' options={options} onSelect={handleSelect} />
                             </div>
-                            <div className='w-full'>
+                            {/* <div className='w-full'>
                                 <CustomDropdown placeholder='software type' options={options} onSelect={handleSelect} />
                             </div>
                             <div className='w-full'>
                                 <CustomDropdown placeholder='cms type' options={options} onSelect={handleSelect} />
-                            </div>
+                            </div> */}
                         </div>
                         <div className='mt-5'>
                             <h3 className='text-xl font-semibold capitalize '>Industry</h3>

@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { FieldError, UseFormRegister } from "react-hook-form";
 
 // export interface dropdownprops {
 //   testclass?: string;
@@ -26,6 +27,7 @@ export interface navcardprops {
 export interface ButtonProps {
   variant?: "primary" | "secondary" | "liquid" | "solidicon";
   isLoading?: boolean;
+  type?:string;
   children?: React.ReactNode;
   onClick?: () => void;
   icon?: boolean;
@@ -130,3 +132,21 @@ export interface dashinput{
   className?:string,
   type?:string
 }
+
+
+export type FormData = {
+  name: string;
+  email: string;
+  password: string;
+};
+
+export type ValidFieldNames = | "email"| "githubUrl"| "yearsOfExperience"| "password" | "confirmPassword";
+
+export type FormFieldProps = {
+  type: string;
+  placeholder: string;
+  name: ValidFieldNames;
+  register: UseFormRegister<FormData>;
+  error: FieldError | undefined;
+  valueAsNumber?: boolean;
+};

@@ -1,34 +1,84 @@
-import { useState, useEffect } from 'react';
+import { useState, useCallback } from "react";
+import { toast } from "react-toastify";
+import { useSession } from "next-auth/react";
 
-function useFetch<T>(url: string, options?: RequestInit) {
+interface FetchResult<T> {
+  data: T | null;
+  error: string | null;
+  loading: boolean;
+  fetchData: (
+    url: string,
+    options?: RequestInit,
+    toaster?: boolean
+  ) => Promise<void>;
+}
+
+interface ApiResponse<T> {
+  message: string;
+  results: T;
+}
+
+function useFetch<T>(): FetchResult<T> {
+  const { data: session } = useSession();
+  const token = session?.user?.access_token;
   const [data, setData] = useState<T | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
+  const fetchData = useCallback(
+    async (
+      url: string,
+      options: RequestInit = {},
+      toaster = true
+    ): Promise<void> => {
       setLoading(true);
-      setError(null); // Reset error before fetching
+
+      const abortController = new AbortController();
+      const { signal } = abortController;
 
       try {
-        const response = await fetch(url, options);
+        const headers: HeadersInit = {
+          ...options.headers,
+          Authorization: token ? `Bearer ${token}` : "",
+          "Content-Type": "application/json",
+        };
+
+        const response = await fetch(`${process.env.NEXT_PUBLIC_APIBASEURL}${url}`, {
+          ...options,
+          headers,
+          signal,
+        });
+
         if (!response.ok) {
-          throw new Error(`Error: ${response.status} ${response.statusText}`);
+          const errorBody = await response.json();
+          const errorMessage =
+            errorBody?.error?.message || errorBody.message || `HTTP error! Status: ${response.status}`;
+          const joinedMessages = errorBody.error?.fieldErrors
+            ?.map((error: any) => error.message)
+            ?.join(" ") || errorMessage;
+
+          throw new Error(joinedMessages);
         }
 
-        const result: T = await response.json();
-        setData(result);
-      } catch (err: any) {
-        setError(err.message || 'Something went wrong');
+        const result: ApiResponse<T> = await response.json();
+        setData(result?.results);
+        toaster && toast.success(result?.message);
+        setError(null);
+      } catch (e: any) {
+        if (!signal.aborted) {
+          console.error("Fetch error:", e);
+          setError(e.message || "An unexpected error occurred");
+          setData(null);
+          toaster && toast.error(`An error occurred: ${e.message}`);
+        }
       } finally {
         setLoading(false);
       }
-    };
+    },
+    [token]
+  );
 
-    fetchData();
-  }, [url, options]);
-
-  return { data, loading, error };
+  return { data, error, loading, fetchData };
 }
 
 export default useFetch;

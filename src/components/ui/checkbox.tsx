@@ -3,6 +3,7 @@ import React from 'react';
 interface CheckBoxProps {
     id: string;
     label: string;
+    index?:number;
     checked: boolean;
     onChange: (id: string) => void;
     labelPosition?: 'left' | 'right'; // New prop for label position
@@ -13,6 +14,7 @@ interface CheckBoxProps {
 const CheckBox: React.FC<CheckBoxProps> = ({
     id,
     label,
+    index,
     checked,
     onChange,
     labelPosition = 'right', // Default label position is right
@@ -24,7 +26,7 @@ const CheckBox: React.FC<CheckBoxProps> = ({
 
             <input
                 type="checkbox"
-                id={id}
+                id={`${id+index}`}
                 checked={checked}
                 onChange={() => onChange(id)}
                 disabled={disabled} // Checkbox can be disabled

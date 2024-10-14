@@ -9,6 +9,7 @@ const Button: React.FC<ButtonProps> = ({
   isLoading = false,
   children,
   onClick,
+  type,
   icon,
   iconClass,
   link,
@@ -33,6 +34,7 @@ const Button: React.FC<ButtonProps> = ({
             className={cn`${buttonClasses} ${className} flex items-center gap-x-[2px] cursor-pointer `}
             onClick={onClick}
             disabled={isLoading}
+            type={type}
           >
             {isLoading ? "Loading..." : children}
 

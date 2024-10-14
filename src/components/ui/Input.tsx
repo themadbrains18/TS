@@ -32,7 +32,7 @@ const Input: React.FC<InputFieldProps> = ({
             <input
                 type={type}
                 name={name}
-                value={value}
+                defaultValue={value}
                 onChange={onChange}
                 placeholder={placeholder}
                 className={`flex text-subparagraph w-full outline-none sm:text-sm placeholder:text-sm  placeholder:leading-5 placeholder:text-neutral-400 py-3 md:py-[18px] px-5 bg-divider-100  ${error ? 'border-red-500' : ''} ${className}`}
