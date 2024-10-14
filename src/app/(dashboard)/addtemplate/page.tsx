@@ -2,7 +2,7 @@
 import Input from '@/components/ui/Input'
 import React, { useState } from 'react'
 import CustomDropdown from './components/customtab';
-import CheckBox from '@/components/ui/checkbox';
+import CheckBox from '@/components/ui/Checkbox';
 import QuillEditor from '@/components/ui/Quilleditor';
 import DashInput from './components/DashInput';
 import Button from '@/components/ui/Button';

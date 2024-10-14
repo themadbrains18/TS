@@ -7,13 +7,14 @@ const PrevFooter = () => {
         "terms & conditions",
         "privacy policy"
     ]
+    const date= new Date()
     return (
         <>
             <footer className='bg-bgcolor'>
                 <div className='container'>
                     <div className='flex flex-col md:flex-row items-center justify-center md:justify-between item-center py-5 gap-y-5 md:gap-0 md:pt-[30px] md:pb-10'>
                         <div>
-                            <p className='cursor-pointer text-center'>Template Studio | © 2022 All Rights Reserved</p>
+                            <p className='cursor-pointer text-center'>Template Studio | © {date.getFullYear()} All Rights Reserved</p>
                         </div>
                         <div className='flex items-center md:flex-row flex-col gap-y-[15px]   gap-x-[25px]'>
                             {

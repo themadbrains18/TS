@@ -53,6 +53,7 @@ const Footer = () => {
     "terms & conditions",
     "privacy policy"
   ]
+  const date= new Date()
 
   return (
     <>
@@ -129,7 +130,7 @@ const Footer = () => {
           </div>
           <div className="mt-5 md:mt-[60px] md:pt-8 grid grid-cols-1 md:grid-cols-2 gap-y-5 ">
             <div>
-              <h3 className="text-subparagraph leading-6 text-center md:text-start">Template Studio | © 2022 All Rights Reserved</h3>
+              <h3 className="text-subparagraph leading-6 text-center md:text-start">Template Studio | © {date.getFullYear()} All Rights Reserved</h3>
             </div>
             <div className="flex justify-center md:justify-end items-center">
               <ul className="flex items-center gap-x-6 ">
