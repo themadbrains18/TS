@@ -32,10 +32,10 @@ const CheckBox: React.FC<CheckBoxProps> = ({
             />
             <label
                 htmlFor={id}
-                className={`relative cursor-pointer flex items-center ${disabled ? 'cursor-not-allowed opacity-50' : ''}`}
+                className={` relative cursor-pointer flex items-center ${disabled ? 'cursor-not-allowed opacity-50' : ''}`}
             >
                 <span
-                    className={`block border-2 border-gray-300 p-2 mr-2 transition duration-200
+                    className={` block border-2 border-gray-300 p-2 mr-2 transition duration-200
             ${checked ? 'bg-purple-100 border-transparent' : ''}`}
                 >
                 </span>
@@ -46,8 +46,8 @@ const CheckBox: React.FC<CheckBoxProps> = ({
                     )
                 }
             </label >
-            <label htmlFor={id} className={`${checked ? "text-primary-900" : "text-subparagraph"}mr-2`}>
-                <span className={`${checked ? "text-primary-900" : "text-subparagraph"} text-[14px] font-semibold leading-5`} >
+            <label htmlFor={id} className={` ${checked ? "text-primary-900" : "text-subparagraph"}mr-2`}>
+                <span className={` capitalize ${checked ? "text-primary-900" : "text-subparagraph"}  text-[14px] font-semibold leading-5`} >
                     {label}
                 </span>
             </label>

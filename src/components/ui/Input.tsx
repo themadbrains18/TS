@@ -4,12 +4,13 @@ import React from 'react';
 interface InputFieldProps {
     label?: string;
     name?: string;
-    type?: 'text' | 'email' | 'password';
+    type?: 'text' | 'email' | 'password' | 'url';
     value?: string;
     placeholder?: string;
     error?: string;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     className?: string;
+    lableclass?:string
 }
 
 const Input: React.FC<InputFieldProps> = ({ 
@@ -21,10 +22,11 @@ const Input: React.FC<InputFieldProps> = ({
     error, 
     onChange, 
     className = '',
+    lableclass
 }) => {
     return (
         <div className='w-full'>
-            <label htmlFor={name} className=" font-openSans antialiased text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor={name} className={`font-openSans antialiased text-sm font-medium text-gray-700 mb-1 ${lableclass}`}>
                 {label}
             </label>
             <input

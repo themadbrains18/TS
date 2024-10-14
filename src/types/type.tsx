@@ -124,3 +124,9 @@ export interface DownloadTemplatetype {
   isFirstPopupOpen: boolean
   setIsFirstPopupOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
+
+export interface dashinput{
+  placeholder?:string,
+  className?:string,
+  type?:string
+}
