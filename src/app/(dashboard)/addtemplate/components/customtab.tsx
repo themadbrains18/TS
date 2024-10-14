@@ -30,7 +30,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
             {/* Dropdown Button */}
             <button
                 type="button"
-                className="w-full p-5 text-neutral-500 text-left bg-white border transition-all duration-300 rounded-md border-neutral-400 md shadow-sm  capitalize"
+                className="w-full p-3 text-neutral-500 text-left bg-white border transition-all duration-300 rounded-md border-neutral-400 md shadow-sm  capitalize"
                 onClick={() => setIsOpen(!isOpen)}
             >
                 {selected || placeholder}
