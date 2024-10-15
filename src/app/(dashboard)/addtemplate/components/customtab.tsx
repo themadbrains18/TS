@@ -1,13 +1,13 @@
 import { useState } from 'react';
 
 interface Option {
-    value: string;
-    label: string;
+    id: string;
+    name: string;
 }
 
 interface CustomDropdownProps {
     options: Option[];
-    onSelect: (value: string) => void;
+    onSelect: (id: string) => void;
     placeholder?: string;
 }
 
@@ -20,8 +20,8 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
     const [selected, setSelected] = useState<string | null>(null);
 
     const handleOptionClick = (option: Option) => {
-        setSelected(option.label);
-        onSelect(option.value);
+        setSelected(option.name);
+        onSelect(option.id);
         setIsOpen(false);
     };
 
@@ -58,11 +58,11 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
                 <div className="absolute z-10 w-full mt-1 bg-white border  rounded-md shadow-lg">
                     {options.map((option) => (
                         <div
-                            key={option.value}
+                            key={option.id}
                             onClick={() => handleOptionClick(option)}
                             className="px-4 py-2 cursor-pointer hover:bg-primary-200 text-neutral-500"
                         >
-                            {option.label}
+                            {option.name}
                         </div>
                     ))}
                 </div>

@@ -10,36 +10,45 @@ interface InputFieldProps {
     error?: string;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     className?: string;
-    lableclass?:string
+    lableclass?: string;
 }
 
-const Input: React.FC<InputFieldProps> = ({ 
-    label, 
-    name, 
-    type = 'text', 
-    value, 
-    placeholder = '', 
-    error, 
-    onChange, 
+// Modify Input to accept a ref using React.forwardRef
+const Input = React.forwardRef<HTMLInputElement, InputFieldProps>(({
+    label,
+    name,
+    type = 'text',
+    value,
+    placeholder = '',
+    error,
+    onChange,
     className = '',
     lableclass
-}) => {
+}, ref) => {
     return (
         <div className='w-full'>
-            <label htmlFor={name} className={`font-openSans antialiased text-sm font-medium text-gray-700 mb-1 ${lableclass}`}>
-                {label}
-            </label>
+            {/* Render the label if it's provided */}
+            {label && (
+                <label htmlFor={name} className={`font-openSans antialiased text-sm font-medium text-gray-700 mb-1 ${lableclass}`}>
+                    {label}
+                </label>
+            )}
             <input
+                ref={ref}  
                 type={type}
                 name={name}
                 defaultValue={value}
                 onChange={onChange}
                 placeholder={placeholder}
-                className={`flex text-subparagraph w-full outline-none sm:text-sm placeholder:text-sm  placeholder:leading-5 placeholder:text-neutral-400 py-3 md:py-[18px] px-5 bg-divider-100  ${error ? 'border-red-500' : ''} ${className}`}
+                className={`flex text-subparagraph w-full outline-none sm:text-sm placeholder:text-sm placeholder:leading-5 placeholder:text-neutral-400 py-3 md:py-[18px] px-5 bg-divider-100  ${error ? 'border-red-500' : ''} ${className}`}
             />
+            {/* Display error message if there is an error */}
             {error && <p className="mt-1 text-xs text-red-600">{error}</p>}
         </div>
     );
-};
+});
+
+// Assign a displayName to help with debugging
+Input.displayName = 'Input';
 
 export default Input;

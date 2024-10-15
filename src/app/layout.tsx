@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Open_Sans, Inter } from 'next/font/google'
 import "./globals.css";
 import StoreProvider from "@/providers/StoreProvider";
+import SessionProvider from './SessionProvider'
+import { authOptions } from "@/libs/auth";
+import { getServerSession } from "next-auth";
 
 const openSans = Open_Sans({
   weight: ["400", "500", "600", "700", "800"],
@@ -25,14 +28,18 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
+  const session = await getServerSession(authOptions);
   return (
     <html lang="en">
       <body
         className={`${openSans.variable} ${inter.variable} antialiased`}
-      >
+        >
+        <SessionProvider  session={session}>
+
           <StoreProvider>
             {children}
           </StoreProvider>
+        </SessionProvider>
       </body>
     </html>
   );

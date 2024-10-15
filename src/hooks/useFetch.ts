@@ -43,7 +43,7 @@ function useFetch<T>(): FetchResult<T> {
           "Content-Type": "application/json",
         };
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_APIBASEURL}${url}`, {
+        const response = await fetch(`${url}`, {
           ...options,
           headers,
           signal,
@@ -61,6 +61,8 @@ function useFetch<T>(): FetchResult<T> {
         }
 
         const result: ApiResponse<T> = await response.json();
+        console.log(result,"===result");
+        
         setData(result?.results);
         toaster && toast.success(result?.message);
         setError(null);

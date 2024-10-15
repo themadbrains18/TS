@@ -9,6 +9,8 @@ import Button from '@/components/ui/Button';
 import FileUpload from './components/InputFile';
 import useFetch from '@/hooks/useFetch';
 const page = () => {
+    const { data, loading, error, fetchData } = useFetch<any>(); // Replace 'any' with the expected data type
+    const { data:data1, loading:loading1, error:error1, fetchData:fetchDataByTemplate } = useFetch<any>(); // Replace 'any' with the expected data type
 
     const [selectedValue, setSelectedValue] = useState<string | null>(null);
     const [isChecked1, setIsChecked1] = useState(false);
@@ -20,6 +22,7 @@ const page = () => {
 
     const handleSelect = (value: string) => {
         setSelectedValue(value);
+        fetchDataByTemplate(`${process.env.NEXT_PUBLIC_APIURL}/sub-categories/${value}`)
     };
 
     const handleFileSelect = (file: File | null) => {
@@ -32,27 +35,13 @@ const page = () => {
 
     const indusrtdata = ["fintech", "health care", "e-commerce", "real estate", "technology", "crypto", "education"]
 
-    const { data, loading, error, fetchData } = useFetch<any>(); // Replace 'any' with the expected data type
 
     useEffect(() => {
       // Call the fetchData function when the component mounts
       fetchData(`${process.env.NEXT_PUBLIC_APIURL}/template-types`);
     }, [fetchData]);
 
-    // const templateTypes = async () => {
-    //     try {
-    //         let response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/template-types`);
-    //         let json = await response.json();
-    //         console.log(json,"===============json");
-            
-    //     } catch (error) {
-    //         console.log('There was an error', error);
-    //     }
-    // }
-    
-    // useEffect(()=>{
-    //     templateTypes();
-    // },[])
+    console.log(data,"==data");
     
 
     return (
@@ -63,10 +52,10 @@ const page = () => {
                         <h2 className='text-3xl capitalize font-bold pb-8 '>upload product</h2>
                         <div className="flex flex-col gap-y-5 justify-center items-center w-full">
                             <div className='w-full'>
-                                <CustomDropdown placeholder='template type' options={options} onSelect={handleSelect} />
+                                <CustomDropdown placeholder='template type' options={data} onSelect={handleSelect} />
                             </div>
                             <div className='w-full'>
-                                <CustomDropdown placeholder='template SubCategory' options={options} onSelect={handleSelect} />
+                                <CustomDropdown placeholder='template SubCategory' options={data1} onSelect={handleSelect} />
                             </div>
                             <div className='w-full'>
                                 <CustomDropdown placeholder='software type' options={options} onSelect={handleSelect} />
