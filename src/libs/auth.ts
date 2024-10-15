@@ -46,7 +46,7 @@ export const authOptions : NextAuthOptions  = {
       authorize: async (credentials) : Promise<any> => {
         try {
             if(!credentials) return null
-            let data  = credentials as dataShape ;
+            const data  = credentials as dataShape ;
             if (!data?.access_token && !data.expires_in) {
                 return null;
             }

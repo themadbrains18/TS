@@ -9,7 +9,7 @@ const Button: React.FC<ButtonProps> = ({
   isLoading = false,
   children,
   onClick,
-  type,
+  type ="button",
   icon,
   iconClass,
   link,

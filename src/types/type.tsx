@@ -27,15 +27,16 @@ export interface navcardprops {
 export interface ButtonProps {
   variant?: "primary" | "secondary" | "liquid" | "solidicon";
   isLoading?: boolean;
-  type?:string;
+  type?: "button" | "submit" | "reset"; 
   children?: React.ReactNode;
   onClick?: () => void;
   icon?: boolean;
   iconClass?: string;
   link?: string;
   className?: string;
-  linkclass?:string
+  linkclass?: string;
 }
+
 
 export interface navdropdownprops {
   tittle: string;
@@ -129,8 +130,10 @@ export interface DownloadTemplatetype {
 
 export interface dashinput{
   placeholder?:string,
+  value?:string,
   className?:string,
-  type?:string
+  type?:string,
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 
@@ -140,7 +143,7 @@ export type FormData = {
   password: string;
 };
 
-export type ValidFieldNames = | "email"| "githubUrl"| "yearsOfExperience"| "password" | "confirmPassword";
+export type ValidFieldNames = | "email"| "password" | "name" ;
 
 export type FormFieldProps = {
   type: string;

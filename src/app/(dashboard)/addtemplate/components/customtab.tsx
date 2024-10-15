@@ -20,6 +20,8 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
     const [selected, setSelected] = useState<string | null>(null);
 
     const handleOptionClick = (option: Option) => {
+        console.log(option,"=optopo");
+        
         setSelected(option.name);
         onSelect(option.id);
         setIsOpen(false);

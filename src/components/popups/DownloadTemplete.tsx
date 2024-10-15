@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Download from "./Download";
 import SendLink from "./SendLink";
-import Checkinbox from "./checkinbox";
+import Checkinbox from "./Checkinbox";
 import { DownloadTemplatetype } from "@/types/type";
 
 /**

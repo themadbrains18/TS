@@ -1,6 +1,6 @@
 // components/RichTextEditor.tsx
 import React, { useState } from 'react';
-import ReactQuill, { Quill } from 'react-quill';
+import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Import Quill styles
 
 const RichTextEditor: React.FC = () => {
@@ -32,3 +32,4 @@ const RichTextEditor: React.FC = () => {
 };
 
 export default RichTextEditor;
+

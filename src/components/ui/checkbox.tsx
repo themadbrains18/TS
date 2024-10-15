@@ -5,10 +5,10 @@ interface CheckBoxProps {
     label: string;
     index?: number;
     checked: boolean;
-    onChange: (id: string, checked: boolean) => void; // Adjusted to also pass the checked value
-    labelPosition?: 'left' | 'right'; // Prop for label position
-    disabled?: boolean; // Prop for disabling the checkbox
-    customClass?: string; // Prop for adding custom classes
+    onChange: (id: string, checked: boolean) => void;
+    labelPosition?: 'left' | 'right';
+    disabled?: boolean;
+    customClass?: string;
 }
 
 const CheckBox: React.FC<CheckBoxProps> = ({
@@ -17,24 +17,24 @@ const CheckBox: React.FC<CheckBoxProps> = ({
     index,
     checked,
     onChange,
-    labelPosition = 'right', // Default label position
-    disabled = false, // Default not disabled
-    customClass = '', // Default empty class
+    labelPosition = 'right',
+    disabled = false,
+    customClass = '',
 }) => {
-    const uniqueId = index !== undefined ? `${id}-${index}` : id; // Unique ID for each checkbox
+    const uniqueId = index !== undefined ? `${id}-${index}` : id;
 
     return (
         <div className={`form-group mb-4 flex items-center ${customClass}`}>
             <input
                 type="checkbox"
-                id={uniqueId} // Use uniqueId here
+                id={uniqueId}
                 checked={checked}
-                onChange={() => onChange(id, !checked)} // Pass both id and the new checked state
-                disabled={disabled} // Checkbox can be disabled
+                onChange={() => onChange(id, !checked)}
+                disabled={disabled}
                 className="hidden"
             />
             <label
-                htmlFor={uniqueId} // Ensure this matches the input ID
+                htmlFor={uniqueId}
                 className={`relative cursor-pointer flex items-center ${disabled ? 'cursor-not-allowed opacity-50' : ''}`}
             >
                 <span
@@ -47,7 +47,7 @@ const CheckBox: React.FC<CheckBoxProps> = ({
                 )}
             </label>
             <label htmlFor={id} className={` ${checked ? "text-primary-900" : "text-subparagraph"}mr-2`}>
-                <span className={` capitalize ${checked ? "text-primary-900" : "text-subparagraph"}  text-[14px] font-semibold leading-5`} >
+                <span className={`capitalize ${checked ? "text-primary-900" : "text-subparagraph"}  text-[14px] font-semibold leading-5`}>
                     {label}
                 </span>
             </label>
