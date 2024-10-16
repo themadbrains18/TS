@@ -6,7 +6,7 @@ import axios from "axios";
 import { useRouter } from 'next/navigation'; // Correct import for App Router structure
 import Input from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
-import CheckBox from '@/components/ui/Checkbox';
+import CheckBox from '@/components/ui/checkbox';
 import { signupSchema } from '@/validations/signUp.validation';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -45,7 +45,7 @@ console.log(response,"==response");
 
             if (response.status === 201) {
                 alert('Registration successful!');
-                router.push('/login'); // Redirect to the login page after successful registration
+                router.push('/otp'); // Redirect to the login page after successful registration
             }
         } catch (error: any) {
             // Handle server-side validation errors

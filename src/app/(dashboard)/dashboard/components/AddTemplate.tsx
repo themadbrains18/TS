@@ -1,13 +1,127 @@
-import React from 'react'
+import React, { Fragment } from 'react'
+import DashInput from '../../addtemplate/components/DashInput'
+import Button from '@/components/ui/Button'
+import Image from 'next/image';
+import Icon from '@/components/Icon';
 
 const AddTemplate = () => {
+  interface TemplateData {
+    name: string;
+    type: string;
+    version: string;
+    price: string;
+  }
+
+  const templates: TemplateData[] = [
+    {
+      name: "Cosmetic Products eCommerce UI Kit",
+      type: "UI Template",
+      version: "01",
+      price: "$9",
+    },
+    {
+      name: "PetCare E-Commerce Project for Shop Food for Pet",
+      type: "UI Template",
+      version: "01",
+      price: "$5",
+    },
+    {
+      name: "Beautify - Landing Page Design For cosmetic products",
+      type: "UI Template",
+      version: "01",
+      price: "$10",
+    },
+    {
+      name: "Organic Food Store Template",
+      type: "UI Template",
+      version: "01",
+      price: "$10",
+    },
+    {
+      name: "Grocery Store - Multipurpose Shopping Delivery Application",
+      type: "UI Template",
+      version: "01",
+      price: "$9",
+    },
+  ];
+
+  const templateheading = [
+    {
+      heading: "template name"
+    },
+    {
+      heading: "template type"
+    },
+    {
+      heading: "version"
+    },
+    {
+      heading: "price"
+    },
+    {
+      heading: "action"
+    },
+  ]
+
   return (
     <>
-    <section>
+      <section className='py-5 '>
         <div className="container">
-            
+        <div className="px-5">
+          <div className='flex flex-col gap-y-5'>
+            <div className='flex items-center justify-end'>
+              <Button className='py-2' children='logout' />
+            </div>
+            <div className='flex justify-center items-center'>
+              <DashInput className='max-w-lg w-full hover:border-primary-100 focus:border-primary-100 ' placeholder='Search'
+                type='text' onChange={() => { }} />
+            </div>
+          </div>
+
         </div>
-    </section>
+        <div className='py-10'>
+          <div className='flex justify-center md:justify-end md:pb-6 md:px-5'>
+            <Button link='/addtemplate' className='py-2' children='add template' />
+          </div>
+
+          <div className="overflow-x-scroll w-full mt-10 hiddenscroll">
+            <table className="min-w-full border-collapse table-auto">
+              <thead>
+                <tr className="bg-gray-100">
+                  {
+                    templateheading?.map((item, index) => {
+                      return (
+                        <Fragment key={index}>
+                          <th className="text-nowrap px-6 py-5 text-left text-sm md:text-base font-semibold text-subheading capitalize">
+                            {item.heading}
+                          </th>
+                        </Fragment>
+                      )
+                    })
+                  }
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                {templates.map((template, index) => (
+                  <tr key={index} className="hover:bg-gray-50">
+                    <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize max-w-[200px]  truncate md:max-w-full font-semibold">{template.name}</td>
+                    <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">{template.type}</td>
+                    <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">{template.version}</td>
+                    <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">{template.price}</td>
+                    <td className="px-6 py-5 text-sm md:text-base text-subparagraph flex gap-x-2 flex-nowrap">
+                     <Icon className='w-6 h-6 fill-subheading cursor-pointer' name='showicon'/>
+                     <Icon className='w-6 h-6 fill-subheading cursor-pointer' name='deleteicon'/>
+                     <Icon className='w-5 h-6 fill-subheading cursor-pointer' name='editicon'/>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+        </div>
+      </section>
     </>
   )
 }

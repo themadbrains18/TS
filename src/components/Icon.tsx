@@ -28,6 +28,9 @@ import Iconleft from "/public/icons/Iconleft.svg";
 import Rating from "/public/icons/Rating.svg";
 import Ratingbottom from "/public/icons/ratingbottom.svg";
 import Swipericon from "/public/icons/swipericon.svg";
+import Showicon from '@/../public/icons/showicon.svg'
+import Deleteicon from '@/../public/icons/deleteicon.svg'
+import Editicon from '@/../public/icons/editicon.svg'
 import { cn } from "@/libs/utils";
 
 // Map icon names to components
@@ -58,7 +61,10 @@ const icons = {
   iconleft: Iconleft,
   rating: Rating,
   ratingbottom: Ratingbottom,
-  swipericon:Swipericon
+  swipericon:Swipericon,
+  showicon:Showicon,
+  deleteicon:Deleteicon,
+  editicon:Editicon
 };
 
 export type IconName = keyof typeof icons;

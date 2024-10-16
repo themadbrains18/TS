@@ -2,14 +2,66 @@
 
 import Icon from '@/components/Icon';
 import Button from '@/components/ui/Button';
-import CheckBox from '@/components/ui/Checkbox';
+import CheckBox from '@/components/ui/checkbox';
 import Input from '@/components/ui/Input';
+import { loginSchema } from '@/validations/loginValidation';
+import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+
+interface FormData {
+    email: string;
+    password: string;
+}
+
 
 const Page = () => {
     const [isChecked1, setIsChecked1] = useState(false);
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        setError,
+    } = useForm<FormData>({
+        resolver: zodResolver(loginSchema),
+    });
+
+    const router = useRouter(); // Correct router usage
+
+    const onSubmit = async (data: FormData) => {
+        console.log("im submited")
+        try {
+            console.log("Submitted data:", data);
+
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_APIURL}/login`, data);
+console.log(response,"==response");
+
+
+            if (response.status === 201) {
+                alert('login successful!');
+                router.push('/login'); // Redirect to the login page after successful registration
+            }
+        } catch (error: any) {
+            // Handle server-side validation errors
+            if (error.response && error.response.data.errors) {
+                const serverErrors = error.response.data.errors;
+                Object.keys(serverErrors).forEach((field) => {
+                    setError(field as keyof FormData, {
+                        type: "server",
+                        message: serverErrors[field],
+                    });
+                });
+            } else {
+                alert("login failed. Please try again.");
+            }
+        }
+    };
+
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 ">
@@ -40,12 +92,16 @@ const Page = () => {
                     <h2 className="text-[22px] tab:text-[36px] font-bold leading-[44px]  pb-[30px] md:pb-[60px]">Hi, Welcome Back!</h2>
                     <div className="flex flex-col justify-center h-[759px]">
                         {/* Name Input */}
-                        <div className='  md:space-y-[30px] space-y-[15px] ' >
+                        <form onSubmit={handleSubmit(onSubmit)} >
+
+                        <div  className='  md:space-y-[30px] space-y-[15px] ' >
                             {/* Email or Phone Input */}
                             <Input
                                 placeholder="Your Details"
                                 label="Email or Phone"
                                 className=" placeholder:text-neutral-400 py-3 md:py-[18px]  px-5 bg-divider-100"
+                                error={errors.email?.message} 
+                                {...register('email')}
                             />
 
                             {/* Password Input with Show Password Option */}
@@ -54,6 +110,8 @@ const Page = () => {
                                 placeholder="Password"
                                 label="Password"
                                 className=" placeholder:text-neutral-400 py-3 md:py-[18px] px-5 bg-divider-100"
+                                error={errors.password?.message} 
+                                {...register('password')}
                             />
 
                             {/* Checkbox to Toggle Password Visibility */}
@@ -69,7 +127,7 @@ const Page = () => {
 
                         {/* Register Button */}
                         <div className='my-[60px]' >
-                            <Button className="w-full items-center  justify-center" variant="primary">
+                            <Button type="submit" className="w-full items-center  justify-center" variant="primary">
                                 Login
                             </Button>
                             {/* Forgot Password Link */}
@@ -79,6 +137,7 @@ const Page = () => {
                                 </Link>
                             </div>
                         </div>
+                        </form>
 
                         {/* Social Media Buttons */}
                         <div className="flex flex-col lg:flex-row gap-[15px] items-center">

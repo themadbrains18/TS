@@ -68,4 +68,9 @@
     right: 0 !important;
     top: 0 !important;
   }
+  /* dashboard table heading */
+
+  .dashheading{
+    @apply capitalize text-textheading
+  }
 }
