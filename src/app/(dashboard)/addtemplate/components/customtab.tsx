@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import useOnClickOutside from '@/hooks/useOnClickOutside';
+import { useRef, useState } from 'react';
 
 interface Option {
     id: string;
@@ -18,28 +19,30 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selected, setSelected] = useState<string | null>(null);
+    const dropdownRef = useRef<HTMLDivElement>(null);
 
     const handleOptionClick = (option: Option) => {
-        console.log(option,"=optopo");
-        
         setSelected(option.name);
         onSelect(option.id);
         setIsOpen(false);
     };
 
+    // Close the dropdown if clicked outside
+    useOnClickOutside(dropdownRef, () => setIsOpen(false));
+
+    
     return (
-        <div className="relative w-full">
+        <div ref={dropdownRef} className="relative w-full">
             {/* Dropdown Button */}
             <button
                 type="button"
-                className="w-full p-3 text-neutral-500 text-left bg-white border transition-all duration-300 rounded-md border-neutral-400 md shadow-sm  capitalize"
+                className="w-full p-3 text-neutral-500 text-left bg-white border transition-all duration-300 rounded-md border-neutral-400 md shadow-sm capitalize"
                 onClick={() => setIsOpen(!isOpen)}
             >
                 {selected || placeholder}
                 <span className="float-right">
                     <svg
-                        className={`w-5 h-5 transform transition-all duration-300 ${isOpen ? 'rotate-180' : 'rotate-0'
-                            }`}
+                        className={`w-5 h-5 transform transition-all duration-300 ${isOpen ? 'rotate-180' : 'rotate-0'}`}
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -57,8 +60,8 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
 
             {/* Dropdown Menu */}
             {isOpen && (
-                <div className="absolute z-10 w-full mt-1 bg-white border  rounded-md shadow-lg">
-                    {options.map((option) => (
+                <div className="absolute z-10 w-full mt-1 bg-white border rounded-md shadow-lg">
+                    {options?.map((option) => (
                         <div
                             key={option.id}
                             onClick={() => handleOptionClick(option)}
