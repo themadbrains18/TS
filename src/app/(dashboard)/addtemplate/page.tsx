@@ -75,7 +75,7 @@ const Page: React.FC = () => {
   };
 
   // Handle file selection from FileUpload component
-  const handleFileSelect = (file: File | null) => {
+  const handleFileSelect = (file: File[] | null) => {
     if (file) {
       console.log('Selected file:', file);
     } else {
@@ -83,7 +83,7 @@ const Page: React.FC = () => {
     }
   };
   // Handle file selection from FileUpload component
-  const handlePreviewFileSelect = (file: File | null) => {
+  const handlePreviewFileSelect = (file: File[] | null) => {
     if (file) {
       console.log('Selected file:', file);
     } else {
@@ -91,7 +91,7 @@ const Page: React.FC = () => {
     }
   };
   // Handle file selection from FileUpload component
-  const handleSliderFileSelect = (file: File | null) => {
+  const handleSliderFileSelect = (file: File[] | null) => {
     if (file) {
       console.log('Selected file:', file);
     } else {
