@@ -78,6 +78,22 @@ const Page: React.FC = () => {
       console.log('No file selected');
     }
   };
+  // Handle file selection from FileUpload component
+  const handlePreviewFileSelect = (file: File | null) => {
+    if (file) {
+      console.log('Selected file:', file);
+    } else {
+      console.log('No file selected');
+    }
+  };
+  // Handle file selection from FileUpload component
+  const handleSliderFileSelect = (file: File | null) => {
+    if (file) {
+      console.log('Selected file:', file);
+    } else {
+      console.log('No file selected');
+    }
+  };
 
   // Handle checkbox change for industries
   const handleIndustryChange = (id: string, isChecked: boolean) => {
@@ -234,27 +250,45 @@ const removeInputField = (setter: React.Dispatch<React.SetStateAction<Font[]>>, 
               </div>
             </div>
 
-            <div className='pt-5'>
-              <h3 className='text-xl font-semibold capitalize  pb-4'>Source Files</h3>
-              <div className='p-5 border border-dashed border-neutral-400 rounded-md'>
-                <FileUpload supportedfiles='zip' onFileSelect={handleFileSelect} />
-              </div>
-            </div>
+         {/* File Uploads */}
+         <div className='pt-5'>
+          <h3 className='text-xl font-semibold capitalize pb-4'>Source Files (only .zip)</h3>
+          <div className='p-5 border border-dashed rounded-md'>
+            <FileUpload
+              onFileSelect={(file) => handleFileSelect(file)}
+              supportedfiles="zip"
+              multiple={false}
+              id="1"
+            />
+          </div>
+        </div>
 
-            <div className='pt-5'>
-              <h3 className='text-xl font-semibold capitalize  pb-4'>Slider Images</h3>
-              <div className='p-5 border border-dashed border-neutral-400 rounded-md'>
-                <FileUpload supportedfiles='png, jpg, jpeg' onFileSelect={handleFileSelect} />
-              </div>
-            </div>
+        <div className='pt-5'>
+          <h3 className='text-xl font-semibold capitalize pb-4'>Slider Images (png, jpg, jpeg)</h3>
+          <div className='p-5 border border-dashed rounded-md'>
+            <FileUpload
+              onFileSelect={(file) => handleSliderFileSelect(file)}
+        supportedfiles="jpg,png,jpeg"
+        multiple={true}
+id="2"
+            />
+          </div>
+        </div>
 
-            <div className='pt-5'>
-              <h3 className='text-xl font-semibold capitalize  pb-4'>Preview Images</h3>
-              <div className='p-5 border border-dashed border-neutral-400 rounded-md'>
-                <FileUpload supportedfiles='png, jpg, jpeg' onFileSelect={handleFileSelect} />
-              </div>
-            </div>
+        <div className='pt-5'>
+          <h3 className='text-xl font-semibold capitalize pb-4'>Preview Images (png, jpg, jpeg)</h3>
+          <div className='p-5 border border-dashed rounded-md'>
+            <FileUpload
+   
+              onFileSelect={(file) => handlePreviewFileSelect(file)}
 
+              supportedfiles="jpg,png,jpeg"
+              multiple={true}
+              id="3"
+
+            />
+          </div>
+        </div>
             <div className='mt-5'>
               <Input label='SEO Keywords Tag' lableclass='text-xl font-semibold capitalize' className='pb-3 border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400' placeholder='tag name' />
               <div className='mt-5'>
