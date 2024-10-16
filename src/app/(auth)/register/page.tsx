@@ -10,6 +10,7 @@ import CheckBox from '@/components/ui/checkbox';
 import { signupSchema } from '@/validations/signUp.validation';
 import Link from 'next/link';
 import Image from 'next/image';
+import { toast } from 'react-toastify';
 
 // Define FormData interface
 interface FormData {
@@ -40,12 +41,10 @@ const Page = () => {
             console.log("Submitted data:", data);
 
             const response = await axios.post(`${process.env.NEXT_PUBLIC_APIURL}/register`, data);
-console.log(response,"==response");
-
 
             if (response.status === 201) {
-                alert('Registration successful!');
-                router.push('/otp'); // Redirect to the login page after successful registration
+                alert(response.data.otp)
+                // router.push('/otp'); // Redirect to the login page after successful registration
             }
         } catch (error: any) {
             // Handle server-side validation errors
@@ -67,15 +66,15 @@ console.log(response,"==response");
         <div className="grid grid-cols-1 lg:grid-cols-2">
             {/* Left Section */}
             <div className="bg-[url('/images/authsideimage.png')] bg-no-repeat bg-cover h-[280px] lg:h-screen lg:sticky top-0 left-0 bottom-0">
-            <div className=" py-[30px] px-5 lg:p-[30px] lg:h-screen flex  items-center lg:items-start  justify-between flex-col ">
+                <div className=" py-[30px] px-5 lg:p-[30px] lg:h-screen flex  items-center lg:items-start  justify-between flex-col ">
                     <Link href={'/'}>
-                    <Image
-                        className=" lg:ml-[70px]"
-                        src={'/images/Logowhite.png'}
-                        alt="Madbrains Logo"
-                        width={276}
-                        height={40}
-                    />
+                        <Image
+                            className=" lg:ml-[70px]"
+                            src={'/images/Logowhite.png'}
+                            alt="Madbrains Logo"
+                            width={276}
+                            height={40}
+                        />
                     </Link>
                     <h2 className="text-[32px] md:text-[50px] xl:text-[62px] text-center lg:text-start font-normal pt-[30px] lg:pt-0 text-white lg:max-w-[700px] lg:m-auto ">
                         Free High-quality UI kits and design resources
@@ -96,27 +95,27 @@ console.log(response,"==response");
                             <Input
                                 placeholder="Name"
                                 label="Name"
-                                error={errors.name?.message} 
+                                error={errors.name?.message}
                                 {...register('name')}
                             />
                             <Input
                                 placeholder="Email"
                                 label="Email"
-                                error={errors.email?.message}  
+                                error={errors.email?.message}
                                 {...register('email')}
                             />
                             <Input
                                 type={isChecked1 ? "text" : "password"}
                                 placeholder="Password"
                                 label="Password"
-                                error={errors.password?.message}  
+                                error={errors.password?.message}
                                 {...register("password")}
                             />
                             <Input
                                 type={isChecked1 ? "text" : "password"}
                                 placeholder="Confirm Password"
                                 label="Confirm Password"
-                                error={errors.confirmPassword?.message}  
+                                error={errors.confirmPassword?.message}
                                 {...register("confirmPassword")}
                             />
                             <CheckBox

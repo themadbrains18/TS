@@ -60,14 +60,14 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
 
             {/* Dropdown Menu */}
             {isOpen && (
-                <div className="absolute z-10 w-full mt-1 bg-white border rounded-md shadow-lg">
+                <div className="absolute z-10 w-full mt-1 bg-white border  rounded-md shadow-lg">
                     {options?.map((option) => (
                         <div
-                            key={option.id}
+                            key={option?.id}
                             onClick={() => handleOptionClick(option)}
                             className="px-4 py-2 cursor-pointer hover:bg-primary-200 text-neutral-500"
                         >
-                            {option.name}
+                            {option?.name}
                         </div>
                     ))}
                 </div>

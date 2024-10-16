@@ -10,6 +10,7 @@ import Button from '@/components/ui/Button';
 import FileUpload from './components/InputFile';
 import useFetch from '@/hooks/useFetch';
 import dynamic from 'next/dynamic';
+import StaticCheckBox from '@/components/ui/StaticCheckbox';
 
 // Define types for data structures
 interface TemplateType {
@@ -30,7 +31,7 @@ interface Font {
 const Page: React.FC = () => {
   // Fetch data hooks for template types, subcategories, and industries
   const { data, fetchData } = useFetch<TemplateType[]>();
-  const { data: templateData,  fetchData: fetchTemplateData } = useFetch<any>();
+  const { data: templateData, fetchData: fetchTemplateData } = useFetch<any>();
   const { data: industryData, fetchData: fetchIndustryData } = useFetch<IndustryType[]>();
 
   // State for fonts, images, icons, and illustrations
@@ -38,21 +39,24 @@ const Page: React.FC = () => {
   const [images, setImages] = useState<Font[]>([{ fontName: '', fontUrl: '' }]);
   const [icons, setIcons] = useState<Font[]>([{ fontName: '', fontUrl: '' }]);
   const [illustrations, setIllustrations] = useState<Font[]>([{ fontName: '', fontUrl: '' }]);
-    // Technical details state (4 inputs by default)
-    const [technicalDetails, setTechnicalDetails] = useState<Font[]>([
-        { fontName: '', fontUrl: '' },
-        { fontName: '', fontUrl: '' },
-        { fontName: '', fontUrl: '' },
-        { fontName: '', fontUrl: '' }
-      ]);
+  // Technical details state (4 inputs by default)
+  const [technicalDetails, setTechnicalDetails] = useState<Font[]>([
+    { fontName: '', fontUrl: '' },
+    { fontName: '', fontUrl: '' },
+    { fontName: '', fontUrl: '' },
+    { fontName: '', fontUrl: '' }
+  ]);
 
   // Dropdown selection states
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
   const [categoryValue, setCategoryValue] = useState<string | null>(null);
   const [softwareType, setSoftwareType] = useState<string | null>(null);
 
+  const [staticcheck, setStaticCheck] = useState(false);
+
   // Checkbox selection for industries
   const [selectedIndustries, setSelectedIndustries] = useState<string[]>([]);
+  const [ispaid, setIsPaid] = useState<string[]>([]);
 
   // Handle template dropdown selection
   const handleTemplateSelect = (value: string) => {
@@ -78,6 +82,22 @@ const Page: React.FC = () => {
       console.log('No file selected');
     }
   };
+  // Handle file selection from FileUpload component
+  const handlePreviewFileSelect = (file: File | null) => {
+    if (file) {
+      console.log('Selected file:', file);
+    } else {
+      console.log('No file selected');
+    }
+  };
+  // Handle file selection from FileUpload component
+  const handleSliderFileSelect = (file: File | null) => {
+    if (file) {
+      console.log('Selected file:', file);
+    } else {
+      console.log('No file selected');
+    }
+  };
 
   // Handle checkbox change for industries
   const handleIndustryChange = (id: string, isChecked: boolean) => {
@@ -85,6 +105,13 @@ const Page: React.FC = () => {
       setSelectedIndustries((prev) => [...prev, id]);
     } else {
       setSelectedIndustries((prev) => prev.filter((industry) => industry !== id));
+    }
+  };
+  const handlepaid = (id: string, isChecked: boolean) => {
+    if (isChecked) {
+      setIsPaid((prev) => [...prev, id]);
+    } else {
+      setIsPaid((prev) => prev.filter((industry) => industry !== id));
     }
   };
 
@@ -106,15 +133,15 @@ const Page: React.FC = () => {
     setter(newValues);
   };
 
-// Function to remove input fields
-const removeInputField = (setter: React.Dispatch<React.SetStateAction<Font[]>>, index: number, values: Font[]) => {
+  // Function to remove input fields
+  const removeInputField = (setter: React.Dispatch<React.SetStateAction<Font[]>>, index: number, values: Font[]) => {
     if (values.length > 1) {
       const newValues = [...values];
       newValues.splice(index, 1); // Remove the input at the specified index
       setter(newValues);
     }
   };
-  
+
   // Render input fields for fonts, images, icons, or illustrations
   const renderInputFields = (items: Font[], setter: React.Dispatch<React.SetStateAction<Font[]>>, title: string) => (
     <div className='pb-3'>
@@ -136,9 +163,9 @@ const removeInputField = (setter: React.Dispatch<React.SetStateAction<Font[]>>, 
             />
             {/* Show remove button only if there is more than one input */}
             {items.length > 1 && (
-              <Button 
-                onClick={() => removeInputField(setter, index, items)} 
-        
+              <Button
+                onClick={() => removeInputField(setter, index, items)}
+
                 className="py-1 px-2"
               >
                 Remove
@@ -150,7 +177,7 @@ const removeInputField = (setter: React.Dispatch<React.SetStateAction<Font[]>>, 
       </div>
     </div>
   );
-  
+
   const renderTechnicalDetailsFields = () => (
     <div className='pb-3'>
       <div className="p-5 border-b border-neutral-400">
@@ -162,11 +189,11 @@ const removeInputField = (setter: React.Dispatch<React.SetStateAction<Font[]>>, 
               value={detail.fontName}
               onChange={(e) => handleInputChange(setTechnicalDetails, index, 'fontName', e.target.value, technicalDetails)}
             />
-          
+
             {/* Show remove button only if there are more than 4 inputs */}
             {technicalDetails.length > 4 && (
-              <Button 
-                onClick={() => removeInputField(setTechnicalDetails, index, technicalDetails)} 
+              <Button
+                onClick={() => removeInputField(setTechnicalDetails, index, technicalDetails)}
                 className="py-1 px-2"
               >
                 Remove
@@ -208,8 +235,8 @@ const removeInputField = (setter: React.Dispatch<React.SetStateAction<Font[]>>, 
             </div>
 
             <div className='flex flex-col gap-y-5'>
-              <Input label='Name' lableclass='text-xl font-semibold capitalize' className='border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400' placeholder='Template Name' />
-              <Input label='Version' lableclass='text-xl font-semibold capitalize' className='border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400' placeholder='Version' />
+              <Input label='Name' lableclass='text-xl font-semibold capitalize' className='bg-white border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400' placeholder='Template Name' />
+              <Input label='Version' lableclass='text-xl font-semibold capitalize' className='border bg-white border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400' placeholder='Version' />
             </div>
 
             <div className='mt-5'>
@@ -230,33 +257,75 @@ const removeInputField = (setter: React.Dispatch<React.SetStateAction<Font[]>>, 
             <div className='pt-5'>
               <h3 className='text-xl font-semibold capitalize  pb-4'>Technical Details</h3>
               <div className='p-5 border border-neutral-400 rounded-md'>
-              {renderTechnicalDetailsFields()}
+                {renderTechnicalDetailsFields()}
+              </div>
+            </div>
+
+            {/* File Uploads */}
+            <div className='pt-5'>
+              <h3 className='text-xl font-semibold capitalize pb-4'>Source File</h3>
+              <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
+                <FileUpload
+                  onFileSelect={(file) => handleFileSelect(file)}
+                  supportedfiles="zip"
+                  multiple={false}
+                  id="1"
+                />
               </div>
             </div>
 
             <div className='pt-5'>
-              <h3 className='text-xl font-semibold capitalize  pb-4'>Source Files</h3>
-              <div className='p-5 border border-dashed border-neutral-400 rounded-md'>
-                <FileUpload supportedfiles='zip' onFileSelect={handleFileSelect} />
+              <h3 className='text-xl font-semibold capitalize pb-4'>Slider Images</h3>
+              <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
+                <FileUpload
+                  onFileSelect={(file) => handleSliderFileSelect(file)}
+                  supportedfiles="jpg,png,jpeg"
+                  multiple={true}
+                  id="2"
+                />
               </div>
             </div>
 
             <div className='pt-5'>
-              <h3 className='text-xl font-semibold capitalize  pb-4'>Slider Images</h3>
-              <div className='p-5 border border-dashed border-neutral-400 rounded-md'>
-                <FileUpload supportedfiles='png, jpg, jpeg' onFileSelect={handleFileSelect} />
+              <h3 className='text-xl font-semibold capitalize pb-4'>Preview Images</h3>
+              <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
+                <FileUpload
+
+                  onFileSelect={(file) => handlePreviewFileSelect(file)}
+
+                  supportedfiles="jpg,png,jpeg"
+                  multiple={true}
+                  id="3"
+
+                />
               </div>
             </div>
-
             <div className='pt-5'>
-              <h3 className='text-xl font-semibold capitalize  pb-4'>Preview Images</h3>
-              <div className='p-5 border border-dashed border-neutral-400 rounded-md'>
-                <FileUpload supportedfiles='png, jpg, jpeg' onFileSelect={handleFileSelect} />
+              <h3 className='text-xl font-semibold capitalize pb-4'>Mobile Images</h3>
+              <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
+                <FileUpload
+
+                  onFileSelect={(file) => handlePreviewFileSelect(file)}
+
+                  supportedfiles="jpg,png,jpeg"
+                  multiple={true}
+                  id="3"
+
+                />
               </div>
             </div>
-
             <div className='mt-5'>
-              <Input label='SEO Keywords Tag' lableclass='text-xl font-semibold capitalize' className='pb-3 border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400' placeholder='tag name' />
+              <Input label='SEO Keywords Tag' lableclass='text-xl font-semibold capitalize' className='bg-white pb-3 border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400' placeholder='tag name' />
+              <div className='pt-5'>
+                <StaticCheckBox onClick={() => setStaticCheck(!staticcheck)} checked={staticcheck} label='Paid' />
+                {
+                  staticcheck &&
+                  <div>
+                    <Input label='price in dollar' lableclass='text-xl font-semibold capitalize' className='pb-3 border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400 bg-white ' placeholder='price in dollar' type='number' />
+                  </div>
+
+                }
+              </div>
               <div className='mt-5'>
                 <Button children="Upload" variant='primary' className='py-3' />
               </div>

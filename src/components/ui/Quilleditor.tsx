@@ -20,12 +20,13 @@ const RichTextEditor: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className='h-32'>
       <ReactQuill
         value={text}
         onChange={handleChange}
         modules={modules}
         theme="snow"
+        className='h-24'
       /> 
     </div>
   );

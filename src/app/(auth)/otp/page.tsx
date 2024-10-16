@@ -36,7 +36,7 @@ const Page = () => {
                     <h2 className="text-[22px] tab:text-[36px] font-bold leading-[44px]  pb-[30px] md:pb-[60px]">Forgot Password</h2>
                     <Link className='flex gap-[7px] items-center  pb-[30px] md:pb-[60px]' href={"/login"} >
                         <Icon name='iconleft' />
-                        <h2 className="text-[18px] font-bold leading-7 text-primary-900">Back To Log In</h2>
+                        <h2 className="text-[18px] font-bold leading-7 text-primary -900">Back To Log In</h2>
                     </Link>
                     <div className="flex flex-col justify-center  h-[500px] md:h-[653px]">
                         <div>

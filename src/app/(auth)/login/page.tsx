@@ -39,7 +39,7 @@ const Page = () => {
             console.log("Submitted data:", data);
 
             const response = await axios.post(`${process.env.NEXT_PUBLIC_APIURL}/login`, data);
-console.log(response,"==response");
+            console.log(response,"==response");
 
 
             if (response.status === 201) {

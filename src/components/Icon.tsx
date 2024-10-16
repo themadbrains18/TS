@@ -29,6 +29,7 @@ import Rating from "/public/icons/Rating.svg";
 import Ratingbottom from "/public/icons/ratingbottom.svg";
 import Swipericon from "/public/icons/swipericon.svg";
 import Showicon from '@/../public/icons/showicon.svg'
+import Hideicon from '@/../public/icons/hiddenicon.svg'
 import Deleteicon from '@/../public/icons/deleteicon.svg'
 import Editicon from '@/../public/icons/editicon.svg'
 import { cn } from "@/libs/utils";
@@ -64,7 +65,8 @@ const icons = {
   swipericon:Swipericon,
   showicon:Showicon,
   deleteicon:Deleteicon,
-  editicon:Editicon
+  editicon:Editicon,
+  hideicon:Hideicon,
 };
 
 export type IconName = keyof typeof icons;
