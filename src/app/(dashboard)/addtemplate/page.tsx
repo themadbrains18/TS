@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Input from '@/components/ui/Input';
-import CustomDropdown from './components/customtab';
+import CustomDropdown from './components/CustomTab';
 import CheckBox from '@/components/ui/checkbox';
 import QuillEditor from '@/components/ui/Quilleditor';
 import DashInput from './components/DashInput';
