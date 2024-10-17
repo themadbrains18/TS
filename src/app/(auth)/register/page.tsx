@@ -10,7 +10,6 @@ import CheckBox from '@/components/ui/checkbox';
 import { signupSchema } from '@/validations/signUp.validation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { toast } from 'react-toastify';
 
 // Define FormData interface
 interface FormData {
@@ -34,7 +33,6 @@ const Page = () => {
     });
 
     const [isChecked1, setIsChecked1] = useState(false);
-    const router = useRouter(); // Correct router usage
 
     const onSubmit = async (data: FormData) => {
         try {

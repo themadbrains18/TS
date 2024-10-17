@@ -9,7 +9,6 @@ import DashInput from './components/DashInput';
 import Button from '@/components/ui/Button';
 import FileUpload from './components/InputFile';
 import useFetch from '@/hooks/useFetch';
-import dynamic from 'next/dynamic';
 import StaticCheckBox from '@/components/ui/StaticCheckbox';
 
 // Define types for data structures
@@ -107,13 +106,13 @@ const Page: React.FC = () => {
       setSelectedIndustries((prev) => prev.filter((industry) => industry !== id));
     }
   };
-  const handlepaid = (id: string, isChecked: boolean) => {
-    if (isChecked) {
-      setIsPaid((prev) => [...prev, id]);
-    } else {
-      setIsPaid((prev) => prev.filter((industry) => industry !== id));
-    }
-  };
+  // const handlepaid = (id: string, isChecked: boolean) => {
+  //   if (isChecked) {
+  //     setIsPaid((prev) => [...prev, id]);
+  //   } else {
+  //     setIsPaid((prev) => prev.filter((industry) => industry !== id));
+  //   }
+  // };
 
   useEffect(() => {
     // Fetch template types and industries on mount
@@ -173,7 +172,7 @@ const Page: React.FC = () => {
             )}
           </div>
         ))}
-        <Button onClick={() => addInputFields(setter, items)} children="Add more" variant='primary' className='py-2 mt-2' />
+        <Button onClick={() => addInputFields(setter, items)}  variant='primary' className='py-2 mt-2' >Add more</Button>
       </div>
     </div>
   );
@@ -201,7 +200,7 @@ const Page: React.FC = () => {
             )}
           </div>
         ))}
-        <Button onClick={() => addInputFields(setTechnicalDetails, technicalDetails)} children="Add more" variant='primary' className='py-2 mt-2' />
+        <Button onClick={() => addInputFields(setTechnicalDetails, technicalDetails)} variant='primary' className='py-2 mt-2' >Add more</Button>
       </div>
     </div>
   );
@@ -327,7 +326,7 @@ const Page: React.FC = () => {
                 }
               </div>
               <div className='mt-5'>
-                <Button children="Upload" variant='primary' className='py-3' />
+                <Button  variant='primary' className='py-3' >Upload</Button>
               </div>
             </div>
           </div>

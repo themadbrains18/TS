@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React, { useState } from 'react';
 
 interface FileUploadProps {
@@ -16,7 +17,8 @@ const FilePreview = ({
 }) => {
   return (
     <div className="relative border p-2 mb-2 z-50">
-      <img src={previewUrl} alt="File Preview" className="w-32 h-32 object-cover mb-2" />
+      <Image src={previewUrl} width={128} height={128} alt='File Preview' className='object-cover mb-2'/>
+      {/* <img src={} alt="File Preview" className="w-32 h-32 object-cover mb-2" /> */}
       <button
         onClick={(e) => {
           e.stopPropagation();
