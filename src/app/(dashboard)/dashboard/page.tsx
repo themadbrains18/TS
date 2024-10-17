@@ -1,7 +1,5 @@
 import Button from '@/components/ui/Button'
 import React from 'react'
-import AddTemplate from './components/AddTemplate'
-
 const page = () => {
     return (
         <>
@@ -16,7 +14,6 @@ const page = () => {
                 </Button>
                 </div>
             </div>
-            {/* <AddTemplate/> */}
         </>
     )
 }

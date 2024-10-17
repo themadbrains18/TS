@@ -212,7 +212,7 @@ const Page: React.FC = () => {
           <h2 className='text-3xl capitalize font-bold pb-8 '>Upload Product</h2>
 
           <div className="flex flex-col gap-y-5 justify-center items-center w-full">
-            <CustomDropdown placeholder='Template Type' options={data || []} onSelect={handleTemplateSelect} />
+            <CustomDropdown  placeholder='Template Type' options={data || []} onSelect={handleTemplateSelect} />
             <CustomDropdown placeholder='Template SubCategory' options={templateData?.subCategories} onSelect={handleCategorySelect} />
             <CustomDropdown placeholder='Software Type' options={templateData?.softwareCategories} onSelect={handleSoftwareSelect} />
           </div>
