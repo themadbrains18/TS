@@ -62,7 +62,7 @@ export const authOptions : NextAuthOptions  = {
     jwt: async ({ token, user }) => {
       // Add user to the token right after signin
       if (user) {
-        const u = user as unknown as any;
+        // const u = user as unknown as any;
         return {
           ...token,
           ...user

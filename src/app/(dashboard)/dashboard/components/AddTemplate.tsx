@@ -112,7 +112,7 @@ const AddTemplate = () => {
           <div className="px-5">
             <div className="flex flex-col gap-y-5">
               <div className="flex items-center justify-end">
-                <Button className="py-2" children="logout" />
+                <Button className="py-2"  >logout</Button>
               </div>
               <div className="flex justify-center items-center">
                 <DashInput className="max-w-lg w-full hover:border-primary-100 focus:border-primary-100" placeholder="Search" type="text" onChange={() => { }} />
@@ -121,7 +121,7 @@ const AddTemplate = () => {
           </div>
           <div className="py-10">
             <div className="flex justify-center md:justify-end md:pb-6 md:px-5">
-              <Button link="/addtemplate" className="py-2" children="add template" />
+              <Button link="/addtemplate" className="py-2"  >add template</Button>
             </div>
 
             <div className="overflow-x-scroll w-full mt-10 hiddenscroll">

@@ -3,14 +3,12 @@ import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { useRouter } from 'next/navigation'; // Correct import for App Router structure
 import Input from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
 import CheckBox from '@/components/ui/checkbox';
 import { signupSchema } from '@/validations/signUp.validation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { toast } from 'react-toastify';
 
 // Define FormData interface
 interface FormData {
@@ -34,7 +32,6 @@ const Page = () => {
     });
 
     const [isChecked1, setIsChecked1] = useState(false);
-    const router = useRouter(); // Correct router usage
 
     const onSubmit = async (data: FormData) => {
         try {
