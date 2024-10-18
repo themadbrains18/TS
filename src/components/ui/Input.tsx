@@ -1,5 +1,6 @@
 'use client';
 import React from 'react';
+import { UseFormRegister } from 'react-hook-form';
 
 interface InputFieldProps {
     label?: string;
@@ -11,6 +12,7 @@ interface InputFieldProps {
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     className?: string;
     lableclass?: string;
+    register: UseFormRegister<any>; // Type from react-hook-form
 }
 
 // Modify Input to accept a ref using React.forwardRef
@@ -23,7 +25,8 @@ const Input = React.forwardRef<HTMLInputElement, InputFieldProps>(({
     error,
     onChange,
     className = '',
-    lableclass
+    lableclass,
+    register
 }, ref) => {
     return (
         <div className='w-full'>
@@ -34,7 +37,8 @@ const Input = React.forwardRef<HTMLInputElement, InputFieldProps>(({
                 </label>
             )}
             <input
-                ref={ref}  
+            {...register('name')}
+                // ref={ref}  
                 type={type}
                 name={name}
                 defaultValue={value}
