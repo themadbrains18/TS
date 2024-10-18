@@ -27,7 +27,7 @@ export interface navcardprops {
 export interface ButtonProps {
   variant?: "primary" | "secondary" | "liquid" | "solidicon";
   isLoading?: boolean;
-  type?: "button" | "submit" | "reset"; 
+  type?: "button" | "submit" | "reset";
   children?: React.ReactNode;
   onClick?: () => void;
   icon?: boolean;
@@ -40,11 +40,17 @@ export interface ButtonProps {
 
 export interface navdropdownprops {
   tittle: string;
-  subCat?:[{id:string,name:string,templateTypeId:string}]
+  subCat?: [{ id: string, name: string, templateTypeId: string }]
 }
 export interface navtabprops {
   // tittle: string;
-  subCat?:[{id:string,name:string,templateTypeId:string}]
+  subCat?:subCat[]
+}
+
+export interface subCat {
+  id: string, 
+  name: string, 
+  templateTypeId: string
 }
 
 export interface AccordionProps {
@@ -133,11 +139,11 @@ export interface DownloadTemplatetype {
   setIsFirstPopupOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export interface dashinput{
-  placeholder?:string,
-  value?:string,
-  className?:string,
-  type?:string,
+export interface dashinput {
+  placeholder?: string,
+  value?: string,
+  className?: string,
+  type?: string,
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -148,7 +154,7 @@ export type FormData = {
   password: string;
 };
 
-export type ValidFieldNames = | "email"| "password" | "name" ;
+export type ValidFieldNames = | "email" | "password" | "name";
 
 export type FormFieldProps = {
   type: string;

@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Icon from "./Icon";
 import { cn } from "@/libs/utils";
+import { navtabprops, subCat } from "@/types/type";
 
 /**
  * SearchDropdown component allows users to select a product category from a dropdown menu.
@@ -10,55 +11,10 @@ import { cn } from "@/libs/utils";
  */
 
 
-const SearchDropdown = () => {
+const SearchDropdown: React.FC<navtabprops> = ({ subCat }) => {
   const [open, setOpen] = useState(false);
   const [prodcuts, setProducts] = useState("all products");
 
-  const category = [
-    {
-      tittle: "all products",
-    },
-    {
-      tittle: "Sports",
-    },
-    {
-      tittle: "Insurance",
-    },
-
-    {
-      tittle: "Sports",
-    },
-    {
-      tittle: "Insurance",
-    },
-
-    {
-      tittle: "Sports",
-    },
-    {
-      tittle: "Insurance",
-    },
-    {
-      tittle: "Insurance",
-    },
-
-    {
-      tittle: "Sports",
-    },
-    {
-      tittle: "Insurance",
-    },
-    {
-      tittle: "Insurance",
-    },
-
-    {
-      tittle: "Sports",
-    },
-    {
-      tittle: "Insurance",
-    },
-  ];
 
   return (
     <>
@@ -80,18 +36,18 @@ const SearchDropdown = () => {
           className={cn`absolute max-h-[420px] overflow-y-scroll scroll-smooth shadow-1 transition-all duration-[0.3s] navsearch bg-white ${open !== false ? "visible opacity-[1]" : "opacity-0 invisible"
             } `}
         >
-          {category?.map((item, index) => {
+          {subCat && subCat?.map((item: subCat, index: number) => {
             return (
               <h4
-                key={Date.now() + index + item.tittle}
+                key={Date.now() + index + item.name}
                 className={cn`text-subparagraph leading-6 py-2 px-[30px] capitalize cursor-pointer text-nowrap  hover:bg-primary-200 border-l-[2px] hover:border-primary-100`}
                 onClick={() => {
-                  setProducts(item.tittle)
+                  setProducts(item.name)
                   setOpen(!open)
                 }
                 }
               >
-                {item.tittle}
+                {item.name}
               </h4>
             );
           })}
