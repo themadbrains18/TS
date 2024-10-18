@@ -10,6 +10,18 @@
   body {
     @apply overflow-x-hidden font-open;
   }
+/* For Chrome, Safari, Edge, and Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* For Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
 
   .container {
     @apply max-w-[1560px] w-full py-0 px-5 my-0 mx-auto;

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 interface FileUploadProps {
   onFileSelect: (files: File[]) => void;
@@ -11,14 +12,26 @@ interface FileUploadProps {
 const FilePreview = ({
   previewUrl,
   onRemove,
+  provided,
 }: {
   previewUrl: string;
   onRemove: () => void;
+  provided: any;
 }) => {
   return (
-    <div className="relative border p-2 mb-2 z-50">
-      <Image src={previewUrl} width={128} height={128} alt='File Preview' className='object-cover mb-2'/>
-      {/* <img src={} alt="File Preview" className="w-32 h-32 object-cover mb-2" /> */}
+    <div
+      className="relative border p-2 mb-2 z-50"
+      ref={provided.innerRef}
+      {...provided.draggableProps}
+      {...provided.dragHandleProps}
+    >
+      <Image
+        src={previewUrl}
+        width={128}
+        height={128}
+        alt="File Preview"
+        className="object-cover mb-2"
+      />
       <button
         onClick={(e) => {
           e.stopPropagation();
@@ -36,7 +49,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
   onFileSelect,
   supportedfiles,
   multiple = true,
-  id = "1",
+  id = '1',
 }) => {
   const [files, setFiles] = useState<File[]>([]);
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
@@ -87,10 +100,28 @@ const FileUpload: React.FC<FileUploadProps> = ({
     onFileSelect(updatedFiles); // Update parent with remaining files
   };
 
+  const handleOnDragEnd = (result: any) => {
+    if (!result.destination) return;
+
+    const newFiles = Array.from(files);
+    const [movedFile] = newFiles.splice(result.source.index, 1);
+    newFiles.splice(result.destination.index, 0, movedFile);
+
+    const newPreviews = Array.from(previewUrls);
+    const [movedPreview] = newPreviews.splice(result.source.index, 1);
+    newPreviews.splice(result.destination.index, 0, movedPreview);
+
+    setFiles(newFiles);
+    setPreviewUrls(newPreviews);
+    onFileSelect(newFiles); // Update parent with reordered files
+  };
+
   return (
     <div className="flex flex-col items-center">
-      <h3 className='text-base text-center capitalize'>Upload Source File Here</h3>
-      <p className='py-3 text-neutral-500 text-xs'>File Supported: {supportedfiles}</p>
+      <h3 className="text-base text-center capitalize">Upload Source File Here</h3>
+      <p className="py-3 text-neutral-500 text-xs">
+        File Supported: {supportedfiles}
+      </p>
       <label
         htmlFor={`file-upload${id}`}
         className="bg-primary-100 text-white capitalize font-semibold leading-6 transition-all duration-300 hover:bg-[#872fcb] py-2 px-[30px] cursor-pointer mb-3"
@@ -108,17 +139,31 @@ const FileUpload: React.FC<FileUploadProps> = ({
 
       {error && <p className="text-red-500 text-xs mt-2">{error}</p>}
 
-      {previewUrls.length > 0 && (
-        <div className="grid grid-cols-3 gap-2 mt-3">
-          {previewUrls.map((url, index) => (
-            <FilePreview
-              key={url}
-              previewUrl={url}
-              onRemove={() => handleRemove(index)} // Call handleRemove with index
-            />
-          ))}
-        </div>
-      )}
+      <DragDropContext onDragEnd={handleOnDragEnd}>
+        <Droppable droppableId="files-droppable" direction="horizontal">
+          {(provided) => (
+            <div
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+              className="grid grid-cols-3 gap-2 mt-3"
+            >
+              {previewUrls.length > 0 &&
+                previewUrls.map((url, index) => (
+                  <Draggable key={url} draggableId={url} index={index}>
+                    {(provided) => (
+                      <FilePreview
+                        previewUrl={url}
+                        onRemove={() => handleRemove(index)}
+                        provided={provided}
+                      />
+                    )}
+                  </Draggable>
+                ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
     </div>
   );
 };
