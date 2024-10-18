@@ -105,7 +105,6 @@ const Page = () => {
                                 customClass="my-custom-checkbox"
                             />
                         </div>
-
                         {/* Register Button */}
                         <div className="my-[30px] tab:my-[60px]">
                             <Button className="w-full items-center justify-center" type="submit" variant="primary">

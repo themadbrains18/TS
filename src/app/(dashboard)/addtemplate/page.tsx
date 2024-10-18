@@ -18,6 +18,8 @@ import { uploadTemplate } from '@/validations/uploadTemplate';
 export interface TemplateType {
   id: string;
   name: string;
+  subCategories?:[{id:string,name:string,templateTypeId:string}],
+  templates?:IndustryType[]
 }
 
 interface IndustryType {

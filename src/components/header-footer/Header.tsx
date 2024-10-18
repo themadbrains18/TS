@@ -78,7 +78,7 @@ const Header = () => {
                  data && data?.map((item,index)=>{
                     return(
                       <Fragment key={index}>
-                    <NavDropdown tittle={item?.name} />
+                    <NavDropdown tittle={item?.name}  subCat={item?.subCategories}/>
                       </Fragment>
                     )
                   })
@@ -136,12 +136,12 @@ const Header = () => {
               </div>
               <div className="flex flex-col mt-8">
                 {
-                  sections.map((item, index) => {
+                 data&& data?.map((item, index) => {
                     return (<Fragment key={index}>
                       <Accordion
                         isOpen={openAccordions[index]} // Check if this specific accordion is open
                         onToggle={() => handleAccordionClick(index)} // Toggle the accordion on click
-                        title={`${item.title}`}
+                        title={`${item.name}`}
                       >
                         <NavTabs />
                       </Accordion>

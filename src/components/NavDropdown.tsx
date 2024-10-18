@@ -13,7 +13,7 @@ import { navdropdownprops } from "@/types/type";
  * @returns {JSX.Element} The rendered NavDropdown component.
  */
 
-const NavDropdown: React.FC<navdropdownprops> = ({ tittle }) => {
+const NavDropdown: React.FC<navdropdownprops> = ({ tittle,subCat }) => {
   return (
     <>
       <section className=" group">
@@ -27,7 +27,7 @@ const NavDropdown: React.FC<navdropdownprops> = ({ tittle }) => {
           />
         </div>
         <div className="hiddenscroll max-w-[60.3vw]  overflow-scroll flex absolute top-[110px] left-[24.8%] transition-all duration-[0.5] opacity-0 invisible    group-hover:visible group-hover:opacity-[1] cursor-pointer shadow-md">
-          <NavTabs />
+          <NavTabs subCat={subCat}/>
         </div>
       </section>
       <div className="overflow-hidden h-0 duration-[0.5s]">dsfdefdsfdfdfgd</div>
