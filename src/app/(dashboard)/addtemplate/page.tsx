@@ -224,9 +224,10 @@ const Page: React.FC = () => {
   console.log(errors)
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
+    console.log("first")
     console.log(data);
     const selectedFile = data.zipFile[0]; // Access the selected file
-    console.log('Selected File:', selectedFile);
+    console.log('Selected File:', selectedFile.name);
     // reset();
   };
 

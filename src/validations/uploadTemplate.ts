@@ -10,9 +10,19 @@ export const uploadTemplate = z.object({
    dollarPrice: z.number({message:"Enter Your Price"}),
    zipFile: z
    .instanceof(FileList)
-   .refine((files) => files.length > 0, 'File is required') // Ensure at least one file is selected
-   .refine((files) => files[0]?.size <= 2 * 1024 * 1024, 'File size should not exceed 2MB') // Check file size
-   .refine((files) => ['image/zip', 'image/zip'].includes(files[0]?.type), 'Only .jpg and .png files are allowed'), // Validate file type
+   .refine((files) => files.length > 0, 'File is required') // Ensure a file is selected
+   .refine(
+     (files) => files[0]?.size <= 10 * 1024 * 1024, // File size limit (5MB max)
+     'File size should not exceed 10MB'
+   )
+   .refine(
+     (files) => files[0]?.name.endsWith('.zip'), // Check file extension
+     'Only .zip files are allowed'
+   )
+   .refine(
+     (files) => files[0]?.type === 'application/zip', // Check MIME type for ZIP
+     'Only ZIP files are allowed'
+   ),
 });
 
 

@@ -143,7 +143,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
           name={name}
           type="file"
           multiple={multiple}
-          onChange={handleFileChange}
+          // onChange={handleFileChange}
           className="hidden"
         />
       }
