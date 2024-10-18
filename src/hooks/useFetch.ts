@@ -61,7 +61,6 @@ function useFetch<T>(): FetchResult<T> {
         }
 
         const result: ApiResponse<T> = await response.json();
-        console.log(result,"===result");
         
         setData(result?.results);
         toaster && toast.success(result?.message);
