@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Input from '@/components/ui/Input';
-import CustomDropdown from './components/customtab';
+import CustomDropdown from './components/customtab'; 
 import CheckBox from '@/components/ui/Checkbox';
 import QuillEditor from '@/components/ui/Quilleditor';
 import DashInput from './components/DashInput';
@@ -55,7 +55,6 @@ const Page: React.FC = () => {
 
   // Checkbox selection for industries
   const [selectedIndustries, setSelectedIndustries] = useState<string[]>([]);
-  const [ispaid, setIsPaid] = useState<string[]>([]);
 
   // Handle template dropdown selection
   const handleTemplateSelect = (value: string) => {
