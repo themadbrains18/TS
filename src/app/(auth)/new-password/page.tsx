@@ -3,12 +3,33 @@
 import Button from '@/components/ui/Button';
 import CheckBox from '@/components/ui/checkbox';
 import Input from '@/components/ui/Input';
+import { newPassword } from '@/validations/NewPassword';
+import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 const Page = () => {
     const [isChecked1, setIsChecked1] = useState(false);
+
+
+    interface FormValues {
+        password: string,
+        confirmpassword: string,
+
+    }
+
+    const { register, reset, handleSubmit, formState: { errors } } = useForm<FormValues>({
+        resolver: zodResolver(newPassword)
+    });
+
+    console.log(errors)
+
+    const onSubmit: SubmitHandler<FormValues> = (data) => {
+        console.log(data);
+        reset();
+    };
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 ">
@@ -16,13 +37,13 @@ const Page = () => {
             <div className=" bg-[url('/images/authsideimage.png')] lg:bg-[url('/images/authsideimage.png')] bg-no-repeat bg-cover h-[280px] lg:h-screen lg:sticky top-0 left-0 bottom-0 ">
                 <div className=" py-[30px] px-5 lg:p-[30px] lg:h-screen flex  items-center lg:items-start  justify-between flex-col ">
                     <Link href={'/'}>
-                    <Image
-                        className=" lg:ml-[70px]"
-                        src={'/images/Logowhite.png'}
-                        alt="Madbrains Logo"
-                        width={276}
-                        height={40}
-                    />
+                        <Image
+                            className=" lg:ml-[70px]"
+                            src={'/images/Logowhite.png'}
+                            alt="Madbrains Logo"
+                            width={276}
+                            height={40}
+                        />
                     </Link>
                     <h2 className=" text-[32px] md:text-[50px] xl:text-[62px] text-center lg:text-start font-normal pt-[30px] lg:pt-0 text-white lg:max-w-[700px] lg:m-auto ">
                         Free High-quality UI kits and design resources
@@ -37,44 +58,51 @@ const Page = () => {
             <div className="md:pt-20 pt-10 pb-10 px-4  w-full bg-[#FDFCFF]">
                 <div className='max-w-[599px] m-auto flex flex-col ' >
                     <h2 className="text-[22px] tab:text-[36px] font-bold leading-[44px]  pb-[30px] md:pb-[60px]">Enter New Password</h2>
-                    <div className="flex flex-col justify-center h-[559px] md:h-[759px]">
-                        <div className='  md:space-y-[30px] space-y-[15px] ' >
-                            {/* Password Input with Show Password Option */}
-                            <Input
-                                type={isChecked1 ? "text" : "password"}
-                                placeholder="Password"
-                                label="Password"
-                                className=" placeholder:text-neutral-400 py-3 md:py-[18px] px-5 bg-divider-100"
-                            />
-                            <Input
-                                type={isChecked1 ? "text" : "password"}
-                                placeholder="Your Password Again"
-                                label="Confirm Password"
-                                className=" placeholder:text-neutral-400 py-3 md:py-[18px] px-5 bg-divider-100"
-                            />
+                    <form onSubmit={handleSubmit(onSubmit)}>
+
+                        <div className="flex flex-col justify-center h-[559px] md:h-[759px]">
+                            <div className='  md:space-y-[30px] space-y-[15px] ' >
+                                {/* Password Input with Show Password Option */}
+                                <Input
+                                    register={register}
+                                    type={isChecked1 ? "text" : "password"}
+                                    placeholder="Password"
+                                    label="Password"
+                                    name='password'
+                                    className=" placeholder:text-neutral-400 py-3 md:py-[18px] px-5 bg-divider-100"
+                                />
+                                <Input
+                                    register={register}
+                                    name='confirmpassword'
+                                    type={isChecked1 ? "text" : "password"}
+                                    placeholder="Your Password Again"
+                                    label="Confirm Password"
+                                    className=" placeholder:text-neutral-400 py-3 md:py-[18px] px-5 bg-divider-100"
+                                />
 
 
-                            {/* Checkbox to Toggle Password Visibility */}
-                            <CheckBox
-                                id="checkbox1"
-                                label="Show Password"
-                                checked={isChecked1}
-                                onChange={() => setIsChecked1(!isChecked1)}
-                                labelPosition="left"
-                                customClass="my-custom-checkbox"
-                            />
+                                {/* Checkbox to Toggle Password Visibility */}
+                                <CheckBox
+                                    id="checkbox1"
+                                    label="Show Password"
+                                    checked={isChecked1}
+                                    onChange={() => setIsChecked1(!isChecked1)}
+                                    labelPosition="left"
+                                    customClass="my-custom-checkbox"
+                                />
+                            </div>
+
+                            <h2 className='text-[14px] font-normal leading-5 text-neutral-600  pt-[60px] ' >New Password Must Be Different From Previous Used Password.</h2>
+
+
+                            {/* Register Button */}
+                            <div className='my-[60px]' >
+                                <Button type='submit' className="w-full items-center  justify-center" variant="primary">
+                                    Save New Password
+                                </Button>
+                            </div>
                         </div>
-
-                        <h2 className='text-[14px] font-normal leading-5 text-neutral-600  pt-[60px] ' >New Password Must Be Different From Previous Used Password.</h2>
-
-
-                        {/* Register Button */}
-                        <div className='my-[60px]' >
-                            <Button className="w-full items-center  justify-center" variant="primary">
-                                Save New Password
-                            </Button>
-                        </div>
-                    </div>
+                    </form>
                     {/* Registration Prompt */}
                     <h3 className="text-[16px] font-normal leading-6 text-textparagraph pt-[30px] ">
                         Not a member yet?{' '}

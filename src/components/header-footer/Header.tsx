@@ -132,7 +132,7 @@ const Header = () => {
             <div className="overflow-scroll hiddenscroll" >
               <div className="p-[10px] flex items-center justify-center gap-x-1 w-full border border-divider-100">
                 <Image width={30} height={30} src={'/icons/solidsearch.svg'} alt="searchicon" />
-                <Input placeholder="Search" />
+                {/* <Input register={} name="search" placeholder="Search" /> */}
               </div>
               <div className="flex flex-col mt-8">
                 {

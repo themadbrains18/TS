@@ -2,14 +2,17 @@
 
 import React, { useEffect, useState } from 'react';
 import Input from '@/components/ui/Input';
-import CustomDropdown from './components/customtab'; 
-import CheckBox from '@/components/ui/Checkbox';
+import CustomDropdown from './components/CustomTab';
+import CheckBox from '@/components/ui/checkbox';
 import QuillEditor from '@/components/ui/Quilleditor';
 import DashInput from './components/DashInput';
 import Button from '@/components/ui/Button';
 import FileUpload from './components/InputFile';
 import useFetch from '@/hooks/useFetch';
 import StaticCheckBox from '@/components/ui/StaticCheckbox';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { uploadTemplate } from '@/validations/uploadTemplate';
 
 // Define types for data structures
 export interface TemplateType {
@@ -171,7 +174,7 @@ const Page: React.FC = () => {
             )}
           </div>
         ))}
-        <Button onClick={() => addInputFields(setter, items)}  variant='primary' className='py-2 mt-2' >Add more</Button>
+        <Button onClick={() => addInputFields(setter, items)} variant='primary' className='py-2 mt-2' >Add more</Button>
       </div>
     </div>
   );
@@ -204,131 +207,157 @@ const Page: React.FC = () => {
     </div>
   );
 
+  interface FormData {
+    name: string;
+    version: string;
+    seoTags: string;
+    dollarPrice: number;
+    zipFile: FileList
+  }
+
+  const { register, reset, handleSubmit, formState: { errors } } = useForm<FormData>({
+    resolver: zodResolver(uploadTemplate)
+  });
+
+  console.log(errors)
+
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    console.log(data);
+    const selectedFile = data.zipFile[0]; // Access the selected file
+    console.log('Selected File:', selectedFile);
+    // reset();
+  };
+
+
   return (
     <>
       <section className='py-10 md:py-20'>
         <div className="max-w-[802px] w-full py-0 px-4 my-0 mx-auto">
           <h2 className='text-3xl capitalize font-bold pb-8 '>Upload Product</h2>
 
-          <div className="flex flex-col gap-y-5 justify-center items-center w-full">
-            <CustomDropdown  placeholder='Template Type' options={data || []} onSelect={handleTemplateSelect} />
-            <CustomDropdown placeholder='Template SubCategory' options={templateData?.subCategories} onSelect={handleCategorySelect} />
-            <CustomDropdown placeholder='Software Type' options={templateData?.softwareCategories} onSelect={handleSoftwareSelect} />
-          </div>
-
-          <div className='mt-5'>
-            <h3 className='text-xl font-semibold capitalize '>Industry</h3>
-            <div className='flex justify-between mt-5'>
-              {industryData?.map((item) => (
-                <CheckBox
-                  key={item.id}
-                  id={item.id}
-                  label={item.name}
-                  checked={selectedIndustries.includes(item.id)}
-                  onChange={handleIndustryChange}
-                  labelPosition="left"
-                  customClass="my-custom-checkbox capitalize cursor-pointer"
-                />
-              ))}
-            </div>
-
-            <div className='flex flex-col gap-y-5'>
-              <Input label='Name' lableclass='text-xl font-semibold capitalize' className='bg-white border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400' placeholder='Template Name' />
-              <Input label='Version' lableclass='text-xl font-semibold capitalize' className='border bg-white border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400' placeholder='Version' />
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="flex flex-col gap-y-5 justify-center items-center w-full">
+              <CustomDropdown placeholder='Template Type' options={data || []} onSelect={handleTemplateSelect} />
+              <CustomDropdown placeholder='Template SubCategory' options={templateData?.subCategories} onSelect={handleCategorySelect} />
+              <CustomDropdown placeholder='Software Type' options={templateData?.softwareCategories} onSelect={handleSoftwareSelect} />
             </div>
 
             <div className='mt-5'>
-              <h3 className='text-xl font-semibold capitalize  pb-4'>Description</h3>
-              <QuillEditor />
-            </div>
-
-            <div className='pt-5'>
-              <h3 className='text-xl font-semibold capitalize  pb-4'>Credits</h3>
-              <div className='p-5 border border-neutral-400 rounded-md'>
-                {renderInputFields(fonts, setFonts, 'Fonts')}
-                {renderInputFields(images, setImages, 'Images')}
-                {renderInputFields(icons, setIcons, 'Icons')}
-                {renderInputFields(illustrations, setIllustrations, 'Illustrations')}
+              <h3 className='text-xl font-semibold capitalize '>Industry</h3>
+              <div className='flex justify-between mt-5'>
+                {industryData?.map((item) => (
+                  <CheckBox
+                    key={item.id}
+                    id={item.id}
+                    label={item.name}
+                    checked={selectedIndustries.includes(item.id)}
+                    onChange={handleIndustryChange}
+                    labelPosition="left"
+                    customClass="my-custom-checkbox capitalize cursor-pointer"
+                  />
+                ))}
               </div>
-            </div>
 
-            <div className='pt-5'>
-              <h3 className='text-xl font-semibold capitalize  pb-4'>Technical Details</h3>
-              <div className='p-5 border border-neutral-400 rounded-md'>
-                {renderTechnicalDetailsFields()}
+              <div className='flex flex-col gap-y-5'>
+                <Input type='text' register={register} name='name' label='Name' lableclass='text-xl font-semibold capitalize' className='bg-white border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400' placeholder='Template Name' />
+                <Input type='text' register={register} name='version' label='Version' lableclass='text-xl font-semibold capitalize' className='border bg-white border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400' placeholder='Version' />
               </div>
-            </div>
 
-            {/* File Uploads */}
-            <div className='pt-5'>
-              <h3 className='text-xl font-semibold capitalize pb-4'>Source File</h3>
-              <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
-                <FileUpload
-                  onFileSelect={(file) => handleFileSelect(file)}
-                  supportedfiles="zip"
-                  multiple={false}
-                  id="1"
-                />
-              </div>
-            </div>
-
-            <div className='pt-5'>
-              <h3 className='text-xl font-semibold capitalize pb-4'>Slider Images</h3>
-              <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
-                <FileUpload
-                  onFileSelect={(file) => handleSliderFileSelect(file)}
-                  supportedfiles="jpg,png,jpeg"
-                  multiple={true}
-                  id="2"
-                />
-              </div>
-            </div>
-
-            <div className='pt-5'>
-              <h3 className='text-xl font-semibold capitalize pb-4'>Preview Images</h3>
-              <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
-                <FileUpload
-
-                  onFileSelect={(file) => handlePreviewFileSelect(file)}
-
-                  supportedfiles="jpg,png,jpeg"
-                  multiple={true}
-                  id="3"
-
-                />
-              </div>
-            </div>
-            <div className='pt-5'>
-              <h3 className='text-xl font-semibold capitalize pb-4'>Mobile Images</h3>
-              <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
-                <FileUpload
-
-                  onFileSelect={(file) => handlePreviewFileSelect(file)}
-
-                  supportedfiles="jpg,png,jpeg"
-                  multiple={true}
-                  id="3"
-
-                />
-              </div>
-            </div>
-            <div className='mt-5'>
-              <Input  label='SEO Keywords Tag' lableclass='text-xl font-semibold capitalize' className='bg-white pb-3 border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400' placeholder='tag name' />
-              <div className='pt-5'>
-                <StaticCheckBox onClick={() => setStaticCheck(!staticcheck)} checked={staticcheck} label='Paid' />
-                {
-                  staticcheck &&
-                  <div>
-                    <Input label='price in dollar' lableclass='text-xl font-semibold capitalize' className='pb-3 border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400 bg-white ' placeholder='price in dollar' type='number' />
-                  </div>
-
-                }
-              </div>
               <div className='mt-5'>
-                <Button  variant='primary' className='py-3' >Upload</Button>
+                <h3 className='text-xl font-semibold capitalize  pb-4'>Description</h3>
+                <QuillEditor />
+              </div>
+
+              <div className='pt-5'>
+                <h3 className='text-xl font-semibold capitalize  pb-4'>Credits</h3>
+                <div className='p-5 border border-neutral-400 rounded-md'>
+                  {renderInputFields(fonts, setFonts, 'Fonts')}
+                  {renderInputFields(images, setImages, 'Images')}
+                  {renderInputFields(icons, setIcons, 'Icons')}
+                  {renderInputFields(illustrations, setIllustrations, 'Illustrations')}
+                </div>
+              </div>
+
+              <div className='pt-5'>
+                <h3 className='text-xl font-semibold capitalize  pb-4'>Technical Details</h3>
+                <div className='p-5 border border-neutral-400 rounded-md'>
+                  {renderTechnicalDetailsFields()}
+                </div>
+              </div>
+
+              {/* File Uploads */}
+              <div className='pt-5'>
+                <h3 className='text-xl font-semibold capitalize pb-4'>Source File</h3>
+                <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
+                  <FileUpload
+                    register={register}
+                    name='zipFile'
+                    onFileSelect={(file) => handleFileSelect(file)}
+                    supportedfiles="zip"
+                    multiple={false}
+                    id="1"
+                  />
+                </div>
+              </div>
+
+              {/* <div className='pt-5'>
+                <h3 className='text-xl font-semibold capitalize pb-4'>Slider Images</h3>
+                <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
+                  <FileUpload
+                    onFileSelect={(file) => handleSliderFileSelect(file)}
+                    supportedfiles="jpg,png,jpeg"
+                    multiple={true}
+                    id="2"
+                  />
+                </div>
+              </div>
+
+              <div className='pt-5'>
+                <h3 className='text-xl font-semibold capitalize pb-4'>Preview Images</h3>
+                <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
+                  <FileUpload
+
+                    onFileSelect={(file) => handlePreviewFileSelect(file)}
+
+                    supportedfiles="jpg,png,jpeg"
+                    multiple={true}
+                    id="3"
+
+                  />
+                </div>
+              </div>
+              <div className='pt-5'>
+                <h3 className='text-xl font-semibold capitalize pb-4'>Mobile Images</h3>
+                <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
+                  <FileUpload
+
+                    onFileSelect={(file) => handlePreviewFileSelect(file)}
+
+                    supportedfiles="jpg,png,jpeg"
+                    multiple={true}
+                    id="4"
+
+                  />
+                </div>
+              </div> */}
+              <div className='mt-5'>
+                <Input type='text' register={register} name='seoTags' label='SEO Keywords Tag' lableclass='text-xl font-semibold capitalize' className='bg-white pb-3 border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400' placeholder='tag name' />
+                <div className='pt-5'>
+                  <StaticCheckBox onClick={() => setStaticCheck(!staticcheck)} checked={staticcheck} label='Paid' />
+                  {
+                    staticcheck &&
+                    <div>
+                      <Input register={register} name='dollarPrice' label='price in dollar' lableclass='text-xl font-semibold capitalize' className='pb-3 border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400 bg-white ' placeholder='price in dollar' type='number' />
+                    </div>
+
+                  }
+                </div>
+                <div className='mt-5'>
+                  <Button type='submit' variant='primary' className='py-3' >Upload</Button>
+                </div>
               </div>
             </div>
-          </div>
+          </form>
         </div>
       </section>
     </>
