@@ -9,7 +9,6 @@ import CheckBox from '@/components/ui/Checkbox';
 import { signupSchema } from '@/validations/signUp.validation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 
 // Define FormData interface
 interface FormData {
@@ -33,19 +32,16 @@ const Page = () => {
     });
 
     const [isChecked1, setIsChecked1] = useState(false);
-    const router = useRouter()
 
     const onSubmit = async (data: FormData) => {
         try {
             console.log("Submitted data:", data);
 
             const response = await axios.post(`${process.env.NEXT_PUBLIC_APIURL}/register`, data);
-            console.log(response,"==response");
-            
 
-            if (response.status === 201 || response.data.otp) {
-                // alert(response.data.otp)
-                router.push('/otp'); // Redirect to the login page after successful registration
+            if (response.status === 201) {
+                alert(response.data.otp)
+                // router.push('/otp'); // Redirect to the login page after successful registration
             }
         } catch (error: any) {
             // Handle server-side validation errors
