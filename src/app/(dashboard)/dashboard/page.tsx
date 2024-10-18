@@ -1,3 +1,5 @@
+import AddTemplate from './components/AddTemplate'
+
 import Button from '@/components/ui/Button'
 import React from 'react'
 const page = () => {
