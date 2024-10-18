@@ -12,7 +12,7 @@ import useFetch from '@/hooks/useFetch';
 import StaticCheckBox from '@/components/ui/StaticCheckbox';
 
 // Define types for data structures
-interface TemplateType {
+export interface TemplateType {
   id: string;
   name: string;
 }

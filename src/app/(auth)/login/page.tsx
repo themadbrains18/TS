@@ -2,7 +2,7 @@
 
 import Icon from '@/components/Icon';
 import Button from '@/components/ui/Button';
-import CheckBox from '@/components/ui/checkbox';
+import CheckBox from '@/components/ui/Checkbox';
 import Input from '@/components/ui/Input';
 import { loginSchema } from '@/validations/loginValidation';
 import { zodResolver } from '@hookform/resolvers/zod';

@@ -1,6 +1,6 @@
 'use client'
 import Image from "next/image";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import NavDropdown from "../NavDropdown";
 import Icon from "../Icon";
 import Button from "../ui/Button";
@@ -10,10 +10,13 @@ import Input from "../ui/Input";
 import NavTabs from "../NavTabs";
 import Accordion from "../ui/Accordion";
 import Link from "next/link";
+import useFetch from "@/hooks/useFetch";
+import { TemplateType } from "@/app/(dashboard)/addtemplate/page";
 
 
 
 const Header = () => {
+  const { data, fetchData } = useFetch<TemplateType[]>();
   // State to manage desktop search bar visibility
   const [opensearch, setOpensearch] = useState(false)
 
@@ -47,6 +50,13 @@ const Header = () => {
     });
   };
 
+  useEffect(() => {
+    fetchData(`${process.env.NEXT_PUBLIC_APIURL}/template-types`);
+  }, [])
+
+
+  
+
 
   return (
     <>
@@ -64,9 +74,17 @@ const Header = () => {
                 />
               </Link>
               <div className="flex items-center max-w-[473px] w-full justify-between">
-                <NavDropdown tittle="Ui Templates" />
-                <NavDropdown tittle="HTML Templatess" />
-                <NavDropdown tittle="Studio Spacials" />
+                {
+                 data && data?.map((item,index)=>{
+                    return(
+                      <Fragment key={index}>
+                    <NavDropdown tittle={item?.name} />
+                      </Fragment>
+                    )
+                  })
+                }
+                {/* <NavDropdown tittle="HTML Templatess" />
+                <NavDropdown tittle="Studio Spacials" /> */}
               </div>
             </div>
             <div className={cn`max-w-[576px] w-full flex items-center justify-end gap-x-5 `}>
