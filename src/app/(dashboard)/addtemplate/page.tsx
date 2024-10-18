@@ -233,8 +233,8 @@ const Page: React.FC = () => {
             </div>
 
             <div className='flex flex-col gap-y-5'>
-              <Input label='Name' lableclass='text-xl font-semibold capitalize' className='bg-white border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400' placeholder='Template Name' />
-              <Input label='Version' lableclass='text-xl font-semibold capitalize' className='border bg-white border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400' placeholder='Version' />
+              <Input name='name' label='Name' lableclass='text-xl font-semibold capitalize' className='bg-white border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400' placeholder='Template Name' />
+              <Input name='version' label='Version' lableclass='text-xl font-semibold capitalize' className='border bg-white border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400' placeholder='Version' />
             </div>
 
             <div className='mt-5'>
@@ -313,13 +313,13 @@ const Page: React.FC = () => {
               </div>
             </div>
             <div className='mt-5'>
-              <Input  label='SEO Keywords Tag' lableclass='text-xl font-semibold capitalize' className='bg-white pb-3 border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400' placeholder='tag name' />
+              <Input name='seo'  label='SEO Keywords Tag' lableclass='text-xl font-semibold capitalize' className='bg-white pb-3 border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400' placeholder='tag name' />
               <div className='pt-5'>
                 <StaticCheckBox onClick={() => setStaticCheck(!staticcheck)} checked={staticcheck} label='Paid' />
                 {
                   staticcheck &&
                   <div>
-                    <Input label='price in dollar' lableclass='text-xl font-semibold capitalize' className='pb-3 border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400 bg-white ' placeholder='price in dollar' type='number' />
+                    <Input name='price' label='price in dollar' lableclass='text-xl font-semibold capitalize' className='pb-3 border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400 bg-white ' placeholder='price in dollar' type='number' />
                   </div>
 
                 }

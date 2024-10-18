@@ -1,7 +1,7 @@
 "use client";
 
 import Button from '@/components/ui/Button';
-import CheckBox from '@/components/ui/checkbox';
+import CheckBox from '@/components/ui/Checkbox';
 import Input from '@/components/ui/Input';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -41,12 +41,14 @@ const Page = () => {
                         <div className='  md:space-y-[30px] space-y-[15px] ' >
                             {/* Password Input with Show Password Option */}
                             <Input
+                            name='password'
                                 type={isChecked1 ? "text" : "password"}
                                 placeholder="Password"
                                 label="Password"
                                 className=" placeholder:text-neutral-400 py-3 md:py-[18px] px-5 bg-divider-100"
                             />
                             <Input
+                            name='confirmpassword'
                                 type={isChecked1 ? "text" : "password"}
                                 placeholder="Your Password Again"
                                 label="Confirm Password"

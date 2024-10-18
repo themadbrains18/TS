@@ -13,15 +13,17 @@ const FilePreview = ({
   previewUrl,
   onRemove,
   provided,
+  innerRef,
 }: {
   previewUrl: string;
   onRemove: () => void;
   provided: any;
+  innerRef: (element: HTMLElement | null) => any;
 }) => {
   return (
     <div
       className="relative border p-2 mb-2 z-50"
-      ref={provided.innerRef}
+      ref={innerRef}
       {...provided.draggableProps}
       {...provided.dragHandleProps}
     >
@@ -155,6 +157,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
                         previewUrl={url}
                         onRemove={() => handleRemove(index)}
                         provided={provided}
+                        innerRef={provided.innerRef} // Pass innerRef to FilePreview
                       />
                     )}
                   </Draggable>

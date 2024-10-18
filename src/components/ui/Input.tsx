@@ -12,7 +12,7 @@ interface InputFieldProps {
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     className?: string;
     lableclass?: string;
-    register: UseFormRegister<any>; // Type from react-hook-form
+    register?: UseFormRegister<any>; // Type from react-hook-form
 }
 
 // Modify Input to accept a ref using React.forwardRef
@@ -37,7 +37,7 @@ const Input = React.forwardRef<HTMLInputElement, InputFieldProps>(({
                 </label>
             )}
          {name &&   <input
-        {...register(name)}
+      {...register &&  {...register(name)}}
                 // ref={ref}  
                 type={type}
                 name={name}

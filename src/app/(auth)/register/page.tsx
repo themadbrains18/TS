@@ -12,7 +12,7 @@ import Image from 'next/image';
 
 // Define FormData interface
 interface FormData {
-    name: string;
+    uname: string;
     email: string;
     password: string;
     confirmPassword: string;
@@ -92,8 +92,8 @@ const Page = () => {
                             <Input
                                 placeholder="Name"
                                 label="Name"
-                                error={errors.name?.message}
-                                {...register('name')}
+                                error={errors.uname?.message}
+                                {...register('uname')}
                             />
                             <Input
                                 placeholder="Email"
@@ -124,7 +124,6 @@ const Page = () => {
                                 customClass="my-custom-checkbox"
                             />
                         </div>
-
                         {/* Register Button */}
                         <div className="my-[30px] tab:my-[60px]">
                             <Button className="w-full items-center justify-center" type="submit" variant="primary">

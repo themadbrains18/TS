@@ -44,6 +44,7 @@ const Page = () => {
                         <div className='md:space-y-[30px] space-y-[15px]'>
                             {/*  Input Email or Phone */}
                             <Input
+                            name='email'
                                 placeholder="Email or Phone"
                                 label=" Your Details"
                                 className=" placeholder:text-neutral-400 py-3 md:py-[18px]  px-5 bg-divider-100"
