@@ -22,10 +22,10 @@ const FilePreview = ({
 }) => {
   return (
     <div
-      className="relative border p-2 mb-2 z-50"
-      ref={innerRef}
-      {...provided.draggableProps}
-      {...provided.dragHandleProps}
+      className="relative border p-2 mb-2"
+      ref={innerRef} // Set the reference from Draggable
+      {...provided.draggableProps} // Pass draggable props
+      {...provided.dragHandleProps} // Pass drag handle props
     >
       <Image
         src={previewUrl}
@@ -151,7 +151,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
             >
               {previewUrls.length > 0 &&
                 previewUrls.map((url, index) => (
-                  <Draggable key={url} draggableId={url} index={index}>
+                  <Draggable key={index.toString()} draggableId={index.toString()} index={index}>
                     {(provided) => (
                       <FilePreview
                         previewUrl={url}

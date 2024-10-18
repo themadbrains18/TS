@@ -40,6 +40,11 @@ export interface ButtonProps {
 
 export interface navdropdownprops {
   tittle: string;
+  subCat?:[{id:string,name:string,templateTypeId:string}]
+}
+export interface navtabprops {
+  // tittle: string;
+  subCat?:[{id:string,name:string,templateTypeId:string}]
 }
 
 export interface AccordionProps {

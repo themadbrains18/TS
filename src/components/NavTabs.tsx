@@ -4,6 +4,7 @@ import Button from "./ui/Button";
 import NavCard from "./cards/NavCard";
 import { cn } from "@/libs/utils";
 import headerdata from "@/json/header.json";
+import { navtabprops } from "@/types/type";
 /**
  * NavTabs component displays a set of navigation tabs for product categories.
  * It allows users to select a tab and view related products.
@@ -13,14 +14,14 @@ import headerdata from "@/json/header.json";
 
 
 
-const NavTabs = () => {
+const NavTabs:React.FC<navtabprops> = ({subCat}) => {
   const [activetab, setActivetab] = useState(0); // Track the currently active tab
   return (
     <>
       {/* Tabs Section */}
       <div className="bg-white shadow-lg overflow-scroll hiddenscroll ">
         <div className="pt-5 lg:px-10 lg:pt-10 lg:pb-[30px] flex gap-x-[5px] lg:gap-x-5 items-center overflow-scroll hiddenscroll">
-          {headerdata?.map((item, index) => (
+          {subCat && subCat?.map((item, index) => (
             <Fragment key={index}>
               <Button
                 className={cn`py-[6px] px-[10px] lg:py-2 lg:px-5 text-sm lg:text-base text-nowrap ${index === activetab
