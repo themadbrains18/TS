@@ -1,18 +1,18 @@
 'use client';
 import React, { useState } from 'react';
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import Input from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
-import CheckBox from '@/components/ui/Checkbox';
 import { signupSchema } from '@/validations/signUp.validation';
 import Link from 'next/link';
 import Image from 'next/image';
+import CheckBox from '@/components/ui/checkbox';
 
 // Define FormData interface
 interface FormData {
-    uname: string;
+    name: string;
     email: string;
     password: string;
     confirmPassword: string;
@@ -22,41 +22,18 @@ interface FormData {
 
 const Page = () => {
     // Initialize useForm with FormData type and Zod schema
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-        setError,
-    } = useForm<FormData>({
-        resolver: zodResolver(signupSchema),
-    });
 
     const [isChecked1, setIsChecked1] = useState(false);
 
-    const onSubmit = async (data: FormData) => {
-        try {
-            console.log("Submitted data:", data);
+    const { register, reset, handleSubmit, formState: { errors } } = useForm<FormData>({
+        resolver: zodResolver(signupSchema)
+    });
 
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_APIURL}/register`, data);
+    console.log(errors)
 
-            if (response.status === 201) {
-                alert(response.data.otp)
-                // router.push('/otp'); // Redirect to the login page after successful registration
-            }
-        } catch (error: any) {
-            // Handle server-side validation errors
-            if (error.response && error.response.data.errors) {
-                const serverErrors = error.response.data.errors;
-                Object.keys(serverErrors).forEach((field) => {
-                    setError(field as keyof FormData, {
-                        type: "server",
-                        message: serverErrors[field],
-                    });
-                });
-            } else {
-                alert("Form submission failed. Please try again.");
-            }
-        }
+    const onSubmit: SubmitHandler<FormData> = (data) => {
+        console.log(data);
+        reset();
     };
 
     return (
@@ -90,30 +67,34 @@ const Page = () => {
                         {/* Name Input */}
                         <div className="md:space-y-[30px] space-y-[15px]">
                             <Input
+                                name='name'
+                                register={register}
                                 placeholder="Name"
                                 label="Name"
-                                error={errors.uname?.message}
-                                {...register('uname')}
+                                error={errors.name?.message}
                             />
                             <Input
+                                name='email'
+                                register={register}
                                 placeholder="Email"
                                 label="Email"
                                 error={errors.email?.message}
-                                {...register('email')}
                             />
                             <Input
+                                name='email'
+                                register={register}
                                 type={isChecked1 ? "text" : "password"}
                                 placeholder="Password"
                                 label="Password"
                                 error={errors.password?.message}
-                                {...register("password")}
                             />
                             <Input
+                                name='email'
+                                register={register}
                                 type={isChecked1 ? "text" : "password"}
                                 placeholder="Confirm Password"
                                 label="Confirm Password"
                                 error={errors.confirmPassword?.message}
-                                {...register("confirmPassword")}
                             />
                             <CheckBox
                                 id="checkbox1"

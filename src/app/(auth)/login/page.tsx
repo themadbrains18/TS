@@ -2,17 +2,14 @@
 
 import Icon from '@/components/Icon';
 import Button from '@/components/ui/Button';
-import CheckBox from '@/components/ui/Checkbox';
+import CheckBox from '@/components/ui/checkbox';
 import Input from '@/components/ui/Input';
 import { loginSchema } from '@/validations/loginValidation';
 import { zodResolver } from '@hookform/resolvers/zod';
-import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { z } from 'zod';
-
 
 const Page = () => {
 
@@ -69,14 +66,13 @@ const Page = () => {
                             <div className='  md:space-y-[30px] space-y-[15px] ' >
                                 {/* Email or Phone Input */}
                                 <Input
-                                type='email'
+                                    type='email'
                                     register={register}
                                     placeholder="Your Details"
                                     label="email"
                                     className=" placeholder:text-neutral-400 py-3 md:py-[18px]  px-5 bg-divider-100"
                                     name='email'
-                                // error={errors.email?.message} 
-                                // {...register('email')}
+                                    error={errors.email?.message}
                                 />
 
                                 {/* Password Input with Show Password Option */}
@@ -87,8 +83,7 @@ const Page = () => {
                                     label="password"
                                     name='password'
                                     className=" placeholder:text-neutral-400 py-3 md:py-[18px] px-5 bg-divider-100"
-                                // error={errors.password?.message} 
-                                // {...register('password')}
+                                    error={errors.password?.message}
                                 />
 
                                 {/* Checkbox to Toggle Password Visibility */}

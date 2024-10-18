@@ -1,12 +1,15 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { UseFormRegister } from 'react-hook-form';
 
 interface FileUploadProps {
   onFileSelect: (files: File[]) => void;
   supportedfiles: string;
   multiple?: boolean;
   id?: string;
+  register: UseFormRegister<any>;
+  name?: string;
 }
 
 const FilePreview = ({
@@ -52,6 +55,8 @@ const FileUpload: React.FC<FileUploadProps> = ({
   supportedfiles,
   multiple = true,
   id = '1',
+  register,
+  name
 }) => {
   const [files, setFiles] = useState<File[]>([]);
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
@@ -130,14 +135,19 @@ const FileUpload: React.FC<FileUploadProps> = ({
       >
         Choose file{multiple ? 's' : ''}
       </label>
+      {
+        name &&
+        <input
+          id={`file-upload${id}`}
+          {...register(name)}
+          name={name}
+          type="file"
+          multiple={multiple}
+          // onChange={handleFileChange}
+          className="hidden"
+        />
+      }
 
-      <input
-        id={`file-upload${id}`}
-        type="file"
-        multiple={multiple}
-        onChange={handleFileChange}
-        className="hidden"
-      />
 
       {error && <p className="text-red-500 text-xs mt-2">{error}</p>}
 
