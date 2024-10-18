@@ -18,8 +18,6 @@ import { uploadTemplate } from '@/validations/uploadTemplate';
 export interface TemplateType {
   id: string;
   name: string;
-  subCategories?:[{id:string,name:string,templateTypeId:string}],
-  templates?:IndustryType[]
 }
 
 interface IndustryType {
@@ -214,7 +212,6 @@ const Page: React.FC = () => {
     version: string;
     seoTags: string;
     dollarPrice: number;
-    zipFile: FileList
   }
 
   const { register, reset, handleSubmit, formState: { errors } } = useForm<FormData>({
@@ -224,10 +221,7 @@ const Page: React.FC = () => {
   console.log(errors)
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log("first")
-    console.log(data);
-    const selectedFile = data.zipFile[0]; // Access the selected file
-    console.log('Selected File:', selectedFile.name);
+console.log(data)
     // reset();
   };
 
@@ -293,8 +287,6 @@ const Page: React.FC = () => {
                 <h3 className='text-xl font-semibold capitalize pb-4'>Source File</h3>
                 <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
                   <FileUpload
-                    register={register}
-                    name='zipFile'
                     onFileSelect={(file) => handleFileSelect(file)}
                     supportedfiles="zip"
                     multiple={false}
@@ -303,7 +295,7 @@ const Page: React.FC = () => {
                 </div>
               </div>
 
-              {/* <div className='pt-5'>
+              <div className='pt-5'>
                 <h3 className='text-xl font-semibold capitalize pb-4'>Slider Images</h3>
                 <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
                   <FileUpload
@@ -342,7 +334,7 @@ const Page: React.FC = () => {
 
                   />
                 </div>
-              </div> */}
+              </div>
               <div className='mt-5'>
                 <Input type='text' register={register} name='seoTags' label='SEO Keywords Tag' lableclass='text-xl font-semibold capitalize' className='bg-white pb-3 border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400' placeholder='tag name' />
                 <div className='pt-5'>
