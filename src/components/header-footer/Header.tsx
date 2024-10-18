@@ -47,8 +47,8 @@ const Header = () => {
   };
 
   useEffect(() => {
-    fetchData(`${process.env.NEXT_PUBLIC_APIURL}/template-types`);
-    fetchsubCatData(`${process.env.NEXT_PUBLIC_APIURL}/sub-categories`);
+    fetchData(`/template-types`);
+    fetchsubCatData(`/sub-categories`);
   }, [])
  
   

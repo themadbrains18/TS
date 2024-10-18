@@ -43,7 +43,7 @@ function useFetch<T>(): FetchResult<T> {
           "Content-Type": "application/json",
         };
 
-        const response = await fetch(`${url}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}${url}`, {
           ...options,
           headers,
           signal,

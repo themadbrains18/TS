@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Input from '@/components/ui/Input';
-import CustomDropdown from './components/CustomTab';
+import CustomDropdown from './components/customtab';
 import CheckBox from '@/components/ui/checkbox';
 import QuillEditor from '@/components/ui/Quilleditor';
 import DashInput from './components/DashInput';
@@ -64,7 +64,7 @@ const Page: React.FC = () => {
   // Handle template dropdown selection
   const handleTemplateSelect = (value: string) => {
     setSelectedValue(value);
-    fetchTemplateData(`${process.env.NEXT_PUBLIC_APIURL}/sub-categories/${value}`);
+    fetchTemplateData(`/sub-categories/${value}`);
   };
 
   // Handle category dropdown selection
@@ -120,8 +120,8 @@ const Page: React.FC = () => {
 
   useEffect(() => {
     // Fetch template types and industries on mount
-    fetchData(`${process.env.NEXT_PUBLIC_APIURL}/template-types`);
-    fetchIndustryData(`${process.env.NEXT_PUBLIC_APIURL}/industry-type`);
+    fetchData(`/template-types`);
+    fetchIndustryData(`/industry-type`);
   }, [fetchData, fetchIndustryData]);
 
   // Function to add new input fields
