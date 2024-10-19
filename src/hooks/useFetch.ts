@@ -62,6 +62,8 @@ function useFetch<T>(): FetchResult<T> {
 
         const result: ApiResponse<T> = await response.json();
         
+        console.log(result,"==result");
+        
         setData(result?.results);
         toaster && toast.success(result?.message);
         setError(null);
@@ -70,7 +72,7 @@ function useFetch<T>(): FetchResult<T> {
           console.error("Fetch error:", e);
           setError(e.message || "An unexpected error occurred");
           setData(null);
-          toaster && toast.error(`An error occurred: ${e.message}`);
+          toaster && toast.error(`${e.message}`);
         }
       } finally {
         setLoading(false);

@@ -347,7 +347,7 @@ console.log(data)
 
                   }
                 </div>
-                <div className='mt-5'>
+                <div className='mt-5'>  
                   <Button type='submit' variant='primary' className='py-3' >Upload</Button>
                 </div>
               </div>

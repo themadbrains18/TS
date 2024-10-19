@@ -1,15 +1,16 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
 import Input from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
 import { signupSchema } from '@/validations/signUp.validation';
 import Link from 'next/link';
 import Image from 'next/image';
 import CheckBox from '@/components/ui/checkbox';
-
+import useFetch from '@/hooks/useFetch';
+import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/navigation';
 // Define FormData interface
 interface FormData {
     name: string;
@@ -23,6 +24,8 @@ interface FormData {
 const Page = () => {
     // Initialize useForm with FormData type and Zod schema
 
+    const router = useRouter();
+
     const [isChecked1, setIsChecked1] = useState(false);
 
     const { register, reset, handleSubmit, formState: { errors } } = useForm<FormData>({
@@ -31,10 +34,33 @@ const Page = () => {
 
     console.log(errors)
 
-    const onSubmit: SubmitHandler<FormData> = (data) => {
-        console.log(data);
-        reset();
+    // Using useFetch hook to make the API call
+    const { data: response, error, loading, fetchData } = useFetch<any>();
+
+    const onSubmit: SubmitHandler<FormData> = async (data) => {
+        // Call fetchData to submit form data to the API
+        await fetchData("/register", {
+            method: "POST",
+            body: JSON.stringify(data),
+        });
+
+        // reset();
     };
+
+
+    useEffect(() => {
+
+        checkData()
+    }, [response])
+
+    const checkData = () => {
+        if (response?.otp) {
+            router.push('/otp')
+        }
+    }
+
+    console.log(response, "response");
+
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2">
@@ -81,7 +107,7 @@ const Page = () => {
                                 error={errors.email?.message}
                             />
                             <Input
-                                name='email'
+                                name='password'
                                 register={register}
                                 type={isChecked1 ? "text" : "password"}
                                 placeholder="Password"
@@ -89,7 +115,7 @@ const Page = () => {
                                 error={errors.password?.message}
                             />
                             <Input
-                                name='email'
+                                name='confirmPassword'
                                 register={register}
                                 type={isChecked1 ? "text" : "password"}
                                 placeholder="Confirm Password"
