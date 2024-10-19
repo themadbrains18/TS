@@ -18,7 +18,6 @@ const Page = () => {
     interface FormValues {
         email: string;
         password: string
-
     }
 
     const { register, reset, handleSubmit, formState: { errors } } = useForm<FormValues>({
@@ -31,6 +30,7 @@ const Page = () => {
         console.log(data);
         reset();
     };
+
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 ">
