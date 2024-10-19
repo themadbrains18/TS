@@ -5,6 +5,7 @@ import StoreProvider from "@/providers/StoreProvider";
 import SessionProvider from './SessionProvider'
 import { authOptions } from "@/libs/auth";
 import { getServerSession } from "next-auth";
+import { ToastContainer } from "react-toastify";
 
 const openSans = Open_Sans({
   weight: ["400", "500", "600", "700", "800"],
@@ -37,6 +38,7 @@ export default async function RootLayout({ children, }: Readonly<{ children: Rea
         <SessionProvider  session={session}>
 
           <StoreProvider>
+          <ToastContainer />
             {children}
           </StoreProvider>
         </SessionProvider>
