@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from 'react';
 import Input from '@/components/ui/Input';
-import CustomDropdown from './components/CustomTab';
 import CheckBox from '@/components/ui/checkbox';
 import QuillEditor from '@/components/ui/Quilleditor';
 import DashInput from './components/DashInput';
@@ -13,6 +12,7 @@ import StaticCheckBox from '@/components/ui/StaticCheckbox';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { uploadTemplate } from '@/validations/uploadTemplate';
+import CustomDropdown from './components/customtab';
 
 // Define types for data structures
 export interface TemplateType {

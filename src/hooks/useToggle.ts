@@ -12,3 +12,4 @@ export default useToggle;
 
 // use like this :==
 // const [isToggled, toggle] = useToggle();
+

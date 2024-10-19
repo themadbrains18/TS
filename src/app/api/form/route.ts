@@ -1,5 +1,5 @@
-;
-import { UserSchema } from "@/app/(auth)/register/page";
+// import { UserSchema } from "@/app/(auth)/register/page";
+import { UserSchema } from "@/app/(auth)/register/page"
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {

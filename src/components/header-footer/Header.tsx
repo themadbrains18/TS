@@ -18,6 +18,7 @@ import { subCat } from "@/types/type";
 
 const Header = () => {
   const { data, fetchData } = useFetch<TemplateType[]>();
+
   const { data: subCatData, fetchData: fetchsubCatData } = useFetch<subCat[]>();
   // State to manage desktop search bar visibility
   const [opensearch, setOpensearch] = useState(false)
@@ -50,8 +51,8 @@ const Header = () => {
     fetchData(`/template-types`);
     fetchsubCatData(`/sub-categories`);
   }, [])
- 
-  
+
+
 
 
   return (
@@ -71,10 +72,10 @@ const Header = () => {
               </Link>
               <div className="flex items-center max-w-[473px] w-full justify-between">
                 {
-                 data && data?.map((item,index)=>{
-                    return(
+                  data && data?.map((item, index) => {
+                    return (
                       <Fragment key={index}>
-                    <NavDropdown tittle={item?.name}  subCat={item?.subCategories}/>
+                        <NavDropdown tittle={item?.name} subCat={item?.subCategories} />
                       </Fragment>
                     )
                   })
@@ -90,7 +91,7 @@ const Header = () => {
                 </div>
                 <div className={cn` flex items-center justify-between max-w-[410px] opacity-0 border-[1px] bg-white border-primary-100 transition-all duration-[0.5s] absolute   ${opensearch !== false ? "opacity-[1] visible  p-[10px] right-0 " : "opacity-0 invisible right-[-100%] p-0 "}`}>
                   <div className="border-r-[1px] border-divider-200 pr-[10px] mr-[10px]">
-                    <SearchDropdown subCat={subCatData || undefined}/>
+                    <SearchDropdown subCat={subCatData || undefined} />
                   </div>
                   <input type="text" placeholder="Search all templates...." className="my-[10px] placeholder:text-sm placeholder:text-subparagraph leading-5 outline-none " />
                   <Icon name="crossicon" className={`cursor-pointer fill-primary-100  ${opensearch !== false ? "opacity-100" : "opacity-0"}`} onClick={() => setOpensearch(!opensearch)} />
@@ -132,7 +133,7 @@ const Header = () => {
               </div>
               <div className="flex flex-col mt-8">
                 {
-                 data&& data?.map((item, index) => {
+                  data && data?.map((item, index) => {
                     return (<Fragment key={index}>
                       <Accordion
                         isOpen={openAccordions[index]} // Check if this specific accordion is open

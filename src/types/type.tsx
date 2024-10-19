@@ -151,8 +151,17 @@ export type FormFieldProps = {
   valueAsNumber?: boolean;
 };
 
-
  
  export interface FormValues {
   email: string;
+}
+
+
+
+
+
+ export interface Downloadpopup {
+  isPopupOpen: boolean,
+  closePopup: () => void;
+  opensecoundpopup: () => void;
 }
