@@ -34,8 +34,8 @@ export interface navtabprops {
 }
 
 export interface subCat {
-  id: string, 
-  name: string, 
+  id: string,
+  name: string,
   templateTypeId?: string
 }
 
@@ -156,10 +156,6 @@ export type FormFieldProps = {
 export interface FormValues {
   email: string;
 }
-
-
-
-
 
 export interface Downloadpopup {
   isPopupOpen: boolean,
