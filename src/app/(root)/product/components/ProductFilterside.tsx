@@ -2,9 +2,10 @@
 
 import Icon from '@/components/Icon'
 import Accordion from '@/components/ui/Accordion';
-import { ProductFiltersidetype } from '@/types/type';
-import React, { useState } from 'react'
+import { Industry, ProductFiltersidetype, SoftwareType } from '@/types/type';
+import React, { useEffect, useState } from 'react'
 import CheckboxFilter from './ProductFilterchekbox';
+import useFetch from '@/hooks/useFetch';
 
 /**
  * ProductFilterside is a sidebar component that allows users to filter products
@@ -24,64 +25,56 @@ const ProductFilterside = ({ items, setItems, closefilter }: ProductFiltersidety
     // Define filter data for different categories
     const [openIndexes, setOpenIndexes] = useState<number[]>([0]); // Track multiple open sections, default to first open
 
+    const { data: industryData, fetchData: fetchIndustryData } = useFetch<Industry[]>();
+    const { data: softwareData, fetchData: fetchSoftwareData } = useFetch<SoftwareType[]>();
+
+    useEffect(() => {
+
+        fetchIndustryData('/industry-type')
+        fetchSoftwareData('/software-types')
+
+    }, [])
+
+
     const filterData = [
         {
             title: "Price Range",
             items: [
-                { label: "$0 - $50", value: "0-50" },
-                { label: "$50 - $100", value: "50-100" },
-                { label: "$100 - $200", value: "100-200" },
+                { name: "$0 - $50", id: "0-50" },
+                { name: "$50 - $100", id: "50-100" },
+                { name: "$100 - $200", id: "100-200" },
             ],
         },
         {
             title: "Template Studio Special",
             items: [
-                { label: "Feature Products", value: "Feature Products" },
-                { label: "Popular Template", value: "Popular Template" },
-                { label: "Browse Trending Categories", value: "Browse Trending Categories" },
+                { name: "Feature Products", id: "Feature Products" },
+                { name: "Popular Template", id: "Popular Template" },
+                { name: "Browse Trending Categories", id: "Browse Trending Categories" },
             ],
         },
         {
             title: "Industries",
-            items: [
-                { label: "Real Estate", value: "Real Estate" },
-                { label: "Insurance", value: "Insurance" },
-                { label: "Education", value: "Education" },
-                { label: "Entertainment", value: "Entertainment" },
-                { label: "Real Estate", value: "Real Estate" },
-                { label: "Retail", value: "Retail" },
-                { label: "Sports", value: "Sports" },
-                { label: "Technology", value: "Technology" },
-                { label: "Crypto", value: "Crypto" },
-                { label: "NFT", value: "NFT" },
-            ],
+            items:industryData,
         },
-        {
-            title: "Tags",
-            items: [
-                { label: "Real Estate", value: "Real Estate" },
-                { label: "Insurance", value: "Insurance" },
-                { label: "Education", value: "Education" },
-                { label: "Entertainment", value: "Entertainment" },
-                { label: "Real Estate", value: "Real Estate" },
-                { label: "Retail", value: "Retail" },
-                { label: "Sports", value: "Sports" },
-                { label: "Technology", value: "Technology" },
-                { label: "Crypto", value: "Crypto" },
-                { label: "NFT", value: "NFT" },
-            ],
-        },
+        // {
+        //     title: "Tags",
+        //     items: [
+        //         { label: "Real Estate", value: "Real Estate" },
+        //         { label: "Insurance", value: "Insurance" },
+        //         { label: "Education", value: "Education" },
+        //         { label: "Entertainment", value: "Entertainment" },
+        //         { label: "Real Estate", value: "Real Estate" },
+        //         { label: "Retail", value: "Retail" },
+        //         { label: "Sports", value: "Sports" },
+        //         { label: "Technology", value: "Technology" },
+        //         { label: "Crypto", value: "Crypto" },
+        //         { label: "NFT", value: "NFT" },
+        //     ],
+        // },
         {
             title: "Software Type",
-            items: [
-                { label: "Software Type", value: "Software Type" },
-                { label: "HTML / CSS", value: "HTML / CSS" },
-                { label: "React", value: "React" },
-                { label: "Bootstrap", value: "Bootstrap" },
-                { label: "Figma", value: "Figma" },
-                { label: "Sketch", value: "Sketch" },
-                { label: "Adobe XD ", value: "Adobe XD " },
-            ],
+            items: softwareData,
         },
     ];
 
@@ -98,6 +91,7 @@ const ProductFilterside = ({ items, setItems, closefilter }: ProductFiltersidety
 
     return (
         <>
+
             <div className="max-w-full sm:max-w-[357px] w-full py-[30px] px-[20px] bg-white h-full">
                 <div className="flex justify-between items-center border-b border-divider-100 pb-5 mb-5">
                     <div className="flex gap-[5px] items-center">
@@ -120,11 +114,11 @@ const ProductFilterside = ({ items, setItems, closefilter }: ProductFiltersidety
                             onToggle={() => toggleAccordion(sectionIndex)} // Toggle the accordion
                         >
                             <div className="border-b pb-5 mb-5">
-                                {section.items.map((item, index) => (
-                                    <div key={index + item.value} className="py-[5px] px-5 mb-1 hover:bg-primary-300">
+                                {section && section?.items?.map((item, index) => (
+                                    <div key={index + item?.id} className="py-[5px] px-5 mb-1 hover:bg-primary-300">
                                         <CheckboxFilter
-                                            value={item.value}
-                                            id={item.value}
+                                            value={item?.name}
+                                            id={item?.name}
                                             setItems={setItems}
                                             items={items}
                                         />

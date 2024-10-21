@@ -11,9 +11,14 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import type { NextAuthOptions } from "next-auth"
+import { signIn } from 'next-auth/react';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
 
 
 const Page = () => {
+
+    const router = useRouter();
 
     const [isChecked1, setIsChecked1] = useState(false);
 
@@ -26,15 +31,29 @@ const Page = () => {
         resolver: zodResolver(loginSchema)
     });
 
-    const onSubmit: SubmitHandler<FormValues> = (data) => {
-        console.log(data);
-        reset();
+    // const onSubmit: SubmitHandler<FormValues> = (data) => {
+    //     console.log(data);
+    //     reset();
+    // };
+
+
+    const onSubmit: SubmitHandler<FormValues> = async (data) => {
+        const result = await signIn("credentials", {
+            redirect: false,
+            email: data.email,
+            password: data.password,
+        });
+
+        if (result?.error) {
+            toast.error(result.error);
+        } else if (result?.ok) {
+            toast.success("Login successful");
+            router.push("/otp");  // Redirect to the desired page
+        }
     };
 
-    
-    
 
-    
+
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 ">
             {/* Left Section with Image and Text */}

@@ -8,7 +8,7 @@ interface InputFieldProps {
     type?: 'text' | 'email' | 'password' | 'url' | 'number';
     value?: string;
     placeholder?: string;
-    error?: string;
+    error?: string |any;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     className?: string;
     lableclass?: string;

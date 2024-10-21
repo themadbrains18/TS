@@ -34,8 +34,8 @@ export interface navtabprops {
 }
 
 export interface subCat {
-  id: string, 
-  name: string, 
+  id: string,
+  name: string,
   templateTypeId?: string
 }
 
@@ -54,15 +54,17 @@ export interface techcardprops {
 }
 
 export interface featurecardprops {
+  id?:string
   poster?: string,
   title?: string,
   themeicon?: string,
   uploadericon?: string,
   uploadername?: string,
   category?: string,
-  buttonprops?: string,
+  buttonprops?: string | number,
   totalimages?: number,
-  currentimage?: number
+  currentimage?: number,
+  isPaid?: boolean,
 }
 
 export interface buissnesscardprops {
@@ -126,6 +128,7 @@ export interface DownloadTemplatetype {
 }
 
 export interface dashinput {
+  name?: string,
   placeholder?: string,
   value?: string,
   className?: string,
@@ -151,17 +154,98 @@ export type FormFieldProps = {
   valueAsNumber?: boolean;
 };
 
- 
- export interface FormValues {
+
+export interface FormValues {
   email: string;
 }
 
-
-
-
-
- export interface Downloadpopup {
+export interface Downloadpopup {
   isPopupOpen: boolean,
   closePopup: () => void;
   opensecoundpopup: () => void;
+}
+
+export interface TemplateResponse {
+  data: TechTemplate[];
+  pagination: Pagination;
+}
+
+interface Pagination {
+  totalTemplates: number;
+  totalPages: number;
+  currentPage: number;
+  limit: number;
+}
+
+export interface TechTemplate {
+  id: string;
+  title: string;
+  price: number;
+  description: string;
+  imageUrl: string | null;
+  version: string;
+  userId: string;
+  downloads: number;
+  createdAt: string;
+  updatedAt: string;
+  industryTypeId: string;
+  templateTypeId: string;
+  subCategoryId: string;
+  softwareTypeId: string;
+  mobileVersion: string | null;
+  documentationReady: boolean | null;
+  techDetails: string[];
+  seoTags: string[];
+  isPaid: boolean;
+  credits: Credit[];
+  sliderImages: Image[];
+  previewImages: Image[];
+  previewMobileImages: Image[];
+  sourceFiles: SourceFile[];
+  softwareType: SoftwareType;
+  subCategory: SubCategory;
+  templateType: SubCategory;
+  user: User;
+}
+
+interface Credit {
+  id: string;
+  fonts: string[];
+  images: string[];
+  icons: string[];
+  illustrations: string[];
+  templateId: string;
+}
+
+interface Image {
+  id: string;
+  imageUrl: string;
+  templateId: string;
+}
+
+interface SourceFile {
+  id: string;
+  fileUrl: string;
+  templateId: string;
+}
+
+export interface SoftwareType {
+  id: string;
+  name: string;
+  templateTypeId: string;
+}
+
+interface SubCategory {
+  id: string;
+  name: string;
+  templateTypeId: string;
+}
+export interface Industry {
+  id: string;
+  name: string;
+  templateTypeId: string;
+}
+
+interface User {
+  name: string;
 }

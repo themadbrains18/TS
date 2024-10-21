@@ -1,12 +1,12 @@
 'use client';
 
 import React, { Fragment, useState } from 'react';
-import { useRouter } from 'next/navigation'; // Import useRouter
-import DashInput from '../../addtemplate/components/DashInput';
+import { useRouter } from 'next/navigation';
 import Button from '@/components/ui/Button';
 import Icon from '@/components/Icon';
 import HideTemplate from '@/components/popups/HideTemplate';
 import DeleteTemplate from '@/components/popups/DeleteTemplate';
+import DashInput from '../addtemplate/components/DashInput';
 
 const AddTemplate = () => {
   interface TemplateData {
@@ -17,36 +17,42 @@ const AddTemplate = () => {
   }
 
   const templates: TemplateData[] = [
+
     {
       name: "Cosmetic Products eCommerce UI Kit",
       type: "UI Template",
       version: "01",
       price: "$9",
     },
+
     {
       name: "PetCare E-Commerce Project for Shop Food for Pet",
       type: "UI Template",
       version: "01",
       price: "$5",
     },
+
     {
       name: "Beautify - Landing Page Design For cosmetic products",
       type: "UI Template",
       version: "01",
       price: "$10",
     },
+
     {
       name: "Organic Food Store Template",
       type: "UI Template",
       version: "01",
       price: "$10",
     },
+
     {
       name: "Grocery Store - Multipurpose Shopping Delivery Application",
       type: "UI Template",
       version: "01",
       price: "$9",
     },
+
   ];
 
   const templateheading = [

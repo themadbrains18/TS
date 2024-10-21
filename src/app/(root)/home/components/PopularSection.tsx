@@ -19,7 +19,7 @@ const PopularSection = () => {
    */
     const data = [
         {
-            poster: "popularbg.png",
+            poster: "/images/popularbg.png",
             title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
@@ -31,7 +31,7 @@ const PopularSection = () => {
 
         },
         {
-            poster: "featureimg.png",
+            poster: "/images/featureimg.png",
             title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
@@ -43,7 +43,7 @@ const PopularSection = () => {
 
         },
         {
-            poster: "popularbg.png",
+            poster: "/images/popularbg.png",
             title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
@@ -55,7 +55,7 @@ const PopularSection = () => {
 
         },
         {
-            poster: "featureimg.png",
+            poster: "/images/featureimg.png",
             title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
@@ -67,7 +67,7 @@ const PopularSection = () => {
 
         },
         {
-            poster: "popularbg.png",
+            poster: "/images/popularbg.png",
             title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
@@ -79,7 +79,7 @@ const PopularSection = () => {
 
         },
         {
-            poster: "featureimg.png",
+            poster: "/images/featureimg.png",
             title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",

@@ -11,8 +11,9 @@ import NavTabs from "../NavTabs";
 import Accordion from "../ui/Accordion";
 import Link from "next/link";
 import useFetch from "@/hooks/useFetch";
-import { TemplateType } from "@/app/(dashboard)/addtemplate/page";
+
 import { subCat } from "@/types/type";
+import { TemplateType } from "@/app/(dashboard)/dashboard/addtemplate/page";
 
 
 

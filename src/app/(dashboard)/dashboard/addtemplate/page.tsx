@@ -14,12 +14,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { uploadTemplate } from '@/validations/uploadTemplate';
 import CustomDropdown from './components/customtab';
 import { subCat } from '@/types/type';
+import { any } from 'zod';
 
 // Define types for data structures
 export interface TemplateType {
   id: string;
   name: string;
-  subCategories:subCat[] 
+  subCategories: subCat[]
 }
 
 interface IndustryType {
@@ -36,11 +37,18 @@ const Page: React.FC = () => {
   // Fetch data hooks for template types, subcategories, and industries
   const { data, fetchData } = useFetch<TemplateType[]>();
   const { data: templateData, fetchData: fetchTemplateData } = useFetch<any>();
+
   const { data: industryData, fetchData: fetchIndustryData } = useFetch<IndustryType[]>();
+  
+  const { register, reset, handleSubmit, formState: { errors } } = useForm<FormData>({
+    resolver: zodResolver(uploadTemplate)
+  });
+
+  console.log(errors, "errors")
 
   // State for fonts, images, icons, and illustrations
   const [fonts, setFonts] = useState<Font[]>([{ name: '', url: '' }]);
-  const [images, setImages] = useState<Font[]>([{name: '', url: '' }]);
+  const [images, setImages] = useState<Font[]>([{ name: '', url: '' }]);
   const [icons, setIcons] = useState<Font[]>([{ name: '', url: '' }]);
   const [illustrations, setIllustrations] = useState<Font[]>([{ name: '', url: '' }]);
   // Technical details state (4 inputs by default)
@@ -106,13 +114,7 @@ const Page: React.FC = () => {
       setSelectedIndustries((prev) => prev.filter((industry) => industry !== id));
     }
   };
-  // const handlepaid = (id: string, isChecked: boolean) => {
-  //   if (isChecked) {
-  //     setIsPaid((prev) => [...prev, id]);
-  //   } else {
-  //     setIsPaid((prev) => prev.filter((industry) => industry !== id));
-  //   }
-  // };
+
 
   useEffect(() => {
     // Fetch template types and industries on mount
@@ -142,6 +144,7 @@ const Page: React.FC = () => {
     }
   };
 
+
   const renderInputFields = (items: Font[], setter: React.Dispatch<React.SetStateAction<Font[]>>, title: string) => (
     <div className='pb-3'>
       <h4 className='text-lg font-semibold capitalize pb-4'>{title}</h4>
@@ -149,12 +152,16 @@ const Page: React.FC = () => {
         {items.map((item, index) => (
           <div key={index} className="flex items-center gap-x-3 pb-3">
             <DashInput
+              error={errors.title?.message}
+              name='fonts'
               type='text'
               placeholder='font name'
               value={item.name}
               onChange={(e) => handleInputChange(setter, index, { ...item, name: e.target.value }, items)}
             />
+
             <DashInput
+              name='fonturl'
               type='text'
               placeholder='font url'
               value={item.url}
@@ -181,6 +188,7 @@ const Page: React.FC = () => {
         {technicalDetails.map((detail, index) => (
           <div key={index} className="flex items-center gap-x-3 pb-3">
             <DashInput
+              name='DetailName'
               type='text'
               placeholder='Detail Name'
               value={detail}
@@ -202,7 +210,7 @@ const Page: React.FC = () => {
       </div>
     </div>
   );
-  
+
   interface FormData {
     name: string;
     version: string;
@@ -210,15 +218,10 @@ const Page: React.FC = () => {
     dollarPrice: number;
   }
 
-  const { register, reset, handleSubmit, formState: { errors } } = useForm<FormData>({
-    resolver: zodResolver(uploadTemplate)
-  });
-
-  console.log(errors)
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
-console.log(data)
-    // reset();
+    console.log(data)
+    reset();
   };
 
 
@@ -227,14 +230,13 @@ console.log(data)
       <section className='py-10 md:py-20'>
         <div className="max-w-[802px] w-full py-0 px-4 my-0 mx-auto">
           <h2 className='text-3xl capitalize font-bold pb-8 '>Upload Product</h2>
-
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-y-5 justify-center items-center w-full">
-              <CustomDropdown placeholder='Template Type' options={data || []} onSelect={handleTemplateSelect} />
-              <CustomDropdown placeholder='Template SubCategory' options={templateData?.subCategories} onSelect={handleCategorySelect} />
-              <CustomDropdown placeholder='Software Type' options={templateData?.softwareCategories} onSelect={handleSoftwareSelect} />
+              <CustomDropdown error={errors?.templateType?.message || ""} // Fallback to an empty string
+                placeholder='Template Type' options={data || []} onSelect={handleTemplateSelect} />
+              <CustomDropdown error={errors?.subCategory?.message || ""} placeholder='Template SubCategory' options={templateData?.subCategories} onSelect={handleCategorySelect} />
+              <CustomDropdown error={errors?.softwareType?.message || ""} placeholder='Software Type' options={templateData?.softwareCategories} onSelect={handleSoftwareSelect} />
             </div>
-
             <div className='mt-5'>
               <h3 className='text-xl font-semibold capitalize '>Industry</h3>
               <div className='flex justify-between mt-5'>
@@ -252,7 +254,7 @@ console.log(data)
               </div>
 
               <div className='flex flex-col gap-y-5'>
-                <Input type='text' register={register} name='name' label='Name' lableclass='text-xl font-semibold capitalize' className='bg-white border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400' placeholder='Template Name' />
+                <Input type='text' register={register} error={errors?.name?.message} name='name' label='Name' lableclass='text-xl font-semibold capitalize' className='bg-white border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400' placeholder='Template Name' />
                 <Input type='text' register={register} name='version' label='Version' lableclass='text-xl font-semibold capitalize' className='border bg-white border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400' placeholder='Version' />
               </div>
 
@@ -264,10 +266,10 @@ console.log(data)
               <div className='pt-5'>
                 <h3 className='text-xl font-semibold capitalize  pb-4'>Credits</h3>
                 <div className='p-5 border border-neutral-400 rounded-md'>
-                  {renderInputFields(fonts, setFonts, 'Fonts')}
-                  {renderInputFields(images, setImages, 'Images')}
-                  {renderInputFields(icons, setIcons, 'Icons')}
-                  {renderInputFields(illustrations, setIllustrations, 'Illustrations')}
+                  {renderInputFields(fonts, setFonts, 'fonts')}
+                  {renderInputFields(images, setImages, 'images')}
+                  {renderInputFields(icons, setIcons, 'icons')}
+                  {renderInputFields(illustrations, setIllustrations, 'illustrations')}
                 </div>
               </div>
 
@@ -332,20 +334,18 @@ console.log(data)
                 </div>
               </div>
               <div className='mt-5'>
-                <Input type='text' register={register} name='seoTags' label='SEO Keywords Tag' lableclass='text-xl font-semibold capitalize' className='bg-white pb-3 border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400' placeholder='tag name' />
+                <Input error={errors?.seoTags?.message} type='text' register={register} name='seoTags' label='SEO Keywords Tag' lableclass='text-xl font-semibold capitalize' className='bg-white pb-3 border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400' placeholder='tag name' />
                 <div className='pt-5'>
                   <StaticCheckBox onClick={() => setStaticCheck(!staticcheck)} checked={staticcheck} label='Paid' />
                   {
                     staticcheck &&
                     <div>
-                      <Input register={register} name='dollarPrice' label='price in dollar' lableclass='text-xl font-semibold capitalize' className='pb-3 border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400 bg-white ' placeholder='price in dollar'  />
+                      <Input error={errors?.dollarPrice?.message} register={register} name='dollarPrice' label='price in dollar' lableclass='text-xl font-semibold capitalize' className='pb-3 border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400 bg-white ' placeholder='price in dollar' />
                     </div>
 
                   }
                 </div>
-                <div className='mt-5'>  
-                  <Button type='submit' variant='primary' className='py-3' >Upload</Button>
-                </div>
+                <Button type='submit' variant='primary' className='py-3 mt-5' >Upload</Button>
               </div>
             </div>
           </form>

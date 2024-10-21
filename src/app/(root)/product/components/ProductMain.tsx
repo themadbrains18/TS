@@ -11,6 +11,7 @@ import Button from '@/components/ui/Button';
 import { useSearchParams } from 'next/navigation'; // Import useSearchParams for navigation
 import useFetch from '@/hooks/useFetch';
 import NotFoundProduct from './NotFountproduct';
+import { TechTemplate, TemplateResponse } from '@/types/type';
 
 /**
  * Renders the main product page layout with filters, tags, sorting, and product grid.
@@ -20,9 +21,10 @@ import NotFoundProduct from './NotFountproduct';
  */
 const ProductMain = () => {
     const searchParams = useSearchParams();
-    const templateTyId = searchParams.get('templateTyId'); // Get templateTyId from query parameters
-    const subCatId = searchParams.get('subCatId'); // Get subCatId from query parameters
-    const { data: productsData, fetchData: fetchProductsData } = useFetch<any[]>();
+    const templateTypeId = searchParams.get('template-type'); // Get templateTyId from query parameters
+    const subCatId = searchParams.get('subcat'); // Get subCatId from query parameters
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
 
 
     const Sortdata = [
@@ -38,7 +40,7 @@ const ProductMain = () => {
     ];
 
     const [items, setItems] = useState<string[]>([]);
-    const [products, setProducts] = useState([]); // State to store fetched products
+    const [products, setProducts] = useState<TemplateResponse | null>(null); // Initialize to null
 
     const removeItem = (index: number) => {
         setItems((prevItems) => {
@@ -64,28 +66,55 @@ const ProductMain = () => {
     const dropdownRef = useRef<HTMLDivElement>(null);
     useOnClickOutside(dropdownRef, sorthandledropdown);
 
-    // Function to fetch products based on the conditions
-    const fetchProducts = async () => {
+
+  // Function to fetch products based on the conditions
+    const fetchProducts = async (page: number): Promise<TemplateResponse> => {
         try {
-            let apiUrl = '/templates'; // Default API URL
+            let apiUrl = `${process.env.NEXT_PUBLIC_APIURL}/templates?page=${page}&limit=12`;
 
             // Check the conditions
-            if (templateTyId !== null && subCatId !== null) {
-                // If both are not null, adjust the URL here as needed
-                apiUrl = `/templates?templateTyId=${templateTyId}&subCatId=${subCatId}`;
+            if (templateTypeId !== null && subCatId !== null) {
+                console.log("hererererer");
+                
+                apiUrl = `${process.env.NEXT_PUBLIC_APIURL}/templates?templateTypeId=${templateTypeId}&subCatId=${subCatId}&page=${page}&limit=12`;
             }
-            await fetchProductsData(apiUrl);
+
+        
+
+            const response = await fetch(apiUrl);
+            const data: TemplateResponse = await response.json();
+
+            setTotalPages(data.pagination.totalPages);
+            setCurrentPage(data.pagination.currentPage);
+        console.log(data,"==data");
+        
+            return data;
 
         } catch (error) {
             console.error("Error fetching products:", error);
+            return { data: [], pagination: { totalTemplates: 0, totalPages: 0, currentPage: 1, limit: 12 } }; // Default return type
         }
     };
 
-    // Call fetchProducts when the component mounts or when templateTyId or subCatId changes
+    // Call fetchProducts when the component mounts or when templateTypeId or subCatId changes
     useEffect(() => {
-        fetchProducts();
-    }, [templateTyId, subCatId]);
+        const getProducts = async () => {
+            const initialProducts = await fetchProducts(1);
+            setProducts(initialProducts);
+        };
+        getProducts();
+    }, [templateTypeId, subCatId]);
 
+    const handleLoadMore = async () => {
+        if (currentPage < totalPages) {
+            const newProducts = await fetchProducts(currentPage + 1);
+            setProducts((prev) => ({
+                ...prev,
+                data: [...(prev?.data || []), ...newProducts.data], // Append new products
+                pagination: newProducts.pagination // Update pagination
+            }));
+        }
+    };
     return (
         <>
             <ProductBanner />
@@ -144,20 +173,22 @@ const ProductMain = () => {
                                     </div>
                                 </div>
                                 <div className='flex flex-col gap-[30px] justify-center items-center'>
-                                    {productsData && productsData?.data?.length > 0 ? (
+                                {products && products.data && products.data.length > 0 ? (
                                         <div className='grid gap-5 lg:grid-cols-2 xl:grid-cols-3 xl:gap-[30px]'>
-                                         {   productsData?.data?.map((item, index) => (
+                                         {   products?.data?.map((item:TechTemplate, index:number) => (
                                             <Fragment key={index}>
                                                 <FeatureCard
-                                                    buttonprops={item.buttonprops}
-                                                    category={item.category}
+                                                id={item.id}
+                                                    buttonprops={item.price}
+                                                    category={item.templateType?.name}
                                                     poster={item.sliderImages[0]?.imageUrl}
-                                                    themeicon={item.themeicon}
+                                                    themeicon="figma.svg"
                                                     title={item.title}
-                                                    uploadericon={item.uploadericon}
-                                                    uploadername={item.uploadername}
+                                                    uploadericon='mdb.svg'
+                                                    uploadername={item.user.name}
                                                     currentimage={1}
                                                     totalimages={item.sliderImages.length}
+                                                    isPaid={item?.isPaid}
                                                 />
                                             </Fragment>
                                             ))}
@@ -165,9 +196,15 @@ const ProductMain = () => {
                                     ) : (
                                         <NotFoundProduct />
                                     )}
-                                    <Button className='w-fit mt-[30px]' variant='solidicon'>
-                                        Load More Products
-                                    </Button>
+                                     {currentPage < totalPages && (
+                                        <Button
+                                            className='w-fit mt-[30px]'
+                                            variant='solidicon'
+                                            onClick={handleLoadMore}
+                                        >
+                                            Load More Products
+                                        </Button>
+                                    )}
                                 </div>
                                 {/* not found template */}
                                 {/* <NotFoundProduct /> */}

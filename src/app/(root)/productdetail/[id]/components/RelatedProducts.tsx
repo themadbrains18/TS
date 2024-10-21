@@ -14,7 +14,7 @@ const RelatedProducts = () => {
     // Sample data for related products
     const data = [
         {
-            poster: "popularbg.png",
+            poster: "/images/popularbg.png",
             title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
@@ -26,7 +26,7 @@ const RelatedProducts = () => {
 
         },
         {
-            poster: "featureimg.png",
+            poster: "/images/featureimg.png",
             title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
@@ -38,7 +38,7 @@ const RelatedProducts = () => {
 
         },
         {
-            poster: "popularbg.png",
+            poster: "/images/popularbg.png",
             title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
@@ -50,7 +50,7 @@ const RelatedProducts = () => {
 
         },
         {
-            poster: "featureimg.png",
+            poster: "/images/featureimg.png",
             title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
@@ -62,7 +62,7 @@ const RelatedProducts = () => {
 
         },
         {
-            poster: "popularbg.png",
+            poster: "/images/popularbg.png",
             title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
@@ -74,7 +74,7 @@ const RelatedProducts = () => {
 
         },
         {
-            poster: "featureimg.png",
+            poster: "/images/featureimg.png",
             title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
