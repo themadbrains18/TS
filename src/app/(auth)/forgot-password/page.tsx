@@ -17,13 +17,11 @@ const Page = () => {
         resolver: zodResolver(forgotPassword)
     });
 
-    // console.log(errors);
 
     const onSubmit: SubmitHandler<FormValues> = (data) => {
         console.log(data);
         reset();
     };
-
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 ">

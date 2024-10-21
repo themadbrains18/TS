@@ -39,6 +39,7 @@ const Header = () => {
    * 
    * @param {number} index - The index of the accordion item.
    */
+
   const handleAccordionClick = (index: number) => {
     setOpenAccordions((prev) => {
       const newOpenAccordions = [...prev];
@@ -51,6 +52,7 @@ const Header = () => {
     fetchData(`/template-types`);
     fetchsubCatData(`/sub-categories`);
   }, [])
+
 
 
 
