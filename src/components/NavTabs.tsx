@@ -1,11 +1,13 @@
 "use client";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Button from "./ui/Button";
 import NavCard from "./cards/NavCard";
 import { cn } from "@/libs/utils";
 import headerdata from "@/json/header.json";
 import { navtabprops } from "@/types/type";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+
 /**
  * NavTabs component displays a set of navigation tabs for product categories.
  * It allows users to select a tab and view related products.
@@ -13,32 +15,39 @@ import Link from "next/link";
  * @returns {JSX.Element} The rendered NavTabs component.
  */
 
-
-
-const NavTabs:React.FC<navtabprops> = ({subCat}) => {
+const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
   const [activetab, setActivetab] = useState(0); // Track the currently active tab
+  const searchParams = useSearchParams();
 
-  console.log(subCat,"==subcat");
-  
+  useEffect(() => {
+    const subCatId = searchParams.get('subcat');
+    
+    // Find the index of the subcategory based on the subcat ID in the URL
+    const index = subCat?.findIndex(item => item.id === subCatId) || 0;
+    if (index !== -1) {
+      setActivetab(index); // Set active tab index based on the URL
+    }
+  }, [searchParams, subCat]);
+
   return (
     <>
       {/* Tabs Section */}
       <div className="bg-white shadow-lg overflow-scroll hiddenscroll ">
         <div className="pt-5 lg:px-10 lg:pt-10 lg:pb-[30px] flex gap-x-[5px] lg:gap-x-5 items-center overflow-scroll hiddenscroll">
-          {subCat && subCat?.map((item, index) => (
+          {subCat && subCat.map((item, index) => (
             <Fragment key={index}>
-              <Link href={`/product`}>
-              <Button
-                className={cn`py-[6px] px-[10px] lg:py-2 lg:px-5 text-sm lg:text-base text-nowrap ${index === activetab
-                  ? "border-[1px] border-primary-100 text-primary-100"
-                  : "text-subparagraph"
-                }`}
-                onClick={() => setActivetab(index)}
-                variant="liquid"
+              <Link href={`/product?template-type=${item?.templateTypeId}&&subcat=${item?.id}`}>
+                <Button
+                  className={cn`py-[6px] px-[10px] lg:py-2 lg:px-5 text-sm lg:text-base text-nowrap ${index === activetab
+                    ? "border-[1px] border-primary-100 text-primary-100"
+                    : "text-subparagraph"
+                  }`}
+                  onClick={() => setActivetab(index)}
+                  variant="liquid"
                 >
-                {item.name}
-              </Button>
-                </Link>
+                  {item.name}
+                </Button>
+              </Link>
             </Fragment>
           ))}
         </div>
@@ -65,7 +74,7 @@ const NavTabs:React.FC<navtabprops> = ({subCat}) => {
               <Fragment key={idx}>
                 <NavCard
                   image={item.image}
-                  tittle={item.tittle}
+                  title={item.title}
                   icon={item.icon}
                 />
               </Fragment>

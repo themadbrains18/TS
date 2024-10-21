@@ -21,25 +21,25 @@ const TrendingTechnology = () => {
     * Array of technology category data.
     * Each object includes the title and image of the technology.
     * 
-    * @type {Array<{tittle: string, image: string}>}
+    * @type {Array<{title: string, image: string}>}
     */
 
 
     const data = [
         {
-            tittle: "Web & Landing Template",
+            title: "Web & Landing Template",
             image: "web.png"
         },
         {
-            tittle: "Mobile Apps",
+            title: "Mobile Apps",
             image: "mobile.png"
         },
         {
-            tittle: "Shopify Themes",
+            title: "Shopify Themes",
             image: "shopify.png"
         },
         {
-            tittle: "HTML Development",
+            title: "HTML Development",
             image: "html.png"
         },
     ]
@@ -52,7 +52,7 @@ const TrendingTechnology = () => {
                             data?.map((item, index) => {
                                 return (
                                     <Fragment key={index}>
-                                        <CategoryCard image={`${item.image}`} imageclass='w-full' tittle={`${item.tittle}`} />
+                                        <CategoryCard image={`${item.image}`} imageclass='w-full' title={`${item.title}`} />
                                     </Fragment>
                                 )
                             })

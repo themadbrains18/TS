@@ -2,6 +2,7 @@
 
 import useFetch from '@/hooks/useFetch';
 import { subCat } from '@/types/type';
+import { useSearchParams, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 /**
@@ -17,23 +18,53 @@ import React, { useEffect, useState } from 'react';
 
 const ProductTags = () => {
     const { data: subCatData, fetchData: fetchsubCatData } = useFetch<subCat[]>();
-
     const [activeIndex, setActiveIndex] = useState(0);
+    const searchParams = useSearchParams();
+    const router = useRouter();
+    
+    // Get template type and subcat from URL
+    const templateTypeId = searchParams.get('template-type');
+    const subCatId = searchParams.get('subcat');
 
     useEffect(() => {
         fetchsubCatData(`/sub-categories`);
     }, []);
 
+    // Filter the subcategories based on template type if applicable
+    const filteredSubCatData = templateTypeId 
+        ? (subCatData?.filter(item => item.templateTypeId === templateTypeId) || []) 
+        : subCatData;
+
+    // Set the active index based on subCatId
+    useEffect(() => {
+        if (subCatId) {
+            const index = filteredSubCatData?.findIndex(item => item.id === subCatId)||0;
+            if (index !== -1) {
+                setActiveIndex(index + 1); // +1 for the "All" tab
+            }
+        }
+    }, [subCatId, filteredSubCatData]);
+
+    const handleAllClick = () => {
+        setActiveIndex(0); // Reset active index to 0 for "All"
+        router.push('/product'); // Navigate to the same page, resetting the filter
+    };
+
+    const handleTabClick = (item:any) => {
+        setActiveIndex(item.id + 1); // Adjust for subCategories
+        router.push(`/product?template-type=${templateTypeId || item?.templateTypeId}&subcat=${item.id}`); // Update URL with selected subcategory ID
+    };
+
     return (
         <div className='container'>
             <div className="flex gap-5 md:flex-row flex-col md:gap-[30px] py-5 md:py-10">
-                <div className='max-w-[357px] w-full md:border-r '>
-                    <h2 className='text-5 font-semibold left-7 text-[#110833]' >Category Tags</h2>
+                <div className='max-w-[357px] w-full md:border-r'>
+                    <h2 className='text-5 font-semibold left-7 text-[#110833]'>Category Tags</h2>
                 </div>
                 <div className='flex overflow-x-scroll xl:overflow-hidden hiddenscroll'>
                     {/* Add an "All" tab at the beginning */}
                     <div
-                        onClick={() => setActiveIndex(0)} // Set active index to 0 for "All"
+                        onClick={handleAllClick} // Set active index to 0 for "All"
                         className={`relative mx-[7px] cursor-pointer text-nowrap group`}
                     >
                         <h2
@@ -52,12 +83,12 @@ const ProductTags = () => {
                         />
                     </div>
 
-                    {subCatData && subCatData.map((item, index) => {
+                    {filteredSubCatData?.map((item, index) => {
                         const isActive = index + 1 === activeIndex; // Adjust for "All" being at index 0
                         return (
                             <div
-                                key={index}
-                                onClick={() => setActiveIndex(index + 1)} // Adjust index for subCategories
+                                key={item.id} // Use item.id as key for better performance
+                                onClick={() => handleTabClick(item)} // Call the new handler with the subcategory ID
                                 className={`relative mx-[7px] cursor-pointer text-nowrap group`}
                             >
                                 <h2

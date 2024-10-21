@@ -16,17 +16,17 @@ const WhatsNewTab = () => {
     const carddata = [
         {
             icon: "publish.svg",
-            tittle: "published on",
+            title: "published on",
             description: "23/03-2022"
         },
         {
             icon: "update.svg",
-            tittle: "Last Update",
+            title: "Last Update",
             description: "23/03-2022"
         },
         {
             icon: "update.svg",
-            tittle: "Latest Version",
+            title: "Latest Version",
             description: "1.1.0"
         },
     ]
@@ -38,7 +38,7 @@ const WhatsNewTab = () => {
                         carddata?.map((item, index) => {
                             return (
                                 <Fragment key={index}>
-                                    <WhatsnewCard description={item.description} icons={item.icon} tittle={item.tittle} />
+                                    <WhatsnewCard description={item.description} icons={item.icon} title={item.title} />
                                 </Fragment>
                             )
                         })

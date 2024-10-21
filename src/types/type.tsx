@@ -2,11 +2,11 @@ import { ReactNode } from "react";
 import { FieldError, UseFormRegister } from "react-hook-form";
 
 export interface navcardprops {
-  tittle?: string,
+  title?: string,
   image?: string,
   icon?: string,
   iconclass?: string,
-  tittleclass?: string,
+  titleclass?: string,
   imageclass?: string
 }
 
@@ -25,11 +25,11 @@ export interface ButtonProps {
 
 
 export interface navdropdownprops {
-  tittle: string;
+  title: string;
   subCat?: subCat[]
 }
 export interface navtabprops {
-  // tittle: string;
+  // title: string;
   subCat?:subCat[]
 }
 
@@ -46,8 +46,8 @@ export interface AccordionProps {
 
 export interface techcardprops {
   image?: string,
-  tittle?: string,
-  tittleclass?: string,
+  title?: string,
+  titleclass?: string,
   imageclass?: string,
   className?: string,
   container?: string
@@ -55,7 +55,7 @@ export interface techcardprops {
 
 export interface featurecardprops {
   poster?: string,
-  tittle?: string,
+  title?: string,
   themeicon?: string,
   uploadericon?: string,
   uploadername?: string,
@@ -66,7 +66,7 @@ export interface featurecardprops {
 }
 
 export interface buissnesscardprops {
-  tittle?: string,
+  title?: string,
   logo?: string
 }
 
@@ -92,7 +92,7 @@ export interface CheckboxProps {
 
 export interface whatsnewprops {
   icons?: string,
-  tittle?: string,
+  title?: string,
   description?: string
 }
 

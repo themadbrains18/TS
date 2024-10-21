@@ -18,13 +18,13 @@ const FeatureSection = () => {
     * An array of featured product data.
     * Each object contains details about the featured product, such as the poster, title, theme icon, uploader information, and more.
     * 
-    * @type {Array<{poster: string, tittle: string, themeicon: string, uploadericon: string, uploadername: string, category: string, buttonprops: string, currentimage: number, totalimage: number}>}
+    * @type {Array<{poster: string, title: string, themeicon: string, uploadericon: string, uploadername: string, category: string, buttonprops: string, currentimage: number, totalimage: number}>}
     */
 
     const data = [
         {
             poster: "featureimg.png",
-            tittle: "Room Sharing - UI Kit Template...",
+            title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
             uploadername: "themadbrains",
@@ -36,7 +36,7 @@ const FeatureSection = () => {
         },
         {
             poster: "featureimg.png",
-            tittle: "Room Sharing - UI Kit Template...",
+            title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
             uploadername: "themadbrains",
@@ -48,7 +48,7 @@ const FeatureSection = () => {
         },
         {
             poster: "featureimg.png",
-            tittle: "Room Sharing - UI Kit Template...",
+            title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
             uploadername: "themadbrains",
@@ -60,7 +60,7 @@ const FeatureSection = () => {
         },
         {
             poster: "featureimg.png",
-            tittle: "Room Sharing - UI Kit Template...",
+            title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
             uploadername: "themadbrains",
@@ -72,7 +72,7 @@ const FeatureSection = () => {
         },
         {
             poster: "featureimg.png",
-            tittle: "Room Sharing - UI Kit Template...",
+            title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
             uploadername: "themadbrains",
@@ -84,7 +84,7 @@ const FeatureSection = () => {
         },
         {
             poster: "featureimg.png",
-            tittle: "Room Sharing - UI Kit Template...",
+            title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
             uploadername: "themadbrains",
@@ -107,7 +107,7 @@ const FeatureSection = () => {
                                     data.map((item, index) => {
                                         return (
                                             <Fragment key={index}>
-                                                <FeatureCard buttonprops={item.buttonprops} category={item.category} poster={item.poster} themeicon={item.themeicon} tittle={item.tittle} uploadericon={item.uploadericon} uploadername={item.uploadername} currentimage={item.currentimage} totalimages={item.totalimage} />
+                                                <FeatureCard buttonprops={item.buttonprops} category={item.category} poster={item.poster} themeicon={item.themeicon} title={item.title} uploadericon={item.uploadericon} uploadername={item.uploadername} currentimage={item.currentimage} totalimages={item.totalimage} />
                                             </Fragment>
                                         )
                                     })

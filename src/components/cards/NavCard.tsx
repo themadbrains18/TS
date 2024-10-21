@@ -15,8 +15,8 @@ import Link from "next/link";
  * @param {string} props.iconclass - Additional CSS classes for the icon (not used in the current implementation).
  * @param {string} props.image - The filename of the image to be displayed.
  * @param {string} props.imageclass - Additional CSS classes for the image (not used in the current implementation).
- * @param {string} props.tittle - The title of the navigation card.
- * @param {string} props.tittleclass - Additional CSS classes for the title (not used in the current implementation).
+ * @param {string} props.title - The title of the navigation card.
+ * @param {string} props.titleclass - Additional CSS classes for the title (not used in the current implementation).
  * @returns {JSX.Element} The rendered NavCard component.
  */
 
@@ -24,7 +24,7 @@ import Link from "next/link";
 const NavCard: React.FC<navcardprops> = ({
   icon,
   image,
-  tittle,
+  title,
 }) => {
   return (
     <>
@@ -48,7 +48,7 @@ const NavCard: React.FC<navcardprops> = ({
         </div>
         <div className="flex items-center py-[10px] px-[15px]">
           <h4 className="mr-[2px] text-sm text-subheading leading-5 font-semibold text-ellipsis overflow-hidden text-nowrap">
-            {tittle}
+            {title}
           </h4>
           <div className="px-1 py-[3.2px]">
             <Image
