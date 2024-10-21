@@ -7,7 +7,7 @@ import Button from '@/components/ui/Button';
 import { signupSchema } from '@/validations/signUp.validation';
 import Link from 'next/link';
 import Image from 'next/image';
-import CheckBox from '@/components/ui/checkbox';
+import CheckBox from '@/components/ui/Checkbox';
 import useFetch from '@/hooks/useFetch';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/navigation';

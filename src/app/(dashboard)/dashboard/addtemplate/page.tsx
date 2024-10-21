@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Input from '@/components/ui/Input';
-import CheckBox from '@/components/ui/checkbox';
+import CheckBox from '@/components/ui/Checkbox';
 import QuillEditor from '@/components/ui/Quilleditor';
 import DashInput from './components/DashInput';
 import Button from '@/components/ui/Button';
@@ -13,11 +13,13 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { uploadTemplate } from '@/validations/uploadTemplate';
 import CustomDropdown from './components/customtab';
+import { subCat } from '@/types/type';
 
 // Define types for data structures
 export interface TemplateType {
   id: string;
   name: string;
+  subCategories:subCat[] 
 }
 
 interface IndustryType {

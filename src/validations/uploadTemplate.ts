@@ -31,6 +31,8 @@ const validateCredits = (items: any[], itemName: string) => {
  });
 
 
-export type uploadTemplate = z.infer<typeof uploadTemplate>;
-// export type SignupFormOtpData = z.infer<typeof signupSchemaOtp>;
+// Merge the two schemas
+export const fullUploadTemplateSchema = uploadTemplate.merge(creditsSchema);
 
+// Export the inferred type for the combined schema
+export type FullUploadTemplateSchemaType = z.infer<typeof fullUploadTemplateSchema>;
