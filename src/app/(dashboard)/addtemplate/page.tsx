@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Input from '@/components/ui/Input';
-import CustomDropdown from './components/CustomTab';
+import CustomDropdown from './components/customtab';
 import CheckBox from '@/components/ui/checkbox';
 import QuillEditor from '@/components/ui/Quilleditor';
 import DashInput from './components/DashInput';
@@ -26,8 +26,8 @@ interface IndustryType {
 }
 
 interface Font {
-  fontName: string;
-  fontUrl: string;
+  name: string;
+  url: string;
 }
 
 const Page: React.FC = () => {
@@ -37,17 +37,13 @@ const Page: React.FC = () => {
   const { data: industryData, fetchData: fetchIndustryData } = useFetch<IndustryType[]>();
 
   // State for fonts, images, icons, and illustrations
-  const [fonts, setFonts] = useState<Font[]>([{ fontName: '', fontUrl: '' }]);
-  const [images, setImages] = useState<Font[]>([{ fontName: '', fontUrl: '' }]);
-  const [icons, setIcons] = useState<Font[]>([{ fontName: '', fontUrl: '' }]);
-  const [illustrations, setIllustrations] = useState<Font[]>([{ fontName: '', fontUrl: '' }]);
+  const [fonts, setFonts] = useState<Font[]>([{ name: '', url: '' }]);
+  const [images, setImages] = useState<Font[]>([{name: '', url: '' }]);
+  const [icons, setIcons] = useState<Font[]>([{ name: '', url: '' }]);
+  const [illustrations, setIllustrations] = useState<Font[]>([{ name: '', url: '' }]);
   // Technical details state (4 inputs by default)
-  const [technicalDetails, setTechnicalDetails] = useState<Font[]>([
-    { fontName: '', fontUrl: '' },
-    { fontName: '', fontUrl: '' },
-    { fontName: '', fontUrl: '' },
-    { fontName: '', fontUrl: '' }
-  ]);
+  const [technicalDetails, setTechnicalDetails] = useState<string[]>(['', '', '', '']); // Initialize with four empty strings
+
 
   // Dropdown selection states
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
@@ -122,51 +118,49 @@ const Page: React.FC = () => {
     fetchIndustryData(`/industry-type`);
   }, [fetchData, fetchIndustryData]);
 
-  // Function to add new input fields
-  const addInputFields = (setter: React.Dispatch<React.SetStateAction<Font[]>>, values: Font[]) => {
-    setter([...values, { fontName: '', fontUrl: '' }]);
+  // Generalized function to add new input fields
+  const addInputFields = <T,>(setter: React.Dispatch<React.SetStateAction<T[]>>, values: T[], isObject: boolean) => {
+    const newValue = isObject ? { name: '', url: '' } : ''; // Create an empty object or string based on type
+    setter([...values, newValue as T]); // Add the new value to the state
   };
 
   // Function to handle input field changes
-  const handleInputChange = (setter: React.Dispatch<React.SetStateAction<Font[]>>, index: number, field: keyof Font, value: string, values: Font[]) => {
+  const handleInputChange = <T,>(setter: React.Dispatch<React.SetStateAction<T[]>>, index: number, value: T, values: T[]) => {
     const newValues = [...values];
-    newValues[index][field] = value;
+    newValues[index] = value; // Update the value at the specified index
     setter(newValues);
   };
 
   // Function to remove input fields
-  const removeInputField = (setter: React.Dispatch<React.SetStateAction<Font[]>>, index: number, values: Font[]) => {
-    if (values.length > 1) {
+  const removeInputField = <T,>(setter: React.Dispatch<React.SetStateAction<T[]>>, index: number, values: T[]) => {
+    if (values.length > 4) { // Ensure there are at least 4 fields
       const newValues = [...values];
       newValues.splice(index, 1); // Remove the input at the specified index
       setter(newValues);
     }
   };
 
-  // Render input fields for fonts, images, icons, or illustrations
   const renderInputFields = (items: Font[], setter: React.Dispatch<React.SetStateAction<Font[]>>, title: string) => (
     <div className='pb-3'>
       <h4 className='text-lg font-semibold capitalize pb-4'>{title}</h4>
-      <div className="p-5 border-b border-neutral-400"> {/* Apply the border to the group container */}
+      <div className="p-5 border-b border-neutral-400">
         {items.map((item, index) => (
           <div key={index} className="flex items-center gap-x-3 pb-3">
             <DashInput
               type='text'
               placeholder='font name'
-              value={item.fontName}
-              onChange={(e) => handleInputChange(setter, index, 'fontName', e.target.value, items)}
+              value={item.name}
+              onChange={(e) => handleInputChange(setter, index, { ...item, name: e.target.value }, items)}
             />
             <DashInput
               type='text'
               placeholder='font url'
-              value={item.fontUrl}
-              onChange={(e) => handleInputChange(setter, index, 'fontUrl', e.target.value, items)}
+              value={item.url}
+              onChange={(e) => handleInputChange(setter, index, { ...item, url: e.target.value }, items)}
             />
-            {/* Show remove button only if there is more than one input */}
             {items.length > 1 && (
               <Button
                 onClick={() => removeInputField(setter, index, items)}
-
                 className="py-1 px-2"
               >
                 Remove
@@ -174,11 +168,11 @@ const Page: React.FC = () => {
             )}
           </div>
         ))}
-        <Button onClick={() => addInputFields(setter, items)} variant='primary' className='py-2 mt-2' >Add more</Button>
+        <Button onClick={() => addInputFields(setter, items, true)} variant='primary' className='py-2 mt-2'>Add more</Button>
       </div>
     </div>
   );
-
+  // Render technical details fields
   const renderTechnicalDetailsFields = () => (
     <div className='pb-3'>
       <div className="p-5 border-b border-neutral-400">
@@ -187,11 +181,9 @@ const Page: React.FC = () => {
             <DashInput
               type='text'
               placeholder='Detail Name'
-              value={detail.fontName}
-              onChange={(e) => handleInputChange(setTechnicalDetails, index, 'fontName', e.target.value, technicalDetails)}
+              value={detail}
+              onChange={(e) => handleInputChange(setTechnicalDetails, index, e.target.value, technicalDetails)}
             />
-
-            {/* Show remove button only if there are more than 4 inputs */}
             {technicalDetails.length > 4 && (
               <Button
                 onClick={() => removeInputField(setTechnicalDetails, index, technicalDetails)}
@@ -202,11 +194,13 @@ const Page: React.FC = () => {
             )}
           </div>
         ))}
-        <Button onClick={() => addInputFields(setTechnicalDetails, technicalDetails)} variant='primary' className='py-2 mt-2' >Add more</Button>
+        <Button onClick={() => addInputFields(setTechnicalDetails, technicalDetails, false)} variant='primary' className='py-2 mt-2'>
+          Add more
+        </Button>
       </div>
     </div>
   );
-
+  
   interface FormData {
     name: string;
     version: string;
