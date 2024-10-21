@@ -30,12 +30,12 @@ export interface navdropdownprops {
 }
 export interface navtabprops {
   // tittle: string;
-  subCat?:subCat[]
+  subCat?: subCat[]
 }
 
 export interface subCat {
-  id: string, 
-  name: string, 
+  id: string,
+  name: string,
   templateTypeId: string
 }
 
@@ -126,6 +126,7 @@ export interface DownloadTemplatetype {
 }
 
 export interface dashinput {
+  name?: string,
   placeholder?: string,
   value?: string,
   className?: string,
@@ -151,8 +152,8 @@ export type FormFieldProps = {
   valueAsNumber?: boolean;
 };
 
- 
- export interface FormValues {
+
+export interface FormValues {
   email: string;
 }
 
@@ -160,7 +161,7 @@ export type FormFieldProps = {
 
 
 
- export interface Downloadpopup {
+export interface Downloadpopup {
   isPopupOpen: boolean,
   closePopup: () => void;
   opensecoundpopup: () => void;
