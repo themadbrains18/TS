@@ -1,8 +1,6 @@
 // validationSchema.ts
 import { z } from 'zod';
 
-
-
 export const uploadTemplate = z.object({
    name: z.string({message:"Enter Your Name"}),
    templateType: z.string({message:"Select Template Type"}),
@@ -12,8 +10,6 @@ export const uploadTemplate = z.object({
    version: z.string({message:"Enter Your Version"}),
    seoTags: z.string({message:"Enter Your Tags"}),
    dollarPrice: z.number({message:"Enter Your Price"}),
- 
-
 });
 
 const validateCredits = (items: any[], itemName: string) => {

@@ -10,6 +10,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import type { NextAuthOptions } from "next-auth"
+
 
 const Page = () => {
 
@@ -18,20 +20,21 @@ const Page = () => {
     interface FormValues {
         email: string;
         password: string
-
     }
 
     const { register, reset, handleSubmit, formState: { errors } } = useForm<FormValues>({
         resolver: zodResolver(loginSchema)
     });
 
-    console.log(errors)
-
     const onSubmit: SubmitHandler<FormValues> = (data) => {
         console.log(data);
         reset();
     };
 
+    
+    
+
+    
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 ">
             {/* Left Section with Image and Text */}

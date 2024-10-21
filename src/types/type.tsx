@@ -1,20 +1,6 @@
 import { ReactNode } from "react";
 import { FieldError, UseFormRegister } from "react-hook-form";
 
-// export interface dropdownprops {
-//   testclass?: string;
-//   heading: string;
-//   children: ReactNode;
-//   image?: string;
-//   className?: string;
-//   directionshovercontent?: string;
-//   arrow?: string;
-//   allcateDropdown?: any;
-//   onclick?: boolean;
-//   arrowimageclass?: string;
-//   positionsta?: boolean;
-// }
-
 export interface navcardprops {
   tittle?: string,
   image?: string,
@@ -164,3 +150,18 @@ export type FormFieldProps = {
   error: FieldError | undefined;
   valueAsNumber?: boolean;
 };
+
+ 
+ export interface FormValues {
+  email: string;
+}
+
+
+
+
+
+ export interface Downloadpopup {
+  isPopupOpen: boolean,
+  closePopup: () => void;
+  opensecoundpopup: () => void;
+}

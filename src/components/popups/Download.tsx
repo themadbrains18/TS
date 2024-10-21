@@ -6,16 +6,12 @@ import Image from 'next/image'
 import Button from '../ui/Button'
 import Link from 'next/link'
 import Modal from '../ui/Modal'
+import { Downloadpopup } from '@/types/type'
 
 
-interface Downloadpopup {
-    isPopupOpen: boolean,
-    closePopup: () => void;
-    opensecoundpopup: () => void;
-}
 
 
-const Download = ({ isPopupOpen, closePopup, opensecoundpopup }: Downloadpopup) => {
+const Download = ({ isPopupOpen, closePopup, opensecoundpopup }: Downloadpopup ) => {
 
     const socialicons = [
         {

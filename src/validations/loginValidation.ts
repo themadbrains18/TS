@@ -1,8 +1,6 @@
 // validationSchema.ts
 import { z } from 'zod';
 
-
-
 export const loginSchema = z.object({
     email: z.string().email({ message: "Invalid email" }),
     password: z.string()
@@ -11,7 +9,6 @@ export const loginSchema = z.object({
             message: "Password must include at least one lowercase letter, one uppercase letter, one number, and one special character"
         }),
 });
-
 
 export type loginFormdata = z.infer<typeof loginSchema>;
 // export type SignupFormOtpData = z.infer<typeof signupSchemaOtp>;

@@ -3,6 +3,7 @@
 import Icon from '@/components/Icon';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
+import { FormValues } from '@/types/type';
 import { forgotPassword } from '@/validations/ForgotPassword';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
@@ -12,21 +13,15 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 const Page = () => {
 
-    interface FormValues {
-        email: string;
-    }
-
     const { register, reset, handleSubmit, formState: { errors } } = useForm<FormValues>({
         resolver: zodResolver(forgotPassword)
     });
 
-    console.log(errors);
 
     const onSubmit: SubmitHandler<FormValues> = (data) => {
         console.log(data);
         reset();
     };
-
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 ">

@@ -27,3 +27,4 @@ const templateSlice = createSlice({
 
 export const { setTemplates, addTemplate, removeTemplate } = templateSlice.actions;
 export default templateSlice.reducer;
+ 
