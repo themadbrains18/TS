@@ -5,7 +5,9 @@ import { z } from 'zod';
 
 export const signupSchema = z.object({
     name: z.string().min(1, { message: "Name is required" }),
-    email: z.string().email({ message: "Invalid email" }),
+    email: z.string()
+        .min(1, { message: "Email is required" }) // Ensures the email field is not empty
+        .email({ message: "Please enter a valid email address" }), // Checks for valid email format
     password: z.string()
         .min(8, { message: "Password must be at least 8 characters" })
         .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\W_]).{8,}$/, {

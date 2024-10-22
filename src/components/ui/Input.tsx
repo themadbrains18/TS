@@ -8,7 +8,7 @@ interface InputFieldProps {
     type?: 'text' | 'email' | 'password' | 'url' | 'number';
     value?: string;
     placeholder?: string;
-    error?: string |any;
+    error?: string | any;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     className?: string;
     lableclass?: string;
@@ -36,8 +36,8 @@ const Input = React.forwardRef<HTMLInputElement, InputFieldProps>(({
                     {label}
                 </label>
             )}
-         {name &&   <input
-      {...register &&  {...register(name)}}
+            {name && <input
+                {...register && { ...register(name) }}
                 // ref={ref}  
                 type={type}
                 name={name}

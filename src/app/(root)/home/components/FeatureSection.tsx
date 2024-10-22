@@ -23,7 +23,7 @@ const FeatureSection = () => {
 
     const data = [
         {
-            poster: "featureimg.png",
+            poster: "/featureimg.png",
             title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
@@ -35,7 +35,7 @@ const FeatureSection = () => {
 
         },
         {
-            poster: "featureimg.png",
+            poster: "/featureimg.png",
             title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
@@ -47,7 +47,7 @@ const FeatureSection = () => {
 
         },
         {
-            poster: "featureimg.png",
+            poster: "/featureimg.png",
             title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
@@ -59,7 +59,7 @@ const FeatureSection = () => {
 
         },
         {
-            poster: "featureimg.png",
+            poster: "/featureimg.png",
             title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
@@ -71,7 +71,7 @@ const FeatureSection = () => {
 
         },
         {
-            poster: "featureimg.png",
+            poster: "/featureimg.png",
             title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
@@ -83,7 +83,7 @@ const FeatureSection = () => {
 
         },
         {
-            poster: "featureimg.png",
+            poster: "/featureimg.png",
             title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
