@@ -93,7 +93,7 @@ interface CustomDropdownProps {
     options: Option[];
     onSelect: (id: string) => void;
     placeholder?: string;
-    error?: string; // Add an error field
+    error?: string | undefined | null;
 }
 
 const CustomDropdown: React.FC<CustomDropdownProps> = ({

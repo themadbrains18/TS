@@ -2,7 +2,6 @@
 
 import Icon from '@/components/Icon';
 import Button from '@/components/ui/Button';
-import CheckBox from '@/components/ui/Checkbox';
 import Input from '@/components/ui/Input';
 import { loginSchema } from '@/validations/loginValidation';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -14,6 +13,7 @@ import type { NextAuthOptions } from "next-auth"
 import { signIn } from 'next-auth/react';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
+import CheckBox from '@/components/ui/checkbox';
 
 
 const Page = () => {
@@ -31,26 +31,24 @@ const Page = () => {
         resolver: zodResolver(loginSchema)
     });
 
-    // const onSubmit: SubmitHandler<FormValues> = (data) => {
-    //     console.log(data);
-    //     reset();
-    // };
-
-
-    const onSubmit: SubmitHandler<FormValues> = async (data) => {
-        const result = await signIn("credentials", {
-            redirect: false,
-            email: data.email,
-            password: data.password,
-        });
-
-        if (result?.error) {
-            toast.error(result.error);
-        } else if (result?.ok) {
-            toast.success("Login successful");
-            router.push("/otp");  // Redirect to the desired page
-        }
+    const onSubmit: SubmitHandler<FormValues> = (data) => {
+        console.log(data, "DATT");
+        reset();
     };
+
+
+    // const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    //     const result = await signIn("credentials", {
+    //         redirect: false,
+    //         email: data.email,
+    //         password: data.password,
+    //     });
+
+    //     if (result?.error) {
+    //     } else if (result?.ok) {
+    //         router.push("/otp");  // Redirect to the desired page
+    //     }
+    // };
 
 
 

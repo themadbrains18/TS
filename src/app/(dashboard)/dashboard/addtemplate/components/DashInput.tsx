@@ -17,16 +17,17 @@
 // }
 
 // export default DashInput
-
 import { cn } from '@/libs/utils';
 import { dashinput } from '@/types/type';
 import React from 'react';
+import { UseFormRegisterReturn } from 'react-hook-form'; // Import types from react-hook-form
 
 interface DashInputProps extends dashinput {
-  error?: string; // Add error prop
+  error?: string; // Error message
+  register?: UseFormRegisterReturn; // Add register prop from react-hook-form
 }
 
-const DashInput: React.FC<DashInputProps> = ({ className, placeholder, type, value, onChange, name, error }) => {
+const DashInput: React.FC<DashInputProps> = ({ className, placeholder, type, value, onChange, name, error, register }) => {
   return (
     <div className="flex flex-col w-full">
       <input
@@ -35,7 +36,8 @@ const DashInput: React.FC<DashInputProps> = ({ className, placeholder, type, val
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className={cn`outline-none border ${error ? 'border-red-500' : 'border-neutral-400'} rounded-md placeholder:text-neutral-500 placeholder:capitalize capitalize w-full p-3 ${className}`} 
+        className={cn`outline-none border ${error ? 'border-red-500' : 'border-neutral-400'} rounded-md placeholder:text-neutral-500 placeholder:capitalize capitalize w-full p-3 ${className}`}
+        {...register} // Pass the register method to the input
       />
       {/* Conditionally render error message */}
       {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
