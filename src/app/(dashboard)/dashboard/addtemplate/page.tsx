@@ -8,12 +8,13 @@ import Button from '@/components/ui/Button';
 import FileUpload from './components/InputFile';
 import useFetch from '@/hooks/useFetch';
 import StaticCheckBox from '@/components/ui/StaticCheckbox';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { uploadTemplate } from '@/validations/uploadTemplate';
 import CustomDropdown from './components/customtab';
 import { subCat } from '@/types/type';
 import CheckBox from '@/components/ui/checkbox';
+import { z } from 'zod';
 
 // Define types for data structures
 export interface TemplateType {
@@ -32,17 +33,14 @@ interface Font {
   url: string;
 }
 
+
+
 const Page: React.FC = () => {
   // Fetch data hooks for template types, subcategories, and industries
-  const { data, fetchData } = useFetch<TemplateType[]>();
-  const { data: templateData, fetchData: fetchTemplateData } = useFetch<any>();
+  const { data, fetchData, loading, error } = useFetch<TemplateType[]>();
+  const { data: templateData, fetchData: fetchTemplateData, } = useFetch<any>();
   const { data: industryData, fetchData: fetchIndustryData } = useFetch<IndustryType[]>();
 
-  const { register, reset, handleSubmit, formState: { errors } } = useForm<FormData>({
-    resolver: zodResolver(uploadTemplate)
-  });
-
-  console.log(errors, "errors")
 
   // State for fonts, images, icons, and illustrations
   const [fonts, setFonts] = useState<Font[]>([{ name: '', url: '' }]);
@@ -123,6 +121,7 @@ const Page: React.FC = () => {
   useEffect(() => {
     // Fetch template types and industries on mount
     fetchData(`/template-types`);
+    // fetchData(`/sub-categories`);
     fetchIndustryData(`/industry-type`);
   }, [fetchData, fetchIndustryData]);
 
@@ -215,18 +214,22 @@ const Page: React.FC = () => {
     version: string;
     seoTags: string;
     dollarPrice: number;
-    gender: string
+    templateType: string;
+    templateSubCategory: string;
+    softwareType: string;
+    zipfile: FileList;
+    sliderimg: FileList;
+    previewimg: FileList;
+    mobileimg: FileList;
   }
 
-  // const { register, reset, handleSubmit, formState: { errors } } = useForm<FormData>({
-  //   resolver: zodResolver(uploadTemplate)
-  // });
 
+  const { register, reset, handleSubmit, control, formState: { errors } } = useForm<FormData>({
+    resolver: zodResolver(uploadTemplate)
+  });
   console.log(errors)
-
   const onSubmit: SubmitHandler<FormData> = (data) => {
     console.log(data)
-    // reset();
   };
 
 
@@ -237,25 +240,64 @@ const Page: React.FC = () => {
           <h2 className='text-3xl capitalize font-bold pb-8 '>Upload Product</h2>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-y-5 justify-center items-center w-full">
-              <CustomDropdown placeholder='Template Type' options={data || []} onSelect={handleTemplateSelect} />
+              {/* <CustomDropdown placeholder='Template Type' options={data || []} onSelect={handleTemplateSelect} />
               <CustomDropdown placeholder='Template SubCategory' options={templateData?.subCategories} onSelect={handleCategorySelect} />
               <CustomDropdown placeholder='Software Type' options={templateData?.softwareCategories} onSelect={handleSoftwareSelect} />
 
-              <select {...register("gender")}>
-                <option value="female">female</option>
-                <option value="male">male</option>
-                <option value="other">other</option>
-              </select>
-              <select {...register("gender")}>
-                <option value="female">female</option>
-                <option value="male">male</option>
-                <option value="other">other</option>
-              </select>
-              <select {...register("gender")}>
-                <option value="female">female</option>
-                <option value="male">male</option>
-                <option value="other">other</option>
-              </select>
+                  {/* Template Type Dropdown */}
+              <div className='w-full'>
+                <select
+                  className='custom-dropdown-template'
+                  id="templateType"
+                  {...register}
+                  name='templateType'
+                  onChange={(e) => handleTemplateSelect(e.target.value)} // Use onChange here
+                >
+                  {data?.map((option) => {
+                    return (
+                      <option className='cursor-pointer' key={option.id} value={option.id}>
+                        {option.name}
+                      </option>
+                    )
+                  }
+
+                  )}
+                </select>
+
+                {
+                  errors?.templateType && (
+                    <p style={{ color: 'red' }}>{errors.templateType.message}</p>
+                  )}
+              </div>
+
+              {/* Template SubCategory Dropdown */}
+              <div className='w-full'>
+                <select className='custom-dropdown-template' id="templateSubCategory" {...register} name='templateSubCategory' onChange={(e) => handleCategorySelect(e.target.value)}>
+                  {templateData?.subCategories?.map((option: any) => {
+                    return (
+                      <option className='cursor-pointer' key={option.id} value={option.id}>
+                        {option.name}
+                      </option>
+                    )
+                  })}
+                </select>
+                {errors.templateSubCategory && <p style={{ color: 'red' }}>{errors.templateSubCategory.message}</p>}
+              </div>
+
+              {/* Software Type Dropdown */}
+              <div className='w-full'>
+                <select className='custom-dropdown-template' id="softwareType" {...register} name='softwareType' onChange={(e) => handleSoftwareSelect(e.target.value)}>
+                  {templateData?.softwareCategories.map((softwareCategory: any) => {
+                    return (
+
+                      <option className='cursor-pointer' key={softwareCategory.id} value={softwareCategory.id}>
+                        {softwareCategory.name}
+                      </option>
+                    )
+                  })}
+                </select>
+                {errors.softwareType && <p style={{ color: 'red' }}>{errors.softwareType.message}</p>}
+              </div>
             </div>
             <div className='mt-5'>
               <h3 className='text-xl font-semibold capitalize '>Industry</h3>
@@ -274,8 +316,16 @@ const Page: React.FC = () => {
               </div>
 
               <div className='flex flex-col gap-y-5'>
-                <Input type='text' register={register} name='name' label='Name' lableclass='text-xl font-semibold capitalize' className='bg-white border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400' placeholder='Template Name' />
-                <Input type='text' register={register} name='version' label='Version' lableclass='text-xl font-semibold capitalize' className='border bg-white border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400' placeholder='Version' />
+                <div className='flex flex-col'>
+                  <label className='text-xl font-semibold capitalize' htmlFor="seoTags">Name</label>
+                  <input {...register} id='name' type="text" name='name' className='py-[18px] px-5 border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400 bg-white  ' placeholder='Template Name' />
+                  {errors.name && <p style={{ color: 'red' }}>{errors.name.message}</p>}
+                </div>
+                <div className='flex flex-col'>
+                  <label className='text-xl font-semibold capitalize' htmlFor="seoTags">Version</label>
+                  <input {...register} id='version' type="text" name='version' className='py-[18px] px-5 border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400 bg-white  ' placeholder='version' />
+                  {errors.version && <p style={{ color: 'red' }}>{errors.version.message}</p>}
+                </div>
               </div>
 
               <div className='mt-5'>
@@ -305,32 +355,40 @@ const Page: React.FC = () => {
                 <h3 className='text-xl font-semibold capitalize pb-4'>Source File</h3>
                 <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
                   <FileUpload
+                    name='zipfile'
                     onFileSelect={(file) => handleFileSelect(file)}
                     supportedfiles="zip"
                     multiple={false}
                     id="1"
+                    register={register}
                   />
                 </div>
+                {errors.zipfile && <p style={{ color: 'red' }}>{errors.zipfile.message}</p>}
               </div>
 
               <div className='pt-5'>
                 <h3 className='text-xl font-semibold capitalize pb-4'>Slider Images</h3>
                 <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
                   <FileUpload
+                    name='sliderimg'
                     onFileSelect={(file) => handleSliderFileSelect(file)}
                     supportedfiles="jpg,png,jpeg"
                     multiple={true}
                     id="2"
+                    register={register}
+
                   />
                 </div>
+                {errors.sliderimg && <p style={{ color: 'red' }}>{errors.sliderimg.message}</p>}
               </div>
 
               <div className='pt-5'>
                 <h3 className='text-xl font-semibold capitalize pb-4'>Preview Images</h3>
                 <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
                   <FileUpload
-
+                    name='previewimg'
                     onFileSelect={(file) => handlePreviewFileSelect(file)}
+                    register={register}
 
                     supportedfiles="jpg,png,jpeg"
                     multiple={true}
@@ -338,12 +396,15 @@ const Page: React.FC = () => {
 
                   />
                 </div>
+                {errors.previewimg && <p style={{ color: 'red' }}>{errors.previewimg.message}</p>}
+
               </div>
               <div className='pt-5'>
                 <h3 className='text-xl font-semibold capitalize pb-4'>Mobile Images</h3>
                 <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
                   <FileUpload
-
+                    register={register}
+                    name='mobileimg'
                     onFileSelect={(file) => handlePreviewFileSelect(file)}
 
                     supportedfiles="jpg,png,jpeg"
@@ -352,17 +413,49 @@ const Page: React.FC = () => {
 
                   />
                 </div>
+                {errors.mobileimg && <p style={{ color: 'red' }}>{errors.mobileimg.message}</p>}
+
               </div>
               <div className='mt-5'>
-                <Input type='text' register={register} name='seoTags' label='SEO Keywords Tag' lableclass='text-xl font-semibold capitalize' className='bg-white pb-3 border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400' placeholder='tag name' />
+                {/* <div className='flex flex-col'>
+                  <label className='text-xl font-semibold capitalize' htmlFor="seoTags">SEO Keywords Tag</label>
+                  <input {...register} id='seoTags' type="text" name='seoTags' className='py-[18px] px-5 border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400 bg-white  ' placeholder='SEO Keywords Tag' />
+                  {errors.seoTags && <p style={{ color: 'red' }}>{errors.seoTags.message}</p>}
+                </div> */}
+                <div className='flex flex-col'>
+                  <label className='text-xl font-semibold capitalize' htmlFor="seoTags">SEO Keywords Tag</label>
+                  <Controller
+                    name='seoTags'
+                    control={control}
+                    rules={{
+                      required: 'SEO Keywords Tag is required',
+                      maxLength: {
+                        value: 100,
+                        message: 'SEO Keywords Tag cannot exceed 100 characters'
+                      }
+                    }}
+                    render={({ field }) => (
+                      <input
+                        {...field} // This spreads the necessary field props from Controller
+                        {...register('seoTags')} // This can be included for demonstration but is redundant
+                        id='seoTags'
+                        type="text"
+                        className='py-[18px] px-5 border border-neutral-400 rounded-md outline-none placeholder:text-neutral-400 bg-white'
+                        placeholder='SEO Keywords Tag'
+                      />
+                    )}
+                  />
+                  {errors.seoTags && <p style={{ color: 'red' }}>{errors.seoTags.message}</p>}
+                </div>
                 <div className='pt-5'>
                   <StaticCheckBox onClick={() => setStaticCheck(!staticcheck)} checked={staticcheck} label='Paid' />
                   {
                     staticcheck &&
-                    <div>
-                      <Input register={register} name='dollarPrice' label='price in dollar' lableclass='text-xl font-semibold capitalize' className='pb-3 border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400 bg-white ' placeholder='price in dollar' />
+                    <div className='flex flex-col'>
+                      <label className='text-xl font-semibold capitalize' htmlFor="dollarPrice">price in dollar</label>
+                      <input {...register} id='dollarPrice' type="text" name='dollarPrice' className='py-[18px] px-5 border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400 bg-white  ' placeholder='price in dollar' />
+                      {errors.dollarPrice && <p style={{ color: 'red' }}>{errors.dollarPrice.message}</p>}
                     </div>
-
                   }
                 </div>
                 <Button type='submit' variant='primary' className='py-3 mt-5' >Upload</Button>
@@ -382,21 +475,3 @@ export default Page;
 
 
 
-// "use client"
-// // import { useForm } from "react-hook-form";
-
-// export default function App() {
-//   const { register, handleSubmit } = useForm();
-//   const onSubmit = (data: any) => console.log(data);
-
-//   return (
-//     <form onSubmit={handleSubmit(onSubmit)}>
-//       <select {...register("gender")}>
-//         <option value="female">female</option>
-//         <option value="male">male</option>
-//         <option value="other">other</option>
-//       </select>
-//       <input type="submit" />
-//     </form>
-//   );
-// }
