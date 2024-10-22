@@ -17,40 +17,40 @@ const BuissnessProducts = () => {
    * An array of product data for business services.
    * Each object contains the title and logo of a product.
    * 
-   * @type {Array<{tittle: string, logo: string}>}
+   * @type {Array<{title: string, logo: string}>}
    */
 
     const data = [
         {
-            tittle: "Website Design",
+            title: "Website Design",
             logo: "creativity.svg"
         },
         {
-            tittle: "WordPress Themes",
+            title: "WordPress Themes",
             logo: "wordpress.svg"
         },
         {
-            tittle: "Shopify Themes",
+            title: "Shopify Themes",
             logo: "shoppify.svg"
         },
         {
-            tittle: "Mobile Apps",
+            title: "Mobile Apps",
             logo: "mobileapp.svg"
         },
         {
-            tittle: "Landing Page",
+            title: "Landing Page",
             logo: "landingpage.svg"
         },
         {
-            tittle: "E-Commerce Theme",
+            title: "E-Commerce Theme",
             logo: "ecommerce.svg"
         },
         {
-            tittle: "Dashboard",
+            title: "Dashboard",
             logo: "dashboard.svg"
         },
         {
-            tittle: "Wireframe Design",
+            title: "Wireframe Design",
             logo: "wireframe.svg"
         },
     ]
@@ -68,9 +68,9 @@ const BuissnessProducts = () => {
                                             {/* 
                                         Renders a single business card with a logo and title.
                                         @param {string} item.logo - The path to the product logo.
-                                        @param {string} item.tittle - The title of the business product.
+                                        @param {string} item.title - The title of the business product.
                                     */}
-                                            <BuissnessCard logo={item.logo} tittle={item.tittle} />
+                                            <BuissnessCard logo={item.logo} title={item.title} />
                                         </Fragment>
                                     )
                                 })

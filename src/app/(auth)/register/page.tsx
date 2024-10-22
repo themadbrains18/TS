@@ -91,6 +91,8 @@ const Page = () => {
                     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-center h-[759px]">
                         {/* Name Input */}
                         <div className="md:space-y-[30px] space-y-[15px]">
+                            {/* <input type="text"  {...register("name")} className={`font-openSans antialiased text-sm font-medium text-gray-700 mb-1 border border-pr`}/>
+                            <p>{errors.name?.message}</p> */}
                             <Input
                                 name='name'
                                 register={register}

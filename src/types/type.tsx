@@ -2,11 +2,11 @@ import { ReactNode } from "react";
 import { FieldError, UseFormRegister } from "react-hook-form";
 
 export interface navcardprops {
-  tittle?: string,
+  title?: string,
   image?: string,
   icon?: string,
   iconclass?: string,
-  tittleclass?: string,
+  titleclass?: string,
   imageclass?: string
 }
 
@@ -25,12 +25,12 @@ export interface ButtonProps {
 
 
 export interface navdropdownprops {
-  tittle: string;
+  title: string;
   subCat?: subCat[]
 }
 export interface navtabprops {
-  // tittle: string;
-  subCat?: subCat[]
+  // title: string;
+  subCat?:subCat[]
 }
 
 export interface subCat {
@@ -46,27 +46,29 @@ export interface AccordionProps {
 
 export interface techcardprops {
   image?: string,
-  tittle?: string,
-  tittleclass?: string,
+  title?: string,
+  titleclass?: string,
   imageclass?: string,
   className?: string,
   container?: string
 }
 
 export interface featurecardprops {
+  id?:string
   poster?: string,
-  tittle?: string,
+  title?: string,
   themeicon?: string,
   uploadericon?: string,
   uploadername?: string,
   category?: string,
-  buttonprops?: string,
+  buttonprops?: string | number,
   totalimages?: number,
-  currentimage?: number
+  currentimage?: number,
+  isPaid?: boolean,
 }
 
 export interface buissnesscardprops {
-  tittle?: string,
+  title?: string,
   logo?: string
 }
 
@@ -92,7 +94,7 @@ export interface CheckboxProps {
 
 export interface whatsnewprops {
   icons?: string,
-  tittle?: string,
+  title?: string,
   description?: string
 }
 
@@ -161,4 +163,89 @@ export interface Downloadpopup {
   isPopupOpen: boolean,
   closePopup: () => void;
   opensecoundpopup: () => void;
+}
+
+export interface TemplateResponse {
+  data: TechTemplate[];
+  pagination: Pagination;
+}
+
+interface Pagination {
+  totalTemplates: number;
+  totalPages: number;
+  currentPage: number;
+  limit: number;
+}
+
+export interface TechTemplate {
+  id: string;
+  title: string;
+  price: number;
+  description: string;
+  imageUrl: string | null;
+  version: string;
+  userId: string;
+  downloads: number;
+  createdAt: string;
+  updatedAt: string;
+  industryTypeId: string;
+  templateTypeId: string;
+  subCategoryId: string;
+  softwareTypeId: string;
+  mobileVersion: string | null;
+  documentationReady: boolean | null;
+  techDetails: string[];
+  seoTags: string[];
+  isPaid: boolean;
+  credits: Credit[];
+  sliderImages: Image[];
+  previewImages: Image[];
+  previewMobileImages: Image[];
+  sourceFiles: SourceFile[];
+  softwareType: SoftwareType;
+  subCategory: SubCategory;
+  templateType: SubCategory;
+  user: User;
+}
+
+interface Credit {
+  id: string;
+  fonts: string[];
+  images: string[];
+  icons: string[];
+  illustrations: string[];
+  templateId: string;
+}
+
+interface Image {
+  id: string;
+  imageUrl: string;
+  templateId: string;
+}
+
+interface SourceFile {
+  id: string;
+  fileUrl: string;
+  templateId: string;
+}
+
+export interface SoftwareType {
+  id: string;
+  name: string;
+  templateTypeId: string;
+}
+
+interface SubCategory {
+  id: string;
+  name: string;
+  templateTypeId: string;
+}
+export interface Industry {
+  id: string;
+  name: string;
+  templateTypeId: string;
+}
+
+interface User {
+  name: string;
 }

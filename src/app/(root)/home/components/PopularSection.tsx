@@ -15,12 +15,12 @@ const PopularSection = () => {
    * Array of popular templates data.
    * Each object includes information about the poster, title, theme icon, uploader, and other details.
    * 
-   * @type {Array<{poster: string, tittle: string, themeicon: string, uploadericon: string, uploadername: string, category: string, buttonprops: string, currentimage: number, totalimage: number}>}
+   * @type {Array<{poster: string, title: string, themeicon: string, uploadericon: string, uploadername: string, category: string, buttonprops: string, currentimage: number, totalimage: number}>}
    */
     const data = [
         {
-            poster: "popularbg.png",
-            tittle: "Room Sharing - UI Kit Template...",
+            poster: "/images/popularbg.png",
+            title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
             uploadername: "themadbrains",
@@ -31,8 +31,8 @@ const PopularSection = () => {
 
         },
         {
-            poster: "featureimg.png",
-            tittle: "Room Sharing - UI Kit Template...",
+            poster: "/images/featureimg.png",
+            title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
             uploadername: "themadbrains",
@@ -43,8 +43,8 @@ const PopularSection = () => {
 
         },
         {
-            poster: "popularbg.png",
-            tittle: "Room Sharing - UI Kit Template...",
+            poster: "/images/popularbg.png",
+            title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
             uploadername: "themadbrains",
@@ -55,8 +55,8 @@ const PopularSection = () => {
 
         },
         {
-            poster: "featureimg.png",
-            tittle: "Room Sharing - UI Kit Template...",
+            poster: "/images/featureimg.png",
+            title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
             uploadername: "themadbrains",
@@ -67,8 +67,8 @@ const PopularSection = () => {
 
         },
         {
-            poster: "popularbg.png",
-            tittle: "Room Sharing - UI Kit Template...",
+            poster: "/images/popularbg.png",
+            title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
             uploadername: "themadbrains",
@@ -79,8 +79,8 @@ const PopularSection = () => {
 
         },
         {
-            poster: "featureimg.png",
-            tittle: "Room Sharing - UI Kit Template...",
+            poster: "/images/featureimg.png",
+            title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
             uploadername: "themadbrains",
@@ -104,7 +104,7 @@ const PopularSection = () => {
                                     data.map((item, index) => {
                                         return (
                                             <Fragment key={index}>
-                                                <FeatureCard buttonprops={item.buttonprops} category={item.category} poster={item.poster} themeicon={item.themeicon} tittle={item.tittle} uploadericon={item.uploadericon} uploadername={item.uploadername} currentimage={item.currentimage} totalimages={item.totalimage} />
+                                                <FeatureCard buttonprops={item.buttonprops} category={item.category} poster={item.poster} themeicon={item.themeicon} title={item.title} uploadericon={item.uploadericon} uploadername={item.uploadername} currentimage={item.currentimage} totalimages={item.totalimage} />
                                             </Fragment>
                                         )
                                     })

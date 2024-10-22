@@ -14,8 +14,8 @@ const RelatedProducts = () => {
     // Sample data for related products
     const data = [
         {
-            poster: "popularbg.png",
-            tittle: "Room Sharing - UI Kit Template...",
+            poster: "/images/popularbg.png",
+            title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
             uploadername: "themadbrains",
@@ -26,8 +26,8 @@ const RelatedProducts = () => {
 
         },
         {
-            poster: "featureimg.png",
-            tittle: "Room Sharing - UI Kit Template...",
+            poster: "/images/featureimg.png",
+            title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
             uploadername: "themadbrains",
@@ -38,8 +38,8 @@ const RelatedProducts = () => {
 
         },
         {
-            poster: "popularbg.png",
-            tittle: "Room Sharing - UI Kit Template...",
+            poster: "/images/popularbg.png",
+            title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
             uploadername: "themadbrains",
@@ -50,8 +50,8 @@ const RelatedProducts = () => {
 
         },
         {
-            poster: "featureimg.png",
-            tittle: "Room Sharing - UI Kit Template...",
+            poster: "/images/featureimg.png",
+            title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
             uploadername: "themadbrains",
@@ -62,8 +62,8 @@ const RelatedProducts = () => {
 
         },
         {
-            poster: "popularbg.png",
-            tittle: "Room Sharing - UI Kit Template...",
+            poster: "/images/popularbg.png",
+            title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
             uploadername: "themadbrains",
@@ -74,8 +74,8 @@ const RelatedProducts = () => {
 
         },
         {
-            poster: "featureimg.png",
-            tittle: "Room Sharing - UI Kit Template...",
+            poster: "/images/featureimg.png",
+            title: "Room Sharing - UI Kit Template...",
             themeicon: "figma.svg",
             uploadericon: "mdb.svg",
             uploadername: "themadbrains",
@@ -99,7 +99,7 @@ const RelatedProducts = () => {
                                     data.splice(0, 4).map((item, index) => {
                                         return (
                                             <Fragment key={index}>
-                                                <FeatureCard buttonprops={item.buttonprops} category={item.category} poster={item.poster} themeicon={item.themeicon} tittle={item.tittle} uploadericon={item.uploadericon} uploadername={item.uploadername} currentimage={item.currentimage} totalimages={item.totalimage} />
+                                                <FeatureCard buttonprops={item.buttonprops} category={item.category} poster={item.poster} themeicon={item.themeicon} title={item.title} uploadericon={item.uploadericon} uploadername={item.uploadername} currentimage={item.currentimage} totalimages={item.totalimage} />
                                             </Fragment>
                                         )
                                     })

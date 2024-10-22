@@ -22,33 +22,33 @@ const AuthorTab = () => {
     /**
      * Data array for the author's projects.
      * 
-     * @type {Array<{tittle: string, image: string, icon: string}>}
+     * @type {Array<{title: string, image: string, icon: string}>}
      */
 
 
     const data = [
         {
-            "tittle": "Web Templates - UI Kit Te UI Kit Te UI Kit Te",
+            "title": "Web Templates - UI Kit Te UI Kit Te UI Kit Te",
             "image": "navimg.png",
             "icon": "figma.svg"
         },
         {
-            "tittle": "Web Templates - UI Kit Te UI Kit Te UI Kit Te",
+            "title": "Web Templates - UI Kit Te UI Kit Te UI Kit Te",
             "image": "navimg.png",
             "icon": "figma.svg"
         },
         {
-            "tittle": "Web Templates - UI Kit Te UI Kit Te UI Kit Te",
+            "title": "Web Templates - UI Kit Te UI Kit Te UI Kit Te",
             "image": "navimg.png",
             "icon": "figma.svg"
         },
         {
-            "tittle": "Web Templates - UI Kit Te UI Kit Te UI Kit Te",
+            "title": "Web Templates - UI Kit Te UI Kit Te UI Kit Te",
             "image": "navimg.png",
             "icon": "figma.svg"
         },
         {
-            "tittle": "Web Templates - UI Kit Te UI Kit Te UI Kit Te",
+            "title": "Web Templates - UI Kit Te UI Kit Te UI Kit Te",
             "image": "navimg.png",
             "icon": "figma.svg"
         }
@@ -93,8 +93,8 @@ const AuthorTab = () => {
                             {
                                 data?.map((item, index) => {
                                     return (
-                                        <Fragment key={Date.now() + item.tittle + index}>
-                                            <NavCard icon={item.icon} image={item.image} imageclass='max-w-full' tittle={item.tittle} />
+                                        <Fragment key={Date.now() + item.title + index}>
+                                            <NavCard icon={item.icon} image={item.image} imageclass='max-w-full' title={item.title} />
                                         </Fragment>
                                     )
                                 })

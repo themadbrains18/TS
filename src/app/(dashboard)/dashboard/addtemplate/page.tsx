@@ -37,6 +37,12 @@ const Page: React.FC = () => {
   const { data, fetchData } = useFetch<TemplateType[]>();
   const { data: templateData, fetchData: fetchTemplateData } = useFetch<any>();
   const { data: industryData, fetchData: fetchIndustryData } = useFetch<IndustryType[]>();
+  
+  const { register, reset, handleSubmit, formState: { errors } } = useForm<FormData>({
+    resolver: zodResolver(uploadTemplate)
+  });
+
+  console.log(errors, "errors")
 
   // State for fonts, images, icons, and illustrations
   const [fonts, setFonts] = useState<Font[]>([{ name: '', url: '' }]);
@@ -154,6 +160,7 @@ const Page: React.FC = () => {
               value={item.name}
               onChange={(e) => handleInputChange(setter, index, { ...item, name: e.target.value }, items)}
             />
+
             <DashInput
               type='text'
               placeholder='font url'
@@ -211,9 +218,9 @@ const Page: React.FC = () => {
     gender: string
   }
 
-  const { register, reset, handleSubmit, formState: { errors } } = useForm<FormData>({
-    resolver: zodResolver(uploadTemplate)
-  });
+  // const { register, reset, handleSubmit, formState: { errors } } = useForm<FormData>({
+  //   resolver: zodResolver(uploadTemplate)
+  // });
 
   console.log(errors)
 
@@ -279,10 +286,10 @@ const Page: React.FC = () => {
               <div className='pt-5'>
                 <h3 className='text-xl font-semibold capitalize  pb-4'>Credits</h3>
                 <div className='p-5 border border-neutral-400 rounded-md'>
-                  {renderInputFields(fonts, setFonts, 'Fonts')}
-                  {renderInputFields(images, setImages, 'Images')}
-                  {renderInputFields(icons, setIcons, 'Icons')}
-                  {renderInputFields(illustrations, setIllustrations, 'Illustrations')}
+                  {renderInputFields(fonts, setFonts, 'fonts')}
+                  {renderInputFields(images, setImages, 'images')}
+                  {renderInputFields(icons, setIcons, 'icons')}
+                  {renderInputFields(illustrations, setIllustrations, 'illustrations')}
                 </div>
               </div>
 

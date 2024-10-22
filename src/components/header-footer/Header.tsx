@@ -11,8 +11,9 @@ import NavTabs from "../NavTabs";
 import Accordion from "../ui/Accordion";
 import Link from "next/link";
 import useFetch from "@/hooks/useFetch";
-import { TemplateType } from "@/app/(dashboard)/addtemplate/page";
+
 import { subCat } from "@/types/type";
+import { TemplateType } from "@/app/(dashboard)/dashboard/addtemplate/page";
 
 
 
@@ -77,13 +78,13 @@ const Header = () => {
                   data && data?.map((item, index) => {
                     return (
                       <Fragment key={index}>
-                        <NavDropdown tittle={item?.name} subCat={item?.subCategories} />
+                        <NavDropdown title={item?.name} subCat={item?.subCategories} />
                       </Fragment>
                     )
                   })
                 }
-                {/* <NavDropdown tittle="HTML Templatess" />
-                <NavDropdown tittle="Studio Spacials" /> */}
+                {/* <NavDropdown title="HTML Templatess" />
+                <NavDropdown title="Studio Spacials" /> */}
               </div>
             </div>
             <div className={cn`max-w-[576px] w-full flex items-center justify-end gap-x-5 `}>
