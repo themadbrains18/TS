@@ -45,7 +45,7 @@ const Page = () => {
             body: JSON.stringify(data),
         });
         // Uncomment reset when form successfully submitted
-        // reset();
+        // reset();     
     };
 
     useEffect(() => {
@@ -53,7 +53,6 @@ const Page = () => {
             setOtppath(true)
         }
     }, [response, router]);
-
 
     return (
         <>
