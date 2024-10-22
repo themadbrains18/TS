@@ -17,7 +17,6 @@ const Page = () => {
         resolver: zodResolver(forgotPassword)
     });
 
-
     const onSubmit: SubmitHandler<FormValues> = (data) => {
         console.log(data);
         reset();
