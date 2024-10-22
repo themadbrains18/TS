@@ -7,17 +7,18 @@ import Button from '@/components/ui/Button';
 import { signupSchema } from '@/validations/signUp.validation';
 import Link from 'next/link';
 import Image from 'next/image';
-import CheckBox from '@/components/ui/Checkbox';
 import useFetch from '@/hooks/useFetch';
 import { useRouter } from 'next/navigation';
+import CheckBox from '@/components/ui/checkbox';
 // Define FormData interface
+
+
 interface FormData {
     name: string;
     email: string;
     password: string;
     confirmPassword: string;
 }
-
 
 
 const Page = () => {

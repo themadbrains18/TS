@@ -37,7 +37,7 @@ const Page: React.FC = () => {
   const { data, fetchData } = useFetch<TemplateType[]>();
   const { data: templateData, fetchData: fetchTemplateData } = useFetch<any>();
   const { data: industryData, fetchData: fetchIndustryData } = useFetch<IndustryType[]>();
-  
+
   const { register, reset, handleSubmit, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(uploadTemplate)
   });
