@@ -4,12 +4,13 @@ import Icon from '@/components/Icon';
 import Button from '@/components/ui/Button';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import useFetch from '@/hooks/useFetch';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import InputOtp from './components/Inputotp';
+import NewPassword from '../new-password/page';
 
 interface FormData {
     otp: string[];  // OTP should be an array of strings if you have multiple inputs
@@ -17,10 +18,11 @@ interface FormData {
 
 interface ApiResponse {
     otp: string;
-    success: boolean;
+    // success: boolean;
 }
 
-const Otp = ({ formData, api }: any) => {
+const Otp = ({ formData, api,setFormData}: any) => {
+    const [path, setPath] = useState(false);
     const router = useRouter();
     const { register, handleSubmit, setValue } = useForm<FormData>();
     const { data: response, error, loading, fetchData } = useFetch<ApiResponse>();
@@ -30,7 +32,7 @@ const Otp = ({ formData, api }: any) => {
     const onSubmit: SubmitHandler<FormData> = async (data) => {
         try {
             formData.otp = data.otp.join('');  // Join array into a single string
-
+            setFormData(formData)
             const result = await fetchData(`/${api}`, {
                 method: "POST",
                 body: JSON.stringify(formData),
@@ -38,16 +40,30 @@ const Otp = ({ formData, api }: any) => {
                     'Content-Type': 'application/json'
                 }
             });
+      
         } catch (err) {
             toast.error("Submission error");
         }
     };
 
     useEffect(() => {
-
+        if(response?.otp){
+            setPath(true) 
+        }
+        if(error){
+            toast.error("invalid otp");
+        }
     }, [response, error, router]);
 
+    console.log(formData,"  in otp");
+    
     return (
+        <>
+        {
+           path  ? (
+                <NewPassword formdata={formData}/>
+            ):(
+
         <div className="grid grid-cols-1 lg:grid-cols-2">
             {/* Left Section */}
             <div className="bg-[url('/images/authsideimage.png')] bg-no-repeat bg-cover h-[280px] lg:h-screen lg:sticky top-0 left-0 bottom-0">
@@ -109,6 +125,9 @@ const Otp = ({ formData, api }: any) => {
                 </div>
             </form>
         </div>
+            )
+        }
+        </>
     );
 };
 

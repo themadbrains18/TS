@@ -3,32 +3,50 @@
 import Button from '@/components/ui/Button';
 import CheckBox from '@/components/ui/checkbox';
 import Input from '@/components/ui/Input';
-import { newPassword } from '@/validations/NewPassword';
+import useFetch from '@/hooks/useFetch';
+import { newChangePassword } from '@/validations/NewPassword';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
-const Page = () => {
+const NewPassword = ({ formdata }: any) => {
+    console.log(formdata, 'fordata email here')
     const [isChecked1, setIsChecked1] = useState(false);
-
-
     interface FormValues {
-        password: string,
-        confirmpassword: string,
+        newPassword: string,
+        confirmPassword: string,
+        otp: string
 
     }
 
-    const { register, reset, handleSubmit, formState: { errors } } = useForm<FormValues>({
-        resolver: zodResolver(newPassword)
+    const { data: response, error, loading, fetchData } = useFetch<FormValues>();
+
+    console.log(error)
+    const { handleSubmit, control, formState: { errors } } = useForm<FormValues>({
+        resolver: zodResolver(newChangePassword)
     });
 
     console.log(errors)
 
-    const onSubmit: SubmitHandler<FormValues> = (data) => {
-        console.log(data);
-        reset();
+    const onSubmit: SubmitHandler<FormValues> = async (data) => {
+        console.log(data,"==datatatat")
+        formdata.newPassword=data.newPassword
+        formdata.confirmPassword= data.confirmPassword
+        try {
+            const result = await fetchData(`/reset-password`, {
+                method: "POST",
+                body: JSON.stringify(formdata),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        } catch (err) {
+            toast.error("Submission error");
+        }
+
     };
 
     return (
@@ -63,22 +81,50 @@ const Page = () => {
                         <div className="flex flex-col justify-center h-[559px] md:h-[759px]">
                             <div className='  md:space-y-[30px] space-y-[15px] ' >
                                 {/* Password Input with Show Password Option */}
-                                <Input
+                                {/* <Input
                                     register={register}
                                     type={isChecked1 ? "text" : "password"}
                                     placeholder="Password"
                                     label="Password"
                                     name='password'
                                     className=" placeholder:text-neutral-400 py-3 md:py-[18px] px-5 bg-divider-100"
+                                /> */}
+                                <Controller
+                                    name='newPassword'
+                                    control={control}
+                                    render={({ field }) => (
+                                        <Input
+                                            {...field}
+                                            type={isChecked1 ? "text" : "password"}
+                                            placeholder="Email or Phone"
+                                            label=" Password"
+                                            className=" placeholder:text-neutral-400 py-3 md:py-[18px]  px-5 bg-divider-100"
+                                            error={errors.newPassword?.message}
+                                        />
+                                    )}
                                 />
-                                <Input
+                                <Controller
+                                    name='confirmPassword'
+                                    control={control}
+                                    render={({ field }) => (
+                                        <Input
+                                            {...field}
+                                            type={isChecked1 ? "text" : "password"}
+                                            placeholder="Your Password Again"
+                                            label=" Confirm Password"
+                                            className=" placeholder:text-neutral-400 py-3 md:py-[18px]  px-5 bg-divider-100"
+                                            error={errors.confirmPassword?.message}
+                                        />
+                                    )}
+                                />
+                                {/* <Input
                                     register={register}
                                     name='confirmpassword'
                                     type={isChecked1 ? "text" : "password"}
                                     placeholder="Your Password Again"
                                     label="Confirm Password"
                                     className=" placeholder:text-neutral-400 py-3 md:py-[18px] px-5 bg-divider-100"
-                                />
+                                /> */}
 
 
                                 {/* Checkbox to Toggle Password Visibility */}
@@ -98,7 +144,7 @@ const Page = () => {
                             {/* Register Button */}
                             <div className='my-[60px]' >
                                 <Button type='submit' className="w-full items-center  justify-center" variant="primary">
-                                    Save New Password
+                                    {loading ? "Save New Password" : "Save New Password"}
                                 </Button>
                             </div>
                         </div>
@@ -115,4 +161,4 @@ const Page = () => {
     );
 };
 
-export default Page;
+export default NewPassword;

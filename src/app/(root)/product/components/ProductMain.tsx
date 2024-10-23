@@ -8,24 +8,24 @@ import Icon from '@/components/Icon';
 import ProductTags from './ProductTags';
 import useOnClickOutside from '@/hooks/useOnClickOutside';
 import Button from '@/components/ui/Button';
-import { useSearchParams } from 'next/navigation'; // Import useSearchParams for navigation
+import { useSearchParams } from 'next/navigation';
 import useFetch from '@/hooks/useFetch';
-import NotFoundProduct from './NotFountproduct';
+// import NotFoundProduct from './NotFoundProduct';
 import { TechTemplate, TemplateResponse } from '@/types/type';
+import useDebounce from '@/hooks/useDebounce'; // Import the useDebounce hook
 
-/**
- * Renders the main product page layout with filters, tags, sorting, and product grid.
- *
- * @component
- * @returns {JSX.Element} The product main page.
- */
 const ProductMain = () => {
     const searchParams = useSearchParams();
-    const templateTypeId = searchParams.get('template-type'); // Get templateTyId from query parameters
-    const subCatId = searchParams.get('subcat'); // Get subCatId from query parameters
+    const templateTypeId = searchParams.get('template-type');
+    const subCatId = searchParams.get('subcat');
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
-
+    const [items, setItems] = useState<string[]>([]);
+    const [products, setProducts] = useState<TemplateResponse | null>(null);
+    
+    // State to manage selected filters and debounced filter values
+    const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+    const debouncedFilters = useDebounce(items, 300); // Debounce the filters
 
     const Sortdata = [
         {
@@ -38,10 +38,6 @@ const ProductMain = () => {
             title: "Best Seller",
         },
     ];
-
-    const [items, setItems] = useState<string[]>([]);
-    const [products, setProducts] = useState<TemplateResponse | null>(null); // Initialize to null
-
     const removeItem = (index: number) => {
         setItems((prevItems) => {
             const updatedItems = [...prevItems];
@@ -66,55 +62,93 @@ const ProductMain = () => {
     const dropdownRef = useRef<HTMLDivElement>(null);
     useOnClickOutside(dropdownRef, sorthandledropdown);
 
-
-  // Function to fetch products based on the conditions
-    const fetchProducts = async (page: number): Promise<TemplateResponse> => {
+    const fetchProducts = async (page: number, filters: string[] = []): Promise<TemplateResponse> => {
         try {
+            
             let apiUrl = `${process.env.NEXT_PUBLIC_APIURL}/templates?page=${page}&limit=12`;
 
-            // Check the conditions
             if (templateTypeId !== null && subCatId !== null) {
-                console.log("hererererer");
-                
                 apiUrl = `${process.env.NEXT_PUBLIC_APIURL}/templates?templateTypeId=${templateTypeId}&subCatId=${subCatId}&page=${page}&limit=12`;
             }
 
-        
+            if (filters.length > 0) {
+                // Group filters by filterType
+                const groupedFilters: { [key: string]: string[] } = {};
+            
+                filters.forEach(filter => {
+                    const [value, filterType] = filter.split(',');
+                    const trimmedValue = value.trim();
+                    const trimmedFilterType = filterType.trim();
+            
+                    if (!groupedFilters[trimmedFilterType]) {
+                        groupedFilters[trimmedFilterType] = [];
+                    }
+                    groupedFilters[trimmedFilterType].push(trimmedValue);
+                });
+            
+                // console.log(groupedFilters, "==grouped filters");
+            
+                // Construct the query string
+                const filterQueryParts: string[] = [];
+            
+                // Check each filter type and build the query accordingly
+                if (groupedFilters['Price Range']) {
+                    const priceRanges = groupedFilters['Price Range'].map(range => range.replace('$', '').trim()).join(','); // Remove dollar signs if needed
+                    filterQueryParts.push(`priceRanges=${priceRanges}`);
+                }
+            
+                if (groupedFilters['Industries']) {
+                    const industryTypeIds = groupedFilters['Industries'].join(','); // Join industries with commas
+                    filterQueryParts.push(`industryTypeIds=${industryTypeIds}`);
+                }
+            
+                if (groupedFilters['Software Type']) {
+                    const softwareTypeIds = groupedFilters['Software Type'].join(','); // Join software types with commas
+                    filterQueryParts.push(`softwareTypeIds=${softwareTypeIds}`);
+                }
+            
+                // Combine all query parts into the final query string
+                const filterQuery = filterQueryParts.join('&');
+            
+                if (filterQuery) {
+                    apiUrl += `&${filterQuery}`;
+                }
+            }
+            
 
             const response = await fetch(apiUrl);
             const data: TemplateResponse = await response.json();
 
             setTotalPages(data.pagination.totalPages);
             setCurrentPage(data.pagination.currentPage);
-        console.log(data,"==data");
-        
             return data;
 
         } catch (error) {
             console.error("Error fetching products:", error);
-            return { data: [], pagination: { totalTemplates: 0, totalPages: 0, currentPage: 1, limit: 12 } }; // Default return type
+            return { data: [], pagination: { totalTemplates: 0, totalPages: 0, currentPage: 1, limit: 12 } };
         }
     };
 
-    // Call fetchProducts when the component mounts or when templateTypeId or subCatId changes
+    // Effect to fetch products based on filters
     useEffect(() => {
         const getProducts = async () => {
-            const initialProducts = await fetchProducts(1);
+            const initialProducts = await fetchProducts(1, debouncedFilters);
             setProducts(initialProducts);
         };
         getProducts();
-    }, [templateTypeId, subCatId]);
+    }, [templateTypeId, subCatId, debouncedFilters]); // Add debouncedFilters as a dependency
 
     const handleLoadMore = async () => {
         if (currentPage < totalPages) {
-            const newProducts = await fetchProducts(currentPage + 1);
+            const newProducts = await fetchProducts(currentPage + 1, debouncedFilters);
             setProducts((prev) => ({
                 ...prev,
-                data: [...(prev?.data || []), ...newProducts.data], // Append new products
-                pagination: newProducts.pagination // Update pagination
+                data: [...(prev?.data || []), ...newProducts.data],
+                pagination: newProducts.pagination
             }));
         }
     };
+
     return (
         <>
             <ProductBanner />
@@ -124,16 +158,16 @@ const ProductMain = () => {
                     <div className='container'>
                         <div className='flex gap-[30px] flex-col md:flex-row justify-between'>
                             <div className={`md:static fixed top-0 h-screen duration-[1s] z-10 transition-all ${filter ? "left-0" : "left-[-100%]"} max-w-full sm:max-w-[357px] w-full`}>
-                                <ProductFilterside closefilter={closefilter} items={items} setItems={setItems} />
+                                <ProductFilterside closefilter={closefilter} items={items} setItems={setItems} setSelectedFilters={setSelectedFilters} /> {/* Pass setSelectedFilters */}
                             </div>
                             <div className='w-full'>
                                 <div className="flex max-[768px]:flex-col-reverse md:flex justify-between pb-5 border-b mb-[30px] items-center">
-                                    <div className='md:max-w-[600px] w-full overflow-x-scroll md:overflow-hidden flex-nowrap flex md:flex-wrap gap-[10px] hiddenscroll'>
+                                <div className='md:max-w-[600px] w-full overflow-x-scroll md:overflow-hidden flex-nowrap flex md:flex-wrap gap-[10px] hiddenscroll'>
                                         {items.map((item, index) => (
                                             <div key={Date.now() + index}>
                                                 <div className="border-[1px] py-[6px] px-[14px] flex items-center w-full max-w-max bg-primary-300 gap-[5px]">
                                                     <span className="whitespace-nowrap text-[14px] font-normal leading-4 text-subparagraph">
-                                                        {item}
+                                                        {item.split(',')[2]}
                                                     </span>
                                                     <div className="cursor-pointer" onClick={() => removeItem(index)}>
                                                         <Icon color='#5D5775' name="closeicon" />
@@ -173,30 +207,31 @@ const ProductMain = () => {
                                     </div>
                                 </div>
                                 <div className='flex flex-col gap-[30px] justify-center items-center'>
-                                {products && products.data && products.data.length > 0 ? (
+                                    {products && products.data && products.data.length > 0 ? (
                                         <div className='grid gap-5 lg:grid-cols-2 xl:grid-cols-3 xl:gap-[30px]'>
-                                         {   products?.data?.map((item:TechTemplate, index:number) => (
-                                            <Fragment key={index}>
-                                                <FeatureCard
-                                                id={item.id}
-                                                    buttonprops={item.price}
-                                                    category={item.templateType?.name}
-                                                    poster={item.sliderImages[0]?.imageUrl}
-                                                    themeicon="figma.svg"
-                                                    title={item.title}
-                                                    uploadericon='mdb.svg'
-                                                    uploadername={item.user.name}
-                                                    currentimage={1}
-                                                    totalimages={item.sliderImages.length}
-                                                    isPaid={item?.isPaid}
-                                                />
-                                            </Fragment>
+                                            {products.data.map((item: TechTemplate, index: number) => (
+                                                <Fragment key={index}>
+                                                    <FeatureCard
+                                                        id={item.id}
+                                                        buttonprops={item.price}
+                                                        category={item.templateType?.name}
+                                                        poster={item.sliderImages[0]?.imageUrl}
+                                                        themeicon="figma.svg"
+                                                        title={item.title}
+                                                        uploadericon='mdb.svg'
+                                                        uploadername={item.user.name}
+                                                        currentimage={1}
+                                                        totalimages={item.sliderImages.length}
+                                                        isPaid={item?.isPaid}
+                                                    />
+                                                </Fragment>
                                             ))}
                                         </div>
                                     ) : (
-                                        <NotFoundProduct />
+                                        // <NotFoundProduct />
+                                        <p>Product not found</p>
                                     )}
-                                     {currentPage < totalPages && (
+                                    {currentPage < totalPages && (
                                         <Button
                                             className='w-fit mt-[30px]'
                                             variant='solidicon'
@@ -206,9 +241,6 @@ const ProductMain = () => {
                                         </Button>
                                     )}
                                 </div>
-                                {/* not found template */}
-                                {/* <NotFoundProduct /> */}
-                                {/* not found template */}
                             </div>
                         </div>
                     </div>

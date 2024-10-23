@@ -6,7 +6,7 @@ import DescriptionTab from './DescriptionTab'
 import CreditTab from './CreditTab'
 import WhatsNewTab from './WhatsNewTab'
 import AuthorTab from './AuthorTab'
-import { TemplateResponse } from '@/types/type'
+import { ProductDetailProps, TechTemplate } from '@/types/type'
 
 
 
@@ -18,11 +18,13 @@ import { TemplateResponse } from '@/types/type'
  * @returns {JSX.Element} The rendered ProductDescription component.
  */
 
-const ProductDescription:React.FC<TemplateResponse> = ({template}) => {
+
+
+const ProductDescription: React.FC<ProductDetailProps> = ({ template }) => {
     // State to manage the active tab index
     const [activetab, setActivetab] = useState(0);
 
-    console.log(template,"=template");
+    // console.log(template,"=template");
     
 
     // Button data for the tab titles and icons
@@ -43,7 +45,7 @@ const ProductDescription:React.FC<TemplateResponse> = ({template}) => {
     const renderTabContent = () => {
         switch (activetab) {
             case 0:
-                return <DescriptionTab />
+                return <DescriptionTab description={template.description}/>
             case 1:
                 return <TechnicalTab />
             case 2:

@@ -29,7 +29,7 @@ const CheckboxFilter = ({
        * 
        * @type {boolean}
        */
-    const isChecked = items.includes(value);
+    const isChecked = items.includes(id);
 
     /**
      * Handles the checkbox state change. If the checkbox is checked, it removes the item from the `items` array,
@@ -38,10 +38,10 @@ const CheckboxFilter = ({
     const handleCheckboxChange = () => {
         if (isChecked) {
             // Remove item from filter if already checked
-            setItems(items.filter((item) => item !== value));
+            setItems(items.filter((item) => item !== id));
         } else {
             // Add item to filter if not checked
-            setItems([...items, value]);
+            setItems([...items, id]);
         }
     };
 

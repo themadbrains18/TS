@@ -45,7 +45,7 @@ const Page = () => {
             body: JSON.stringify(data),
         });
         // Uncomment reset when form successfully submitted
-        // reset();
+        // reset();     
     };
 
     useEffect(() => {
@@ -54,12 +54,11 @@ const Page = () => {
         }
     }, [response, router]);
 
-
     return (
         <>
             {
                 otpPath ? (
-                    <Otp formData={formData} api="register" />
+                    <Otp formData={formData} api="register" setFormData={setFormData}/>
                 ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-2">
                         {/* Left Section */}
