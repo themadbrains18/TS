@@ -1,8 +1,10 @@
+
 import HeroSection from "./home/components/HeroSection";
 import TrendingTechnology from "./home/components/TrendingTechnology";
 import FeatureSection from "./home/components/FeatureSection";
 import BuissnessProducts from "./home/components/BuissnessProducts";
 import PopularSection from "./home/components/PopularSection";
+
 
 /**
  * Home component serves as the main landing page of the application.
@@ -13,6 +15,8 @@ import PopularSection from "./home/components/PopularSection";
  * @returns {JSX.Element} The rendered Home component containing various sections.
  */
 const Home = () => {
+
+
   return (
     <>
       <HeroSection />

@@ -10,7 +10,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import useFetch from '@/hooks/useFetch';
 import 'react-toastify/dist/ReactToastify.css';
-import { useRouter } from 'next/navigation';
 import CheckBox from '@/components/ui/checkbox';
 import Otp from '../otp/page';
 
@@ -27,7 +26,7 @@ interface ApiResponse {
     success: boolean;
 }
 const Page = () => {
-    const router = useRouter();
+
     const [isChecked1, setIsChecked1] = useState(false);
     const [otpPath, setOtppath] = useState(false);
     const [formData, setFormData] = useState({})
@@ -52,13 +51,13 @@ const Page = () => {
         if (response?.otp) {
             setOtppath(true)
         }
-    }, [response, router]);
+    }, [response]);
 
     return (
         <>
             {
                 otpPath ? (
-                    <Otp formData={formData} api="register" />
+                    <Otp formData={formData} api="register" setFormData={setFormData}/>
                 ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-2">
                         {/* Left Section */}

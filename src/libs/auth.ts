@@ -1,99 +1,100 @@
-
+import { AuthOptions, DefaultSession } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-
-
-import { type GetServerSidePropsContext } from "next";
-import {
-  getServerSession,
-  type DefaultSession,
-  type NextAuthOptions,
-} from "next-auth";
-
-
-
 declare module "next-auth" {
-  interface Session extends DefaultSession {
-    user: {
-        expires_in : string,
-        access_token : string,
-    } & DefaultSession["user"];
+  interface Session {
+    id: string;
+    email: string;
+    role: string;
+    token: string;
   }
 
+  interface User {
+    id: string;
+    email: string;
+    role: string;
+    token: string;
+  }
 }
 
-export interface dataShape {
-    expires_in : string,
-    access_token : string,
+declare module "next-auth/jwt" {
+  interface JWT {
+    id: string;
+    email: string;
+    role: string;
+    token: string;
+  }
 }
 
-export const authOptions : NextAuthOptions  = {
-  session: { strategy: 'jwt' },
-  pages: {
-    error: '/auth/error',     // Error page URL
-    signIn: '/',
-    signOut: '/auth/signout',
-  },
-  secret : process.env.NEXTAUTH_SECRET,
+export const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
-      id: "credentials",
       name: "Credentials",
       credentials: {
-        // email: { label: "Email", type: "text" },
-        // password: { label: "Password", type: "password" },
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" },
+        otp: { label: "OTP", type: "text", required: false },
       },
-      authorize: async (credentials) : Promise<any> => {
-        try {
-            if(!credentials) return null
-            const data  = credentials as dataShape ;
-            if (!data?.access_token && !data.expires_in) {
-                return null;
-            }
-          // Return user object if everything is okay
-          return data;
-        } catch (error : any) {
-          throw new Error(error?.message);
+      async authorize(credentials) {
+        if (!credentials || !credentials.email || !credentials.password) {
+          throw new Error("Email and password are required");
         }
-      }
-    })
+
+        const { email, password, otp } = credentials;
+
+        // Call your login API
+        const res = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/login`, {
+          method: "POST",
+          body: JSON.stringify({ email, password, otp }),
+          headers: { "Content-Type": "application/json" },
+        });
+
+        const user = await res.json();
+        
+        // If login is successful, return the user object
+        if (res.ok && user) {
+          return {
+            id: user.results.id, // Adjust according to your API response structure
+            email: user.results.email,
+            role: user.results.role,
+            token: user.results.token, // Ensure this property is returned from your API
+          };
+        }
+
+        // Return null if login fails
+        return null;
+      },
+    }),
   ],
   callbacks: {
-    jwt: async ({ token, user }) => {
-      // Add user to the token right after signin
-      if (user) {
-        // const u = user as unknown as any;
-        return {
-          ...token,
-          ...user
-        };
+    async jwt({ token, user }) {
+      console.log(user,"==user=");
+      
+      if (user ) {
+        token.id = user?.id;
+        token.email = user?.email;
+        token.role = user?.role;
+        token.token = user.token; // Store JWT token from API
       }
       return token;
     },
-
-    async session(params : unknown | any) {
-      return {
-        ...params.session,
-        user: {
-          ...params.session.user,
-          access_token: params.token.access_token as string,
-          expires_in: params.token.expires_in as string,
-     
-        },
-      };
+    async session({ session, token }) {
+      console.log(token,"==token");
+ 
+        session.id = token.id;
+        session.email = token.email;
+        session.role = token.role;
+        session.token = token.token; // JWT Token available in the session
+        return session;
     },
-  }
-};
 
-
-/**
- * Wrapper for `getServerSession` so that you don't need to import the `authOptions` in every file.
- *
- * @see https://next-auth.js.org/configuration/nextjs
- */
-export const getServerAuthSession = (ctx: {
-  req: GetServerSidePropsContext["req"];
-  res: GetServerSidePropsContext["res"];
-}) => {
-  return getServerSession(ctx.req, ctx.res, authOptions);
+  },
+  pages: {
+    signIn: "/auth/login",
+    error: "/auth/error", // Error page
+  },
+  session: {
+    strategy: "jwt",
+  },
+  secret: process.env.NEXTAUTH_SECRET,
 };

@@ -255,3 +255,8 @@ interface User {
 export interface ProductDetailProps {
   template: TechTemplate;
 }
+
+export interface UserLogin {
+  email: string;
+  password : string;
+}
