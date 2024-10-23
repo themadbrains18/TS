@@ -5,7 +5,7 @@ import Link from 'next/link';
 import React from 'react';
 import InputOtp from './components/Inputotp';
 
-const Page = () => {
+const Otp = () => {
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 ">
@@ -72,4 +72,4 @@ const Page = () => {
     );
 };
 
-export default Page;
+export default Otp;

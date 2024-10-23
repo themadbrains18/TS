@@ -78,6 +78,7 @@ export interface ProductFiltersidetype {
   items: string[];
   setItems: (items: string[]) => void;
   closefilter: () => void;
+  setSelectedFilters:any
 }
 
 
@@ -91,6 +92,7 @@ export interface CheckboxProps {
   className?: string;
   labelClass?: string;
 }
+
 
 export interface whatsnewprops {
   icons?: string,
@@ -248,4 +250,8 @@ export interface Industry {
 
 interface User {
   name: string;
+}
+
+export interface ProductDetailProps {
+  template: TechTemplate;
 }

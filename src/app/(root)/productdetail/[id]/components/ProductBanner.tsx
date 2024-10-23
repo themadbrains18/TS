@@ -17,6 +17,7 @@ import Icon from '@/components/Icon';
 import ProductDetailcheckbox from './ProductDetailcheckbox';
 import Link from 'next/link';
 import DownloadTemplete from '@/components/popups/DownloadTemplete';
+import { ProductDetailProps, TechTemplate } from '@/types/type';
 
 /**
  * ProductBanner component displays the main product image and allows users to 
@@ -28,7 +29,7 @@ import DownloadTemplete from '@/components/popups/DownloadTemplete';
  */
 
 
-const ProductBanner = () => {
+const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
 
     // swiper images
     const images = [
@@ -144,21 +145,21 @@ const ProductBanner = () => {
                                 </div>
                             </div>
                             <div>
-                                <h2 className='pb-2.5 md:pb-5 text-[18px] md:text-[28px] leading-8 font-bold text-[#110833]'>Room - UI Kit for Room Sharing UI Template </h2>
-                                <p className=' text-[14px] md:text-[16px] font-normal leading-6 text-subparagraph'>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. <span className=' text-[14px] font-normal leading-5 text-subheading'>View more</span></p>
+                                <h2 className='pb-2.5 md:pb-5 text-[18px] md:text-[28px] leading-8 font-bold text-[#110833]'>{template.title} </h2>
+                                <p className=' text-[14px] md:text-[16px] font-normal leading-6 text-subparagraph'>{template.description} <span className=' text-[14px] font-normal leading-5 text-subheading'>View more</span></p>
                                 <div className=' py-5 md:py-10 flex gap-2.5 md:gap-[18px] flex-col' >
                                     <ProductDetailcheckbox image='/images/figmalogo.png' label="Figma Design File" detailText="View Detail" />
                                     <ProductDetailcheckbox image='/images/XD.png' label="XD Design File" detailText="View Detail" />
                                     <ProductDetailcheckbox image='/images/diamond.png' label="Sketch Design File" detailText="View Detail" />
                                 </div>
                                 <div className='p-2.5 md:p-5 flex items-center bg-divider-100 justify-between ' >
-                                    <Button className='py-[5px] px-2.5' variant='primary' >FREE</Button>
+                                    <Button className='py-[5px] px-2.5' variant='primary' >{template.isPaid ? template.price : 'FREE'}</Button>
                                     <div className='flex gap-5 items-center' >
                                         <h3 className='text-[14px] font-normal leading-5 text-subparagraph' >Total Price</h3>
-                                        <span className='text-[20px] leading-7 text-subparagraph font-bold' >$0.00</span>
+                                        <span className='text-[20px] leading-7 text-subparagraph font-bold' >{template.isPaid?'$'+template.price:"$0.00"}</span>
                                     </div>
                                 </div>
-                                <Button onClick={openPopup} className='w-full mb-2.5 mt-5  md:mt-[30px] md:mb-5 justify-center py-2 md:py-[13px]' variant='primary' >Free — Download</Button>
+                                <Button onClick={openPopup} className='w-full mb-2.5 mt-5  md:mt-[30px] md:mb-5 justify-center py-2 md:py-[13px]' variant='primary' > Download</Button>
                                 <Button className='w-full justify-center' variant='liquid' >Preview</Button>
                                 {
                                     isPopupOpen &&
