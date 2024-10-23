@@ -218,7 +218,7 @@ const ProductMain = () => {
                                                         category={item.templateType?.name}
                                                         poster={item.sliderImages[0]?.imageUrl}
                                                         // themeicon="figma.svg"
-                                                        themeicon='photoshop'
+                                                        themeicon='figma'
                                                         title={item.title}
                                                         uploadericon='mdb.svg'
                                                         uploadername={item.user.name}
