@@ -14,7 +14,6 @@ import React, { useEffect, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import Otp from '../otp/page';
 import { toast } from 'react-toastify';
-import { json } from 'stream/consumers';
 
 const Page = () => {
     interface ApiResponse {
@@ -50,6 +49,7 @@ const Page = () => {
         console.log(response)
         if (response?.otp) {
             setOtppath(true)
+            
         }
     }, [response, router]);
 

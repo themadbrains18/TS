@@ -1,5 +1,4 @@
 "use client";
-
 import Icon from '@/components/Icon';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
@@ -36,7 +35,7 @@ const Page = () => {
 
     // Fetch hook to make API requests
     const { data: response, error, loading, fetchData } = useFetch<ApiResponse>();
-
+    console.log(error, "erro")
     // Submit handler with API request
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
         setFormData(data)
