@@ -1,3 +1,7 @@
+
+
+
+
 'use client';
 
 import React, { useEffect, useState } from 'react';
@@ -48,7 +52,7 @@ const Page: React.FC = () => {
   const [icons, setIcons] = useState<Font[]>([{ name: '', url: '' }]);
   const [illustrations, setIllustrations] = useState<Font[]>([{ name: '', url: '' }]);
   // Technical details state (4 inputs by default)
-  const [technicalDetails, setTechnicalDetails] = useState<string[]>(['', '', '', '']); // Initialize with four empty strings
+  const [technicalDetails, setTechnicalDetails] = useState<string[]>(['']); // Initialize with four empty strings
 
 
   // Dropdown selection states
@@ -60,10 +64,14 @@ const Page: React.FC = () => {
 
   // Checkbox selection for industries
   const [selectedIndustries, setSelectedIndustries] = useState<string[]>([]);
+  const { register, reset, handleSubmit, control, formState: { errors }, setValue } = useForm<FormData>({
+    resolver: zodResolver(uploadTemplate)
+  });
 
   // Handle template dropdown selection
   const handleTemplateSelect = (value: string) => {
     setSelectedValue(value);
+    setValue("templateType", value)
     fetchTemplateData(`/sub-categories/${value}`);
   };
 
@@ -140,7 +148,7 @@ const Page: React.FC = () => {
 
   // Function to remove input fields
   const removeInputField = <T,>(setter: React.Dispatch<React.SetStateAction<T[]>>, index: number, values: T[]) => {
-    if (values.length > 4) { // Ensure there are at least 4 fields
+    if (values.length > 1) { // Ensure there are at least 4 fields
       const newValues = [...values];
       newValues.splice(index, 1); // Remove the input at the specified index
       setter(newValues);
@@ -153,6 +161,7 @@ const Page: React.FC = () => {
       <div className="p-5 border-b border-neutral-400">
         {items.map((item, index) => (
           <div key={index} className="flex items-center gap-x-3 pb-3">
+
             <DashInput
               type='text'
               placeholder='font name'
@@ -166,6 +175,7 @@ const Page: React.FC = () => {
               value={item.url}
               onChange={(e) => handleInputChange(setter, index, { ...item, url: e.target.value }, items)}
             />
+
             {items.length > 1 && (
               <Button
                 onClick={() => removeInputField(setter, index, items)}
@@ -174,6 +184,7 @@ const Page: React.FC = () => {
                 Remove
               </Button>
             )}
+
           </div>
         ))}
         <Button onClick={() => addInputFields(setter, items, true)} variant='primary' className='py-2 mt-2'>Add more</Button>
@@ -192,11 +203,10 @@ const Page: React.FC = () => {
               value={detail}
               onChange={(e) => handleInputChange(setTechnicalDetails, index, e.target.value, technicalDetails)}
             />
-            {technicalDetails.length > 4 && (
+            {technicalDetails.length > 1 && (
               <Button
                 onClick={() => removeInputField(setTechnicalDetails, index, technicalDetails)}
-                className="py-1 px-2"
-              >
+                className="py-1 px-2" >
                 Remove
               </Button>
             )}
@@ -224,14 +234,11 @@ const Page: React.FC = () => {
   }
 
 
-  const { register, reset, handleSubmit, control, formState: { errors } } = useForm<FormData>({
-    resolver: zodResolver(uploadTemplate)
-  });
+
   console.log(errors)
   const onSubmit: SubmitHandler<FormData> = (data) => {
     console.log(data)
   };
-
 
   return (
     <>
@@ -240,38 +247,51 @@ const Page: React.FC = () => {
           <h2 className='text-3xl capitalize font-bold pb-8 '>Upload Product</h2>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-y-5 justify-center items-center w-full">
+
               {/* <CustomDropdown placeholder='Template Type' options={data || []} onSelect={handleTemplateSelect} />
               <CustomDropdown placeholder='Template SubCategory' options={templateData?.subCategories} onSelect={handleCategorySelect} />
               <CustomDropdown placeholder='Software Type' options={templateData?.softwareCategories} onSelect={handleSoftwareSelect} />
 
                   {/* Template Type Dropdown */}
+
+
+
               <div className='w-full'>
-                <select
-                  className='custom-dropdown-template'
-                  id="templateType"
-                  {...register}
-                  name='templateType'
-                  onChange={(e) => handleTemplateSelect(e.target.value)} // Use onChange here
-                >
-                  {data?.map((option) => {
-                    return (
-                      <option className='cursor-pointer' key={option.id} value={option.id}>
-                        {option.name}
-                      </option>
-                    )
-                  }
+                <label className='text-xl font-semibold capitalize' htmlFor="templateType">Template Type</label>
+                {data && data.length > 0 ? (
+                  <Controller
+                    name="templateType"
+                    control={control}
+                    defaultValue={data[0]?.id ?? ""} // Set a valid default or empty string
+                    render={({ field }) => (
+                      <select
+                        className='custom-dropdown-template'
+                        id="templateType"
+                        {...field}
+                        onChange={(e) => {
+                          field.onChange(e.target.value);
+                          handleTemplateSelect(e.target.value);
+                        }}
+                      >
+                        {data.map((option) => (
+                          <option className='cursor-pointer' key={option.id} value={option.id}>
+                            {option.name}
+                          </option>
+                        ))}
+                      </select>
+                    )}
+                  />
+                ) : (
+                  <p>Loading options...</p> // Or handle the case where data is null
+                )}
 
-                  )}
-                </select>
-
-                {
-                  errors?.templateType && (
-                    <p style={{ color: 'red' }}>{errors.templateType.message}</p>
-                  )}
+                {errors.templateType && (
+                  <p style={{ color: 'red' }}>{errors.templateType.message}</p>
+                )}
               </div>
 
               {/* Template SubCategory Dropdown */}
-              <div className='w-full'>
+              {/* <div className='w-full'>
                 <select className='custom-dropdown-template' id="templateSubCategory" {...register} name='templateSubCategory' onChange={(e) => handleCategorySelect(e.target.value)}>
                   {templateData?.subCategories?.map((option: any) => {
                     return (
@@ -282,14 +302,13 @@ const Page: React.FC = () => {
                   })}
                 </select>
                 {errors.templateSubCategory && <p style={{ color: 'red' }}>{errors.templateSubCategory.message}</p>}
-              </div>
+              </div> */}
 
               {/* Software Type Dropdown */}
-              <div className='w-full'>
+              {/* <div className='w-full'>
                 <select className='custom-dropdown-template' id="softwareType" {...register} name='softwareType' onChange={(e) => handleSoftwareSelect(e.target.value)}>
                   {templateData?.softwareCategories.map((softwareCategory: any) => {
                     return (
-
                       <option className='cursor-pointer' key={softwareCategory.id} value={softwareCategory.id}>
                         {softwareCategory.name}
                       </option>
@@ -297,7 +316,8 @@ const Page: React.FC = () => {
                   })}
                 </select>
                 {errors.softwareType && <p style={{ color: 'red' }}>{errors.softwareType.message}</p>}
-              </div>
+              </div> */}
+
             </div>
             <div className='mt-5'>
               <h3 className='text-xl font-semibold capitalize '>Industry</h3>
@@ -317,15 +337,41 @@ const Page: React.FC = () => {
 
               <div className='flex flex-col gap-y-5'>
                 <div className='flex flex-col'>
-                  <label className='text-xl font-semibold capitalize' htmlFor="seoTags">Name</label>
-                  <input {...register} id='name' type="text" name='name' className='py-[18px] px-5 border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400 bg-white  ' placeholder='Template Name' />
-                  {errors.name && <p style={{ color: 'red' }}>{errors.name.message}</p>}
+                  <label className='text-xl font-semibold capitalize' htmlFor="name">Name</label>
+                  <Controller
+                    name="name"
+                    control={control}
+                    defaultValue="" // Set default value
+                    render={({ field }) => (
+                      <input
+                        {...field}
+                        id='name'
+                        type="text"
+                        className='py-[18px] px-5 border border-neutral-400 rounded-md outline-none placeholder:text-neutral-400 bg-white'
+                        placeholder='Template Name'
+                      />
+                    )}
+                  />
+                  {errors.name && (
+                    <p style={{ color: 'red' }}>{errors.name.message}</p>
+                  )}
                 </div>
+
                 <div className='flex flex-col'>
-                  <label className='text-xl font-semibold capitalize' htmlFor="seoTags">Version</label>
-                  <input {...register} id='version' type="text" name='version' className='py-[18px] px-5 border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400 bg-white  ' placeholder='version' />
-                  {errors.version && <p style={{ color: 'red' }}>{errors.version.message}</p>}
+                  <label className='text-xl font-semibold capitalize' htmlFor="version">Version</label>
+                  <input
+                    {...register("version")}
+                    id='version'
+                    type="text"
+                    name='version'
+                    className='py-[18px] px-5 border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400 bg-white'
+                    placeholder='version'
+                  />
+                  {errors.version &&
+                    <p style={{ color: 'red' }}>{errors.version.message}</p>
+                  }
                 </div>
+
               </div>
 
               <div className='mt-5'>
@@ -333,7 +379,7 @@ const Page: React.FC = () => {
                 <QuillEditor />
               </div>
 
-              <div className='pt-5'>
+              {/* <div className='pt-5'>
                 <h3 className='text-xl font-semibold capitalize  pb-4'>Credits</h3>
                 <div className='p-5 border border-neutral-400 rounded-md'>
                   {renderInputFields(fonts, setFonts, 'fonts')}
@@ -341,17 +387,17 @@ const Page: React.FC = () => {
                   {renderInputFields(icons, setIcons, 'icons')}
                   {renderInputFields(illustrations, setIllustrations, 'illustrations')}
                 </div>
-              </div>
+              </div> */}
 
-              <div className='pt-5'>
+              {/* <div className='pt-5'>
                 <h3 className='text-xl font-semibold capitalize  pb-4'>Technical Details</h3>
                 <div className='p-5 border border-neutral-400 rounded-md'>
                   {renderTechnicalDetailsFields()}
                 </div>
-              </div>
+              </div> */}
 
               {/* File Uploads */}
-              <div className='pt-5'>
+              {/* <div className='pt-5'>
                 <h3 className='text-xl font-semibold capitalize pb-4'>Source File</h3>
                 <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
                   <FileUpload
@@ -406,16 +452,15 @@ const Page: React.FC = () => {
                     register={register}
                     name='mobileimg'
                     onFileSelect={(file) => handlePreviewFileSelect(file)}
-
                     supportedfiles="jpg,png,jpeg"
                     multiple={true}
                     id="4"
-
                   />
                 </div>
                 {errors.mobileimg && <p style={{ color: 'red' }}>{errors.mobileimg.message}</p>}
 
-              </div>
+              </div> */}
+
               <div className='mt-5'>
                 {/* <div className='flex flex-col'>
                   <label className='text-xl font-semibold capitalize' htmlFor="seoTags">SEO Keywords Tag</label>
@@ -447,17 +492,32 @@ const Page: React.FC = () => {
                   />
                   {errors.seoTags && <p style={{ color: 'red' }}>{errors.seoTags.message}</p>}
                 </div>
-                <div className='pt-5'>
+                {/* <div className='pt-5'>
                   <StaticCheckBox onClick={() => setStaticCheck(!staticcheck)} checked={staticcheck} label='Paid' />
                   {
                     staticcheck &&
                     <div className='flex flex-col'>
                       <label className='text-xl font-semibold capitalize' htmlFor="dollarPrice">price in dollar</label>
-                      <input {...register} id='dollarPrice' type="text" name='dollarPrice' className='py-[18px] px-5 border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400 bg-white  ' placeholder='price in dollar' />
-                      {errors.dollarPrice && <p style={{ color: 'red' }}>{errors.dollarPrice.message}</p>}
+                      <Controller
+                        name="dollarPrice"
+                        control={control} // Make sure you have `control` passed from `useForm`
+                        render={({ field }) => (
+                          <input
+                            {...field} // This spreads the necessary props like onChange and value
+                            id="dollarPrice"
+                            type="text"
+                            className="py-[18px] px-5 border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400 bg-white"
+                            placeholder="price in dollar"
+                          />
+                        )}
+                      />
+                      {
+                        errors.dollarPrice &&
+                        <p style={{ color: 'red' }}>{errors.dollarPrice.message}</p>
+                      }
                     </div>
                   }
-                </div>
+                </div> */}
                 <Button type='submit' variant='primary' className='py-3 mt-5' >Upload</Button>
               </div>
             </div>
@@ -469,9 +529,6 @@ const Page: React.FC = () => {
 };
 
 export default Page;
-
-
-
 
 
 

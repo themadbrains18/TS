@@ -27,8 +27,7 @@ const FilePreview = ({
           e.stopPropagation();
           onRemove();
         }}
-        className="absolute top-0 right-0 bg-red-500 text-white px-2 py-1"
-      >
+        className="absolute top-0 right-0 bg-red-500 text-white px-2 py-1" >
         Remove
       </button>
     </div>
@@ -104,7 +103,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
       </label>
 
       <input
-        {...register}
+        {...register(name)}
         name={name}
         id={`file-upload${id}`}
         type="file"
