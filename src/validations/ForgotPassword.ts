@@ -1,10 +1,16 @@
-// validationSchema.ts
-import { z } from 'zod';
+import { z } from "zod";
 
-export const forgotPassword = z.object({
-    email: z.string().email({ message: "Invalid email" }),
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const phoneRegex = /^\+?\d{10,14}$/;
+
+const forgotPassword = z.object({
+    email: z
+    .string()
+    .min(1, {message:"Email or phone number is required"}) // Equivalent of `required` in Yup
+    .refine(
+      (value) => emailRegex.test(value) || phoneRegex.test(value),
+      "Invalid email or phone number"
+    ),
 });
 
-export type forgotPassword = z.infer<typeof forgotPassword>;
-// export type SignupFormOtpData = z.infer<typeof signupSchemaOtp>;
-
+export default forgotPassword;

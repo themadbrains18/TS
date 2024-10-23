@@ -6,6 +6,7 @@ import SessionProvider from './SessionProvider'
 import { authOptions } from "@/libs/auth";
 import { getServerSession } from "next-auth";
 import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const openSans = Open_Sans({
   weight: ["400", "500", "600", "700", "800"],

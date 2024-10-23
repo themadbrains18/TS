@@ -85,4 +85,7 @@ input[type="number"]::-webkit-inner-spin-button {
   .dashheading{
     @apply capitalize text-textheading
   }
+  .custom-dropdown-template{
+    @apply  block w-full px-4 py-2 border border-gray-300 rounded-lg transition-all duration-300 outline-none cursor-pointer focus:border-primary-300 hover:border-primary-300
+  }
 }

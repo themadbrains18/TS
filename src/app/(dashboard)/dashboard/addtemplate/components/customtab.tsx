@@ -93,7 +93,7 @@ interface CustomDropdownProps {
     options: Option[];
     onSelect: (id: string) => void;
     placeholder?: string;
-    error?: string; // Add an error field
+    error?: string | undefined | null;
 }
 
 const CustomDropdown: React.FC<CustomDropdownProps> = ({
@@ -109,7 +109,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
     const handleOptionClick = (option: Option) => {
         setSelected(option.name);
         onSelect(option.id);
-        setIsOpen(false);
+        // setIsOpen(false);
     };
 
     // Close the dropdown if clicked outside

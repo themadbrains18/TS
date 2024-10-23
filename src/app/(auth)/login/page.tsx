@@ -2,113 +2,125 @@
 
 import Icon from '@/components/Icon';
 import Button from '@/components/ui/Button';
-import CheckBox from '@/components/ui/Checkbox';
 import Input from '@/components/ui/Input';
 import { loginSchema } from '@/validations/loginValidation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import type { NextAuthOptions } from "next-auth"
-import { signIn } from 'next-auth/react';
-import { toast } from 'react-toastify';
+import React, { useEffect, useState } from 'react';
+import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-
+import CheckBox from '@/components/ui/checkbox';
+import useFetch from '@/hooks/useFetch';
 
 const Page = () => {
-
     const router = useRouter();
-
     const [isChecked1, setIsChecked1] = useState(false);
 
+    // Form Values Interface
     interface FormValues {
         email: string;
-        password: string
+        password: string;
     }
 
-    const { register, reset, handleSubmit, formState: { errors } } = useForm<FormValues>({
-        resolver: zodResolver(loginSchema)
+    const { control, reset, handleSubmit, formState: { errors } } = useForm<FormValues>({
+        resolver: zodResolver(loginSchema),
     });
 
-    // const onSubmit: SubmitHandler<FormValues> = (data) => {
-    //     console.log(data);
-    //     reset();
-    // };
+    // Response Interface for Fetch Hook
+    interface ApiResponse {
+        otp: string;
+        success: boolean;
+    }
 
+    // Fetch hook to make API requests
+    const { data: response, error, loading, fetchData } = useFetch<ApiResponse>();
 
+    // Submit handler with API request
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
-        const result = await signIn("credentials", {
-            redirect: false,
-            email: data.email,
-            password: data.password,
+        await fetchData("/login", {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json",
+            },
         });
-
-        if (result?.error) {
-            toast.error(result.error);
-        } else if (result?.ok) {
-            toast.success("Login successful");
-            router.push("/otp");  // Redirect to the desired page
+        // Uncomment reset when form successfully submitted
+        if (response?.success) {
+            reset();
         }
     };
 
-
+    // Redirect if OTP is returned
+    useEffect(() => {
+        if (response?.otp) {
+            router.push('/otp');
+        }
+    }, [response, router]);
 
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-2 ">
+        <div className="grid grid-cols-1 lg:grid-cols-2">
             {/* Left Section with Image and Text */}
-            <div className=" bg-[url('/images/authsideimage.png')] lg:bg-[url('/images/authsideimage.png')] bg-no-repeat bg-cover h-[280px] lg:h-screen lg:sticky top-0 left-0 bottom-0 ">
-                <div className=" py-[30px] px-5 lg:p-[30px] lg:h-screen flex  items-center lg:items-start  justify-between flex-col ">
+            <div className="bg-[url('/images/authsideimage.png')] lg:bg-[url('/images/authsideimage.png')] bg-no-repeat bg-cover h-[280px] lg:h-screen lg:sticky top-0 left-0 bottom-0">
+                <div className="py-[30px] px-5 lg:p-[30px] lg:h-screen flex items-center lg:items-start justify-between flex-col">
                     <Link href={'/'}>
                         <Image
-                            className=" lg:ml-[70px]"
+                            className="lg:ml-[70px]"
                             src={'/images/Logowhite.png'}
                             alt="Madbrains Logo"
                             width={276}
                             height={40}
                         />
                     </Link>
-                    <h2 className="text-[32px] md:text-[50px] xl:text-[62px] text-center lg:text-start font-normal pt-[30px] lg:pt-0 text-white lg:max-w-[700px] lg:m-auto ">
+                    <h2 className="text-[32px] md:text-[50px] xl:text-[62px] text-center lg:text-start font-normal pt-[30px] lg:pt-0 text-white lg:max-w-[700px] lg:m-auto">
                         Free High-quality UI kits and design resources
                     </h2>
-                    <p className=" hidden lg:block ml-[70px] text-[14px] font-medium leading-5 text-white">
+                    <p className="hidden lg:block ml-[70px] text-[14px] font-medium leading-5 text-white">
                         By Madbrains Technologies LLP.
                     </p>
                 </div>
             </div>
 
             {/* Right Section with Form */}
-            <div className="md:pt-20 pt-10 pb-10 px-4  w-full bg-[#FDFCFF]">
-                <div className='max-w-[599px] m-auto flex flex-col ' >
-                    <h2 className="text-[22px] tab:text-[36px] font-bold leading-[44px]  pb-[30px] md:pb-[60px]">Hi, Welcome Back!</h2>
+            <div className="md:pt-20 pt-10 pb-10 px-4 w-full bg-[#FDFCFF]">
+                <div className="max-w-[599px] m-auto flex flex-col">
+                    <h2 className="text-[22px] tab:text-[36px] font-bold leading-[44px] pb-[30px] md:pb-[60px]">Hi, Welcome Back!</h2>
                     <div className="flex flex-col justify-center h-[759px]">
-                        {/* Name Input */}
-                        <form onSubmit={handleSubmit(onSubmit)} >
-
-                            <div className='  md:space-y-[30px] space-y-[15px] ' >
-                                {/* Email or Phone Input */}
-                                <Input
-                                    type='email'
-                                    register={register}
-                                    placeholder="Your Details"
-                                    label="email"
-                                    className=" placeholder:text-neutral-400 py-3 md:py-[18px]  px-5 bg-divider-100"
-                                    name='email'
-                                    error={errors.email?.message}
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            <div className="md:space-y-[30px] space-y-[15px]">
+                                {/* Email Input */}
+                                <Controller
+                                    name="email"
+                                    control={control}
+                                    render={({ field }) => (
+                                        <Input
+                                            {...field}
+                                            type="email"
+                                            placeholder="Your Details"
+                                            label="Email"
+                                            className="placeholder:text-neutral-400 py-3 md:py-[18px] px-5 bg-divider-100"
+                                            error={errors.email?.message}
+                                        />
+                                    )}
                                 />
 
-                                {/* Password Input with Show Password Option */}
-                                <Input
-                                    register={register}
-                                    type={isChecked1 ? "text" : "password"}
-                                    placeholder="Password"
-                                    label="password"
-                                    name='password'
-                                    className=" placeholder:text-neutral-400 py-3 md:py-[18px] px-5 bg-divider-100"
-                                    error={errors.password?.message}
+                                {/* Password Input */}
+                                <Controller
+                                    name="password"
+                                    control={control}
+                                    render={({ field }) => (
+                                        <Input
+                                            {...field}
+                                            type={isChecked1 ? "text" : "password"}
+                                            placeholder="Password"
+                                            label="Password"
+                                            className="placeholder:text-neutral-400 py-3 md:py-[18px] px-5 bg-divider-100"
+                                            error={errors.password?.message}
+                                        />
+                                    )}
                                 />
 
-                                {/* Checkbox to Toggle Password Visibility */}
+                                {/* Show Password Checkbox */}
                                 <CheckBox
                                     id="checkbox1"
                                     label="Show Password"
@@ -119,11 +131,15 @@ const Page = () => {
                                 />
                             </div>
 
-                            {/* Register Button */}
-                            <div className='my-[60px]' >
-                                <Button type="submit" className="w-full items-center  justify-center" variant="primary">
-                                    Login
+                            {/* Submit Button */}
+                            <div className="my-[60px]">
+                                <Button className="w-full items-center justify-center" type="submit" variant="primary" >
+                                    {loading ? "Logging in..." : "Login"}
                                 </Button>
+
+                                {/* Error message display */}
+                                {/* {error && <p className="text-red-500 mt-2">Failed to login. Please try again.</p>} */}
+
                                 {/* Forgot Password Link */}
                                 <div className="text-end pt-5">
                                     <Link href={'/forgot-password'} className="text-[16px] font-semibold leading-6 text-subparagraph">
@@ -159,13 +175,12 @@ const Page = () => {
                                 <h2 className="text-[16px] font-normal leading-6 text-action-900">Twitter</h2>
                             </button>
                         </div>
-
                     </div>
+
                     {/* Registration Prompt */}
                     <h3 className="text-[16px] font-normal leading-6 text-textparagraph pt-[30px] md:pt-[60px]">
                         Not a member yet?{' '}
                         <Link href={"/register"} className="text-textheading font-semibold">Register Now</Link>
-
                     </h3>
                 </div>
             </div>

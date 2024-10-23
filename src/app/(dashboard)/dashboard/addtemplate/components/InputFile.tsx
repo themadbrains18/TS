@@ -1,11 +1,14 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
+import { UseFormRegister } from 'react-hook-form';
 
 interface FileUploadProps {
   onFileSelect: (files: File[]) => void;
   supportedfiles: string;
   multiple?: boolean;
   id?: string;
+  register: UseFormRegister<any>,
+  name: string
 }
 
 const FilePreview = ({
@@ -17,7 +20,7 @@ const FilePreview = ({
 }) => {
   return (
     <div className="relative border p-2 mb-2 z-50">
-      <Image src={previewUrl} width={128} height={128} alt='File Preview' className='object-cover mb-2'/>
+      <Image src={previewUrl} width={128} height={128} alt='File Preview' className='object-cover mb-2' />
       {/* <img src={} alt="File Preview" className="w-32 h-32 object-cover mb-2" /> */}
       <button
         onClick={(e) => {
@@ -37,6 +40,8 @@ const FileUpload: React.FC<FileUploadProps> = ({
   supportedfiles,
   multiple = true,
   id = "1",
+  name,
+  register
 }) => {
   const [files, setFiles] = useState<File[]>([]);
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
@@ -99,6 +104,8 @@ const FileUpload: React.FC<FileUploadProps> = ({
       </label>
 
       <input
+        {...register}
+        name={name}
         id={`file-upload${id}`}
         type="file"
         multiple={multiple}
