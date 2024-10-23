@@ -217,7 +217,8 @@ const ProductMain = () => {
                                                         buttonprops={item.price}
                                                         category={item.templateType?.name}
                                                         poster={item.sliderImages[0]?.imageUrl}
-                                                        themeicon="figma.svg"
+                                                        // themeicon="figma.svg"
+                                                        themeicon='photoshop'
                                                         title={item.title}
                                                         uploadericon='mdb.svg'
                                                         uploadername={item.user.name}
@@ -249,7 +250,7 @@ const ProductMain = () => {
                                         </Button>
                                     )}
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
