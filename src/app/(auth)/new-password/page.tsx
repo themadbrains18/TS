@@ -8,23 +8,27 @@ import { newChangePassword } from '@/validations/NewPassword';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 const NewPassword = ({ formdata }: any) => {
-    console.log(formdata, 'fordata email here')
+    const router = useRouter();
+    // console.log(formdata, 'fordata email here')
     const [isChecked1, setIsChecked1] = useState(false);
     interface FormValues {
         newPassword: string,
         confirmPassword: string,
-        otp: string
-
+        otp: string,
+        success: boolean
     }
 
     const { data: response, error, loading, fetchData } = useFetch<FormValues>();
 
-    console.log(error)
+    // console.log(error)
+    // console.log(response)
+    console.log(response?.success)
     const { handleSubmit, control, formState: { errors } } = useForm<FormValues>({
         resolver: zodResolver(newChangePassword)
     });
@@ -32,10 +36,12 @@ const NewPassword = ({ formdata }: any) => {
     console.log(errors)
 
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
-        console.log(data,"==datatatat")
-        formdata.newPassword=data.newPassword
-        formdata.confirmPassword= data.confirmPassword
+        // console.log(data,"==datatatat")
+        formdata.newPassword = data.newPassword
+        formdata.confirmPassword = data.confirmPassword
         try {
+           
+
             const result = await fetchData(`/reset-password`, {
                 method: "POST",
                 body: JSON.stringify(formdata),
@@ -43,11 +49,15 @@ const NewPassword = ({ formdata }: any) => {
                     'Content-Type': 'application/json'
                 }
             });
+            console.log(response?.success,"success")
+            if (response?.success) {
+                router.push('/login')
+            }
         } catch (err) {
             toast.error("Submission error");
         }
-
     };
+
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 ">
@@ -80,15 +90,7 @@ const NewPassword = ({ formdata }: any) => {
 
                         <div className="flex flex-col justify-center h-[559px] md:h-[759px]">
                             <div className='  md:space-y-[30px] space-y-[15px] ' >
-                                {/* Password Input with Show Password Option */}
-                                {/* <Input
-                                    register={register}
-                                    type={isChecked1 ? "text" : "password"}
-                                    placeholder="Password"
-                                    label="Password"
-                                    name='password'
-                                    className=" placeholder:text-neutral-400 py-3 md:py-[18px] px-5 bg-divider-100"
-                                /> */}
+                                {/* newPassword Input with Show Password Option */}
                                 <Controller
                                     name='newPassword'
                                     control={control}
@@ -117,16 +119,6 @@ const NewPassword = ({ formdata }: any) => {
                                         />
                                     )}
                                 />
-                                {/* <Input
-                                    register={register}
-                                    name='confirmpassword'
-                                    type={isChecked1 ? "text" : "password"}
-                                    placeholder="Your Password Again"
-                                    label="Confirm Password"
-                                    className=" placeholder:text-neutral-400 py-3 md:py-[18px] px-5 bg-divider-100"
-                                /> */}
-
-
                                 {/* Checkbox to Toggle Password Visibility */}
                                 <CheckBox
                                     id="checkbox1"
@@ -144,7 +136,7 @@ const NewPassword = ({ formdata }: any) => {
                             {/* Register Button */}
                             <div className='my-[60px]' >
                                 <Button type='submit' className="w-full items-center  justify-center" variant="primary">
-                                    {loading ? "Save New Password" : "Save New Password"}
+                                    {loading ? "Save New Password..." : "Save New Password"}
                                 </Button>
                             </div>
                         </div>

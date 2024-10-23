@@ -13,6 +13,7 @@ import useFetch from '@/hooks/useFetch';
 // import NotFoundProduct from './NotFoundProduct';
 import { TechTemplate, TemplateResponse } from '@/types/type';
 import useDebounce from '@/hooks/useDebounce'; // Import the useDebounce hook
+import FeatureSkeleton from '@/components/skeletons/FeatureSkeleton';
 
 const ProductMain = () => {
     const searchParams = useSearchParams();
@@ -22,7 +23,7 @@ const ProductMain = () => {
     const [totalPages, setTotalPages] = useState(0);
     const [items, setItems] = useState<string[]>([]);
     const [products, setProducts] = useState<TemplateResponse | null>(null);
-    
+
     // State to manage selected filters and debounced filter values
     const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
     const debouncedFilters = useDebounce(items, 300); // Debounce the filters
@@ -64,7 +65,7 @@ const ProductMain = () => {
 
     const fetchProducts = async (page: number, filters: string[] = []): Promise<TemplateResponse> => {
         try {
-            
+
             let apiUrl = `${process.env.NEXT_PUBLIC_APIURL}/templates?page=${page}&limit=12`;
 
             if (templateTypeId !== null && subCatId !== null) {
@@ -74,47 +75,47 @@ const ProductMain = () => {
             if (filters.length > 0) {
                 // Group filters by filterType
                 const groupedFilters: { [key: string]: string[] } = {};
-            
+
                 filters.forEach(filter => {
                     const [value, filterType] = filter.split(',');
                     const trimmedValue = value.trim();
                     const trimmedFilterType = filterType.trim();
-            
+
                     if (!groupedFilters[trimmedFilterType]) {
                         groupedFilters[trimmedFilterType] = [];
                     }
                     groupedFilters[trimmedFilterType].push(trimmedValue);
                 });
-            
+
                 // console.log(groupedFilters, "==grouped filters");
-            
+
                 // Construct the query string
                 const filterQueryParts: string[] = [];
-            
+
                 // Check each filter type and build the query accordingly
                 if (groupedFilters['Price Range']) {
                     const priceRanges = groupedFilters['Price Range'].map(range => range.replace('$', '').trim()).join(','); // Remove dollar signs if needed
                     filterQueryParts.push(`priceRanges=${priceRanges}`);
                 }
-            
+
                 if (groupedFilters['Industries']) {
                     const industryTypeIds = groupedFilters['Industries'].join(','); // Join industries with commas
                     filterQueryParts.push(`industryTypeIds=${industryTypeIds}`);
                 }
-            
+
                 if (groupedFilters['Software Type']) {
                     const softwareTypeIds = groupedFilters['Software Type'].join(','); // Join software types with commas
                     filterQueryParts.push(`softwareTypeIds=${softwareTypeIds}`);
                 }
-            
+
                 // Combine all query parts into the final query string
                 const filterQuery = filterQueryParts.join('&');
-            
+
                 if (filterQuery) {
                     apiUrl += `&${filterQuery}`;
                 }
             }
-            
+
 
             const response = await fetch(apiUrl);
             const data: TemplateResponse = await response.json();
@@ -162,7 +163,7 @@ const ProductMain = () => {
                             </div>
                             <div className='w-full'>
                                 <div className="flex max-[768px]:flex-col-reverse md:flex justify-between pb-5 border-b mb-[30px] items-center">
-                                <div className='md:max-w-[600px] w-full overflow-x-scroll md:overflow-hidden flex-nowrap flex md:flex-wrap gap-[10px] hiddenscroll'>
+                                    <div className='md:max-w-[600px] w-full overflow-x-scroll md:overflow-hidden flex-nowrap flex md:flex-wrap gap-[10px] hiddenscroll'>
                                         {items.map((item, index) => (
                                             <div key={Date.now() + index}>
                                                 <div className="border-[1px] py-[6px] px-[14px] flex items-center w-full max-w-max bg-primary-300 gap-[5px]">
@@ -229,7 +230,14 @@ const ProductMain = () => {
                                         </div>
                                     ) : (
                                         // <NotFoundProduct />
-                                        <p>Product not found</p>
+                                        <div className='transition-all duration-300 w-full grid gap-5 lg:grid-cols-2 xl:grid-cols-3 xl:gap-[30px]'>
+                                            <FeatureSkeleton />
+                                            <FeatureSkeleton />
+                                            <FeatureSkeleton />
+                                            <FeatureSkeleton />
+                                            <FeatureSkeleton />
+                                            <FeatureSkeleton />
+                                        </div>
                                     )}
                                     {currentPage < totalPages && (
                                         <Button
@@ -241,6 +249,7 @@ const ProductMain = () => {
                                         </Button>
                                     )}
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
