@@ -50,13 +50,14 @@ export const authOptions: AuthOptions = {
         });
 
         const user = await res.json();
-        
         // If login is successful, return the user object
-        if (res.ok && user) {
+        if (res.ok && user) {    
+          console.log(user.results,"==jshdksjhdkjsh");
+                
           return {
-            id: user.results.id, // Adjust according to your API response structure
-            email: user.results.email,
-            role: user.results.role,
+            id: user.results.data.id, // Adjust according to your API response structure
+            email: user.results.data.email,
+            role: user.results.data.role,
             token: user.results.token, // Ensure this property is returned from your API
           };
         }
@@ -68,7 +69,7 @@ export const authOptions: AuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user }) {
-      // console.log(user,"==user=");
+      console.log(user,"==user=");
       
       if (user ) {
         token.id = user?.id;
@@ -79,7 +80,7 @@ export const authOptions: AuthOptions = {
       return token;
     },
     async session({ session, token }) {
-      // console.log(token,"==token");
+      console.log(token,"==token");
  
         session.id = token.id;
         session.email = token.email;
