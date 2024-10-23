@@ -1,8 +1,15 @@
+"use client"
 import Icon from '@/components/Icon'
+import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import React from 'react'
 
 const HeroSection = () => {
+    
+  const {data:session} = useSession()
+
+  console.log(session,"=session");
+  
 
     /**
  * Hero section component that highlights the main features, design resources, and animations.
