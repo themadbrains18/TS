@@ -15,7 +15,7 @@ import useFetch from "@/hooks/useFetch";
 import { subCat } from "@/types/type";
 import { TemplateType } from "@/app/(dashboard)/dashboard/addtemplate/page";
 
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 
 const Header = () => {
   const { data, fetchData, loading } = useFetch<TemplateType[]>();
@@ -122,7 +122,11 @@ const Header = () => {
                   <Button link="/login">Log In</Button>
                 </>
               ) : (<>
-                <Button variant="primary" className=" py-2 px-[18px] w-full max-w-[50%] flex justify-center">
+                <Button
+                  variant="primary"
+                  className="py-2 px-[18px] w-full max-w-[50%] flex justify-center"
+                  onClick={() => signOut()}
+                >
                   Log out
                 </Button>
               </>)}
