@@ -39,6 +39,9 @@ const Page = () => {
             const results = await fetchData("/forget-password", {
                 method: "POST",
                 body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json',
+                  },
             });
         } catch (error) {
             toast.error("Submission error");
