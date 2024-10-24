@@ -379,6 +379,11 @@ const Page: React.FC = () => {
               <h3 className='text-xl font-semibold capitalize '>Industry</h3>
               <div className='flex justify-between mt-5'>
                 {industryData?.map((item) => (
+                   <Controller
+                   name="templateType"
+                   control={control}
+                  //  defaultValue={data[0]?.id ?? ""} // Set a valid default or empty string
+                   render={({ field }) => (
                   <CheckBox
                     key={item.id}
                     id={item.id}
@@ -388,8 +393,13 @@ const Page: React.FC = () => {
                     labelPosition="left"
                     customClass="my-custom-checkbox capitalize cursor-pointer"
                   />
+                   )}
+                   />
                 ))}
               </div>
+                {errors.industry && (
+                    <p style={{ color: 'red' }}>{errors.industry.message}</p>
+                  )}
 
               <div className='flex flex-col gap-y-5'>
                 <div className='flex flex-col'>
@@ -432,8 +442,12 @@ const Page: React.FC = () => {
 
               <div className='mt-5'>
                 <h3 className='text-xl font-semibold capitalize  pb-4'>Description</h3>
-                <QuillEditor />
+                <QuillEditor setValue={setValue}/>
+                {errors.description &&
+                    <p style={{ color: 'red' }}>{errors.description.message}</p>
+                  }
               </div>
+            
 
               <div className='pt-5'>
                 <h3 className='text-xl font-semibold capitalize  pb-4'>Credits</h3>
@@ -446,7 +460,7 @@ const Page: React.FC = () => {
               </div>
 
               <div className='pt-5'>
-                <h3 className='text-xl font-semibold capitalize pb-4'>Credits</h3>
+                {/* <h3 className='text-xl font-semibold capitalize pb-4'>Credits</h3> */}
                 {/* <div className='p-5 border border-neutral-400 rounded-md'>
                   {renderInputFields(credits.fonts, setCredits, 'fonts', 'fonts')}
                   {renderInputFields(credits.images, setCredits, 'images', 'images')}
@@ -466,13 +480,20 @@ const Page: React.FC = () => {
                 <div className='pt-5'>
                   <h3 className='text-xl font-semibold capitalize pb-4'>Source File</h3>
                   <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
+                  <Controller
+                  name="zipfile"
+                  control={control}
+                  rules={{ required: false }}
+                  render={({ field: { onChange } }) => (
                     <FileUpload
                       name='zipfile'
-                      onFileSelect={(file) => handleFileSelect(file)}
+                      onFileSelect={(file) => {handleFileSelect(file); onChange(file)}}
                       supportedfiles="zip"
                       multiple={false}
                       id="1"
                       register={register}
+                    />
+                  )}
                     />
                   </div>
                   {errors.zipfile && <p style={{ color: 'red' }}>{errors.zipfile.message}</p>}
@@ -481,14 +502,21 @@ const Page: React.FC = () => {
                 <div className='pt-5'>
                   <h3 className='text-xl font-semibold capitalize pb-4'>Slider Images</h3>
                   <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
+                  <Controller
+                  name="sliderimg"
+                  control={control}
+                  rules={{ required: false }}
+                  render={({ field: { onChange } }) => (
                     <FileUpload
                       name='sliderimg'
-                      onFileSelect={(file) => handleSliderFileSelect(file)}
+                      onFileSelect={(file) =>{ handleSliderFileSelect(file); onChange(file)}}
                       supportedfiles="jpg,png,jpeg"
                       multiple={true}
                       id="2"
                       register={register}
                     />
+                  )}
+                  />
                   </div>
                   {errors.sliderimg && <p style={{ color: 'red' }}>{errors.sliderimg.message}</p>}
                 </div>
@@ -496,15 +524,22 @@ const Page: React.FC = () => {
                 <div className='pt-5'>
                   <h3 className='text-xl font-semibold capitalize pb-4'>Preview Images</h3>
                   <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
+                  <Controller
+                  name="previewimg"
+                  control={control}
+                  rules={{ required: false }}
+                  render={({ field: { onChange } }) => (
                     <FileUpload
                       name='previewimg'
-                      onFileSelect={(file) => handlePreviewFileSelect(file)}
+                      onFileSelect={(file) => {handlePreviewFileSelect(file), onChange(file)}}
                       register={register}
 
                       supportedfiles="jpg,png,jpeg"
                       multiple={true}
                       id="3"
                     />
+                  )}
+                  />
                   </div>
                   {errors.previewimg && <p style={{ color: 'red' }}>{errors.previewimg.message}</p>}
 
@@ -512,14 +547,21 @@ const Page: React.FC = () => {
                 <div className='pt-5'>
                   <h3 className='text-xl font-semibold capitalize pb-4'>Mobile Images</h3>
                   <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
+                  <Controller
+                  name="mobileimg"
+                  control={control}
+                  rules={{ required: false }}
+                  render={({ field: { onChange } }) => (
                     <FileUpload
                       register={register}
                       name='mobileimg'
-                      onFileSelect={(file) => handlemobileFileSelect(file)}
+                      onFileSelect={(file) => {handlemobileFileSelect(file); onChange(file)}}
                       supportedfiles="jpg,png,jpeg"
                       multiple={true}
                       id="4"
                     />
+                  )}
+                  />
                   </div>
                   {errors.mobileimg && <p style={{ color: 'red' }}>{errors.mobileimg.message}</p>}
 

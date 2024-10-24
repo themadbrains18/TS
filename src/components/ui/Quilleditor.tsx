@@ -1,13 +1,19 @@
 // components/RichTextEditor.tsx
 import React, { useState } from 'react';
+import { UseFormSetValue } from 'react-hook-form';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Import Quill styles
 
-const RichTextEditor: React.FC = () => {
+interface EditerProps{
+  setValue: UseFormSetValue<any>
+}
+
+const RichTextEditor: React.FC<EditerProps> = ({setValue}) => {
   const [text, setText] = useState<string>('');
 
   const handleChange = (value: string) => {
     setText(value);
+    setValue("description",value)
   };
 
   const modules = {
