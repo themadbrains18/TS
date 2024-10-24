@@ -55,8 +55,14 @@ const Header = () => {
   const isLoggedIn = session && session.token;
 
   useEffect(() => {
-    fetchData(`/template-types`);
-    fetchsubCatData(`/sub-categories`);
+    try {
+
+      fetchData(`/template-types`);
+      fetchsubCatData(`/sub-categories`);
+    } catch (error) {
+
+    }
+
   }, [])
 
 
@@ -78,13 +84,8 @@ const Header = () => {
                 />
               </Link>
               <div className="flex items-center max-w-[473px] w-full justify-between">
-
                 {loading ? <>
-                  <div className="" >
-                    <div  ></div>
-                    <div  ></div>
-                    <div  ></div>
-                  </div>
+
                 </> : <>
                   {
                     data && data?.map((item, index) => {
@@ -96,8 +97,10 @@ const Header = () => {
                     })
                   }
                 </>}
+
                 {/* <NavDropdown title="HTML Templatess" />
                 <NavDropdown title="Studio Spacials" /> */}
+
               </div>
             </div>
             <div className={cn`max-w-[576px] w-full flex items-center justify-end gap-x-5 `}>
