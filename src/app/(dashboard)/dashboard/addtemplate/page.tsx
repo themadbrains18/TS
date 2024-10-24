@@ -375,7 +375,7 @@ const router = useRouter();
 
             <div className='mt-5'>
               <h3 className='text-xl font-semibold capitalize '>Industry</h3>
-              <div className='flex justify-between mt-5'>
+              {/* <div className='flex justify-between mt-5'>
                 {industryData?.map((item) => (
                   <Controller
                     name="templateType"
@@ -391,6 +391,29 @@ const router = useRouter();
                         labelPosition="left"
                         customClass="my-custom-checkbox capitalize cursor-pointer"
                       />
+                    )}
+                  />
+                ))}
+              </div> */}
+              <div className='flex justify-between  mb-3'>
+                {industryData?.map((item) => (
+                  <Controller
+                    key={item.id} // Add key here for each map iteration
+                    name="industry"
+                    control={control}
+                    render={({ field }) => (
+                      <label htmlFor={item.id} className="my-custom-radio-label capitalize cursor-pointer flex items-center">
+                        <input
+                          type="radio"
+                          id={item.id}
+                          {...field}
+                          value={item.id}
+                          // checked={item.id}
+                          onChange={() => field.onChange(item.id)}
+                          className="cursor-pointer"
+                        />
+                        <span className="ml-2">{item.name}</span> {/* Label text next to the radio */}
+                      </label>
                     )}
                   />
                 ))}
