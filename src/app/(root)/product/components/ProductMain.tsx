@@ -14,6 +14,7 @@ import useFetch from '@/hooks/useFetch';
 import { TechTemplate, TemplateResponse } from '@/types/type';
 import useDebounce from '@/hooks/useDebounce'; // Import the useDebounce hook
 import FeatureSkeleton from '@/components/skeletons/FeatureSkeleton';
+import NotFoundProduct from './NotFountproduct';
 
 const ProductMain = () => {
     const searchParams = useSearchParams();
@@ -23,6 +24,8 @@ const ProductMain = () => {
     const [totalPages, setTotalPages] = useState(0);
     const [items, setItems] = useState<string[]>([]);
     const [products, setProducts] = useState<TemplateResponse | null>(null);
+    const [loading, setLoading] = useState(true);  // Initially true while loading
+
 
     // State to manage selected filters and debounced filter values
     const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
@@ -65,7 +68,7 @@ const ProductMain = () => {
 
     const fetchProducts = async (page: number, filters: string[] = []): Promise<TemplateResponse> => {
         try {
-
+            setLoading(true);
             let apiUrl = `${process.env.NEXT_PUBLIC_APIURL}/templates?page=${page}&limit=12`;
 
             if (templateTypeId !== null && subCatId !== null) {
@@ -128,6 +131,9 @@ const ProductMain = () => {
             console.error("Error fetching products:", error);
             return { data: [], pagination: { totalTemplates: 0, totalPages: 0, currentPage: 1, limit: 12 } };
         }
+        finally {
+            setLoading(false);
+        }
     };
 
     // Effect to fetch products based on filters
@@ -149,7 +155,6 @@ const ProductMain = () => {
             }));
         }
     };
-
     return (
         <>
             <ProductBanner />
@@ -158,7 +163,7 @@ const ProductMain = () => {
                 <div className='pt-10 pb-10 lg:pb-20 bg-bgcolor'>
                     <div className='container'>
                         <div className='flex gap-[30px] flex-col md:flex-row justify-between'>
-                            <div className={`md:static fixed top-0 h-screen duration-[1s] z-10 transition-all ${filter ? "left-0" : "left-[-100%]"} max-w-full sm:max-w-[357px] w-full`}>
+                            <div className={`md:sticky md:top-10 fixed top-0 h-screen duration-[1s] z-10 transition-all ${filter ? "left-0" : "left-[-100%]"} max-w-full sm:max-w-[357px] w-full`}>
                                 <ProductFilterside closefilter={closefilter} items={items} setItems={setItems} setSelectedFilters={setSelectedFilters} /> {/* Pass setSelectedFilters */}
                             </div>
                             <div className='w-full'>
@@ -188,7 +193,7 @@ const ProductMain = () => {
                                             <Icon name='filter' />
                                             <h3 className='lg:text-[18px] leading-[28px] font-normal text-subparagraph'>Filters</h3>
                                         </div>
-                                        <div className='relative' onMouseEnter={() => setSort(true)} onMouseLeave={() => setSort(false)}>
+                                        <div className='relative cursor-pointer' onMouseEnter={() => setSort(true)} onMouseLeave={() => setSort(false)}>
                                             <div onClick={sorthandledropdown} className={`border duration-[0.5s] ${sort ? "border-primary-100" : "border-divider-100"} group pr-[15px] pl-5 py-[8px] flex gap-[6px] items-center`}>
                                                 <h2 className={`text-primary text-4 font-semibold leading-6 duration-[0.2s] ${sort ? "text-primary-100" : "text-subheading"} text-nowrap`}>
                                                     {selectedSort}
@@ -207,8 +212,19 @@ const ProductMain = () => {
                                         </div>
                                     </div>
                                 </div>
+
                                 <div className='flex flex-col gap-[30px] justify-center items-center'>
-                                    {products && products.data && products.data.length > 0 ? (
+                                    {loading ? (
+                                        <div className='transition-all duration-300 w-full grid gap-5 lg:grid-cols-2 xl:grid-cols-3 xl:gap-[30px]'>
+                                            <FeatureSkeleton />
+                                            <FeatureSkeleton />
+                                            <FeatureSkeleton />
+                                            <FeatureSkeleton />
+                                            <FeatureSkeleton />
+                                            <FeatureSkeleton />
+                                        </div>
+                                    ) : products && products.data && products.data.length > 0 ? (
+                                        // Show products when data is loaded and length is greater than 0
                                         <div className='grid gap-5 lg:grid-cols-2 xl:grid-cols-3 xl:gap-[30px]'>
                                             {products.data.map((item: TechTemplate, index: number) => (
                                                 <Fragment key={index}>
@@ -217,7 +233,6 @@ const ProductMain = () => {
                                                         buttonprops={item.price}
                                                         category={item.templateType?.name}
                                                         poster={item.sliderImages[0]?.imageUrl}
-                                                        // themeicon="figma.svg"
                                                         themeicon='figma'
                                                         title={item.title}
                                                         uploadericon='mdb.svg'
@@ -230,15 +245,7 @@ const ProductMain = () => {
                                             ))}
                                         </div>
                                     ) : (
-                                        // <NotFoundProduct />
-                                        <div className='transition-all duration-300 w-full grid gap-5 lg:grid-cols-2 xl:grid-cols-3 xl:gap-[30px]'>
-                                            <FeatureSkeleton />
-                                            <FeatureSkeleton />
-                                            <FeatureSkeleton />
-                                            <FeatureSkeleton />
-                                            <FeatureSkeleton />
-                                            <FeatureSkeleton />
-                                        </div>
+                                        <NotFoundProduct />
                                     )}
                                     {currentPage < totalPages && (
                                         <Button
@@ -250,7 +257,6 @@ const ProductMain = () => {
                                         </Button>
                                     )}
                                 </div>
-
                             </div>
                         </div>
                     </div>
