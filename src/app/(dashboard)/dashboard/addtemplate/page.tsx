@@ -47,8 +47,6 @@ interface FormData {
   industry: string[]
   techDetails: string[]
   isPaid: boolean,
-  uploaded:boolean
-
 }
 
 
@@ -71,6 +69,7 @@ const Page: React.FC = () => {
   const { data, fetchData, loading, error } = useFetch<TemplateType[]>();
   const { data: templateData, fetchData: fetchTemplateData, } = useFetch<any>();
   const { data: industryData, fetchData: fetchIndustryData } = useFetch<IndustryType[]>();
+  // const { data: uploadedData, fetchData: uploadFetch } = useFetch();
 
   // State for fonts, images, icons, and illustrations
   const [fonts, setFonts] = useState<Font[]>([{ name: '', url: '' }]);
@@ -250,9 +249,6 @@ const router = useRouter();
     });
     
     fetchData('/templates', { method: "POST", body: formData })
-     if(!loading){
-      router.push('/dashboard')
-    }
   };
 
 console.log(getValues("isPaid"),"==is paid");
