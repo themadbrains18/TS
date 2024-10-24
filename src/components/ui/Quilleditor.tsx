@@ -1,19 +1,30 @@
 // components/RichTextEditor.tsx
 import React, { useState } from 'react';
-import { UseFormSetValue } from 'react-hook-form';
+import { UseFormClearErrors, UseFormSetError, UseFormSetValue } from 'react-hook-form';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Import Quill styles
 
 interface EditerProps{
   setValue: UseFormSetValue<any>
+  clearErrors:UseFormClearErrors<any>
+  setError:UseFormSetError<any>
 }
 
-const RichTextEditor: React.FC<EditerProps> = ({setValue}) => {
+const RichTextEditor: React.FC<EditerProps> = ({setValue,clearErrors, setError}) => {
   const [text, setText] = useState<string>('');
 
   const handleChange = (value: string) => {
-    setText(value);
-    setValue("description",value)
+    // Remove <p><br></p> when the editor is empty
+    if (value === '<p><br></p>') {
+      setText('');
+      setValue('description', ''); // Set the form value to an empty string
+    } else {
+      setText(value);
+      setValue('description', value); // Update the form value
+      clearErrors('description')
+    }
+
+    console.log(value, '==value');
   };
 
   const modules = {
