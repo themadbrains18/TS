@@ -42,6 +42,9 @@ const Page = () => {
         await fetchData("/register", {
             method: "POST",
             body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json',
+              },
         });
         // Uncomment reset when form successfully submitted
         // reset();     

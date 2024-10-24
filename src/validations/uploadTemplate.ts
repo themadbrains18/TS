@@ -20,7 +20,7 @@ export const uploadTemplate = z.object({
   templateType: z.string().max(200, { message: "Enter templateType" }),
   templateSubCategory: z.string().max(200, { message: "Select Category" }),
   softwareType: z.string().min(1, { message: "Select Software Type" }),
-  industry: z.array(z.string()).nonempty({ message: "Select at least one Industry Type" }), // Multiple selection allowed
+  industry: z.string().min(1,{ message: "Select at least one Industry Type" }), // Multiple selection allowed
   version: z.string().min(1, { message: "Enter Your Version" }),
   description: z.string().min(10, { message: "Enter description" }),
   techDetails: z

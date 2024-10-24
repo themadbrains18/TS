@@ -346,7 +346,7 @@ const AddTemplate = () => {
           </div>
           <div className="py-10">
             <div className="flex justify-center md:justify-end md:pb-6 md:px-5">
-              <Button link="/addtemplate" className="py-2"  >add template</Button>
+              <Button link="/dashboard/addtemplate" className="py-2"  >add template</Button>
             </div>
 
             <div className="overflow-x-scroll w-full mt-10 hiddenscroll">
