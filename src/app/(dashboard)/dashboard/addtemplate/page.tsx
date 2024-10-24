@@ -12,6 +12,7 @@ import { uploadTemplate } from '@/validations/uploadTemplate';
 import { subCat } from '@/types/type';
 import CheckBox from '@/components/ui/checkbox';
 import StaticCheckBox from '@/components/ui/StaticCheckbox';
+import { useRouter } from 'next/navigation';
 
 // Define types for data structures
 export interface TemplateType {
@@ -44,7 +45,8 @@ interface FormData {
   description: string;
   industry: string[]
   techDetails: string[]
-  isPaid: boolean
+  isPaid: boolean,
+  uploaded:boolean
 
 }
 
@@ -242,7 +244,7 @@ const Page: React.FC = () => {
   );
 
 
-
+const router = useRouter();
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     // error.r
@@ -271,8 +273,11 @@ const Page: React.FC = () => {
     formData.forEach((value, key) => {
       console.log(`${key}:`, value);
     });
+    
     fetchData('/templates', { method: "POST", body: formData })
-
+     if(!loading){
+      router.push('/dashboard')
+    }
   };
 
   console.log("techDetails", getValues('techDetails'));
@@ -615,7 +620,9 @@ const Page: React.FC = () => {
                       </div>
                     }
                   </div>
-                  <Button type='submit' variant='primary' className='py-3 mt-5' >Upload</Button>
+                  <Button type='submit' variant='primary' className='py-3 mt-5' >
+                    {loading ? "uploading..." : "upload"}
+                    </Button>
                 </div>
               </div>
             </div>
