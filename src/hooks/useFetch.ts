@@ -20,7 +20,7 @@ interface ApiResponse<T> {
 
 function useFetch<T>(): FetchResult<T> {
   const { data: session } = useSession();
-  const token = session?.user?.access_token;
+  const token = session?.token;
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -39,8 +39,7 @@ function useFetch<T>(): FetchResult<T> {
       try {
         const headers: HeadersInit = {
           ...options.headers,
-          Authorization: token ? `Bearer ${token}` : "",
-          "Content-Type": "application/json",
+          Authorization: token ? `Bearer ${token}` : ""
         };
 
         const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}${url}`, {
