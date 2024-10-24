@@ -56,7 +56,7 @@ const CheckboxFilter = ({
                     {value}
                 </h2>
                 <div
-                    className={`relative ${isChecked ? "checked" : ""}
+                    className={`relative flex justify-center items-center ${isChecked ? "checked" : ""}
                          w-[20px] h-[20px] border-solid border
                           ${isChecked ? "border-[#AD54F2]" : "border-gray-300"}
                           rounded-[3px] transition-all`}
@@ -70,7 +70,7 @@ const CheckboxFilter = ({
                         onChange={handleCheckboxChange}
                     />
                     {isChecked && (
-                        <div className="bg-[#AD54F2] absolute rounded-[2px] top-[4px] right-[4px] h-[10px] w-[10px]"></div>
+                        <div className="bg-[#AD54F2] absolute rounded-[2px] h-[10px] w-[10px]"></div>
                     )}
                 </div>
             </label>

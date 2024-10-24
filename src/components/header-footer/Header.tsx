@@ -18,7 +18,7 @@ import { TemplateType } from "@/app/(dashboard)/dashboard/addtemplate/page";
 import { useSession } from 'next-auth/react';
 
 const Header = () => {
-  const { data, fetchData } = useFetch<TemplateType[]>();
+  const { data, fetchData, loading } = useFetch<TemplateType[]>();
   const { data: session } = useSession();
 
   const { data: subCatData, fetchData: fetchsubCatData } = useFetch<subCat[]>();
@@ -78,15 +78,24 @@ const Header = () => {
                 />
               </Link>
               <div className="flex items-center max-w-[473px] w-full justify-between">
-                {
-                  data && data?.map((item, index) => {
-                    return (
-                      <Fragment key={index}>
-                        <NavDropdown title={item?.name} subCat={item?.subCategories} />
-                      </Fragment>
-                    )
-                  })
-                }
+
+                {loading ? <>
+                  <div className="" >
+                    <div  ></div>
+                    <div  ></div>
+                    <div  ></div>
+                  </div>
+                </> : <>
+                  {
+                    data && data?.map((item, index) => {
+                      return (
+                        <Fragment key={index}>
+                          <NavDropdown title={item?.name} subCat={item?.subCategories} />
+                        </Fragment>
+                      )
+                    })
+                  }
+                </>}
                 {/* <NavDropdown title="HTML Templatess" />
                 <NavDropdown title="Studio Spacials" /> */}
               </div>

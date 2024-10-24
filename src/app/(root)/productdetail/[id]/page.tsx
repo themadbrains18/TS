@@ -1,3 +1,5 @@
+"use client"
+
 import React from 'react';
 import ProductBanner from './components/ProductBanner';
 import RelatedProducts from './components/RelatedProducts';
@@ -23,7 +25,7 @@ const Page = async ({ params }: { params: Params }) => {
   const { id } = params; // Get the template id from the URL parameters
 
   // Fetch the template data from the API
-  
+
   const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/templates-by-id/${id}`, {
     method: 'GET',
     headers: {
@@ -31,22 +33,21 @@ const Page = async ({ params }: { params: Params }) => {
     },
   });
 
-  
+
   if (!response.ok) {
-    // Handle error or redirect
     throw new Error('Template not found'); // You can also redirect or show a 404 page
   }
-  
+
   const template = await response.json(); // Parse the JSON response
 
-  
+
 
   return (
     <>
       <BreadCrumbs />
-      <ProductBanner  template={template}/>
-      <ProductDescription  template={template}/>
-      <RelatedProducts  />
+      <ProductBanner template={template} />
+      <ProductDescription template={template} />
+      <RelatedProducts />
     </>
   );
 };

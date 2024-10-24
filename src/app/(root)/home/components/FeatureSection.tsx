@@ -95,6 +95,10 @@ const FeatureSection = () => {
 
         },
     ]
+
+
+    
+    
     return (
         <>
             <section className='bg-bgcolor py-10 lg:py-[100px] '>
@@ -104,7 +108,7 @@ const FeatureSection = () => {
                             <h2 className='text-subheading leading-9 font-bold text-[22px] tab:text-[28px]'>Feature Products</h2>
                             <div className='mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-[30px] '>
                                 {
-                                    data.map((item, index) => {
+                                    data?.map((item, index) => {
                                         return (
                                             <Fragment key={index}>
                                                 <FeatureCard buttonprops={item.buttonprops} category={item.category} poster={item.poster} themeicon={item.themeicon} title={item.title} uploadericon={item.uploadericon} uploadername={item.uploadername} currentimage={item.currentimage} totalimages={item.totalimage} />

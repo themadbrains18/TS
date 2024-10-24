@@ -53,9 +53,9 @@ const ProductFilterside = ({ items, setItems, closefilter, setSelectedFilters }:
     };
 
 
-  
+
     return (
-        <div className="max-w-full sm:max-w-[357px] w-full py-[30px] px-[20px] bg-white h-full">
+        <div className="max-w-full sm:max-w-[357px] w-full py-[30px] px-[20px] bg-white  h-screen">
             <div className="flex justify-between items-center border-b border-divider-100 pb-5 mb-5">
                 <div className="flex gap-[5px] items-center">
                     <Icon name="filter" />
@@ -65,30 +65,32 @@ const ProductFilterside = ({ items, setItems, closefilter, setSelectedFilters }:
                     <Icon name="closeicon" />
                 </button>
             </div>
-            {filterData.map((filterSection, index) => (
-                <Accordion
-                    key={index}
-                    title={filterSection.title}
-                    isOpen={openIndexes.includes(index)}
-                    onToggle={() => toggleAccordion(index)}
-                >
-                    <div className="grid gap-[10px]">
-                        {filterSection && filterSection?.items?.map((item, itemIndex) => (
-                       
-                            <CheckboxFilter
-                            key={itemIndex}
-                               value={item?.name}
-                                            id={`${item.id},${filterSection.title},${item.name}`}
-                                            setItems={setItems}
-                                            items={items}
+            <div className='overflow-y-scroll  h-[calc(100%_-_100px)] hiddenscroll ' >
+                {filterData.map((filterSection, index) => (
+                    <Accordion
+                        key={index}
+                        title={filterSection.title}
+                        isOpen={openIndexes.includes(index)}
+                        onToggle={() => toggleAccordion(index)}
+                    >
+                        <div className="grid gap-[10px]">
+                            {filterSection && filterSection?.items?.map((item, itemIndex) => (
+
+                                <CheckboxFilter
+                                    key={itemIndex}
+                                    value={item?.name}
+                                    id={`${item.id},${filterSection.title},${item.name}`}
+                                    setItems={setItems}
+                                    items={items}
                                 // checked={items.includes(item.id)}
                                 // onChange={() => handleFilterChange(item.id)} // Handle filter change
-                            />
-                           
-                        ))}
-                    </div>
-                </Accordion>
-            ))}
+                                />
+
+                            ))}
+                        </div>
+                    </Accordion>
+                ))}
+            </div>
         </div>
     );
 };

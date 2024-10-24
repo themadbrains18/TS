@@ -21,7 +21,7 @@ const ProductTags = () => {
     const [activeIndex, setActiveIndex] = useState(0);
     const searchParams = useSearchParams();
     const router = useRouter();
-    
+
     // Get template type and subcat from URL
     const templateTypeId = searchParams.get('template-type');
     const subCatId = searchParams.get('subcat');
@@ -31,26 +31,29 @@ const ProductTags = () => {
     }, []);
 
     // Filter the subcategories based on template type if applicable
-    const filteredSubCatData = templateTypeId 
-        ? (subCatData?.filter(item => item.templateTypeId === templateTypeId) || []) 
+    const filteredSubCatData = templateTypeId
+        ? (subCatData?.filter(item => item.templateTypeId === templateTypeId) || [])
         : subCatData;
 
     // Set the active index based on subCatId
     useEffect(() => {
         if (subCatId) {
-            const index = filteredSubCatData?.findIndex(item => item.id === subCatId)||0;
+            const index = filteredSubCatData?.findIndex(item => item.id === subCatId) || 0;
             if (index !== -1) {
                 setActiveIndex(index + 1); // +1 for the "All" tab
             }
+        } else {
+            setActiveIndex(0); // Reset to 0 when there's no subCatId
         }
     }, [subCatId, filteredSubCatData]);
 
     const handleAllClick = () => {
         setActiveIndex(0); // Reset active index to 0 for "All"
-        router.push('/product'); // Navigate to the same page, resetting the filter
+        // Clear the subcat from the URL
+        router.push(`/product`);
     };
 
-    const handleTabClick = (item:any) => {
+    const handleTabClick = (item: any) => {
         setActiveIndex(item.id + 1); // Adjust for subCategories
         router.push(`/product?template-type=${templateTypeId || item?.templateTypeId}&subcat=${item.id}`); // Update URL with selected subcategory ID
     };
@@ -68,7 +71,7 @@ const ProductTags = () => {
                         className={`relative mx-[7px] cursor-pointer text-nowrap group`}
                     >
                         <h2
-                            className={`px-[10px] py-[5px] leading-7 font-normal transition-all duration-500 
+                            className={`px-[10px] py-[5px] leading-7 font-normal transition-all duration-500
                                 ${activeIndex === 0 ? 'text-primary-100' : 'text-subparagraph'}
                             `}
                         >
@@ -92,7 +95,7 @@ const ProductTags = () => {
                                 className={`relative mx-[7px] cursor-pointer text-nowrap group`}
                             >
                                 <h2
-                                    className={`px-[10px] py-[5px] leading-7 font-normal transition-all duration-500 
+                                    className={`px-[10px] py-[5px] leading-7 font-normal transition-all duration-500
                                         ${isActive ? 'text-primary-100' : 'text-subparagraph'}
                                     `}
                                 >
@@ -112,6 +115,6 @@ const ProductTags = () => {
             </div>
         </div>
     );
-}
+};
 
 export default ProductTags;
