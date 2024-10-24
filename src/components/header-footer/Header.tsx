@@ -15,10 +15,11 @@ import useFetch from "@/hooks/useFetch";
 import { subCat } from "@/types/type";
 import { TemplateType } from "@/app/(dashboard)/dashboard/addtemplate/page";
 
-
+import { useSession } from 'next-auth/react';
 
 const Header = () => {
   const { data, fetchData } = useFetch<TemplateType[]>();
+  const { data: session } = useSession();
 
   const { data: subCatData, fetchData: fetchsubCatData } = useFetch<subCat[]>();
   // State to manage desktop search bar visibility
@@ -49,11 +50,14 @@ const Header = () => {
     });
   };
 
+
+
+  const isLoggedIn = session && session.token;
+
   useEffect(() => {
     fetchData(`/template-types`);
     fetchsubCatData(`/sub-categories`);
   }, [])
-
 
 
 
@@ -100,12 +104,16 @@ const Header = () => {
                   <Icon name="crossicon" className={`cursor-pointer fill-primary-100  ${opensearch !== false ? "opacity-100" : "opacity-0"}`} onClick={() => setOpensearch(!opensearch)} />
                 </div>
               </div>
-              <Button link="/register">
-                sign up
-              </Button>
-              <Button link="/login">
-                Log in
-              </Button>
+              {!isLoggedIn ? (
+                <>
+                  <Button link="/register">Sign Up</Button>
+                  <Button link="/login">Log In</Button>
+                </>
+              ) : (<>
+                <Button variant="primary" className=" py-2 px-[18px] w-full max-w-[50%] flex justify-center">
+                  Log out
+                </Button>
+              </>)}
             </div>
           </div>
         </div>
@@ -151,12 +159,20 @@ const Header = () => {
               </div>
             </div>
             <div className="flex justify-center items-center mt-8 gap-2">
-              <Button variant="primary" className=" py-2 px-[18px] w-full max-w-[50%] flex justify-center">
-                sign up
-              </Button>
-              <Button variant="primary" className=" py-2 px-[18px] w-full max-w-[50%] flex justify-center">
-                log in
-              </Button>
+              {!isLoggedIn ? (
+                <>
+                  <Button variant="primary" className=" py-2 px-[18px] w-full max-w-[50%] flex justify-center">
+                    sign up
+                  </Button>
+                  <Button variant="primary" className=" py-2 px-[18px] w-full max-w-[50%] flex justify-center">
+                    log in
+                  </Button>
+                </>
+              ) : (<>
+                <Button variant="primary" className=" py-2 px-[18px] w-full max-w-[50%] flex justify-center">
+                  Log out
+                </Button>
+              </>)}
             </div>
           </div>
         </div>

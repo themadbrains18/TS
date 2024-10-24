@@ -207,7 +207,6 @@ const Page: React.FC = () => {
                 Remove
               </Button>
             )}
-
           </div>
         ))}
         <Button onClick={() => addInputFields(setter, items, true)} variant='primary' className='py-2 mt-2'>Add more</Button>
