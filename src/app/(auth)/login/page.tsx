@@ -11,8 +11,13 @@ import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import CheckBox from '@/components/ui/checkbox';
 import useFetch from '@/hooks/useFetch';
 import Otp from '../otp/page';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 const Page = () => {
+    const { data: session, status } = useSession();
+    const router = useRouter();
+
     const [isChecked1, setIsChecked1] = useState(false);
     const [otpPath, setOtppath] = useState(false);
     const [formData, setFormData] = useState({})
@@ -53,17 +58,19 @@ const Page = () => {
     };
 
     useEffect(() => {
-        
         if (response?.otp) {
             setOtppath(true)
         }
-    }, [response]);
+        if (status === 'authenticated') {
+            router.push('/'); // Redirect to the home page if the user is logged in
+        }
+    }, [response, status, router]);
 
     return (
         <>
             {
                 otpPath ? (
-                    <Otp formData={formData} api="login" setFormData={setFormData}/>
+                    <Otp formData={formData} api="login" setFormData={setFormData} />
                 ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-2">
                         {/* Left Section with Image and Text */}

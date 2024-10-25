@@ -12,6 +12,8 @@ import { uploadTemplate } from '@/validations/uploadTemplate';
 import { subCat } from '@/types/type';
 import CheckBox from '@/components/ui/checkbox';
 import StaticCheckBox from '@/components/ui/StaticCheckbox';
+import { useRouter } from 'next/navigation';
+import { signOut } from 'next-auth/react';
 
 // Define types for data structures
 export interface TemplateType {
@@ -44,8 +46,7 @@ interface FormData {
   description: string;
   industry: string[]
   techDetails: string[]
-  isPaid: boolean
-
+  isPaid: boolean,
 }
 
 
@@ -68,6 +69,7 @@ const Page: React.FC = () => {
   const { data, fetchData, loading, error } = useFetch<TemplateType[]>();
   const { data: templateData, fetchData: fetchTemplateData, } = useFetch<any>();
   const { data: industryData, fetchData: fetchIndustryData } = useFetch<IndustryType[]>();
+  // const { data: uploadedData, fetchData: uploadFetch } = useFetch();
 
   // State for fonts, images, icons, and illustrations
   const [fonts, setFonts] = useState<Font[]>([{ name: '', url: '' }]);
@@ -89,13 +91,11 @@ const Page: React.FC = () => {
   // Dropdown selection states
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
   const [categoryValue, setCategoryValue] = useState<string | null>(null);
-  const [softwareType, setSoftwareType] = useState<string | null>(null);
 
   const [staticcheck, setStaticCheck] = useState(false);
 
-  // Checkbox selection for industries
-  const [selectedIndustries, setSelectedIndustries] = useState<string[]>([]);
-  const { register, reset, handleSubmit, control, formState: { errors }, setValue, clearErrors, setError, getValues } = useForm<FormData>({
+
+  const { register, handleSubmit, control, formState: { errors }, setValue, clearErrors, setError, getValues } = useForm<FormData>({
     resolver: zodResolver(uploadTemplate)
   });
 
@@ -111,33 +111,9 @@ const Page: React.FC = () => {
     setCategoryValue(value);
   };
 
-  // Handle software dropdown selection
-  const handleSoftwareSelect = (value: string) => {
-    setSoftwareType(value);
-  };
+  
 
 
-
-  // Handle checkbox change for industries
-  const handleIndustryChange = (id: string, isChecked: boolean) => {
-    if (isChecked) {
-      setSelectedIndustries((prev) => [...prev, id]);
-    } else {
-      setSelectedIndustries((prev) => prev.filter((industry) => industry !== id));
-    }
-    const currentIndustries = getValues('industry') || [];
-    const updatedIndustries = currentIndustries?.length > 0 && currentIndustries?.includes(id)
-      ? currentIndustries?.filter((industryId) => industryId !== id)
-      : [...currentIndustries, id];
-
-    // Use setValue to manually update the field
-    setValue('industry', updatedIndustries);
-
-    if (getValues('industry').length > 0) {
-      clearErrors('industry')
-    }
-
-  };
   // const handlepaid = (id: string, isChecked: boolean) => {
   //   if (isChecked) {
   //     setIsPaid((prev) => [...prev, id]);
@@ -242,7 +218,7 @@ const Page: React.FC = () => {
   );
 
 
-
+const router = useRouter();
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     // error.r
@@ -271,13 +247,14 @@ const Page: React.FC = () => {
     formData.forEach((value, key) => {
       console.log(`${key}:`, value);
     });
+    
     fetchData('/templates', { method: "POST", body: formData })
-
   };
 
-  console.log("techDetails", getValues('techDetails'));
-  console.log(data, "===data");
+console.log(getValues("isPaid"),"==is paid");
 
+
+console.log(errors,"errors");
 
 
   return (
@@ -638,7 +615,9 @@ const Page: React.FC = () => {
                       </div>
                     }
                   </div>
-                  <Button type='submit' variant='primary' className='py-3 mt-5' >Upload</Button>
+                  <Button type='submit' variant='primary' className='py-3 mt-5' >
+                    {loading ? "uploading..." : "upload"}
+                    </Button>
                 </div>
               </div>
             </div>

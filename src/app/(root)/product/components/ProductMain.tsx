@@ -137,6 +137,8 @@ const ProductMain = () => {
     };
 
     // Effect to fetch products based on filters
+
+
     useEffect(() => {
         const getProducts = async () => {
             const initialProducts = await fetchProducts(1, debouncedFilters);
@@ -144,6 +146,7 @@ const ProductMain = () => {
         };
         getProducts();
     }, [templateTypeId, subCatId, debouncedFilters]); // Add debouncedFilters as a dependency
+
 
     const handleLoadMore = async () => {
         if (currentPage < totalPages) {
@@ -225,7 +228,7 @@ const ProductMain = () => {
                                         </div>
                                     ) : products && products.data && products.data.length > 0 ? (
                                         // Show products when data is loaded and length is greater than 0
-                                        <div className='grid gap-5 lg:grid-cols-2 xl:grid-cols-3 xl:gap-[30px]'>
+                                        <div className='grid gap-5  w-full lg:grid-cols-2 xl:grid-cols-3 xl:gap-[30px]'>
                                             {products.data.map((item: TechTemplate, index: number) => (
                                                 <Fragment key={index}>
                                                     <FeatureCard

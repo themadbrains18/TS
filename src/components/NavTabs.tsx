@@ -19,15 +19,17 @@ const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
   const [activetab, setActivetab] = useState(0); // Track the currently active tab
   const searchParams = useSearchParams();
 
+
   useEffect(() => {
     const subCatId = searchParams.get('subcat');
-    
+
     // Find the index of the subcategory based on the subcat ID in the URL
     const index = subCat?.findIndex(item => item.id === subCatId) || 0;
     if (index !== -1) {
       setActivetab(index); // Set active tab index based on the URL
     }
   }, [searchParams, subCat]);
+
 
   return (
     <>
@@ -41,7 +43,7 @@ const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
                   className={cn`py-[6px] px-[10px] lg:py-2 lg:px-5 text-sm lg:text-base text-nowrap ${index === activetab
                     ? "border-[1px] border-primary-100 text-primary-100"
                     : "text-subparagraph"
-                  }`}
+                    }`}
                   onClick={() => setActivetab(index)}
                   variant="liquid"
                 >

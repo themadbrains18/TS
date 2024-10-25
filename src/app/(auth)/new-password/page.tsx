@@ -50,9 +50,12 @@ const NewPassword = ({ formdata }: any) => {
                 }
             });
             console.log(response?.success,"success")
+
             if (response?.success) {
                 router.push('/login')
             }
+            
+
         } catch (err) {
             toast.error("Submission error");
         }

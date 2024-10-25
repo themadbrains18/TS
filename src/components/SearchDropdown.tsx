@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Icon from "./Icon";
 import { cn } from "@/libs/utils";
 import { navtabprops, subCat } from "@/types/type";
+import Link from "next/link";
 
 /**
  * SearchDropdown component allows users to select a product category from a dropdown menu.
@@ -14,6 +15,7 @@ import { navtabprops, subCat } from "@/types/type";
 const SearchDropdown: React.FC<navtabprops> = ({ subCat }) => {
   const [open, setOpen] = useState(false);
   const [prodcuts, setProducts] = useState("all products");
+
 
 
   return (

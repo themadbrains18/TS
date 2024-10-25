@@ -29,7 +29,7 @@ export const uploadTemplate = z.object({
 
   seoTags: z.string().min(2, { message: "Enter Your Tags" }),
   isPaid: z.boolean().optional().default(false),
-  dollarPrice: z.number().optional(),  
+  dollarPrice: z.string().optional(),  
 
 
   // File validation for ZIP file
@@ -40,7 +40,7 @@ export const uploadTemplate = z.object({
     `1 file is allowed.`,
   )
   .refine(
-    (files) => {
+    (files) => {  
       return files.every((file) => {  
         // Check that each item is within the acceptable
         return file.size <= MAX_FILE_SIZE
@@ -139,17 +139,16 @@ export const uploadTemplate = z.object({
       'Only these types are allowed .jpg, .jpeg, .png and .webp',
     ),
 
-}).superRefine((data, ctx) => {
-  console.log(data.dollarPrice,"==dollar price");
+}).refine((data) => {
+  console.log(data,"==datat");
   
-  if (data.isPaid && (data.dollarPrice === undefined || data.dollarPrice === null)) {
-    ctx.addIssue({
-      path: ['dollarPrice'], // Point to the `dollarPrice` field
-      message: "Enter Your Price if it's paid",
-      code: z.ZodIssueCode.custom,
-    });
-  }
-});;
+  // If isPaid is true, dollarPrice must be provided
+  return data.isPaid == false || (data.isPaid == true && data.dollarPrice);
+}, {
+  message: "Dollar price is required if it's paid.",
+  path: ["dollarPrice"], // This will point the error to dollarPrice
+});
+
 
 // // Helper function to validate credits (dynamically checks the array length)
 // const validateCredits = (itemName: string) => {

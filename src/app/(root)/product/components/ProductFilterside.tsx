@@ -61,7 +61,7 @@ const ProductFilterside = ({ items, setItems, closefilter, setSelectedFilters }:
                     <Icon name="filter" />
                     <h5 className="font-bold text-h5">Filters</h5>
                 </div>
-                <button onClick={closefilter}>
+                <button className='md:hidden' onClick={closefilter}>
                     <Icon name="closeicon" />
                 </button>
             </div>

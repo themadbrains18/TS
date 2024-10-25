@@ -18,15 +18,17 @@ const FeatureCard: React.FC<featurecardprops> = ({ id, buttonprops, category, cu
     return (
         <>
             <div className='group'>
-                <div className='relative'>
+
+                <div className='relative h-[278px]'>
                     <Image
                         src={imgSrc}
                         onError={handleImageError}
-                        className='w-full'
+                        className='w-full h-[278px] object-cover  '
                         width={370}
                         height={278}
                         alt='productimg'
                     />
+
                     <Link href={`/productdetail/${id}`}>
                         <div className='absolute top-0 right-0 left-0 bottom-0 bg-subheading opacity-0 transition-all duration-[0.5s] group-hover:opacity-50 flex items-center justify-center gap-x-1 cursor-pointer'>
                             <div className='flex items-center justify-center cursor-pointer'>
@@ -37,6 +39,7 @@ const FeatureCard: React.FC<featurecardprops> = ({ id, buttonprops, category, cu
                         </div>
                     </Link>
                 </div>
+
                 <div>
                     <div className='px-[10px] pt-[10px] md:px-5 md:pt-3 bg-white'>
                         <div className='flex items-center justify-between w-full border-b border-divider-100 pb-[10px] md:pb-5'>
