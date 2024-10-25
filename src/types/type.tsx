@@ -11,7 +11,7 @@ export interface navcardprops {
 }
 
 export interface ButtonProps {
-  variant?: "primary" | "secondary" | "liquid" | "solidicon";
+  variant?: "primary" | "secondary" | "liquid" | "solidicon" | "basic";
   isLoading?: boolean;
   type?: "button" | "submit" | "reset";
   children?: React.ReactNode;
