@@ -21,6 +21,10 @@ export interface ButtonProps {
   link?: string;
   className?: string;
   linkclass?: string;
+  saveicon?:boolean;
+  editicon?:boolean;
+  direction?:string;
+  hideChild?:string
 }
 
 

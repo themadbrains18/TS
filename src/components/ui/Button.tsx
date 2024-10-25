@@ -14,7 +14,11 @@ const Button: React.FC<ButtonProps> = ({
   iconClass,
   link,
   className,
-  linkclass
+  linkclass,
+  saveicon,
+  editicon,
+  direction,
+  hideChild
 }) => {
   const buttonClasses = cn({
     "bg-primary-100 text-white capitalize font-semibold leading-6 transition-all duration-300 hover:bg-[#872fcb] py-[13px] px-[30px]":
@@ -33,10 +37,38 @@ const Button: React.FC<ButtonProps> = ({
       {
         link === undefined ?
           <button
-            className={cn`${buttonClasses} ${className} flex items-center gap-x-[2px] cursor-pointer `}
+            className={cn`${buttonClasses} ${className}  capitalize flex items-center gap-x-[2px] cursor-pointer `}
             onClick={onClick}
             disabled={isLoading}
             type={type}
+          >
+            <div className={cn`flex items-center ${direction}`}>
+              <div className={cn`${hideChild}`}>
+                {isLoading ? "Loading..." : children}
+              </div>
+
+              {icon === true ? (
+                <Icon className={cn`${iconClass}`} name="soliddownicon" />
+              ) : (
+                ""
+              )}
+              {editicon === true ? (
+                <Icon className={cn`${iconClass}`} name="editicon" />
+              ) : (
+                ""
+              )}
+              {saveicon === true ? (
+                <Icon className={cn`${iconClass}`} name="saveicon" />
+              ) : (
+                ""
+              )}
+            </div>
+          </button>
+          :
+          <Link href={`${link}`} className={cn`${linkclass}`}>  <button
+            className={cn`${buttonClasses} ${className} capitalize  flex items-center gap-x-[2px] cursor-pointer justify-center`}
+            onClick={onClick}
+            disabled={isLoading}
           >
             {isLoading ? "Loading..." : children}
 
@@ -45,17 +77,13 @@ const Button: React.FC<ButtonProps> = ({
             ) : (
               ""
             )}
-          </button>
-          :
-          <Link href={`${link}`} className={cn`${linkclass}`}>  <button
-            className={cn`${buttonClasses} ${className} flex items-center gap-x-[2px] cursor-pointer justify-center`}
-            onClick={onClick}
-            disabled={isLoading}
-          >
-            {isLoading ? "Loading..." : children}
-
-            {icon === true ? (
-              <Icon className={cn`${iconClass}`} name="soliddownicon" />
+            {editicon === true ? (
+              <Icon className={cn`${iconClass}`} name="editicon" />
+            ) : (
+              ""
+            )}
+            {saveicon === true ? (
+              <Icon className={cn`${iconClass}`} name="saveicon" />
             ) : (
               ""
             )}
