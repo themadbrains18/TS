@@ -1,4 +1,6 @@
 import WhatsnewCard from '@/components/cards/WhatsnewCard'
+import { formatDate } from '@/libs/utils'
+import { TechTemplate } from '@/types/type'
 import React, { Fragment } from 'react'
 
 
@@ -9,25 +11,28 @@ import React, { Fragment } from 'react'
  * @returns {JSX.Element} The rendered WhatsNewTab component.
  */
 
+interface whatsNewProps{
+    details:TechTemplate
+}
 
-const WhatsNewTab = () => {
+const WhatsNewTab:React.FC<whatsNewProps> = ({details}) => {
 
     // Data for the update cards
     const carddata = [
         {
             icon: "publish.svg",
             title: "published on",
-            description: "23/03-2022"
+            description: formatDate(details.createdAt)
         },
         {
             icon: "update.svg",
             title: "Last Update",
-            description: "23/03-2022"
+            description: formatDate(details.updatedAt)
         },
         {
             icon: "update.svg",
             title: "Latest Version",
-            description: "1.1.0"
+            description: details.version
         },
     ]
     return (

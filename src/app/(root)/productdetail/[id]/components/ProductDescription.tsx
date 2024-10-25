@@ -36,6 +36,8 @@ const ProductDescription: React.FC<ProductDetailProps> = ({ template }) => {
         { title: "About Author" }
     ]
 
+    console.log(template,"==tempat");
+    
 
     /**
     * Renders the content of the currently active tab.
@@ -45,15 +47,15 @@ const ProductDescription: React.FC<ProductDetailProps> = ({ template }) => {
     const renderTabContent = () => {
         switch (activetab) {
             case 0:
-                return <DescriptionTab description={template.description}/>
+                return <DescriptionTab description={template?.description}/>
             case 1:
-                return <TechnicalTab />
+                return <TechnicalTab technicalDetails={template?.techDetails }/>
             case 2:
-                return <CreditTab />
+                return <CreditTab credits={template?.credits}/>
             case 3:
-                return <WhatsNewTab />
+                return <WhatsNewTab details={template}/>  
             case 4:
-                return <AuthorTab />
+                return <AuthorTab userDetail={template?.user}/>
             default:
                 return null
         }

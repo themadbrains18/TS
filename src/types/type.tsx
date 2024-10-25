@@ -1,3 +1,4 @@
+import { Resource } from "@/app/(root)/productdetail/[id]/components/CreditTab";
 import { ReactNode } from "react";
 import { FieldError, UseFormRegister } from "react-hook-form";
 
@@ -11,7 +12,7 @@ export interface navcardprops {
 }
 
 export interface ButtonProps {
-  variant?: "primary" | "secondary" | "liquid" | "solidicon";
+  variant?: "primary" | "secondary" | "liquid" | "solidicon" | "basic";
   isLoading?: boolean;
   type?: "button" | "submit" | "reset";
   children?: React.ReactNode;
@@ -21,6 +22,10 @@ export interface ButtonProps {
   link?: string;
   className?: string;
   linkclass?: string;
+  saveicon?:boolean;
+  editicon?:boolean;
+  direction?:string;
+  hideChild?:string
 }
 
 
@@ -212,10 +217,10 @@ export interface TechTemplate {
 
 interface Credit {
   id: string;
-  fonts: string[];
-  images: string[];
-  icons: string[];
-  illustrations: string[];
+  fonts: Resource[];
+  images: Resource[];
+  icons: Resource[];
+  illustrations: Resource[];
   templateId: string;
 }
 

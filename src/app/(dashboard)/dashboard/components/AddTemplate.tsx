@@ -150,7 +150,7 @@ const AddTemplate = () => {
                               <Icon onClick={() => openPopup(index)} className="w-6 h-6 fill-subheading cursor-pointer" name="showicon" />
                             )}
                             <Icon onClick={() => setDeletePopupIndex(index)} className="w-6 h-6 fill-subheading cursor-pointer" name="deleteicon" />
-                            <Icon onClick={() => handleEdit(index)} className="w-5 h-6 fill-subheading cursor-pointer" name="editicon" />
+                            <Icon onClick={() => router.push(`/dashboard/edit/${template?.id}`)} className="w-5 h-6 fill-subheading cursor-pointer" name="editicon" />
                           </td>
                         </tr>
                       ))}

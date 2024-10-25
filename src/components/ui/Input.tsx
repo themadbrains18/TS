@@ -13,6 +13,7 @@ interface InputFieldProps {
     className?: string;
     lableclass?: string;
     register?: UseFormRegister<any>; // Type from react-hook-form
+    disabled?:boolean
 }
 
 // Modify Input to accept a ref using React.forwardRef
@@ -26,7 +27,8 @@ const Input = React.forwardRef<HTMLInputElement, InputFieldProps>(({
     onChange,
     className = '',
     lableclass,
-    register
+    register,
+    disabled
 }, ref) => {
     return (
         <div className='w-full'>
@@ -42,9 +44,10 @@ const Input = React.forwardRef<HTMLInputElement, InputFieldProps>(({
                 type={type}
                 name={name}
                 defaultValue={value}
+                disabled={disabled ? true : false}
                 onChange={onChange}
                 placeholder={placeholder}
-                className={`flex text-subparagraph w-full outline-none sm:text-sm placeholder:text-sm placeholder:leading-5 placeholder:text-neutral-400 py-3 md:py-[18px] px-5 bg-divider-100 placeholder:capitalize ${error ? 'border-red-500' : ''} ${className}`}
+                className={`flex text-subparagraph w-full outline-none sm:text-sm placeholder:text-sm placeholder:leading-5 placeholder:text-neutral-400 py-3 md:py-[18px] px-5 bg-divider-100 placeholder:capitalize border border-divider-100 ${error ? 'border-red-500' : ''} ${className}`}
             />}
             {/* Display error message if there is an error */}
             {error && <p className="mt-1 text-xs text-red-600">{error}</p>}

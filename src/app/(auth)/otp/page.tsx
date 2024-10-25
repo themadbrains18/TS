@@ -32,7 +32,7 @@ const Otp = ({ formData, api, setFormData }: any) => {
     const [startTimer, setStartTimer] = useState('5')
 
 
-    console.log(response)
+    // console.log(response)
 
     const onSubmit: SubmitHandler<FormData> = async (data) => {
         try {
@@ -46,7 +46,7 @@ const Otp = ({ formData, api, setFormData }: any) => {
                     otp:formData.otp,
                     password:formData.password
                   });
-                  console.log(result,"==result");
+                //   console.log(result,"==result");
                   if(result?.ok){
                         router.push('/')
                   }
@@ -90,12 +90,6 @@ const Otp = ({ formData, api, setFormData }: any) => {
 
                 console.log(res)
               })
-              
-            //   // Use your actual API URL and options
-            //     let result = await signIn('credentials', { email: formData?.email, password: formData?.password, redirect: false })
-            //     if (result?.ok) {
-          
-            //     }
 
         } catch (error) {
             console.log(error, "==error");
@@ -104,7 +98,7 @@ const Otp = ({ formData, api, setFormData }: any) => {
     }
 
     useEffect(() => {
-        console.log(response, "===response");
+        // console.log(response, "===response");
 
         if (response && api === "login") {
             console.log("here in this", formData);

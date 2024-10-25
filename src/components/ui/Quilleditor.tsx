@@ -1,16 +1,21 @@
 // components/RichTextEditor.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { UseFormClearErrors, UseFormSetError, UseFormSetValue } from 'react-hook-form';
-import ReactQuill from 'react-quill';
+
+import 'react-quill/dist/quill.snow.css'; // Import Quill styles
+import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css'; // Import Quill styles
 
+// Dynamically import ReactQuill to avoid SSR issues
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 interface EditerProps{
   setValue: UseFormSetValue<any>
   clearErrors:UseFormClearErrors<any>
   setError:UseFormSetError<any>
+  initialValue?: string; // Accept initial value as a prop
 }
 
-const RichTextEditor: React.FC<EditerProps> = ({setValue,clearErrors, setError}) => {
+const RichTextEditor: React.FC<EditerProps> = ({setValue,clearErrors, setError,initialValue}) => {
   const [text, setText] = useState<string>('');
 
   const handleChange = (value: string) => {
@@ -27,6 +32,13 @@ const RichTextEditor: React.FC<EditerProps> = ({setValue,clearErrors, setError})
     console.log(value, '==value');
   };
 
+  useEffect(() => {
+    if (initialValue) {
+      setText(initialValue);
+      setValue('description', initialValue); // Set form value to initial value
+      clearErrors('description');
+    }
+  }, [initialValue, setValue]);
   const modules = {
     toolbar: [
       [{ header: [1, 2, false] }],

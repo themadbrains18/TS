@@ -10,6 +10,7 @@ interface FileUploadProps {
   register: UseFormRegister<any>;
   name: string;
   error?: FieldError;
+  initialUrls?: string[]; // New prop for initial images
 }
 
 const FilePreview = ({
@@ -64,9 +65,10 @@ const FileUpload: React.FC<FileUploadProps> = ({
   name,
   register,
   error,
+  initialUrls = [], // default to an empty array
 }) => {
   const [files, setFiles] = useState<File[]>([]);
-  const [previewUrls, setPreviewUrls] = useState<string[]>([]);
+  const [previewUrls, setPreviewUrls] = useState<string[]>(initialUrls || []);
   const [fileNames, setFileNames] = useState<string[]>([]);
   const [fileError, setFileError] = useState<string | null>(null);
 

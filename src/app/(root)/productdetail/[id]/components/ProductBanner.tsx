@@ -31,6 +31,16 @@ import { ProductDetailProps, TechTemplate } from '@/types/type';
 
 const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
 
+    const [showFullDescription, setShowFullDescription] = useState(false);
+
+    const toggleDescription = () => {
+        setShowFullDescription(!showFullDescription);
+    };
+
+    const maxLength = 300; // Set the max length for the description preview
+    const description = template?.description || '';
+    const isLongDescription = description.length > maxLength;
+
     // swiper images
     const images = [
         { id: 'product1', src: '/images/product1.png' },
@@ -145,8 +155,21 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                 </div>
                             </div>
                             <div>
-                                <h2 className='pb-2.5 md:pb-5 text-[18px] md:text-[28px] leading-8 font-bold text-[#110833]'>{template.title} </h2>
-                                <p className=' text-[14px] md:text-[16px] font-normal leading-6 text-subparagraph'>{template.description} <span className=' text-[14px] font-normal leading-5 text-subheading'>View more</span></p>
+                                <h2 className='pb-2.5 md:pb-5 text-[18px] md:text-[28px] leading-8 font-bold text-[#110833] capitalize'>{template.title} </h2>
+                                <div
+                                    dangerouslySetInnerHTML={{
+                                        __html: showFullDescription || !isLongDescription
+                                            ? template.description
+                                            : template.description.slice(0, maxLength)
+                                    }}
+                                    className=' text-[14px] md:text-[16px] font-normal leading-6 text-subparagraph'
+                                />
+                                {isLongDescription && (
+                                    <button onClick={toggleDescription} className=" text-[14px] font-normal leading-5 text-primary-100">
+                                        {showFullDescription ? 'Read Less' : 'Read More'}
+                                    </button>
+                                )}
+
                                 <div className=' py-5 md:py-10 flex gap-2.5 md:gap-[18px] flex-col' >
                                     <ProductDetailcheckbox image='/images/figmalogo.png' label="Figma Design File" detailText="View Detail" />
                                     <ProductDetailcheckbox image='/images/XD.png' label="XD Design File" detailText="View Detail" />
@@ -156,7 +179,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                     <Button className='py-[5px] px-2.5' variant='primary' >{template.isPaid ? template.price : 'FREE'}</Button>
                                     <div className='flex gap-5 items-center' >
                                         <h3 className='text-[14px] font-normal leading-5 text-subparagraph' >Total Price</h3>
-                                        <span className='text-[20px] leading-7 text-subparagraph font-bold' >{template.isPaid?'$'+template.price:"$0.00"}</span>
+                                        <span className='text-[20px] leading-7 text-subparagraph font-bold' >{template.isPaid ? '$' + template.price : "$0.00"}</span>
                                     </div>
                                 </div>
                                 <Button onClick={openPopup} className='w-full mb-2.5 mt-5  md:mt-[30px] md:mb-5 justify-center py-2 md:py-[13px]' variant='primary' > Download</Button>
@@ -168,8 +191,8 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </div >
+            </section >
         </>
     )
 }

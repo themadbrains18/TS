@@ -1,5 +1,3 @@
-"use client"
-
 import React from 'react';
 import ProductBanner from './components/ProductBanner';
 import RelatedProducts from './components/RelatedProducts';

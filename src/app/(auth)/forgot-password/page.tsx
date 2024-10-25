@@ -22,21 +22,19 @@ const Page = () => {
     }
     const [otpPath, setOtppath] = useState(false);
     const [formData, setFormData] = useState({})
-    console.log(formData, "formdata")
     const router = useRouter();
 
-    const { reset, control, handleSubmit, formState: { errors } } = useForm<FormValues>({
+    const {  control, handleSubmit, formState: { errors } } = useForm<FormValues>({
         resolver: zodResolver(forgotPassword)
     });
 
-    const { data: response, error, loading, fetchData } = useFetch<ApiResponse>();
+    const { data: response,  loading, fetchData } = useFetch<ApiResponse>();
 
     console.log(errors)
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
         try {
-            console.log(data);
             setFormData(data)
-            const results = await fetchData("/forget-password", {
+            await fetchData("/forget-password", {
                 method: "POST",
                 body: JSON.stringify(data),
                 headers: {
@@ -49,7 +47,7 @@ const Page = () => {
 
     };
     useEffect(() => {
-        console.log(response)
+        // console.log(response)
         if (response?.otp) {
             setOtppath(true)
             

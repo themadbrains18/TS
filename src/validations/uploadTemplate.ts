@@ -1,176 +1,75 @@
-
-// validationSchema.ts
-const MAX_FILE_COUNT = 15
-const MAX_FILE_SIZE = 1024 * 1024;
-export const ACCEPTED_IMAGE_TYPES = [
-  "image/jpeg",
-  "image/jpg",
-  "image/png",
-];
-
-const ACCEPTED_ZIP_TYPES = [
-  'application/zip',
-  'application/x-zip-compressed',
-  'multipart/x-zip',
-];
 import { z } from 'zod';
 
-export const uploadTemplate = z.object({
-  name: z.string().min(1, { message: "Enter template name" }),
-  templateType: z.string().max(200, { message: "Enter templateType" }),
-  templateSubCategory: z.string().max(200, { message: "Select Category" }),
-  softwareType: z.string().min(1, { message: "Select Software Type" }),
-  industry: z.string().min(1,{ message: "Select at least one Industry Type" }), // Multiple selection allowed
+// Constants
+const MAX_FILE_COUNT = 15;
+const MAX_FILE_SIZE = 1024 * 1024; // 1MB
+const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+const ACCEPTED_ZIP_TYPES = ['application/zip', 'application/x-zip-compressed', 'multipart/x-zip'];
+
+// Type guards and helper functions
+const isFile = (file: unknown): file is File => file instanceof File;
+const isImageObject = (file: unknown): file is { imageUrl: string } =>
+  typeof file === 'object' && file !== null && 'imageUrl' in file;
+
+const validateFileSize = (files: (string | File | { imageUrl: string })[]) =>
+  files.every((file) => isFile(file) ? file.size <= MAX_FILE_SIZE : true);
+
+const validateFileType = (files: (string | File | { imageUrl: string })[], acceptedTypes: string[]) =>
+  files.every((file) => isFile(file) ? acceptedTypes.includes(file.type) : true);
+
+// Schema to allow File, string (URL), or an object with an imageUrl
+const fileOrUrlOrImageObjectSchema = z.union([
+  z.instanceof(File),
+  z.string().url(),
+  z.object({ imageUrl: z.string().url(), id: z.string().optional(), templateId: z.string().optional() })
+]);
+
+// File validation schema with the adjusted helper functions
+const fileValidationSchema = (min: number, max: number, acceptedTypes: string[], fileTypeMessage: string) =>
+  z.array(fileOrUrlOrImageObjectSchema)
+    .refine((files) => files.length >= min && files.length <= max, `Minimum ${min} and maximum ${max} files allowed.`)
+    .refine((files) => validateFileSize(files), `File size should be less than 1MB.`)
+    .refine((files) => validateFileType(files, acceptedTypes), fileTypeMessage);
+
+// Base template schema
+const uploadTemplateBase = z.object({
+  title: z.string().min(1, { message: "Enter template name" }),
+  templateTypeId: z.string().max(200, { message: "Enter templateType" }),
+  subCategoryId: z.string().max(200, { message: "Select Category" }),
+  softwareTypeId: z.string().min(1, { message: "Select Software Type" }),
+  industry: z.string().min(1, { message: "Select at least one Industry Type" }),
   version: z.string().min(1, { message: "Enter Your Version" }),
   description: z.string().min(10, { message: "Enter description" }),
-  techDetails: z
-    .array(z.string().min(1, "Detail cannot be empty"))
-    .min(4, "At least 4 technical details are required"),
-
+  techDetails: z.array(z.string().min(1, "Detail cannot be empty")).min(4, "At least 4 technical details are required"),
   seoTags: z.string().min(2, { message: "Enter Your Tags" }),
   isPaid: z.boolean().optional().default(false),
-  dollarPrice: z.string().optional(),  
-
-
-  // File validation for ZIP file
-  sourceFiles: z
-  .array(z.custom<File>()) 
-  .refine(
-    (files) => (files.length >=1 && files.length <= 2),
-    `1 file is allowed.`,
-  )
-  .refine(
-    (files) => {  
-      return files.every((file) => {  
-        // Check that each item is within the acceptable
-        return file.size <= MAX_FILE_SIZE
-      })
-    },
-    `File size should be less than 2mb.`,
-  )
-    .refine((files)=> files.every((file) => ACCEPTED_ZIP_TYPES.includes(file.type)), {
-      message: 'Only zip files are allowed.',
-    }),
-
-  // File validation for slider image
-  sliderImages: z
-    .array(z.custom<File>())
-    .refine(
-      (files) => (files.length >= 3 && files.length <= MAX_FILE_COUNT),
-      `Minimum 3 files and maximum ${MAX_FILE_COUNT} files allowed.`,
-    )
-    .refine(
-      (files) => {
-        return files.every((file) => file instanceof File);
-      },
-      {
-        message: 'Expected a file',
-      },
-    )
-    .refine(
-      (files) => {
-        return files.every((file) => {
-          // Check that each item is within the acceptable
-          return file.size <= MAX_FILE_SIZE
-        })
-      },
-      `File size should be less than 2mb.`,
-    )
-    .refine(
-      (files) => files.every((file) => ACCEPTED_IMAGE_TYPES.includes(file.type)),
-      'Only these types are allowed .jpg, .jpeg, .png and .webp',
-    ),
-
-  previewMobileImages: z
-    .array(z.custom<File>())
-    .refine(
-      (files) => (files.length >= 1 && files.length <= MAX_FILE_COUNT),
-      `Minimum 1 file and maximum ${MAX_FILE_COUNT} files allowed.`,
-    )
-    .refine(
-      (files) => {
-        return files.every((file) => file instanceof File);
-      },
-      {
-        message: 'Expected a file',
-      },
-    )
-    .refine(
-      (files) => {
-        return files.every((file) => {
-          // Check that each item is within the acceptable
-          return file.size <= MAX_FILE_SIZE
-        })
-      },
-      `File size should be less than 2mb.`,
-    )
-    .refine(
-      (files) => files.every((file) => ACCEPTED_IMAGE_TYPES.includes(file.type)),
-      'Only these types are allowed .jpg, .jpeg, .png and .webp',
-    ),
-
-  previewImages: z
-    .array(z.custom<File>())
-    .refine(
-      (files) => (files.length >= 1 && files.length <= MAX_FILE_COUNT),
-      `Minimum 1 file and maximum ${MAX_FILE_COUNT} files allowed.`,
-    )
-    .refine(
-      (files) => {
-        // Check if all items in the array are instances of the File object
-        return files.every((file) => file instanceof File);
-      },
-      {
-        // If the refinement fails, throw an error with this message
-        message: 'Expected a file',
-      },
-    )
-    .refine(
-      (files) => {
-        return files.every((file) => {
-          // Check that each item is within the acceptable
-          return file.size <= MAX_FILE_SIZE
-        })
-      },
-      `File size should be less than 2mb.`,
-    )
-    .refine(
-      (files) => files.every((file) => ACCEPTED_IMAGE_TYPES.includes(file.type)),
-      'Only these types are allowed .jpg, .jpeg, .png and .webp',
-    ),
-
-}).refine((data) => {
-  console.log(data,"==datat");
-  
-  // If isPaid is true, dollarPrice must be provided
-  return data.isPaid == false || (data.isPaid == true && data.dollarPrice);
-}, {
-  message: "Dollar price is required if it's paid.",
-  path: ["dollarPrice"], // This will point the error to dollarPrice
+  price: z.string().optional(),
 });
 
+// Schema for creating a template
+export const uploadTemplateSchema = uploadTemplateBase.extend({
+  sourceFiles: fileValidationSchema(1, 2, ACCEPTED_ZIP_TYPES, 'Only zip files are allowed.'),
+  sliderImages: fileValidationSchema(3, MAX_FILE_COUNT, ACCEPTED_IMAGE_TYPES, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
+  previewMobileImages: fileValidationSchema(1, MAX_FILE_COUNT, ACCEPTED_IMAGE_TYPES, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
+  previewImages: fileValidationSchema(1, MAX_FILE_COUNT, ACCEPTED_IMAGE_TYPES, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
+}).refine((data) => {
+  return !data.isPaid || !!data.price;
+}, {
+  message: "Dollar price is required if it's paid.",
+  path: ["price"],
+});
 
-// // Helper function to validate credits (dynamically checks the array length)
-// const validateCredits = (itemName: string) => {
-//   return z.array(
-//     z.object({
-//       name: z.string().min(1, `${itemName} name is required`),
-//       url: z.string().url(`${itemName} URL must be a valid URL`),
-//     })
-//   ).nonempty({ message: `${itemName} must have at least one entry` });
-// };
-
-// // Credits schema for fonts, images, icons, etc.
-// const creditsSchema = z.object({
-//   fonts: validateCredits("Font"),
-//   images: validateCredits("Image"),
-//   icons: validateCredits("Icon"),
-//   illustrations: validateCredits("Illustration"),
-// });
-
-// // Merging the schemas
-// export const fullUploadTemplateSchema = uploadTemplate.merge(creditsSchema);
-
-// // Exporting the type for full schema validation
-// export type FullUploadTemplateSchemaType = z.infer<typeof fullUploadTemplateSchema>;
-
+// Schema for updating a template
+export const uploadTemplateUpdateSchema = uploadTemplateBase.extend({
+  sourceFiles: fileValidationSchema(1, 2, ACCEPTED_ZIP_TYPES, 'Only zip files are allowed.'),
+  sliderImages: fileValidationSchema(3, MAX_FILE_COUNT, ACCEPTED_IMAGE_TYPES, 'Only .jpg, .jpeg, .png, and .webp are allowed.')
+    .or(z.null())
+    .or(z.array(z.undefined())),
+  previewMobileImages: fileValidationSchema(1, MAX_FILE_COUNT, ACCEPTED_IMAGE_TYPES, 'Only .jpg, .jpeg, .png, and .webp are allowed.')
+    .or(z.null())
+    .or(z.array(z.undefined())),
+  previewImages: fileValidationSchema(1, MAX_FILE_COUNT, ACCEPTED_IMAGE_TYPES, 'Only .jpg, .jpeg, .png, and .webp are allowed.')
+    .or(z.null())
+    .or(z.array(z.undefined())),
+  price: z.coerce.number().optional(),
+}).partial();
