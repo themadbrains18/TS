@@ -8,6 +8,7 @@ import Link from 'next/link'
 
 
 const FeatureCard: React.FC<featurecardprops> = ({ id, buttonprops, category, currentimage, poster, themeicon, title, totalimages, uploadericon, uploadername, isPaid }) => {
+    console.log(id, buttonprops, category, currentimage, poster, themeicon, title, totalimages, uploadericon, uploadername, isPaid, "id")
     // Ensure poster URL starts with a leading slash or is an absolute URL
     const [imgSrc, setImgSrc] = useState(poster ? poster : '/images/featureimg.png');
 
