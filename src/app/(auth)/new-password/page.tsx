@@ -28,12 +28,12 @@ const NewPassword = ({ formdata }: any) => {
 
     // console.log(error)
     // console.log(response)
-    console.log(response?.success)
+    // console.log(response?.success)
     const { handleSubmit, control, formState: { errors } } = useForm<FormValues>({
         resolver: zodResolver(newChangePassword)
     });
 
-    console.log(errors)
+    // console.log(errors)
 
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
         // console.log(data,"==datatatat")

@@ -1,3 +1,4 @@
+import { Resource } from "@/app/(root)/productdetail/[id]/components/CreditTab";
 import { ReactNode } from "react";
 import { FieldError, UseFormRegister } from "react-hook-form";
 
@@ -212,10 +213,10 @@ export interface TechTemplate {
 
 interface Credit {
   id: string;
-  fonts: string[];
-  images: string[];
-  icons: string[];
-  illustrations: string[];
+  fonts: Resource[];
+  images: Resource[];
+  icons: Resource[];
+  illustrations: Resource[];
   templateId: string;
 }
 

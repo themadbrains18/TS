@@ -1,4 +1,4 @@
-import React  from "react";
+import React, { useState }  from "react";
 import Image from "next/image";
 import { navcardprops } from "@/types/type";
 import Link from "next/link";
@@ -26,15 +26,21 @@ const NavCard: React.FC<navcardprops> = ({
   image,
   title,
 }) => {
+  const [imgSrc, setImgSrc] = useState(image ? image : '/images/featureimg.png');
+
+  const handleImageError = () => {
+      setImgSrc('/images/featureimg.png'); // Fallback image with a leading slash
+  };
   return (
     <>
       <div className="max-w-[248px]  cursor-pointer border border-divider-100">
         <div className="relative">
           <Image
-            src={`/images/${image}`}
+            src={imgSrc}
             width={248}
             height={122}
             alt="cardimage"
+            onError={handleImageError}
           />
           <div className="bg-subheading opacity-[0] absolute top-0 right-0 left-0 bottom-0 transition-all duration-200 hover:opacity-[0.45] flex justify-center items-center">
             <Link
@@ -54,7 +60,7 @@ const NavCard: React.FC<navcardprops> = ({
             <Image
               width={20}
               height={20}
-              src={`/icons/${icon}`}
+              src={`/icons/figma.svg`}
               alt="icon"
             />
           </div>

@@ -1,8 +1,10 @@
 import NavCard from '@/components/cards/NavCard'
 import Icon from '@/components/Icon'
 import Button from '@/components/ui/Button'
+import useFetch from '@/hooks/useFetch'
+import { TechTemplate } from '@/types/type'
 import Image from 'next/image'
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 
 
 /**
@@ -15,9 +17,17 @@ import React, { Fragment } from 'react'
  * )
  */
 
+interface UserDetailProps{
+    userDetail:{
+        name:string
+    }
+}
 
+interface ApiResponse {
+ data:TechTemplate[]
+}
 
-const AuthorTab = () => {
+const AuthorTab:React.FC<UserDetailProps> = ({userDetail}) => {
 
     /**
      * Data array for the author's projects.
@@ -25,34 +35,50 @@ const AuthorTab = () => {
      * @type {Array<{title: string, image: string, icon: string}>}
      */
 
+    
+    const {data, fetchData} = useFetch<ApiResponse>()
+const getUserTemplates=async()=>{
+try {
+    await fetchData(`/templates-by-userid`)
+} catch (error) {
+    console.log("errror");
+    
+}
+}
 
-    const data = [
-        {
-            "title": "Web Templates - UI Kit Te UI Kit Te UI Kit Te",
-            "image": "navimg.png",
-            "icon": "figma.svg"
-        },
-        {
-            "title": "Web Templates - UI Kit Te UI Kit Te UI Kit Te",
-            "image": "navimg.png",
-            "icon": "figma.svg"
-        },
-        {
-            "title": "Web Templates - UI Kit Te UI Kit Te UI Kit Te",
-            "image": "navimg.png",
-            "icon": "figma.svg"
-        },
-        {
-            "title": "Web Templates - UI Kit Te UI Kit Te UI Kit Te",
-            "image": "navimg.png",
-            "icon": "figma.svg"
-        },
-        {
-            "title": "Web Templates - UI Kit Te UI Kit Te UI Kit Te",
-            "image": "navimg.png",
-            "icon": "figma.svg"
-        }
-    ]
+    useEffect(()=>{
+            getUserTemplates()
+    },[])
+console.log(data,"==data");
+
+
+    // const data = [
+    //     {
+    //         "title": "Web Templates - UI Kit Te UI Kit Te UI Kit Te",
+    //         "image": "navimg.png",
+    //         "icon": "figma.svg"
+    //     },
+    //     {
+    //         "title": "Web Templates - UI Kit Te UI Kit Te UI Kit Te",
+    //         "image": "navimg.png",
+    //         "icon": "figma.svg"
+    //     },
+    //     {
+    //         "title": "Web Templates - UI Kit Te UI Kit Te UI Kit Te",
+    //         "image": "navimg.png",
+    //         "icon": "figma.svg"
+    //     },
+    //     {
+    //         "title": "Web Templates - UI Kit Te UI Kit Te UI Kit Te",
+    //         "image": "navimg.png",
+    //         "icon": "figma.svg"
+    //     },
+    //     {
+    //         "title": "Web Templates - UI Kit Te UI Kit Te UI Kit Te",
+    //         "image": "navimg.png",
+    //         "icon": "figma.svg"
+    //     }
+    // ]
     return (
         <>
             <div className='mt-10 lg:mt-20'>
@@ -62,7 +88,7 @@ const AuthorTab = () => {
                             <Image className='max-w-11 max-h-11 tab:max-w-full tab:max-h-full ' src={'/icons/mdbbiglogo.svg'} width={94} height={94} alt='logo' />
                         </div>
                         <div>
-                            <h3 className='text-lg tab:text-xl text-subheading leading-7 font-bold' >Themadbrains</h3>
+                            <h3 className='text-lg tab:text-xl text-subheading leading-7 font-bold' >{userDetail?.name}</h3>
                             <p className='pt-[6px] text-sm md:text-base pb-[14px] text-subparagraph font-semibold'>Id gravida magna sed ultrices facilisi nullam cursus pretium et.</p>
                             <div className='pr-[10px] border-r border-divider-100 inline-block'>
                                 <p className='font-semibold leading-6 inline-block'>4.9</p>
@@ -91,10 +117,10 @@ const AuthorTab = () => {
 
                         <div className='flex items-center justify-between  gap-x-[10px] md:gap-x-[30px] mt-5'>
                             {
-                                data?.map((item, index) => {
+                              data &&  data?.length>0 && data?.map((item, index) => {
                                     return (
                                         <Fragment key={Date.now() + item.title + index}>
-                                            <NavCard icon={item.icon} image={item.image} imageclass='max-w-full' title={item.title} />
+                                            <NavCard icon={item.icon} image={item?.sliderImages[0]?.imageUrl} imageclass='max-w-full' title={item.title} />
                                         </Fragment>
                                     )
                                 })
