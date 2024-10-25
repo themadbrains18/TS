@@ -59,7 +59,7 @@ const PopularSection = () => {
 
     useEffect(() => {
         fetchData("/feature-templates");
-    }, [fetchData]);
+    }, []);
 
     useEffect(() => {
         if (response) {
