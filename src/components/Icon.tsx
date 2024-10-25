@@ -35,6 +35,7 @@ import Editicon from '@/../public/icons/editicon.svg'
 import Sketch from '@/../public/icons/sketch.svg'
 import Photoshop from '@/../public/icons/photoshop.svg'
 import Adobexd from '@/../public/icons/adobexd.svg'
+import Saveicon from '@/../public/icons/saveicon.svg'
 import { cn } from "@/libs/utils";
 
 // Map icon names to components
@@ -72,7 +73,8 @@ const icons = {
   hideicon:Hideicon,
   sketch:Sketch,
   photoshop:Photoshop,
-  adobexd:Adobexd
+  adobexd:Adobexd,
+  saveicon:Saveicon
 };
 
 export type IconName = keyof typeof icons;

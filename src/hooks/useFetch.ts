@@ -39,7 +39,8 @@ function useFetch<T>(): FetchResult<T> {
       try {
         const headers: HeadersInit = {
           ...options.headers,
-          Authorization: token ? `Bearer ${token}` : ""
+          Authorization: token ? `Bearer ${token}` : "",
+          //  "Content-Type": "application/json",
         };
 
         const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}${url}`, {
