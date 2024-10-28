@@ -278,5 +278,12 @@ export interface downloadcard {
   downloadClass?: string,
   bgClass?: string,
   parentClass?: string,
-  bgParentClass?: string
+  bgParentClass?: string,
+  premium?:boolean
+}
+
+export interface verifyoldemail {
+  isPopupOpen: boolean,
+  closePopup: () => void;
+  register?:UseFormRegister<any>
 }
