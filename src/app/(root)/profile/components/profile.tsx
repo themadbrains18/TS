@@ -6,6 +6,7 @@ import React, { useState } from 'react'
 import profileimage from '@/../public/images/profileimage.png'
 import Input from '@/components/ui/Input'
 import Toggle from '@/components/ui/ToggleButton'
+import VerfiyOldEmail from '@/components/popups/VerfiyOldEmail'
 const Profile = () => {
     // Separate state for each button
     const [isNameActive, setIsNameActive] = useState<boolean>(false)
@@ -14,9 +15,18 @@ const Profile = () => {
     const [isNameDisabled, setIsNameDisabled] = useState<boolean>(true);
     const [isUserDisabled, setIsUserDisabled] = useState<boolean>(true);
     const [isEmailDisabled, setIsEmailDisabled] = useState<boolean>(true);
+    const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
+
+    const closePopup = () => {
+        setIsPopupOpen(false);
+    }
+    const openPopup = () => {
+        setIsPopupOpen(true);
+    };
     return (
         <>
             <section>
+                <VerfiyOldEmail  closePopup={()=>closePopup()} isPopupOpen={isPopupOpen} />
                 <div className="container">
                     <div className='max-w-[1162px] w-full'>
                         <div className='max-w-[616px] w-full mb-4 md:mb-[50px]'>
@@ -26,7 +36,7 @@ const Profile = () => {
                                 <div className=' flex items-end justify-between'>
                                     <div className='relative max-w-[115px] md:max-w-[168px] w-full'>
                                         <Image src={profileimage} height={168} width={168} alt='userimage' />
-                                        <label htmlFor="profilepic" className='py-[5px] px-[14px] text-[11px] md:text-base md:py-2  absolute bottom-0 left-[6px] right-[6px] md:left-2  md:right-2 text-center bg-primary-300 text-[#282827] capitalize cursor-pointer border-b transition-all duration-200 hover:border-primary-100 text-base font-regular leading-6'>change image</label>
+                                        <label htmlFor="profilepic" className='py-[5px] px-[14px] text-[11px] md:text-base md:py-2 text-nowrap  absolute bottom-0 left-[6px] right-[6px] md:left-2  md:right-2 text-center bg-primary-300 text-[#282827] capitalize cursor-pointer border-b transition-all duration-200 hover:border-primary-100 font-regular leading-6'>change image</label>
                                         <input className='hidden' id='profilepic' type='file' />
                                     </div>
                                     <Button className='py-[6px] px-5 text-sm md:text-base md:px-7 md:py-2' variant='basic'>Remove</Button>
@@ -38,7 +48,7 @@ const Profile = () => {
                                             isNameActive ?
                                                 <Button hideChild='hidden md:block' iconClass='w-6 h-6' direction='flex-row-reverse gap-x-[10px]' className='py-[13px] px-4 md:py-4 md:px-[14px]' onClick={() => { setIsNameActive(false), setIsNameDisabled(!isNameDisabled) }
                                                 } variant='primary' saveicon={true}>save</Button> :
-                                                <Button hideChild='hidden md:block' direction='flex-row-reverse gap-x-[10px]' className='py-[13px] px-4 md:py-4 md:px-[14px]' onClick={() => { setIsNameActive(true), setIsNameDisabled(!isNameDisabled) }} variant='primary' iconClass='fill-white w-6 h-6' editicon={true}>edit</Button>
+                                                <Button hideChild='hidden md:block' direction='flex-row-reverse gap-x-[10px]' className='py-[13px] px-4 md:py-4 md:px-[14px]' onClick={() => { setIsNameActive(true), setIsNameDisabled(!isNameDisabled), openPopup() }} variant='primary' iconClass='fill-white w-6 h-6' editicon={true} >edit</Button>
                                         }
                                     </div>
 

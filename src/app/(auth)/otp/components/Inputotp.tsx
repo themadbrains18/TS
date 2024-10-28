@@ -1,14 +1,16 @@
 "use client";
 
+import { cn } from '@/libs/utils';
 import React, { useState, useRef, useEffect } from 'react';
 import { UseFormRegister, UseFormSetValue } from 'react-hook-form';
 
 interface InputOtpProps {
     register: UseFormRegister<any>;
     setValue: UseFormSetValue<any>; // Add setValue to props
+    className?:string
 }
 
-const InputOtp: React.FC<InputOtpProps> = ({ register, setValue }) => {
+const InputOtp: React.FC<InputOtpProps> = ({ register, setValue,className }) => {
     const [activeInput, setActiveInput] = useState<number>(0);
     const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -51,8 +53,8 @@ const InputOtp: React.FC<InputOtpProps> = ({ register, setValue }) => {
     };
 
     return (
-        <div className="flex flex-col items-center bg-primary-200 p-[15px]">
-            <div className="flex space-x-[30px]">
+        <div className="flex flex-col items-center bg-primary-200 ">
+            <div className={cn`flex space-x-[30px] m-[15px] ${className}`}>
                 {new Array(6).fill("").map((_, index) => (
                     <input
                         key={index}
