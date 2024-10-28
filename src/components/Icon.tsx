@@ -36,6 +36,8 @@ import Sketch from '@/../public/icons/sketch.svg'
 import Photoshop from '@/../public/icons/photoshop.svg'
 import Adobexd from '@/../public/icons/adobexd.svg'
 import Saveicon from '@/../public/icons/saveicon.svg'
+import Setting from '@/../public/icons/setting.svg'
+import DownloadIcon from '@/../public/icons/downloadicon.svg'
 import { cn } from "@/libs/utils";
 
 // Map icon names to components
@@ -74,7 +76,9 @@ const icons = {
   sketch:Sketch,
   photoshop:Photoshop,
   adobexd:Adobexd,
-  saveicon:Saveicon
+  saveicon:Saveicon,
+  setting:Setting,
+  downloadIcon:DownloadIcon
 };
 
 export type IconName = keyof typeof icons;
