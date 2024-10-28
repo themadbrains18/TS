@@ -33,6 +33,9 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
 
     const [showFullDescription, setShowFullDescription] = useState(false);
 
+    console.log(template,"==template");
+    
+
     const toggleDescription = () => {
         setShowFullDescription(!showFullDescription);
     };

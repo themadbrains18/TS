@@ -240,9 +240,9 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type,id }) => 
         formData.append("credits", JSON.stringify(credits))
 
         // Logging the FormData for demonstration using forEach
-        formData.forEach((value, key) => {
-            console.log(`${key}:`, value);
-        });
+        // formData.forEach((value, key) => {
+        //     console.log(`${key}:`, value);
+        // });
         const endpoint = type == 'edit' ? `/templates/${id}` : '/templates';
         const method = type == 'edit' ? 'PUT' : 'POST';
         fetchData(endpoint, { method:method, body: formData })

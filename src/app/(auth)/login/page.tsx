@@ -3,7 +3,7 @@
 import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/libs/auth';
-import Form from './components/form';
+import LoginForm from './components/loginForm';
 
 const LoginPage = async () => {
   const session = await getServerSession(authOptions);
@@ -16,7 +16,7 @@ const LoginPage = async () => {
 
   return (
     <>
-      <Form />
+      <LoginForm />
     </>
   );
 };

@@ -36,7 +36,7 @@ const ProductDescription: React.FC<ProductDetailProps> = ({ template }) => {
         { title: "About Author" }
     ]
 
-    console.log(template,"==tempat");
+    // console.log(template,"==tempat");
     
 
     /**
