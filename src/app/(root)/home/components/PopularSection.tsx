@@ -98,6 +98,7 @@ const PopularSection = () => {
                                                     title={item?.title}
                                                     uploadericon='mdb.svg'
                                                     currentimage={1}
+                                                    totalimages={10}
                                                 />
                                             </Fragment>
                                         ))

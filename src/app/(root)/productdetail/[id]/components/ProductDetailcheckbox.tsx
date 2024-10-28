@@ -17,7 +17,7 @@ import { useState } from 'react';
  * @returns {JSX.Element} The CheckBoxComponent.
  */
 const ProductDetailcheckbox: React.FC<CheckBoxComponentProps> = ({ label, detailText, image }) => {
-    const [isChecked, setIsChecked] = useState(false);
+    const [isChecked, setIsChecked] = useState(true);
 
     /**
      * Handles the checkbox click event by toggling the `isChecked` state.

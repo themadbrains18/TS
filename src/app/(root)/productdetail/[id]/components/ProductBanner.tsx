@@ -33,8 +33,8 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
 
     const [showFullDescription, setShowFullDescription] = useState(false);
 
-    console.log(template,"==template");
-    
+    console.log(template, "==template");
+
 
     const toggleDescription = () => {
         setShowFullDescription(!showFullDescription);
@@ -65,7 +65,15 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
     }
 
     const [isFirstPopupOpen, setIsFirstPopupOpen] = useState<boolean>(true);
+    console.log(template.softwareType.name, "softwaretype")
 
+    type SoftwareType = "Figma" | "Adobe XD" | "PhotoShop" | "Sketch";
+
+    interface SoftwareDetail {
+        image: string;
+        label: string;
+        detailText: string;
+    }
     return (
         <>
             <section className='pb-10'>
@@ -111,6 +119,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                             modules={[Navigation]}
                                             slidesPerView={6}
                                             spaceBetween={10}
+                                            loop={true}
                                             breakpoints={{
                                                 315: {
                                                     slidesPerView: 3,
@@ -125,10 +134,10 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                             onBeforeInit={(swiper) => {
                                                 swiperRef.current = swiper;
                                             }}
-                                            className="mySwiper"
+                                            className="mySwiper !flex justify-center w-full"
                                         >
                                             {images?.map(({ id, imageUrl }) => (
-                                                <SwiperSlide key={id}>
+                                                <SwiperSlide className='w-full' key={id}>
                                                     <div
                                                         onClick={() => setActiveImageId(id)} // Set active image by ID
                                                         className={`cursor-pointer min-w-[50px] md:max-w-[120px] w-full border-2 ${activeImageId === id ? 'border-primary-900' : 'border-transparent'} rounded-lg`}
@@ -163,9 +172,19 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                 )}
 
                                 <div className=' py-5 md:py-10 flex gap-2.5 md:gap-[18px] flex-col' >
-                                    <ProductDetailcheckbox image='/images/figmalogo.png' label="Figma Design File" detailText="View Detail" />
-                                    <ProductDetailcheckbox image='/images/XD.png' label="XD Design File" detailText="View Detail" />
-                                    <ProductDetailcheckbox image='/images/diamond.png' label="Sketch Design File" detailText="View Detail" />
+
+                                    {
+                                        template.softwareType.name === "Figma" ? <ProductDetailcheckbox image='/images/figmalogo.png' label="Figma Design File" detailText="View Detail" /> : ""
+                                    }
+                                    {
+                                        template.softwareType.name === "Adobe XD" ? <ProductDetailcheckbox image='/images/XD.png' label="Figma Design File" detailText="View Detail" /> : ""
+                                    }
+                                    {
+                                        template.softwareType.name === "PhotoShop" ? <ProductDetailcheckbox image='/icons/photoshop.svg' label="Figma Design File" detailText="View Detail" /> : ""
+                                    }
+                                    {
+                                        template.softwareType.name === "Sketch" ? <ProductDetailcheckbox image='/images/diamond.png' label="Figma Design File" detailText="View Detail" /> : ""
+                                    }
                                 </div>
                                 <div className='p-2.5 md:p-5 flex items-center bg-divider-100 justify-between ' >
                                     <Button className='py-[5px] px-2.5' variant='primary' >{template?.isPaid ? template?.price : 'FREE'}</Button>
