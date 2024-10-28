@@ -18,7 +18,8 @@ const Button: React.FC<ButtonProps> = ({
   saveicon,
   editicon,
   direction,
-  hideChild
+  hideChild,
+  downloadicon
 }) => {
   const buttonClasses = cn({
     "bg-primary-100 text-white capitalize font-semibold leading-6 transition-all duration-300 hover:bg-[#872fcb] py-[13px] px-[30px]":
@@ -59,6 +60,11 @@ const Button: React.FC<ButtonProps> = ({
               )}
               {saveicon === true ? (
                 <Icon className={cn`${iconClass}`} name="saveicon" />
+              ) : (
+                ""
+              )}
+              {downloadicon === true ? (
+                <Icon className={cn`${iconClass}`} name="downloadIcon" />
               ) : (
                 ""
               )}

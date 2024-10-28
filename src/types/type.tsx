@@ -22,10 +22,11 @@ export interface ButtonProps {
   link?: string;
   className?: string;
   linkclass?: string;
-  saveicon?:boolean;
-  editicon?:boolean;
-  direction?:string;
-  hideChild?:string
+  saveicon?: boolean;
+  downloadicon?: boolean;
+  editicon?: boolean;
+  direction?: string;
+  hideChild?: string
 }
 
 
@@ -35,7 +36,7 @@ export interface navdropdownprops {
 }
 export interface navtabprops {
   // title: string;
-  subCat?:subCat[]
+  subCat?: subCat[]
 }
 
 export interface subCat {
@@ -59,7 +60,7 @@ export interface techcardprops {
 }
 
 export interface featurecardprops {
-  id?:string
+  id?: string
   poster?: string,
   title?: string,
   themeicon?: string,
@@ -83,7 +84,7 @@ export interface ProductFiltersidetype {
   items: string[];
   setItems: (items: string[]) => void;
   closefilter: () => void;
-  setSelectedFilters:any
+  setSelectedFilters: any
 }
 
 
@@ -263,5 +264,17 @@ export interface ProductDetailProps {
 
 export interface UserLogin {
   email: string;
-  password : string;
+  password: string;
+}
+
+export interface downloadcard {
+  image: string,
+  tittle: string,
+  date: string,
+  tittleClass?: string,
+  dateClass?: string,
+  downloadClass?: string,
+  bgClass?: string,
+  parentClass?: string,
+  bgParentClass?: string
 }

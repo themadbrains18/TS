@@ -26,8 +26,8 @@ const Profile = () => {
                                 <div className=' flex items-end justify-between'>
                                     <div className='relative max-w-[115px] md:max-w-[168px] w-full'>
                                         <Image src={profileimage} height={168} width={168} alt='userimage' />
-                                        <Button className='py-[5px] px-[14px] text-[11px] md:text-base md:py-2  absolute bottom-0 left-[6px] right-[6px] md:left-2  md:right-2 text-center' variant='basic'>change image</Button>
-
+                                        <label htmlFor="profilepic" className='py-[5px] px-[14px] text-[11px] md:text-base md:py-2  absolute bottom-0 left-[6px] right-[6px] md:left-2  md:right-2 text-center bg-primary-300 text-[#282827] capitalize cursor-pointer border-b transition-all duration-200 hover:border-primary-100 text-base font-regular leading-6'>change image</label>
+                                        <input className='hidden' id='profilepic' type='file' />
                                     </div>
                                     <Button className='py-[6px] px-5 text-sm md:text-base md:px-7 md:py-2' variant='basic'>Remove</Button>
                                 </div>
@@ -36,9 +36,9 @@ const Profile = () => {
                                         <Input disabled={isNameDisabled} className='px-4 py-[13px] md:py-[13px]' label='Name' placeholder='Name' name='name' type='text' />
                                         {
                                             isNameActive ?
-                                                <Button hideChild='hidden md:block' iconClass='w-6 h-6' direction='flex-row-reverse gap-x-[10px]' className='py-[13px] px-4 md:py-4 md:px-[14px]' onClick={() => {setIsNameActive(false) , setIsNameDisabled(!isNameDisabled)}
-                                                 } variant='primary'  saveicon={true}>save</Button> :
-                                                <Button hideChild='hidden md:block' direction='flex-row-reverse gap-x-[10px]' className='py-[13px] px-4 md:py-4 md:px-[14px]' onClick={() => {setIsNameActive(true), setIsNameDisabled(!isNameDisabled)}} variant='primary' iconClass='fill-white w-6 h-6' editicon={true}>edit</Button>
+                                                <Button hideChild='hidden md:block' iconClass='w-6 h-6' direction='flex-row-reverse gap-x-[10px]' className='py-[13px] px-4 md:py-4 md:px-[14px]' onClick={() => { setIsNameActive(false), setIsNameDisabled(!isNameDisabled) }
+                                                } variant='primary' saveicon={true}>save</Button> :
+                                                <Button hideChild='hidden md:block' direction='flex-row-reverse gap-x-[10px]' className='py-[13px] px-4 md:py-4 md:px-[14px]' onClick={() => { setIsNameActive(true), setIsNameDisabled(!isNameDisabled) }} variant='primary' iconClass='fill-white w-6 h-6' editicon={true}>edit</Button>
                                         }
                                     </div>
 
@@ -46,8 +46,8 @@ const Profile = () => {
                                         <Input disabled={isUserDisabled} className='px-4 py-[13px] md:py-[13px]' label='UserName' placeholder='UserName' name='username' type='text' />
                                         {
                                             isUsernameActive ?
-                                                <Button hideChild='hidden md:block' direction='flex-row-reverse gap-x-[10px]' className='py-[13px] px-4 md:py-4 md:px-[14px]' iconClass='w-6 h-6' onClick={() => {setIsUsernameActive(false),setIsUserDisabled(!isUserDisabled)}} variant='primary' saveicon={true}>save</Button> :
-                                                <Button hideChild='hidden md:block' direction='flex-row-reverse gap-x-[10px]' className='py-[13px] px-4 md:py-4 md:px-[14px]' onClick={() => {setIsUsernameActive(true),setIsUserDisabled(!isUserDisabled)}} variant='primary' iconClass='fill-white w-6 h-6' editicon={true}>edit</Button>
+                                                <Button hideChild='hidden md:block' direction='flex-row-reverse gap-x-[10px]' className='py-[13px] px-4 md:py-4 md:px-[14px]' iconClass='w-6 h-6' onClick={() => { setIsUsernameActive(false), setIsUserDisabled(!isUserDisabled) }} variant='primary' saveicon={true}>save</Button> :
+                                                <Button hideChild='hidden md:block' direction='flex-row-reverse gap-x-[10px]' className='py-[13px] px-4 md:py-4 md:px-[14px]' onClick={() => { setIsUsernameActive(true), setIsUserDisabled(!isUserDisabled) }} variant='primary' iconClass='fill-white w-6 h-6' editicon={true}>edit</Button>
                                         }
                                     </div>
 
@@ -55,8 +55,8 @@ const Profile = () => {
                                         <Input disabled={isEmailDisabled} className='px-4 py-[13px] md:py-[13px]' label='Email' placeholder='Email' name='email' type='email' />
                                         {
                                             isEmailActive ?
-                                                <Button hideChild='hidden md:block' iconClass='w-6 h-6' direction='flex-row-reverse gap-x-[10px]' className='py-[13px] px-4 md:py-4 md:px-[14px]' onClick={() => {setIsEmailActive(false),setIsEmailDisabled(!isEmailDisabled)}} variant='primary' saveicon={true}>save</Button> :
-                                                <Button hideChild='hidden md:block' direction='flex-row-reverse gap-x-[10px]' className='py-[13px] px-4 md:py-4 md:px-[14px]' onClick={() => {setIsEmailActive(true),setIsEmailDisabled(!isEmailDisabled)}} variant='primary' iconClass='fill-white w-6 h-6' editicon={true}>edit</Button>
+                                                <Button hideChild='hidden md:block' iconClass='w-6 h-6' direction='flex-row-reverse gap-x-[10px]' className='py-[13px] px-4 md:py-4 md:px-[14px]' onClick={() => { setIsEmailActive(false), setIsEmailDisabled(!isEmailDisabled) }} variant='primary' saveicon={true}>save</Button> :
+                                                <Button hideChild='hidden md:block' direction='flex-row-reverse gap-x-[10px]' className='py-[13px] px-4 md:py-4 md:px-[14px]' onClick={() => { setIsEmailActive(true), setIsEmailDisabled(!isEmailDisabled) }} variant='primary' iconClass='fill-white w-6 h-6' editicon={true}>edit</Button>
                                         }
                                     </div>
 
