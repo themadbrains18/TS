@@ -14,7 +14,7 @@ import { DownloadTemplatetype } from "@/types/type";
  * @param {React.Dispatch<React.SetStateAction<boolean>>} setIsFirstPopupOpen - State setter function to toggle the first popup.
  * @returns {JSX.Element} The rendered component containing the popups.
  */
-const DownloadTemplate = ({ isFirstPopupOpen, setIsFirstPopupOpen }: DownloadTemplatetype) => {
+const DownloadTemplate = ({ isFirstPopupOpen, setIsFirstPopupOpen,id,url }: DownloadTemplatetype) => {
     // State for managing the visibility of the second and third popups
     const [isSecondPopupOpen, setIsSecondPopupOpen] = useState(false);
     const [isThirdPopupOpen, setIsThirdPopupOpen] = useState(false);
@@ -59,6 +59,8 @@ const DownloadTemplate = ({ isFirstPopupOpen, setIsFirstPopupOpen }: DownloadTem
                 closePopup={closeFirstPopup}
             />
             <SendLink
+            id={id}
+            url={url}
                 openthirdpopup={openthirdpopup}
                 isPopupOpen={isSecondPopupOpen}
                 closePopup={closeSecondPopup}

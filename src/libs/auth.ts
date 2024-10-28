@@ -58,6 +58,7 @@ export const authOptions: AuthOptions = {
             email: user.results.data.email,
             role: user.results.data.role,
             token: user.results.token, // Ensure this property is returned from your API
+            name:user.results.name
           };
         }
 

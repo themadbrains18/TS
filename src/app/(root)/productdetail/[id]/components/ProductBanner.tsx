@@ -178,7 +178,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                 <Button className='w-full justify-center' variant='liquid' >Preview</Button>
                                 {
                                     isPopupOpen &&
-                                    <DownloadTemplete isFirstPopupOpen={isFirstPopupOpen} setIsFirstPopupOpen={setIsFirstPopupOpen} />
+                                    <DownloadTemplete isFirstPopupOpen={isFirstPopupOpen} setIsFirstPopupOpen={setIsFirstPopupOpen} id={template?.id} url={template?.sourceFiles[0]?.fileUrl}/>
                                 }
                             </div>
                         </div>
