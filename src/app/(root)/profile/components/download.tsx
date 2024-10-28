@@ -11,6 +11,7 @@ const Download = () => {
   const [selectedSort, setSelectedSort] = useState("Last Day");
   const [selectedCategory, setselectedCategory] = useState("All");
   const sorthandledropdown = () => setSort(!sort);
+  const sortcategory = () => setCategory(!category);
   const handleItemClick = (itemTitle: string) => {
     setSelectedSort(itemTitle);
     setSort(false);
@@ -88,7 +89,7 @@ const Download = () => {
             <h2 className='text-[28px] font-bold leading-9 text-subheading '>Downloads</h2>
             <div className='flex gap-x-4 max-w-full w-full sm:w-auto'>
               <div className='relative cursor-pointer w-full sm:w-auto' onMouseEnter={() => setCategory(true)} onMouseLeave={() => setCategory(false)}>
-                <div onClick={sorthandledropdown} className={`w-full border duration-[0.5s] flex gap-x-[5px] bg-white ${category ? "border-primary-100" : "border-divider-100"} group py-2 px-[10px] sm:px-5 flex gap-[6px] items-center`}>
+                <div onClick={sortcategory} className={`w-full border duration-[0.5s] flex gap-x-[5px] bg-white ${category ? "border-primary-100" : "border-divider-100"} group py-2 px-[10px] sm:px-5 flex gap-[6px] items-center`}>
                   <Icon className={`w-5 h-5 ${category ? "[&>*]:fill-primary-100" : "[&>*]:fill-[#5D5775]"}`} name="setting" />
                   <h2 className={`text-primary text-lg font-normal leading-7 duration-[0.2s] ${category ? "text-primary-100" : "text-subheading"} text-nowrap`}>
                     {selectedCategory}
