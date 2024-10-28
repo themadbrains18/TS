@@ -133,6 +133,8 @@ export interface Downloadpopuptype {
 export interface DownloadTemplatetype {
   isFirstPopupOpen: boolean
   setIsFirstPopupOpen: React.Dispatch<React.SetStateAction<boolean>>
+  id:string
+  url:string
 }
 
 export interface dashinput {

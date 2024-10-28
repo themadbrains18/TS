@@ -53,7 +53,7 @@ const Profile = () => {
                                     </div>
 
                                     <div className='flex items-end gap-x-[10px]'>
-                                        <Input disabled={isUserDisabled} className='px-4 py-[13px] md:py-[13px]' label='UserName' placeholder='UserName' name='username' type='text' />
+                                        <Input disabled={isUserDisabled} className='px-4 py-[13px] md:py-[13px]' label='Number' placeholder='Number' name='number' type='text' />
                                         {
                                             isUsernameActive ?
                                                 <Button hideChild='hidden md:block' direction='flex-row-reverse gap-x-[10px]' className='py-[13px] px-4 md:py-4 md:px-[14px]' iconClass='w-6 h-6' onClick={() => { setIsUsernameActive(false), setIsUserDisabled(!isUserDisabled) }} variant='primary' saveicon={true}>save</Button> :
