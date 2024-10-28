@@ -14,7 +14,7 @@ import Otp from "../../otp/page"
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
-const Form = () => {
+const LoginForm = () => {
     const { data: session, status } = useSession();
     const router = useRouter();
 
@@ -204,4 +204,4 @@ const Form = () => {
     );
 };
 
-export default Form;
+export default LoginForm;

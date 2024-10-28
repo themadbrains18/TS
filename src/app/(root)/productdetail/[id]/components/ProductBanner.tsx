@@ -33,6 +33,9 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
 
     const [showFullDescription, setShowFullDescription] = useState(false);
 
+    console.log(template,"==template");
+    
+
     const toggleDescription = () => {
         setShowFullDescription(!showFullDescription);
     };
@@ -42,23 +45,12 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
     const isLongDescription = description.length > maxLength;
 
     // swiper images
-    const images = [
-        { id: 'product1', src: '/images/product1.png' },
-        { id: 'product2', src: '/images/product1.png' },
-        { id: 'product3', src: '/images/product1.png' },
-        { id: 'product4', src: '/images/product1.png' },
-        { id: 'product5', src: '/images/product1.png' },
-        { id: 'product6', src: '/images/product1.png' },
-        { id: 'product7', src: '/images/product1.png' },
-        { id: 'product8', src: '/images/product1.png' },
-        { id: 'product9', src: '/images/product1.png' },
-        { id: 'product10', src: '/images/product1.png' },
-    ];
+    const images = template.sliderImages
 
 
     // State to manage the currently active image ID
     const [activeImageId, setActiveImageId] = useState(images[0].id);
-    const activeImage = images.find(image => image.id === activeImageId)?.src; // Get the active image src
+    const activeImage = images.find(image => image.id === activeImageId)?.imageUrl; // Get the active image src
 
     // Reference to Swiper instance for custom navigation
     const swiperRef = useRef<SwiperType | null>(null);
@@ -81,7 +73,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                     <div>
                         <div className='flex items-center gap-x-2 pt-2.5 md:pt-5 border-t md:mt-5 mb-5'>
                             <Image src={`/icons/mdb.svg`} width={20} height={20} alt='uploadericon' />
-                            <p className='text-subparagraph text-sx leading-5 capitalize text-nowrap text-ellipsis overflow-hidden'>by <span className='text-[12px] font-semibold leading-5 text-subheading  capitalize'>{`themadbrains`}</span> <span className='text-primary-100' >|</span> <span className='text-xs text-subheading font-semibold leading-5 capitalize'>{`UI templates`}</span></p>
+                            <p className='text-subparagraph text-sx leading-5 capitalize text-nowrap text-ellipsis overflow-hidden'>by <span className='text-[12px] font-semibold leading-5 text-subheading  capitalize'>{template?.user?.name}</span> <span className='text-primary-100' >|</span> <span className='text-xs text-subheading font-semibold leading-5 capitalize'>{`UI templates`}</span></p>
                         </div>
 
                         {/* Main Grid Section */}
@@ -108,7 +100,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
 
                                     <div className="flex items-center gap-2 lg:gap-7 md:p-5 md:border pt-2.5  border-divider-100">
                                         {/* Custom Previous Button */}
-                                        {images.length > 0 && (
+                                        {images?.length > 0 && (
                                             <div className='rotate-[180deg]' onClick={() => swiperRef.current?.slidePrev()}>
                                                 <Icon name='rightarrow' />
                                             </div>
@@ -135,13 +127,13 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                             }}
                                             className="mySwiper"
                                         >
-                                            {images.map(({ id, src }) => (
+                                            {images?.map(({ id, imageUrl }) => (
                                                 <SwiperSlide key={id}>
                                                     <div
                                                         onClick={() => setActiveImageId(id)} // Set active image by ID
                                                         className={`cursor-pointer min-w-[50px] md:max-w-[120px] w-full border-2 ${activeImageId === id ? 'border-primary-900' : 'border-transparent'} rounded-lg`}
                                                     >
-                                                        <Image className="w-full object-cover rounded-lg" src={`${src}`} height={100} width={120} alt={`Thumbnail ${id}`} />
+                                                        <Image className="w-full object-cover rounded-lg" src={`${imageUrl}`} height={100} width={120} alt={`Thumbnail ${id}`} />
                                                     </div>
                                                 </SwiperSlide>
                                             ))}
@@ -155,12 +147,12 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                 </div>
                             </div>
                             <div>
-                                <h2 className='pb-2.5 md:pb-5 text-[18px] md:text-[28px] leading-8 font-bold text-[#110833] capitalize'>{template.title} </h2>
+                                <h2 className='pb-2.5 md:pb-5 text-[18px] md:text-[28px] leading-8 font-bold text-[#110833] capitalize'>{template?.title} </h2>
                                 <div
                                     dangerouslySetInnerHTML={{
                                         __html: showFullDescription || !isLongDescription
-                                            ? template.description
-                                            : template.description.slice(0, maxLength)
+                                            ? template?.description
+                                            : template?.description.slice(0, maxLength)
                                     }}
                                     className=' text-[14px] md:text-[16px] font-normal leading-6 text-subparagraph'
                                 />
@@ -176,10 +168,10 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                     <ProductDetailcheckbox image='/images/diamond.png' label="Sketch Design File" detailText="View Detail" />
                                 </div>
                                 <div className='p-2.5 md:p-5 flex items-center bg-divider-100 justify-between ' >
-                                    <Button className='py-[5px] px-2.5' variant='primary' >{template.isPaid ? template.price : 'FREE'}</Button>
+                                    <Button className='py-[5px] px-2.5' variant='primary' >{template?.isPaid ? template?.price : 'FREE'}</Button>
                                     <div className='flex gap-5 items-center' >
                                         <h3 className='text-[14px] font-normal leading-5 text-subparagraph' >Total Price</h3>
-                                        <span className='text-[20px] leading-7 text-subparagraph font-bold' >{template.isPaid ? '$' + template.price : "$0.00"}</span>
+                                        <span className='text-[20px] leading-7 text-subparagraph font-bold' >{template?.isPaid ? '$' + template?.price : "$0.00"}</span>
                                     </div>
                                 </div>
                                 <Button onClick={openPopup} className='w-full mb-2.5 mt-5  md:mt-[30px] md:mb-5 justify-center py-2 md:py-[13px]' variant='primary' > Download</Button>

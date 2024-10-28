@@ -15,7 +15,6 @@ import { toast } from 'react-toastify';
 
 const NewPassword = ({ formdata }: any) => {
     const router = useRouter();
-    // console.log(formdata, 'fordata email here')
     const [isChecked1, setIsChecked1] = useState(false);
     interface FormValues {
         newPassword: string,

@@ -61,7 +61,7 @@ const Otp = ({ formData, api, setFormData }: any) => {
                     }
                 }).then(res => {
     
-                    console.log(res)
+                    // console.log(res)
                 })
 
             }
@@ -101,7 +101,7 @@ const Otp = ({ formData, api, setFormData }: any) => {
         // console.log(response, "===response");
 
         if (response && api === "login") {
-            console.log("here in this", formData);
+            // console.log("here in this", formData);
 
             { async () => { let result = await signIn('credentials', response?.results?.data) } }
         }
