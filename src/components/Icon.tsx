@@ -38,6 +38,7 @@ import Adobexd from '@/../public/icons/adobexd.svg'
 import Saveicon from '@/../public/icons/saveicon.svg'
 import Setting from '@/../public/icons/setting.svg'
 import DownloadIcon from '@/../public/icons/downloadicon.svg'
+import Premium from '@/../public/icons/premium.svg'
 import { cn } from "@/libs/utils";
 
 // Map icon names to components
@@ -78,7 +79,8 @@ const icons = {
   adobexd:Adobexd,
   saveicon:Saveicon,
   setting:Setting,
-  downloadIcon:DownloadIcon
+  downloadIcon:DownloadIcon,
+  premium:Premium
 };
 
 export type IconName = keyof typeof icons;

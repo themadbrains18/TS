@@ -54,6 +54,8 @@ const Download = () => {
       tittle: "Landing page",
       date: "24 Oct 2024",
       image: "download.pnf",
+      premium:true
+
     },
     {
       tittle: "Landing page",
@@ -64,6 +66,7 @@ const Download = () => {
       tittle: "Landing page",
       date: "24 Oct 2024",
       image: "download.pnf",
+      premium:true
     },
     {
       tittle: "Landing page",
@@ -74,6 +77,8 @@ const Download = () => {
       tittle: "Landing page",
       date: "24 Oct 2024",
       image: "download.pnf",
+      premium:true
+
     },
     {
       tittle: "Landing page",
@@ -129,7 +134,7 @@ const Download = () => {
               downloadTemplate?.map((item, index) => {
                 return (
                   <Fragment key={index}>
-                    <DownloadCard date={item.date} image={item.image} tittle={item.tittle}/>
+                    <DownloadCard  premium={item.premium} date={item.date} image={item.image} tittle={item.tittle}/>
                   </Fragment>
                 )
               })
