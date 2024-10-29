@@ -44,17 +44,25 @@ const FeatureCard: React.FC<featurecardprops> = ({ id, buttonprops, category, cu
                     <div className='px-[10px] pt-[10px] md:px-5 md:pt-3 bg-white'>
                         <div className='flex items-center justify-between w-full border-b border-divider-100 pb-[10px] md:pb-5'>
                             <h3 className='text-subparagraph font-semibold leading-6 capitalize text-xs tab:text-base'>{title}</h3>
-                            {/* <Image src={`/icons/${themeicon}`} width={20} height={20} alt='themeicon' /> */}
                             {
-                                themeicon === "figma" ? <Icon className='max-w-6 w-full h-6' name='figma' /> : ""}
+                                themeicon === "Figma" ? <Icon className='max-w-6 w-full h-6' name='figma' /> : ""}
                             {
-                                themeicon === "adobexd" ? <Icon className='max-w-6 w-full h-6' name='adobexd' /> : ""
+                                themeicon === "Adobe XD" ? <Icon className='max-w-6 w-full h-6' name='adobexd' /> : ""
                             }
                             {
-                                themeicon === "sketch" ? <Icon className='max-w-6 w-full h-6' name='xd' /> : ""
+                                themeicon === "Sketch" ? <Icon className='max-w-6 w-full h-6' name='sketch' /> : ""
                             }
                             {
-                                themeicon === "photoshop" ? <Icon className='max-w-6 w-full h-6' name='photoshop' /> : ""
+                                themeicon === "PhotoShop" ? <Icon className='max-w-6 w-full h-6' name='photoshop' /> : ""
+                            }
+                            {
+                                themeicon === "ReactJs" ? <Icon className='max-w-6 w-full h-6' name='reactjs' /> : ""
+                            }
+                            {
+                                themeicon === "Tailwind Css" ? <Icon className='max-w-6 w-full h-6' name='tailwind' /> : ""
+                            }
+                            {
+                                themeicon === "NextJs" ? <Icon className='max-w-6 w-full h-6  fill-black' name="nextjs" /> : ""
                             }
                         </div>
                     </div>

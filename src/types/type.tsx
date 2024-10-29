@@ -208,9 +208,9 @@ export interface TechTemplate {
   seoTags: string[];
   isPaid: boolean;
   credits: Credit[];
-  sliderImages: Image[];
-  previewImages: Image[];
-  previewMobileImages: Image[];
+  sliderImages: PreviewImage[];
+  previewImages: PreviewImage[];
+  previewMobileImages: PreviewImage[];
   sourceFiles: SourceFile[];
   softwareType: SoftwareType;
   subCategory: SubCategory;
@@ -227,7 +227,7 @@ interface Credit {
   templateId: string;
 }
 
-interface Image {
+export interface PreviewImage {
   id: string;
   imageUrl: string;
   templateId: string;

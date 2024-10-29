@@ -86,7 +86,11 @@ const Header = () => {
               </Link>
               <div className="flex items-center max-w-[473px] w-full justify-between">
                 {loading ? <>
-
+                  <div className="flex items-center animate-pulse w-full">
+                    <div className="h-4  bg-gray-200 rounded mr-2 w-full"></div>
+                    <div className="h-4  bg-gray-200 rounded mr-2 w-full"></div>
+                    <div className="h-4  bg-gray-200 rounded w-full"></div>
+                  </div>
                 </> : <>
                   {
                     data && data?.map((item, index) => {

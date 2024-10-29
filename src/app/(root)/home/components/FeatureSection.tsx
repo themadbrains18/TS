@@ -1,10 +1,11 @@
 "use client"
 
 import FeatureCard from '@/components/cards/FeatureCard'
+import Icon from '@/components/Icon'
 import FeatureSkeleton from '@/components/skeletons/FeatureSkeleton' // Import your skeleton component
 import Button from '@/components/ui/Button'
 import useFetch from '@/hooks/useFetch'
-import { TechTemplate } from '@/types/type'
+import { SoftwareType, TechTemplate } from '@/types/type'
 import React, { Fragment, useEffect, useState } from 'react'
 
 
@@ -24,6 +25,7 @@ type Template = {
     title: string;
     version: string;
     price: number;
+    softwareType: SoftwareType;
     templateType: TemplateType;
     sliderImages: SliderImage[]; // Updated sliderImages to hold an array of SliderImage objects
 };
@@ -66,21 +68,29 @@ const FeatureSection = () => {
                     ) : (
                         <div className='mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-[30px]'>
                             {
-                                items.map((item, index) => (
-                                    <Fragment key={index}>
-                                        <FeatureCard
-                                            id={item.id}
-                                            buttonprops={item.price}
-                                            category={item.templateType.name}
-                                            themeicon='figma'
-                                            title={item.title}
-                                            uploadericon='mdb.svg'
-                                            currentimage={1}
-                                            poster={item?.sliderImages[0]?.imageUrl}
-                                            totalimages={item.sliderImages.length}
-                                        />
-                                    </Fragment>
-                                ))
+                                items.map((item, index) => {
+                                    return (
+                                        <>
+                                        {
+                                            console.log(item.softwareType.name,"helosoft")
+                                        }
+                                            <Fragment key={index}>
+                                                <FeatureCard
+                                                    id={item.id}
+                                                    buttonprops={item.price}
+                                                    category={item.templateType.name}
+                                                    themeicon={item?.softwareType.name}
+                                                    title={item.title}
+                                                    uploadericon='mdb.svg'
+                                                    currentimage={1}
+                                                    poster={item?.sliderImages[0]?.imageUrl}
+                                                    totalimages={item.sliderImages.length}
+                                                    isPaid={true}
+                                                />
+                                            </Fragment>
+                                        </>
+                                    )
+                                })
                             }
                         </div>
 

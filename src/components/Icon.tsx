@@ -39,6 +39,9 @@ import Saveicon from '@/../public/icons/saveicon.svg'
 import Setting from '@/../public/icons/setting.svg'
 import DownloadIcon from '@/../public/icons/downloadicon.svg'
 import Premium from '@/../public/icons/premium.svg'
+import Reactjs from '@/../public/icons/reactjs.svg'
+import Nextjs from '@/../public/icons/nextjs.svg'
+import Tailwind from '@/../public/icons/tailwind.svg'
 import { cn } from "@/libs/utils";
 
 // Map icon names to components
@@ -69,18 +72,21 @@ const icons = {
   iconleft: Iconleft,
   rating: Rating,
   ratingbottom: Ratingbottom,
-  swipericon:Swipericon,
-  showicon:Showicon,
-  deleteicon:Deleteicon,
-  editicon:Editicon,
-  hideicon:Hideicon,
-  sketch:Sketch,
-  photoshop:Photoshop,
-  adobexd:Adobexd,
-  saveicon:Saveicon,
-  setting:Setting,
-  downloadIcon:DownloadIcon,
-  premium:Premium
+  swipericon: Swipericon,
+  showicon: Showicon,
+  deleteicon: Deleteicon,
+  editicon: Editicon,
+  hideicon: Hideicon,
+  sketch: Sketch,
+  photoshop: Photoshop,
+  adobexd: Adobexd,
+  saveicon: Saveicon,
+  setting: Setting,
+  downloadIcon: DownloadIcon,
+  premium: Premium,
+  reactjs: Reactjs,
+  nextjs: Nextjs,
+  tailwind: Tailwind
 };
 
 export type IconName = keyof typeof icons;

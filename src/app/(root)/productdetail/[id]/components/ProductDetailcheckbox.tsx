@@ -42,13 +42,13 @@ const ProductDetailcheckbox: React.FC<CheckBoxComponentProps> = ({ label, detail
                     </div>
                 </div>
                 {/* Label */}
-                <span className={`font-semibold text-[14px] leading-5 ${isChecked ? 'text-primary-100' : 'text-subparagraph'}`}>
+                <span className={`font-semibold text-xs sm:text-[14px] leading-5 ${isChecked ? 'text-primary-100' : 'text-subparagraph'}`}>
                     {label}
                 </span>
             </div>
             {/* Right side text and icon */}
             <div className="flex items-center space-x-2 justify-between border-l pl-2">
-                <span className="text-subparagraph font-semibold text-[14px] leading-5 text-center max-w-[217px] w-full">
+                <span className="text-subparagraph font-semibold  text-xs sm:text-[14px] leading-5 text-center max-w-[217px] w-full">
                     {detailText}
                 </span>
                 <div className='bg-bgcolor flex justify-center w-[30px] h-[30px] '>
