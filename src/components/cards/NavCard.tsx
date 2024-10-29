@@ -36,7 +36,7 @@ const NavCard: React.FC<navcardprops> = ({
       <div className="max-w-[248px]  cursor-pointer border border-divider-100">
         <div className="relative">
           <Image
-            src={`/images/featureimg.png`}
+            src={imgSrc}
             width={248}
             height={122}
             alt="cardimage"

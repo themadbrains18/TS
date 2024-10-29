@@ -258,6 +258,7 @@ export interface Industry {
 
 interface User {
   name: string;
+  id?:string | undefined
 }
 
 export interface ProductDetailProps {

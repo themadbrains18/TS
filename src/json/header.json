@@ -4,23 +4,23 @@
         "data": [
             {
                 "title": "Web Templates - UI Kit Te UI Kit Te UI Kit Te",
-                "image": "navimg.png",
-                "icon": "figma.svg"
+                "image": "/images/navimg.png",
+                "icon": "/icons/figma.svg"
             },
             {
                 "title": "Web Templates - UI Kit Te UI Kit Te UI Kit Te",
-                "image": "navimg.png",
-                "icon": "figma.svg"
+                "image": "/images/navimg.png",
+                "icon": "/icons/figma.svg"
             },
             {
                 "title": "Web Templates - UI Kit Te UI Kit Te UI Kit Te",
-                "image": "navimg.png",
-                "icon": "figma.svg"
+                "image": "/images/navimg.png",
+                "icon": "/icons/figma.svg"
             },
             {
                 "title": "Web Templates - UI Kit Te UI Kit Te UI Kit Te",
-                "image": "navimg.png",
-                "icon": "figma.svg"
+                "image": "/images/navimg.png",
+                "icon": "/icons/figma.svg"
             }
         ]
     },
@@ -30,22 +30,22 @@
             {
                 "title": "Mobile App - UI Kit Te UI Kit Te UI Kit Te",
                 "image": "dummy1.png",
-                "icon": "figma.svg"
+                "icon": "/icons/figma.svg"
             },
             {
                 "title": "Mobile App - UI Kit Te UI Kit Te UI Kit Te",
                 "image": "dummy1.png",
-                "icon": "figma.svg"
+                "icon": "/icons/figma.svg"
             },
             {
                 "title": "Mobile App - UI Kit Te UI Kit Te UI Kit Te",
                 "image": "dummy1.png",
-                "icon": "figma.svg"
+                "icon": "/icons/figma.svg"
             },
             {
                 "title": "Mobile App - UI Kit Te UI Kit Te UI Kit Te",
                 "image": "dummy1.png",
-                "icon": "figma.svg"
+                "icon": "/icons/figma.svg"
             }
   
         ]
@@ -56,22 +56,22 @@
             {
                 "title": "Dashboards - UI Kit Te UI Kit Te UI Kit Te",
                 "image": "dummy2.png",
-                "icon": "figma.svg"
+                "icon": "/icons/figma.svg"
             },
             {
                 "title": "Dashboards - UI Kit Te UI Kit Te UI Kit Te",
                 "image": "dummy2.png",
-                "icon": "figma.svg"
+                "icon": "/icons/figma.svg"
             },
             {
                 "title": "Dashboards - UI Kit Te UI Kit Te UI Kit Te",
                 "image": "dummy2.png",
-                "icon": "figma.svg"
+                "icon": "/icons/figma.svg"
             },
             {
                 "title": "Dashboards - UI Kit Te UI Kit Te UI Kit Te",
                 "image": "dummy2.png",
-                "icon": "figma.svg"
+                "icon": "/icons/figma.svg"
             }
  
         ]
@@ -82,22 +82,22 @@
             {
                 "title": "Landing Page - UI Kit Te UI Kit Te UI Kit Te",
                 "image": "dummy4.png",
-                "icon": "figma.svg"
+                "icon": "/icons/figma.svg"
             },
             {
                 "title": "Landing Page - UI Kit Te UI Kit Te UI Kit Te",
                 "image": "dummy4.png",
-                "icon": "figma.svg"
+                "icon": "/icons/figma.svg"
             },
             {
                 "title": "Landing Page - UI Kit Te UI Kit Te UI Kit Te",
                 "image": "dummy4.png",
-                "icon": "figma.svg"
+                "icon": "/icons/figma.svg"
             },
             {
                 "title": "Landing Page - UI Kit Te UI Kit Te UI Kit Te",
                 "image": "dummy4.png",
-                "icon": "figma.svg"
+                "icon": "/icons/figma.svg"
             }
         ]
     },
@@ -106,23 +106,23 @@
         "data": [
             {
                 "title": "Web Template - UI Kit Te UI Kit Te UI Kit Te",
-                "image": "navimg.png",
-                "icon": "figma.svg"
+                "image": "/images/navimg.png",
+                "icon": "/icons/figma.svg"
             },
             {
                 "title": "Web Template - UI Kit Te UI Kit Te UI Kit Te",
-                "image": "navimg.png",
-                "icon": "figma.svg"
+                "image": "/images/navimg.png",
+                "icon": "/icons/figma.svg"
             },
             {
                 "title": "Web Template - UI Kit Te UI Kit Te UI Kit Te",
-                "image": "navimg.png",
-                "icon": "figma.svg"
+                "image": "/images/navimg.png",
+                "icon": "/icons/figma.svg"
             },
             {
                 "title": "Web Template - UI Kit Te UI Kit Te UI Kit Te",
-                "image": "navimg.png",
-                "icon": "figma.svg"
+                "image": "/images/navimg.png",
+                "icon": "/icons/figma.svg"
             }
         ]
     }

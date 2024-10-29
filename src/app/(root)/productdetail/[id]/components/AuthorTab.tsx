@@ -9,6 +9,7 @@ import React, { Fragment, useEffect } from 'react';
 interface UserDetailProps {
   userDetail: {
     name: string;
+    id?:string 
   };
 }
 
@@ -17,11 +18,13 @@ interface ApiResponse {
 }
 
 const AuthorTab: React.FC<UserDetailProps> = ({ userDetail }) => {
+  console.log(userDetail,"==userDetail");
+  
   const { data, fetchData } = useFetch<ApiResponse>();
 
   const getUserTemplates = async () => {
     try {
-      await fetchData(`/templates-by-userid`);
+      await fetchData(`/templates-by-userid/${userDetail?.id}`);
     } catch (error) {
       console.error("Error fetching templates:", error);
     }
@@ -31,6 +34,8 @@ const AuthorTab: React.FC<UserDetailProps> = ({ userDetail }) => {
     getUserTemplates();
   }, []);
 
+  console.log(data,"==data");
+  
   return (
     <div className="mt-10 lg:mt-20">
       <div className="flex justify-between flex-col md:flex-row items-center md:items-end">
@@ -71,18 +76,18 @@ const AuthorTab: React.FC<UserDetailProps> = ({ userDetail }) => {
 
       <div>
         <div className="flex justify-between items-center">
-          <h3 className="text-xl font-bold leading-7">36 Projects</h3>
+          <h3 className="text-xl font-bold leading-7">{data?.data.length} Projects</h3>
           <Button variant="solidicon" icon iconClass="w-5 h-5 py-1 fill-primary-100" link="/product">
             view all products
           </Button>
         </div>
         <div className="max-w-[1560px] overflow-scroll hiddenscroll">
           <div className="flex items-center justify-between gap-x-[10px] md:gap-x-[30px] mt-5">
-            {data && data?.length > 0 && data?.map((item) => (
+            {data && data?.data?.length > 0 && data?.data?.map((item) => (
               <Fragment key={item.id}>
                 <NavCard
-                  icon={item.icon}
-                  image={item.image}
+                  icon={`/icons/figma.svg`}
+                  image={item.sliderImages[0]?.imageUrl}
                   imageclass="max-w-full"
                   title={item.title}
                 />
