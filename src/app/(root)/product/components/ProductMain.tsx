@@ -229,7 +229,7 @@ const ProductMain = () => {
                                     ) : products && products.data && products.data.length > 0 ? (
                                         // Show products when data is loaded and length is greater than 0
                                         <div className='grid gap-5  w-full lg:grid-cols-2 xl:grid-cols-3 xl:gap-[30px]'>
-                                            {products.data.map((item: TechTemplate, index: number) => (
+                                            {products?.data?.map((item: TechTemplate, index: number) => (
                                                 <Fragment key={index}>
                                                     <FeatureCard
                                                         id={item.id}
