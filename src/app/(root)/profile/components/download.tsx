@@ -3,7 +3,8 @@
 import DownloadCard from '@/components/cards/DownloadCard';
 import Icon from '@/components/Icon';
 import Button from '@/components/ui/Button';
-import React, { Fragment, useState } from 'react'
+import useFetch from '@/hooks/useFetch';
+import React, { Fragment, useEffect, useState } from 'react'
 
 const Download = () => {
   const [sort, setSort] = useState(false);
@@ -16,6 +17,23 @@ const Download = () => {
     setSelectedSort(itemTitle);
     setSort(false);
   };
+
+  const [page, setPage] = useState(1);
+  const [downloads, setDownloads] = useState([]);
+  const { data, loading, error, fetchData } = useFetch();
+
+  useEffect(() => {
+    fetchData(`/get-user-downloads?page=${page}`);
+  }, [page]);
+
+  useEffect(() => {
+    if (data) {
+      setDownloads((prevDownloads) => [...prevDownloads, ...data.downloads]);
+    }
+  }, [data]);
+
+
+
   const handleCategoryClick = (itemTitle: string) => {
     setselectedCategory(itemTitle);
     setSort(false);
@@ -54,7 +72,7 @@ const Download = () => {
       tittle: "Landing page",
       date: "24 Oct 2024",
       image: "download.pnf",
-      premium:true
+      premium: true
 
     },
     {
@@ -66,7 +84,7 @@ const Download = () => {
       tittle: "Landing page",
       date: "24 Oct 2024",
       image: "download.pnf",
-      premium:true
+      premium: true
     },
     {
       tittle: "Landing page",
@@ -77,7 +95,7 @@ const Download = () => {
       tittle: "Landing page",
       date: "24 Oct 2024",
       image: "download.pnf",
-      premium:true
+      premium: true
 
     },
     {
@@ -86,6 +104,9 @@ const Download = () => {
       image: "download.pnf",
     },
   ]
+
+  console.log(data, "==data");
+
   return (
     <>
       <section>
@@ -129,20 +150,30 @@ const Download = () => {
           </div>
           <div className='py-10 sm:py-0'>
 
-          <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-[30px] mt-5'>
-            {
-              downloadTemplate?.map((item, index) => {
-                return (
-                  <Fragment key={index}>
-                    <DownloadCard  premium={item.premium} date={item.date} image={item.image} tittle={item.tittle}/>
-                  </Fragment>
-                )
-              })
-            }
-          </div>
-            <div className='mt-5 flex justify-center'>
-              <Button className='w-full justify-center sm:w-auto' variant='primary'>load more</Button>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-[30px] mt-5">
+              {downloads.map((item, index) => (
+                <Fragment key={item.id}>
+                  <DownloadCard
+                    title={item.template.title}
+                    date={new Date(item.downloadedAt).toLocaleDateString()}
+                    image={item.template.sliderImages[0]?.imageUrl}
+                    premium={item.template.price > 0}
+                  />
+                </Fragment>
+              ))}
             </div>
+
+            <div className="mt-5 flex justify-center">
+              <Button
+                className="w-full justify-center sm:w-auto"
+                variant="primary"
+                onClick={() => setPage((prevPage) => prevPage + 1)}
+              // disabled={loading}
+              >
+                {loading ? "Loading..." : "Load More"}
+              </Button>
+            </div>
+
           </div>
         </div>
       </section>

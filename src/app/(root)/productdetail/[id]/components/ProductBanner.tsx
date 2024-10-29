@@ -65,7 +65,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
     }
 
     const [isFirstPopupOpen, setIsFirstPopupOpen] = useState<boolean>(true);
-    console.log(template.softwareType.name, "softwaretype")
+    console.log(template?.softwareType?.name, "softwaretype")
 
     type SoftwareType = {
         image: string;
@@ -82,7 +82,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
         "ReactJs": { image: '/icons/reactjs.svg', label: "ReactJs Design File" },
     };
 
-    const matchedSoftware = softwareImages[template.softwareType.name];
+    const matchedSoftware = softwareImages[template?.softwareType?.name];
 
     return (
         <>

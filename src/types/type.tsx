@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 import { FieldError, UseFormRegister } from "react-hook-form";
 
 export interface navcardprops {
+  id?:string
   title?: string,
   image?: string,
   icon?: string,
@@ -37,6 +38,7 @@ export interface navdropdownprops {
 export interface navtabprops {
   // title: string;
   subCat?: subCat[]
+  onSelect?: (id: string) => void;
 }
 
 export interface subCat {

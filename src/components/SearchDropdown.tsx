@@ -12,7 +12,7 @@ import Link from "next/link";
  */
 
 
-const SearchDropdown: React.FC<navtabprops> = ({ subCat }) => {
+const SearchDropdown: React.FC<navtabprops> = ({ subCat,onSelect  }) => {
   const [open, setOpen] = useState(false);
   const [prodcuts, setProducts] = useState("all products");
 
@@ -39,6 +39,8 @@ const SearchDropdown: React.FC<navtabprops> = ({ subCat }) => {
             } `}
         >
           {subCat && subCat?.map((item: subCat, index: number) => {
+            console.log(item,"-===id");
+            
             return (
               <h4
                 key={Date.now() + index + item.name}
@@ -46,6 +48,7 @@ const SearchDropdown: React.FC<navtabprops> = ({ subCat }) => {
                 onClick={() => {
                   setProducts(item.name)
                   setOpen(!open)
+                  onSelect && onSelect(item.id); // Call onSelect if it exists
                 }
                 }
               >
