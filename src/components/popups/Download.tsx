@@ -48,12 +48,12 @@ const Download = ({ isPopupOpen, closePopup, opensecoundpopup }: Downloadpopup )
                     <div className='flex justify-center items-center flex-col pt-5 md:pt-[60px] px-5' >
                         <h3 className=' open_sans font-normal leading-6 pb-[15px] text-subparagraph text-center' >Help us to expand the designer&apos;s community</h3>
                         <div className="flex items-center lg:max-w-[250px] w-full justify-between mt-5 lg:mt-0">
-                            {
+                            {socialicons && socialicons.length>0 &&
                                 socialicons?.map((item, index) => {
                                     return (
                                         <Fragment key={index}>
                                             <Link href={'#'}>
-                                                <Image className="transition-all duration-300 hover:translate-y-[-5px] hover:scale-[1.1] hover:rotate-6" width={30} height={30} src={`/icons/${item.icon}`} alt="icons" />
+                                                <Image className="transition-all duration-300 hover:translate-y-[-5px] hover:scale-[1.1] hover:rotate-6" width={30} height={30} src={`/icons/${item?.icon}`} alt="icons" />
                                             </Link>
                                         </Fragment>
                                     )

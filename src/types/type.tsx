@@ -282,6 +282,7 @@ export interface downloadcard {
   bgClass?: string,
   parentClass?: string,
   bgParentClass?: string,
+  url?: string,
   premium?:boolean
 }
 
@@ -289,4 +290,22 @@ export interface verifyoldemail {
   isPopupOpen: boolean,
   closePopup: () => void;
   register?:UseFormRegister<any>
+}
+
+
+
+interface Template {
+  title: string;
+  price: number;
+  sliderImages: PreviewImage[];
+  sourceFiles: SourceFile[];
+}
+
+export interface DownloadInterface {
+  id: string;
+  userId: string;
+  email: string;
+  templateId: string;
+  downloadedAt: string;
+  template: Template;
 }

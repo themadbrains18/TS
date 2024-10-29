@@ -19,7 +19,7 @@ const TechnicalTab: React.FC<techDetailProps> = ({ technicalDetails }) => {
 
                 <div className='mt-5 py-5 md:py-10 px-[10px] md:px-[50px] border border-divider-200'>
                         <ul className='grid grid-cols-1 md:grid-cols-2 pb-5 mb-5   list-disc list-inside'>
-                            {technicalDetails?.map((item: string, index: number) => {
+                            {technicalDetails && technicalDetails?.length>0 && technicalDetails?.map((item: string, index: number) => {
                                 return (
                                     <li  className='text-sm md:text-base leading-6 py-5 border-b border-divider-200' key={index}>
                                         {item}
