@@ -13,16 +13,16 @@ import Link from "next/link";
 import useFetch from "@/hooks/useFetch";
 
 import { subCat } from "@/types/type";
-
+import { TemplateType } from "@/app/(dashboard)/dashboard/addtemplate/page";
 
 import { signOut, useSession } from 'next-auth/react';
-import { TemplateType } from "@/app/(dashboard)/dashboard/addtemplate/components/templateForm";
 
 const Header = () => {
   const { data, fetchData, loading } = useFetch<TemplateType[]>();
   const { data: session } = useSession();
 
   const { data: subCatData, fetchData: fetchsubCatData } = useFetch<subCat[]>();
+
   // State to manage desktop search bar visibility
   const [opensearch, setOpensearch] = useState(false)
 
@@ -57,13 +57,10 @@ const Header = () => {
 
   useEffect(() => {
     try {
-
       fetchData(`/template-types`);
       fetchsubCatData(`/sub-categories`);
     } catch (error) {
-
     }
-
   }, [])
 
 

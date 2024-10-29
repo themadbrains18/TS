@@ -15,6 +15,7 @@ const emailSchema = z.object({
     email: z.string().email({ message: "Invalid email" }),
 });
 
+
 interface Downloadpopup {
     isPopupOpen: boolean;
     closePopup: () => void;
@@ -22,6 +23,7 @@ interface Downloadpopup {
     id: string;
     url: string;
 }
+
 
 const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url }: Downloadpopup) => {
     const { data: session } = useSession();
@@ -40,6 +42,7 @@ const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url }: Download
         resolver: zodResolver(emailSchema),
     });
 
+
     // Handle form submission
     const onSubmit = async (data: any) => {
         try {
@@ -54,11 +57,13 @@ const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url }: Download
                 },
                 body: JSON.stringify(data),
             });
+
         } catch (error) {
             console.error('Error:', error);
             // Handle error state
         }
     };
+
 
     useEffect(() => {
         console.log("herer", response);
@@ -85,15 +90,15 @@ const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url }: Download
                     </p>
                     <Image className='md:my-[35px] max-w-[232px] w-full' alt='img' src={'/images/sendemailpopimage.png'} width={232} height={148} />
                     <form onSubmit={handleSubmit(onSubmit)} className='w-full'>
-                        <input 
-                            type="text" 
-                            placeholder='Enter your email' 
-                            {...register('email')} 
-                            className={`py-[18px] px-[15px] bg-white rounded-[5px] w-full placeholder:text-subparagraph outline-none ${errors.email ? 'border-red-500' : ''}`} 
+                        <input
+                            type="text"
+                            placeholder='Enter your email'
+                            {...register('email')}
+                            className={`py-[18px] px-[15px] bg-white rounded-[5px] w-full placeholder:text-subparagraph outline-none ${errors.email ? 'border-red-500' : ''}`}
                         />
                         {errors.email && (
                             <span className="text-red-500">
-                                {errors.email?.message}  
+                                {errors?.email?.message}
                             </span>
                         )}
                         <Button type="submit" variant='primary' className='w-full justify-center mt-4'>Send Link</Button>

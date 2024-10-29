@@ -4,12 +4,11 @@ import Profile from './profile'
 import Download from './download'
 import { Session } from 'next-auth'
 
-interface sessionProps{
-    session:Session
+interface sessionProps {
+    session: Session
 }
-const MainScreen:React.FC<sessionProps> = ({session}) => {
+const MainScreen: React.FC<sessionProps> = ({ session }) => {
     const [activeTab, setActiveTab] = useState<number>(0) // 0 for Profile, 1 for Download
-console.log(session,"==session ");
 
     return (
         <>
@@ -31,7 +30,7 @@ console.log(session,"==session ");
                     </div>
                 </div>
                 <div className='mt-[10px]'>
-                    {activeTab === 0 ? <Profile /> : <Download />}
+                    {activeTab === 0 ? <Profile session={session} /> : <Download />}
                 </div>
             </section>
         </>

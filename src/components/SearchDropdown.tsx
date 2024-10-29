@@ -16,7 +16,7 @@ const SearchDropdown: React.FC<navtabprops> = ({ subCat }) => {
   const [open, setOpen] = useState(false);
   const [prodcuts, setProducts] = useState("all products");
 
-
+ 
 
   return (
     <>

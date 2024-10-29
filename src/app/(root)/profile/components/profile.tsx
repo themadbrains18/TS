@@ -1,13 +1,21 @@
-'use state'
+'use client'
 
 import Button from '@/components/ui/Button'
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import profileimage from '@/../public/images/profileimage.png'
 import Input from '@/components/ui/Input'
 import Toggle from '@/components/ui/ToggleButton'
 import VerfiyOldEmail from '@/components/popups/VerfiyOldEmail'
-const Profile = () => {
+import useFetch from '@/hooks/useFetch'
+import { Session } from 'next-auth'
+
+
+interface sessionProps {
+    session: Session
+}
+
+const Profile: React.FC<sessionProps> = ({ session }) => {
     // Separate state for each button
     const [isNameActive, setIsNameActive] = useState<boolean>(false)
     const [isUsernameActive, setIsUsernameActive] = useState<boolean>(false)
@@ -16,6 +24,7 @@ const Profile = () => {
     const [isUserDisabled, setIsUserDisabled] = useState<boolean>(true);
     const [isEmailDisabled, setIsEmailDisabled] = useState<boolean>(true);
     const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
+    const [profileImage, setProfileImage] = useState<any>(profileimage);
 
     const closePopup = () => {
         setIsPopupOpen(false);
@@ -23,21 +32,63 @@ const Profile = () => {
     const openPopup = () => {
         setIsPopupOpen(true);
     };
+
+    const { data: response, error, loading, fetchData } = useFetch<any>();
+    console.log(response?.user, response, "user data")
+
+    const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            setProfileImage(URL.createObjectURL(file)); // Preview image
+            const formData = new FormData();
+            formData.append('profileImg', file);
+
+            try {
+                await fetchData("/user/update-image", {
+                    method: "PUT",
+                    body: formData,
+                });
+            } catch (error) {
+                console.error("Error updating profile image:", error);
+            }
+        }
+    };
+    const fetchUserData = async () => {
+        try {
+            const userdata = await fetchData(`/get-user`);
+        } catch (error) {
+            console.log(error)
+        }
+    };
+    useEffect(() => {
+        fetchUserData();
+    }, []);
+    console.log(response, "=================responseresponse")
     return (
         <>
             <section>
-                <VerfiyOldEmail  closePopup={()=>closePopup()} isPopupOpen={isPopupOpen} />
+                <VerfiyOldEmail closePopup={() => closePopup()} isPopupOpen={isPopupOpen} />
                 <div className="container">
                     <div className='max-w-[1162px] w-full'>
                         <div className='max-w-[616px] w-full mb-4 md:mb-[50px]'>
                             <h2 className='lg:py-1 text-subheading text-[28px] font-bold leading-9 capitalize mb-5'>Profile details</h2>
                             <div className='pt-10 '>
-
                                 <div className=' flex items-end justify-between'>
-                                    <div className='relative max-w-[115px] md:max-w-[168px] w-full'>
-                                        <Image src={profileimage} height={168} width={168} alt='userimage' />
-                                        <label htmlFor="profilepic" className='py-[5px] px-[14px] text-[11px] md:text-base md:py-2 text-nowrap  absolute bottom-0 left-[6px] right-[6px] md:left-2  md:right-2 text-center bg-primary-300 text-[#282827] capitalize cursor-pointer border-b transition-all duration-200 hover:border-primary-100 font-regular leading-6'>change image</label>
-                                        <input className='hidden' id='profilepic' type='file' />
+                                    <div className='relative max-w-[115px] md:max-w-[168px] w-full h-[168px]'>
+                                        <Image
+                                            className='rounded-full h-[168px]'
+                                            src={profileImage}
+                                            height={168}
+                                            width={168}
+                                            alt='userimage'
+                                        />
+                                        <label htmlFor="profilepic" className='py-[5px] px-[14px] text-[11px] md:text-base md:py-2 text-nowrap absolute bottom-0 left-[6px] right-[6px] md:left-2 md:right-2 text-center bg-primary-300 text-[#282827] capitalize cursor-pointer border-b transition-all duration-200 hover:border-primary-100 font-regular leading-6'>change image</label>
+                                        <input
+                                            className='hidden'
+                                            id='profilepic'
+                                            type='file'
+                                            onChange={handleImageChange}
+                                        />
                                     </div>
                                     <Button className='py-[6px] px-5 text-sm md:text-base md:px-7 md:py-2' variant='basic'>Remove</Button>
                                 </div>
