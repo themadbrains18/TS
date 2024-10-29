@@ -229,19 +229,19 @@ const ProductMain = () => {
                                     ) : products && products.data && products.data.length > 0 ? (
                                         // Show products when data is loaded and length is greater than 0
                                         <div className='grid gap-5  w-full lg:grid-cols-2 xl:grid-cols-3 xl:gap-[30px]'>
-                                            {products?.data?.map((item: TechTemplate, index: number) => (
+                                            {products && products?.data?.length>0 && products?.data?.map((item: TechTemplate, index: number) => (
                                                 <Fragment key={index}>
                                                     <FeatureCard
-                                                        id={item.id}
-                                                        buttonprops={item.price}
-                                                        category={item.templateType?.name}
-                                                        poster={item.sliderImages[0]?.imageUrl}
-                                                        themeicon={item?.softwareType.name}
-                                                        title={item.title}
+                                                        id={item?.id}
+                                                        buttonprops={item?.price}
+                                                        category={item?.templateType?.name}
+                                                        poster={item?.sliderImages[0]?.imageUrl}
+                                                        themeicon={item?.softwareType?.name}
+                                                        title={item?.title}
                                                         uploadericon='mdb.svg'
-                                                        uploadername={item.user.name}
+                                                        uploadername={item?.user?.name}
                                                         currentimage={1}
-                                                        totalimages={item.sliderImages.length}
+                                                        totalimages={item?.sliderImages?.length}
                                                         isPaid={true}
                                                     />
                                                 </Fragment>
