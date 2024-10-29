@@ -71,9 +71,6 @@ const FeatureSection = () => {
                                 items.map((item, index) => {
                                     return (
                                         <>
-                                        {
-                                            console.log(item?.softwareType?.name,"helosoft")
-                                        }
                                             <Fragment key={index}>
                                                 <FeatureCard
                                                     id={item?.id}

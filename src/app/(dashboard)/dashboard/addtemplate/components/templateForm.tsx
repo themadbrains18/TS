@@ -601,7 +601,9 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type,id }) => 
                                             </div>
                                         }
                                     </div>
-                                    <Button type='submit' variant='primary' className='py-3 mt-5' >Upload</Button>
+                                    <Button type='submit' variant='primary' className='py-3 mt-5' >
+                                        {loading ? "Uploading..." : "Upload"}
+                                        </Button>
                                 </div>
                             </div>
                         </div>

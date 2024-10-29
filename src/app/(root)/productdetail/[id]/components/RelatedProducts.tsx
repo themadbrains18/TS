@@ -20,9 +20,10 @@ const RelatedProducts = () => {
             uploadericon: "mdb.svg",
             uploadername: "themadbrains",
             category: "UI templates",
-            buttonprops: "free",
+            buttonprops: 0,
             currentimage: 1,
-            totalimage: 20
+            totalimage: 20,
+            isPaid:false
 
         },
         {
@@ -32,9 +33,11 @@ const RelatedProducts = () => {
             uploadericon: "mdb.svg",
             uploadername: "themadbrains",
             category: "UI templates",
-            buttonprops: "free",
+            buttonprops: 50,
             currentimage: 1,
-            totalimage: 20
+            totalimage: 20,
+            isPaid:true
+
 
         },
         {
@@ -44,9 +47,11 @@ const RelatedProducts = () => {
             uploadericon: "mdb.svg",
             uploadername: "themadbrains",
             category: "UI templates",
-            buttonprops: "free",
+            buttonprops: 49,
             currentimage: 1,
-            totalimage: 20
+            totalimage: 20,
+            isPaid:true
+
 
         },
         {
@@ -56,9 +61,11 @@ const RelatedProducts = () => {
             uploadericon: "mdb.svg",
             uploadername: "themadbrains",
             category: "UI templates",
-            buttonprops: "free",
+            buttonprops: 0,
             currentimage: 1,
-            totalimage: 20
+            totalimage: 20,
+            isPaid:false
+
 
         },
         {
@@ -68,9 +75,11 @@ const RelatedProducts = () => {
             uploadericon: "mdb.svg",
             uploadername: "themadbrains",
             category: "UI templates",
-            buttonprops: "free",
+            buttonprops: 199,
             currentimage: 1,
-            totalimage: 20
+            totalimage: 20,
+            isPaid:true
+
 
         },
         {
@@ -80,9 +89,11 @@ const RelatedProducts = () => {
             uploadericon: "mdb.svg",
             uploadername: "themadbrains",
             category: "UI templates",
-            buttonprops: "free",
+            buttonprops: 99,
             currentimage: 1,
-            totalimage: 20
+            totalimage: 20,
+            isPaid:true
+
 
         },
     ]
@@ -99,7 +110,7 @@ const RelatedProducts = () => {
                                    data && data?.length>0 &&  data?.splice(0, 4).map((item, index) => {
                                         return (
                                             <Fragment key={index}>
-                                                <FeatureCard buttonprops={item?.buttonprops} category={item?.category} poster={item?.poster} themeicon={item?.themeicon} title={item?.title} uploadericon={item?.uploadericon} uploadername={item?.uploadername} currentimage={item?.currentimage} totalimages={item?.totalimage} />
+                                                <FeatureCard buttonprops={item?.buttonprops} category={item?.category} poster={item?.poster} themeicon={item?.themeicon} title={item?.title} uploadericon={item?.uploadericon} uploadername={item?.uploadername} currentimage={item?.currentimage} totalimages={item?.totalimage} isPaid={item?.isPaid}/>
                                             </Fragment>
                                         )
                                     })

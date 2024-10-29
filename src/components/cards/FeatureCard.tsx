@@ -11,7 +11,7 @@ const FeatureCard: React.FC<featurecardprops> = ({ id, buttonprops, category, cu
     // console.log(id, buttonprops, category, currentimage, poster, themeicon, title, totalimages, uploadericon, uploadername, isPaid, "id")
     // Ensure poster URL starts with a leading slash or is an absolute URL
     const [imgSrc, setImgSrc] = useState(poster ? poster : '/images/featureimg.png');
-
+    
     const handleImageError = () => {
         setImgSrc('/images/featureimg.png'); // Fallback image with a leading slash
     };
@@ -74,8 +74,13 @@ const FeatureCard: React.FC<featurecardprops> = ({ id, buttonprops, category, cu
                             </p>
                         </div>
                         <Button variant='primary' className='py-[5px] px-[10px] text-sm leading-5 font-semibold capitalize'>
-                            {isPaid ? `$${buttonprops}` : "Free"}
+                            {isPaid && buttonprops &&  buttonprops > 0
+                                    ? `$${buttonprops}`
+
+                                        : "Free"
+                            }
                         </Button>
+ 
                     </div>
                 </div>
             </div>
