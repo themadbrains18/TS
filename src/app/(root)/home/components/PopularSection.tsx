@@ -4,6 +4,7 @@ import FeatureCard from '@/components/cards/FeatureCard'
 import FeatureSkeleton from '@/components/skeletons/FeatureSkeleton'
 import Button from '@/components/ui/Button'
 import useFetch from '@/hooks/useFetch'
+import { SoftwareType } from '@/types/type'
 import { it } from 'node:test'
 import React, { Fragment, useEffect, useState } from 'react'
 /**
@@ -33,6 +34,7 @@ type Template = {
     title: string;
     version: string;
     price: number;
+    softwareType: SoftwareType;
     templateType: TemplateType;
     sliderImages: SliderImage[]; // Updated sliderImages to hold an array of SliderImage objects
 };
@@ -94,11 +96,12 @@ const PopularSection = () => {
                                                     id={item?.id}
                                                     buttonprops={item?.price}
                                                     category={item?.templateType.name}
-                                                    themeicon='figma'
+                                                    themeicon={item?.softwareType.name}
                                                     title={item?.title}
                                                     uploadericon='mdb.svg'
                                                     currentimage={1}
                                                     totalimages={item.sliderImages.length}
+                                                    isPaid={true}
                                                 />
                                             </Fragment>
                                         ))

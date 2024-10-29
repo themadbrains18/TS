@@ -236,13 +236,13 @@ const ProductMain = () => {
                                                         buttonprops={item.price}
                                                         category={item.templateType?.name}
                                                         poster={item.sliderImages[0]?.imageUrl}
-                                                        themeicon='figma'
+                                                        themeicon={item?.softwareType.name}
                                                         title={item.title}
                                                         uploadericon='mdb.svg'
                                                         uploadername={item.user.name}
                                                         currentimage={1}
                                                         totalimages={item.sliderImages.length}
-                                                        isPaid={item?.isPaid}
+                                                        isPaid={true}
                                                     />
                                                 </Fragment>
                                             ))}
