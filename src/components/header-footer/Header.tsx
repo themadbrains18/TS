@@ -11,11 +11,10 @@ import NavTabs from "../NavTabs";
 import Accordion from "../ui/Accordion";
 import Link from "next/link";
 import useFetch from "@/hooks/useFetch";
-
 import { subCat } from "@/types/type";
-import { TemplateType } from "@/app/(dashboard)/dashboard/addtemplate/page";
-
 import { signOut, useSession } from 'next-auth/react';
+import { TemplateType } from "@/app/(dashboard)/dashboard/addtemplate/components/templateForm";
+import SearchComponent from "./SearchComponent";
 
 const Header = () => {
   const { data, fetchData, loading } = useFetch<TemplateType[]>();
@@ -83,7 +82,11 @@ const Header = () => {
               </Link>
               <div className="flex items-center max-w-[473px] w-full justify-between">
                 {loading ? <>
-
+                  <div className="flex items-center animate-pulse w-full">
+                    <div className="h-4  bg-gray-200 rounded mr-2 w-full"></div>
+                    <div className="h-4  bg-gray-200 rounded mr-2 w-full"></div>
+                    <div className="h-4  bg-gray-200 rounded w-full"></div>
+                  </div>
                 </> : <>
                   {
                     data && data?.map((item, index) => {
@@ -102,7 +105,8 @@ const Header = () => {
               </div>
             </div>
             <div className={cn`max-w-[576px] w-full flex items-center justify-end gap-x-5 `}>
-              <div className={cn`flex items-center relative  justify-end ${opensearch !== false ? "" : "overflow-hidden"}`}>
+              <SearchComponent subCat={subCatData || undefined}/>
+              {/* <div className={cn`flex items-center relative  justify-end ${opensearch !== false ? "" : "overflow-hidden"}`}>
                 <div className="p-[11px]" >
                   <Icon name="search" className={cn` cursor-pointer transition-all duration-[0.3s] ${opensearch !== false ? " opacity-0 invisible" : "visible opacity-[1]"}`} onClick={() => setOpensearch(!opensearch)} />
                 </div>
@@ -113,7 +117,7 @@ const Header = () => {
                   <input type="text" placeholder="Search all templates...." className="my-[10px] placeholder:text-sm placeholder:text-subparagraph leading-5 outline-none " />
                   <Icon name="crossicon" className={`cursor-pointer fill-primary-100  ${opensearch !== false ? "opacity-100" : "opacity-0"}`} onClick={() => setOpensearch(!opensearch)} />
                 </div>
-              </div>
+              </div> */}
               {!isLoggedIn ? (
                 <>
                   <Button link="/register">Sign Up</Button>

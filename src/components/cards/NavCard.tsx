@@ -22,6 +22,7 @@ import Link from "next/link";
 
 
 const NavCard: React.FC<navcardprops> = ({
+  id,
   icon,
   image,
   title,
@@ -35,7 +36,7 @@ const NavCard: React.FC<navcardprops> = ({
     <>
       <div className="max-w-[248px]  cursor-pointer border border-divider-100">
         <div className="relative">
-          <Image
+          <Image    
             src={imgSrc}
             width={248}
             height={122}
@@ -45,7 +46,7 @@ const NavCard: React.FC<navcardprops> = ({
           <div className="bg-subheading opacity-[0] absolute top-0 right-0 left-0 bottom-0 transition-all duration-200 hover:opacity-[0.45] flex justify-center items-center">
             <Link
               className="text-white leading-5 font-semibold opacity-[1] capitalize"
-              href={""}
+              href={`productdetail/${id}`}
             >
               {" "}
               view details

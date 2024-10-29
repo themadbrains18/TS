@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 import { FieldError, UseFormRegister } from "react-hook-form";
 
 export interface navcardprops {
+  id?:string
   title?: string,
   image?: string,
   icon?: string,
@@ -37,6 +38,7 @@ export interface navdropdownprops {
 export interface navtabprops {
   // title: string;
   subCat?: subCat[]
+  onSelect?: (id: string) => void;
 }
 
 export interface subCat {
@@ -208,9 +210,9 @@ export interface TechTemplate {
   seoTags: string[];
   isPaid: boolean;
   credits: Credit[];
-  sliderImages: Image[];
-  previewImages: Image[];
-  previewMobileImages: Image[];
+  sliderImages: PreviewImage[];
+  previewImages: PreviewImage[];
+  previewMobileImages: PreviewImage[];
   sourceFiles: SourceFile[];
   softwareType: SoftwareType;
   subCategory: SubCategory;
@@ -227,7 +229,7 @@ interface Credit {
   templateId: string;
 }
 
-interface Image {
+export interface PreviewImage {
   id: string;
   imageUrl: string;
   templateId: string;
