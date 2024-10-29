@@ -18,7 +18,6 @@ import ProductDetailcheckbox from './ProductDetailcheckbox';
 import Link from 'next/link';
 import DownloadTemplete from '@/components/popups/DownloadTemplete';
 import { ProductDetailProps, TechTemplate } from '@/types/type';
-import Preview from '@/app/(preview)/preview/components/Preview';
 import { useRouter } from 'next/navigation';
 
 /**
@@ -88,16 +87,6 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
 
     return (
         <>
-            {
-                showPreviews ?
-                    <div>
-                        {/* <div className='container'>
-                        <p className='cursor-pointer' onClick={()=>setShowPreviews(false)}>Go Back</p>
-                        </div> */}
-                        <Preview previewImages={template.previewImages}
-                            previewMobileImages={template.previewMobileImages}
-                        />
-                    </div> :
                     <section className='pb-10'>
                         <div className="container">
                             <div>
@@ -208,7 +197,8 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                             </div>
                                         </div>
                                         <Button onClick={openPopup} className='w-full mb-2.5 mt-5  md:mt-[30px] md:mb-5 justify-center py-2 md:py-[13px]' variant='primary' > Download</Button>
-                                        <Button onClick={() => setShowPreviews(true)} className='w-full justify-center' variant='liquid' >Preview</Button>
+                                        <Button link={`/preview${template.id}`}  className='w-full justify-center' variant='liquid' >Preview</Button>
+                                        {/* onClick={() => setShowPreviews(true)} */}
                                         {
                                             isPopupOpen &&
                                             <DownloadTemplete isFirstPopupOpen={isFirstPopupOpen} setIsFirstPopupOpen={setIsFirstPopupOpen} id={template?.id} url={template?.sourceFiles[0]?.fileUrl} />
@@ -218,8 +208,6 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                             </div>
                         </div >
                     </section >
-            }
-
 
         </>
     )
