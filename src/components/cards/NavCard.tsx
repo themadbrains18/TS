@@ -42,6 +42,7 @@ const NavCard: React.FC<navcardprops> = ({
             height={122}
             alt="cardimage"
             onError={handleImageError}
+            className="max-h-[122px] object-cover"
           />
           <div className="bg-subheading opacity-[0] absolute top-0 right-0 left-0 bottom-0 transition-all duration-200 hover:opacity-[0.45] flex justify-center items-center">
             <Link

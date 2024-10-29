@@ -76,7 +76,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
 
     const softwareImages: Record<string, SoftwareType> = {
         "Figma": { image: '/icons/figma.svg', label: "Figma Design File" },
-        "Adobe XD": { image: '/icons/XD.svg', label: "Adobe XD Design File" },
+        "Adobe XD": { image: '/icons/adobexd.svg', label: "Adobe XD Design File" },
         "PhotoShop": { image: '/icons/photoshop.svg', label: "Photoshop Design File" },
         "Sketch": { image: '/icons/sketch.svg', label: "Sketch Design File" },
         "NextJs": { image: '/icons/nextjs.svg', label: "NextJs Design File" },

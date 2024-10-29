@@ -52,7 +52,7 @@ const ProductDetailcheckbox: React.FC<CheckBoxComponentProps> = ({ label, detail
                     {detailText}
                 </span>
                 <div className='bg-bgcolor flex justify-center w-[30px] h-[30px] '>
-                    <Image className={`${isChecked ? 'opacity-1  ' : 'opacity-[0.5]'} duration-[0.5s] object-contain `} src={`${image}`} height={22} width={15} alt={image}
+                    <Image className={`w-6 h-6 ${isChecked ? 'opacity-1  ' : 'opacity-[0.5]'} duration-[0.5s] object-contain `} src={`${image}`} height={22} width={15} alt={image}
                     />
                 </div>
             </div>
