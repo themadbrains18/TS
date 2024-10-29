@@ -77,6 +77,7 @@ const FeatureSection = () => {
                                             uploadericon='mdb.svg'
                                             currentimage={1}
                                             poster={item?.sliderImages[0]?.imageUrl}
+                                            totalimages={item.sliderImages.length}
                                         />
                                     </Fragment>
                                 ))

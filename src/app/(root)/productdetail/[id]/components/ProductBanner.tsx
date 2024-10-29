@@ -67,13 +67,23 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
     const [isFirstPopupOpen, setIsFirstPopupOpen] = useState<boolean>(true);
     console.log(template.softwareType.name, "softwaretype")
 
-    type SoftwareType = "Figma" | "Adobe XD" | "PhotoShop" | "Sketch";
-
-    interface SoftwareDetail {
+    type SoftwareType = {
         image: string;
         label: string;
-        detailText: string;
-    }
+    };
+
+    const softwareImages: Record<string, SoftwareType> = {
+        "Figma": { image: '/icons/figma.svg', label: "Figma Design File" },
+        "Adobe XD": { image: '/icons/XD.svg', label: "Adobe XD Design File" },
+        "PhotoShop": { image: '/icons/photoshop.svg', label: "Photoshop Design File" },
+        "Sketch": { image: '/icons/sketch.svg', label: "Sketch Design File" },
+        "NextJs": { image: '/icons/nextjs.svg', label: "NextJs Design File" },
+        "Tailwind Css": { image: '/icons/tailwind.svg', label: "Tailwind Design File" },
+        "ReactJs": { image: '/icons/reactjs.svg', label: "ReactJs Design File" },
+    };
+
+    const matchedSoftware = softwareImages[template.softwareType.name];
+
     return (
         <>
             <section className='pb-10'>
@@ -109,7 +119,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                     <div className="flex items-center gap-2 lg:gap-7 md:p-5 md:border pt-2.5  border-divider-100">
                                         {/* Custom Previous Button */}
                                         {images?.length > 0 && (
-                                            <div className='rotate-[180deg]' onClick={() => swiperRef.current?.slidePrev()}>
+                                            <div className='rotate-[180deg] cursor-pointer' onClick={() => swiperRef.current?.slidePrev()}>
                                                 <Icon name='rightarrow' />
                                             </div>
                                         )}
@@ -149,7 +159,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                         </Swiper>
 
                                         {/* Custom Next Button */}
-                                        <div onClick={() => swiperRef.current?.slideNext()}>
+                                        <div className='cursor-pointer' onClick={() => swiperRef.current?.slideNext()}>
                                             <Icon name='rightarrow' />
                                         </div>
                                     </div>
@@ -172,19 +182,13 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                 )}
 
                                 <div className=' py-5 md:py-10 flex gap-2.5 md:gap-[18px] flex-col' >
-
-                                    {
-                                        template.softwareType.name === "Figma" ? <ProductDetailcheckbox image='/images/figmalogo.png' label="Figma Design File" detailText="View Detail" /> : ""
-                                    }
-                                    {
-                                        template.softwareType.name === "Adobe XD" ? <ProductDetailcheckbox image='/images/XD.png' label="Figma Design File" detailText="View Detail" /> : ""
-                                    }
-                                    {
-                                        template.softwareType.name === "PhotoShop" ? <ProductDetailcheckbox image='/icons/photoshop.svg' label="Figma Design File" detailText="View Detail" /> : ""
-                                    }
-                                    {
-                                        template.softwareType.name === "Sketch" ? <ProductDetailcheckbox image='/images/diamond.png' label="Figma Design File" detailText="View Detail" /> : ""
-                                    }
+                                    {matchedSoftware && (
+                                        <ProductDetailcheckbox
+                                            image={matchedSoftware.image}
+                                            label={matchedSoftware.label}
+                                            detailText="View Detail"
+                                        />
+                                    )}
                                 </div>
                                 <div className='p-2.5 md:p-5 flex items-center bg-divider-100 justify-between ' >
                                     <Button className='py-[5px] px-2.5' variant='primary' >{template?.isPaid ? template?.price : 'FREE'}</Button>
@@ -197,7 +201,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                 <Button className='w-full justify-center' variant='liquid' >Preview</Button>
                                 {
                                     isPopupOpen &&
-                                    <DownloadTemplete isFirstPopupOpen={isFirstPopupOpen} setIsFirstPopupOpen={setIsFirstPopupOpen} id={template?.id} url={template?.sourceFiles[0]?.fileUrl}/>
+                                    <DownloadTemplete isFirstPopupOpen={isFirstPopupOpen} setIsFirstPopupOpen={setIsFirstPopupOpen} id={template?.id} url={template?.sourceFiles[0]?.fileUrl} />
                                 }
                             </div>
                         </div>
