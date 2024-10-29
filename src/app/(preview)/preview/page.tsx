@@ -17,10 +17,7 @@ const Page: FC<previewimagesprops> = ({ previewImages, previewMobileImages, }) =
         'desktop',
         'mobile responsive'
     ];
-    // interface Params {
-    //     id: string;
-    //   }
-      
+    
     return (
         <>
                     <section className='pt-10 md:pt-20 bg-bgcolor'>
@@ -71,7 +68,6 @@ const Page: FC<previewimagesprops> = ({ previewImages, previewMobileImages, }) =
                         </div>
                     </section>
                 </>
-          
     )
 }
 

@@ -85,6 +85,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
 
     const matchedSoftware = softwareImages[template?.softwareType?.name];
 
+    
     return (
         <>
                     <section className='pb-10'>

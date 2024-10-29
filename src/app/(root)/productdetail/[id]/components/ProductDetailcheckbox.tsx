@@ -22,12 +22,12 @@ const ProductDetailcheckbox: React.FC<CheckBoxComponentProps> = ({ label, detail
     /**
      * Handles the checkbox click event by toggling the `isChecked` state.
      */
-    const handleCheckboxChange = () => {
-        setIsChecked(!isChecked);
-    };
-
+    // const handleCheckboxChange = () => {
+    //     setIsChecked(!isChecked);
+    // };
+    // onClick={handleCheckboxChange} 
     return (
-        <div onClick={handleCheckboxChange} className="grid grid-cols-2 w-full justify-between items-center border  border-gray-200 p-2.5 md:p-4 rounded-lg  cursor-pointer">
+        <div className="grid grid-cols-2 w-full justify-between items-center border  border-gray-200 p-2.5 md:p-4 rounded-lg  cursor-pointer">
             <div className="flex items-center space-x-2">
                 {/* Custom Checkbox */}
                 <div
