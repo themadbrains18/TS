@@ -43,8 +43,7 @@ const uploadTemplateBase = z.object({
   techDetails: z.array(z.string().min(1, "Detail cannot be empty")).min(4, "At least 4 technical details are required"),
   seoTags: z.string().min(2, { message: "Enter Your Tags" }),
   isPaid: z.boolean().optional().default(false),
-  price: z.string().optional(),
-});
+  price: z.string().optional(),});
 
 // Schema for creating a template
 export const uploadTemplateSchema = uploadTemplateBase.extend({

@@ -4,7 +4,7 @@ import Preview from './components/Preview'
 const page = () => {
   return (
  <>
- <Preview/>
+ <Preview />
  </>
   )
 }

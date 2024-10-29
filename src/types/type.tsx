@@ -67,7 +67,7 @@ export interface featurecardprops {
   uploadericon?: string,
   uploadername?: string,
   category?: string,
-  buttonprops?: string | number,
+  buttonprops?:  number,
   totalimages?: number,
   currentimage?: number,
   isPaid?: boolean,

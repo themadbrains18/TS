@@ -19,6 +19,7 @@ import Link from 'next/link';
 import DownloadTemplete from '@/components/popups/DownloadTemplete';
 import { ProductDetailProps, TechTemplate } from '@/types/type';
 import Preview from '@/app/(preview)/preview/components/Preview';
+import { useRouter } from 'next/navigation';
 
 /**
  * ProductBanner component displays the main product image and allows users to 
@@ -84,13 +85,18 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
     };
 
     const matchedSoftware = softwareImages[template.softwareType.name];
-
     return (
         <>
             {
-                showPreviews ? <Preview previewImages={template.previewImages}
-                    previewMobileImages={template.previewMobileImages}
-                /> :
+                showPreviews ?
+                    <div>
+                        {/* <div className='container'>
+                        <p className='cursor-pointer' onClick={()=>setShowPreviews(false)}>Go Back</p>
+                        </div> */}
+                        <Preview previewImages={template.previewImages}
+                            previewMobileImages={template.previewMobileImages}
+                        />
+                    </div> :
                     <section className='pb-10'>
                         <div className="container">
                             <div>
@@ -194,7 +200,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                             )}
                                         </div>
                                         <div className='p-2.5 md:p-5 flex items-center bg-divider-100 justify-between ' >
-                                            <Button className='py-[5px] px-2.5' variant='primary' >{template?.isPaid ? template?.price : 'FREE'}</Button>
+                                            <Button className='py-[5px] px-2.5' variant='primary' >{template?.isPaid && template?.price > 0 ? `$${template?.price}` : 'FREE'}</Button>
                                             <div className='flex gap-5 items-center' >
                                                 <h3 className='text-[14px] font-normal leading-5 text-subparagraph' >Total Price</h3>
                                                 <span className='text-[20px] leading-7 text-subparagraph font-bold' >{template?.isPaid ? '$' + template?.price : "$0.00"}</span>
