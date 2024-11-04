@@ -2,10 +2,12 @@
 import React, { useState } from 'react'
 import Profile from './profile'
 import Download from './download'
+import { useSession } from 'next-auth/react'
+import { Session } from 'next-auth'
 
-
-const MainScreen= () => {
+const MainScreen = () => {
     const [activeTab, setActiveTab] = useState<number>(0) // 0 for Profile, 1 for Download
+    const { data: session } = useSession();
 
     return (
         <>
@@ -27,7 +29,7 @@ const MainScreen= () => {
                     </div>
                 </div>
                 <div className='mt-[10px]'>
-                    {activeTab === 0 ? <Profile session={session} /> : <Download />}
+                    {activeTab === 0 ? <Profile session={session as Session} /> : <Download />}
                 </div>
             </section>
         </>
