@@ -51,13 +51,13 @@ const SearchComponent: React.FC<navtabprops> = ({ subCat }) => {
                 {loading && <p className="p-4 text-gray-500 text-center">Loading...</p>}
                 {templates && templates?.length > 0 ? (
                     templates?.map((template) => (
-                        <Link href={`/productdetail/${template?.id}`} key={template.id}>
+                        <Link href={`/productdetail/${template?.id}`} key={template?.id}>
                         <div
                             
                             className="px-4 py-2 hover:bg-gray-100 cursor-pointer border-b w-full last:border-b-0"
                             >
                             <p className="text-sm text-gray-800 font-medium truncate">
-                                {template.title}
+                                {template?.title}
                             </p>
                         </div>
                             </Link>

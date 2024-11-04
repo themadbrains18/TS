@@ -95,12 +95,12 @@ const PopularSection = () => {
                                                     poster={item?.sliderImages[0]?.imageUrl}
                                                     id={item?.id}
                                                     buttonprops={item?.price}
-                                                    category={item?.templateType.name}
-                                                    themeicon={item?.softwareType.name}
+                                                    category={item?.templateType?.name}
+                                                    themeicon={item?.softwareType?.name}
                                                     title={item?.title}
                                                     uploadericon='mdb.svg'
                                                     currentimage={1}
-                                                    totalimages={item.sliderImages.length}
+                                                    totalimages={item.sliderImages?.length}
                                                     isPaid={true}
                                                 />
                                             </Fragment>

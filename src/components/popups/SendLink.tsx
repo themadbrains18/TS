@@ -109,10 +109,10 @@ const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url }: Download
                         Help us to expand the designer's community
                     </h3>
                     <div className="flex items-center lg:max-w-[250px] w-full justify-between mt-5 md:mt-10 lg:mt-0">
-                        {socialicons.map((item, index) => (
+                        {socialicons && socialicons.length>0 && socialicons?.map((item, index) => (
                             <Fragment key={index}>
                                 <Link href={'#'}>
-                                    <Image className="transition-all duration-300 hover:translate-y-[-5px] hover:scale-[1.1] hover:rotate-6" width={30} height={30} src={`/icons/${item.icon}`} alt="icons" />
+                                    <Image className="transition-all duration-300 hover:translate-y-[-5px] hover:scale-[1.1] hover:rotate-6" width={30} height={30} src={`/icons/${item?.icon}`} alt="icons" />
                                 </Link>
                             </Fragment>
                         ))}

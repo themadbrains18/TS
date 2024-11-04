@@ -85,8 +85,8 @@ const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
               <Fragment key={idx}>
                 <NavCard
                 id={item?.id}
-                  image={item.sliderImages[0]?.imageUrl}
-                  title={item.title}
+                  image={item?.sliderImages[0]?.imageUrl}
+                  title={item?.title}
                   icon={`/icons/figma.svg`}
                 />
               </Fragment>

@@ -18,7 +18,7 @@ import ProductDetailcheckbox from './ProductDetailcheckbox';
 import Link from 'next/link';
 import DownloadTemplete from '@/components/popups/DownloadTemplete';
 import { ProductDetailProps, TechTemplate } from '@/types/type';
-import Preview from '@/app/(preview)/preview/components/Preview';
+import { useRouter } from 'next/navigation';
 
 /**
  * ProductBanner component displays the main product image and allows users to 
@@ -75,7 +75,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
 
     const softwareImages: Record<string, SoftwareType> = {
         "Figma": { image: '/icons/figma.svg', label: "Figma Design File" },
-        "Adobe XD": { image: '/icons/XD.svg', label: "Adobe XD Design File" },
+        "Adobe XD": { image: '/icons/adobexd.svg', label: "Adobe XD Design File" },
         "PhotoShop": { image: '/icons/photoshop.svg', label: "Photoshop Design File" },
         "Sketch": { image: '/icons/sketch.svg', label: "Sketch Design File" },
         "NextJs": { image: '/icons/nextjs.svg', label: "NextJs Design File" },
@@ -85,12 +85,9 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
 
     const matchedSoftware = softwareImages[template?.softwareType?.name];
 
+    
     return (
         <>
-            {
-                showPreviews ? <Preview previewImages={template.previewImages}
-                    previewMobileImages={template.previewMobileImages}
-                /> :
                     <section className='pb-10'>
                         <div className="container">
                             <div>
@@ -194,14 +191,15 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                             )}
                                         </div>
                                         <div className='p-2.5 md:p-5 flex items-center bg-divider-100 justify-between ' >
-                                            <Button className='py-[5px] px-2.5' variant='primary' >{template?.isPaid ? template?.price : 'FREE'}</Button>
+                                            <Button className='py-[5px] px-2.5' variant='primary' >{template?.isPaid && template?.price > 0 ? `$${template?.price}` : 'FREE'}</Button>
                                             <div className='flex gap-5 items-center' >
                                                 <h3 className='text-[14px] font-normal leading-5 text-subparagraph' >Total Price</h3>
                                                 <span className='text-[20px] leading-7 text-subparagraph font-bold' >{template?.isPaid ? '$' + template?.price : "$0.00"}</span>
                                             </div>
                                         </div>
                                         <Button onClick={openPopup} className='w-full mb-2.5 mt-5  md:mt-[30px] md:mb-5 justify-center py-2 md:py-[13px]' variant='primary' > Download</Button>
-                                        <Button onClick={() => setShowPreviews(true)} className='w-full justify-center' variant='liquid' >Preview</Button>
+                                        <Button link={`/preview/${template?.id}`}  className='w-full justify-center' variant='liquid' >Preview</Button>
+                                        {/* onClick={() => setShowPreviews(true)} */}
                                         {
                                             isPopupOpen &&
                                             <DownloadTemplete isFirstPopupOpen={isFirstPopupOpen} setIsFirstPopupOpen={setIsFirstPopupOpen} id={template?.id} url={template?.sourceFiles[0]?.fileUrl} />
@@ -211,8 +209,6 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                             </div>
                         </div >
                     </section >
-            }
-
 
         </>
     )

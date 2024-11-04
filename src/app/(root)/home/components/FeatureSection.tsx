@@ -72,23 +72,20 @@ const FeatureSection = () => {
                             {
                                 items.map((item, index) => {
                                     return (
-                                        <>
-
-                                            <Fragment key={index}>
-                                                <FeatureCard
-                                                    id={item.id}
-                                                    buttonprops={item.price}
-                                                    category={item.templateType.name}
-                                                    themeicon={item?.softwareType.name}
-                                                    title={item.title}
-                                                    uploadericon='mdb.svg'
-                                                    currentimage={1}
-                                                    poster={item?.sliderImages[0]?.imageUrl}
-                                                    totalimages={item.sliderImages.length}
-                                                    isPaid={true}
-                                                />
-                                            </Fragment>
-                                        </>
+                                        <Fragment key={index}>
+                                            <FeatureCard
+                                                id={item?.id}
+                                                buttonprops={item?.price}
+                                                category={item?.templateType?.name}
+                                                themeicon={item?.softwareType?.name}
+                                                title={item?.title}
+                                                uploadericon='mdb.svg'
+                                                currentimage={1}
+                                                poster={item?.sliderImages[0]?.imageUrl}
+                                                totalimages={item?.sliderImages?.length}
+                                                isPaid={true}
+                                            />
+                                        </Fragment>
                                     )
                                 })
                             }

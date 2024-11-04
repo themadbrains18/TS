@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { FC, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Swiper as SwiperType } from 'swiper';
 import 'swiper/css';
@@ -9,15 +9,19 @@ import { Navigation } from 'swiper/modules';
 import Image from 'next/image';
 import Icon from '@/components/Icon';
 import { useRouter } from 'next/navigation';
+import { PreviewImage } from '@/types/type';
 
-const Page = () => {
+interface fullscreen {
+    previewMobileImages?: PreviewImage[],
+    previewImages?: PreviewImage[]
+}
+
+const Page: FC<fullscreen> = ({
+    previewImages, previewMobileImages
+}) => {
     const router = useRouter();
     const swiperRef = useRef<SwiperType | null>(null);
     const [activeIndex, setActiveIndex] = useState(0); // Track the current active slide
-
-    const desktopImages = [
-        'templete2.png', 'templete1.png', 'templete2.png', 'templete1.png', 'templete3.png', 'templete1.png',
-    ];
 
     const handleGoBack = () => {
         router.back();
@@ -26,14 +30,15 @@ const Page = () => {
     return (
         <section className="pt-10 relative h-fit">
             <div className="container">
-                <div onClick={handleGoBack} className=" flex  items-center gap-x-[2px] justify-between cursor-pointer pb-[6px]">
-                    <div className='flex  items-center  gap-1' >
+                <div className=" flex  items-center gap-x-[2px] justify-between cursor-pointer pb-[6px]">
+                    <div onClick={handleGoBack} className='flex  items-center  gap-1' >
                         <Icon name="soliddownicon" className="fill-subparagraph rotate-180 h-3 w-3" />
                         <p className="text-sm font-semibold leading-5 text-textparagraph capitalize">Back</p>
                     </div>
                     {/* Custom Number Pagination */}
                     <div className=" text-sm text-subparagraph">
-                        {activeIndex + 1}/{desktopImages.length}
+                        {activeIndex + 1}/
+                        {(previewMobileImages?.length ?? 0) + (previewImages?.length ?? 0)}
                     </div>
                 </div>
             </div>
@@ -45,12 +50,26 @@ const Page = () => {
                     onBeforeInit={(swiper) => (swiperRef.current = swiper)}
                     autoHeight={true} // Automatically adjusts height based on slide content
                 >
-                    {desktopImages.map((image, index) => (
+                    {previewImages && previewImages?.map((image, index) => (
                         <SwiperSlide key={index}>
                             <div className="flex justify-center">
                                 <Image
                                     className="select-none w-full h-auto" // Ensure the image adjusts its height automatically
-                                    src={`/images/${image}`}
+                                    src={image.imageUrl}
+                                    width={1500}
+                                    height={1111}
+                                    alt={`Slide image ${index + 1}`}
+                                    priority={index === 0} // Optimizes loading for the first image
+                                />
+                            </div>
+                        </SwiperSlide>
+                    ))}
+                    {previewMobileImages && previewMobileImages?.map((image, index) => (
+                        <SwiperSlide key={index}>
+                            <div className="flex justify-center">
+                                <Image
+                                    className="select-none w-full h-auto" // Ensure the image adjusts its height automatically
+                                    src={image.imageUrl}
                                     width={1500}
                                     height={1111}
                                     alt={`Slide image ${index + 1}`}
