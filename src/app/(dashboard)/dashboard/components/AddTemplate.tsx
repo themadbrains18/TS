@@ -12,7 +12,7 @@ import useFetch from '@/hooks/useFetch';
 
 const AddTemplate = () => {
   interface Template {
-    templates: [
+    templates: 
       {
         id: string; // Add ID to template
         title: string;
@@ -20,8 +20,8 @@ const AddTemplate = () => {
         version: string;
         price: number;
         deleted:boolean
-      }
-    ]
+      }[]
+    
   }
 
   const { data: response, error, loading, fetchData } = useFetch<Template[]>();
@@ -73,7 +73,7 @@ const AddTemplate = () => {
 
   // Function to handle the DELETE request
   const handleDelete = async (id: string) => {
-    // console.log(id,"i am id ")
+    console.log(id,"i am id ")
     try {
       await fetchData(`/templates/${id}`, { method: 'DELETE' });
       // Optionally refetch templates after deletion
