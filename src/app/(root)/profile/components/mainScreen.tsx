@@ -2,12 +2,9 @@
 import React, { useState } from 'react'
 import Profile from './profile'
 import Download from './download'
-import { Session } from 'next-auth'
 
-interface sessionProps {
-    session: Session
-}
-const MainScreen: React.FC<sessionProps> = ({ session }) => {
+
+const MainScreen= () => {
     const [activeTab, setActiveTab] = useState<number>(0) // 0 for Profile, 1 for Download
 
     return (
