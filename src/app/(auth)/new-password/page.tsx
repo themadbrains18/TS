@@ -1,7 +1,7 @@
 "use client";
 
 import Button from '@/components/ui/Button';
-import CheckBox from '@/components/ui/checkbox';
+import CheckBox from '@/components/ui/Checkbox';
 import Input from '@/components/ui/Input';
 import useFetch from '@/hooks/useFetch';
 import { newChangePassword } from '@/validations/NewPassword';
@@ -48,7 +48,7 @@ const NewPassword = ({ formdata }: any) => {
                     'Content-Type': 'application/json'
                 }
             });
-            console.log(response?.success,"success")
+            // console.log(response?.success,"success")
 
             if (response?.success) {
                 router.push('/login')
