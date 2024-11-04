@@ -69,7 +69,7 @@ export interface featurecardprops {
   uploadericon?: string,
   uploadername?: string,
   category?: string,
-  buttonprops?:  number,
+  buttonprops?: number,
   totalimages?: number,
   currentimage?: number,
   isPaid?: boolean,
@@ -283,13 +283,14 @@ export interface downloadcard {
   parentClass?: string,
   bgParentClass?: string,
   url?: string,
-  premium?:boolean
+  premium?: boolean
 }
 
 export interface verifyoldemail {
   isPopupOpen: boolean,
   closePopup: () => void;
-  register?:UseFormRegister<any>
+  register?: UseFormRegister<any>
+  handlepasswordUpdate: () => void
 }
 
 

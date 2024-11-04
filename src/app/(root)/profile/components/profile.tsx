@@ -27,9 +27,10 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
     const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
     const [profileImage, setProfileImage] = useState<any>(profileimage);
     const [name, setName] = useState('');
+    const [nameError, setNameeror] = useState<boolean>();
     const [phoneNumber, setPhoneNumber] = useState('');
+    const [phoneNumberError, setPhoneNumberError] = useState<boolean>();
 
-    console.log(phoneNumber, "phoneNumber")
 
     const closePopup = () => {
         setIsPopupOpen(false);
@@ -42,7 +43,6 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
     const { data: updateData, error: updateError, loading: updateLoading, fetchData: updateFetchData } = useFetch<any>();
     const { data: updateNumberdata, error: updateNumbererror, loading: updateloadingNumber, fetchData: updateNumber } = useFetch<any>();
     const { data: updatePassworddata, error: updatePassworderror, loading: updateloadingPassword, fetchData: updatePassword } = useFetch<any>();
-
 
 
 
@@ -78,6 +78,10 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
 
     const handleNameUpdate = async () => {
         try {
+            if (!name) {
+                setNameeror(true)
+                return
+            }
             await updateFetchData('/update-details', {
                 method: 'PUT',
                 body: JSON.stringify({ name, id: session?.id }),
@@ -98,6 +102,10 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
         let number = phoneNumber
 
         try {
+            if (!phoneNumberError) {
+                setPhoneNumberError(true)
+                return
+            }
             await updateNumber('/update-details', {
                 method: 'PUT',
                 body: JSON.stringify({ number, id: session?.id }),
@@ -141,14 +149,18 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
                                     <div className='relative max-w-[115px] md:max-w-[168px] w-full h-[168px]'>
                                         <Image
                                             className='rounded-full h-[168px]'
-                                            src={
-                                                loading ? profileImage :
-                                                    response?.user?.profileImg
-                                            }
+                                            // src={
+                                            //     loading ? '/images/profileimage.png' :
+                                            //         response?.user?.profileImg
+                                            // }
+                                            src={profileImage}
                                             height={168}
                                             width={168}
                                             alt='userimage'
                                         />
+
+
+                                        
                                         <label htmlFor="profilepic" className='py-[5px] px-[14px] text-[11px] md:text-base md:py-2 text-nowrap absolute bottom-0 left-[6px] right-[6px] md:left-2 md:right-2 text-center bg-primary-300 text-[#282827] capitalize cursor-pointer border-b transition-all duration-200 hover:border-primary-100 font-regular leading-6'>change image</label>
                                         <input
                                             className='hidden'
@@ -169,8 +181,9 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
                                             name='name'
                                             type='text'
                                             value={name}
-                                            onChange={(e) => setName(e.target.value)}
+                                            onChange={(e) => setName(e?.target?.value)}
                                         />
+
                                         {
                                             isNameActive ?
                                                 <Button
@@ -195,7 +208,11 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
                                                     editicon={true} >edit</Button>
                                         }
 
+
                                     </div>
+                                    {
+                                        nameError && <p className='text-red-300'> Your Name Is Empty</p>
+                                    }
 
                                     <div className='flex items-end gap-x-[10px]'>
                                         <Input
@@ -225,7 +242,9 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
                                         }
                                     </div>
 
-
+                                    {
+                                        phoneNumberError && <p className='text-red-300'> Your Phone Number Is Empty</p>
+                                    }
 
                                     <div className='flex items-end gap-x-[10px]'>
                                         <Input
