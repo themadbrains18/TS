@@ -32,18 +32,18 @@ const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
     }
   }, [searchParams, subCat]);
 
-  const handleActive = (item:subCat, index:number) => {
+  const handleActive = (item: subCat, index: number) => {
     setActivetab(index)
     setSubCategory(item)
     fetchData(`/templates?templateTypeId=${item?.templateTypeId}&subCatId=${item?.id}&page=1&limit=4`)
   }
   // console.log(data,"==data");
-  
+
 
   return (
     <>
       {/* Tabs Section */}
-      <div className="bg-white shadow-lg overflow-scroll hiddenscroll ">
+      <div className="bg-white shadow-lg overflow-scroll hiddenscroll  w-full">
         <div className="pt-5 lg:px-10 lg:pt-10 lg:pb-[30px] flex gap-x-[5px] lg:gap-x-5 items-center overflow-scroll hiddenscroll">
           {subCat && subCat.map((item, index) => (
             <Fragment key={index}>
@@ -81,10 +81,10 @@ const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
 
           {/* NavCards Section */}
           <div className="flex justify-between my-5 w-full gap-x-[10px] lg:gap-x-5 overflow-scroll hiddenscroll">
-            {data && data?.data?.length>0 && data.data?.map((item:TechTemplate, idx:number) => (
+            {data && data?.data?.length > 0 && data.data?.map((item: TechTemplate, idx: number) => (
               <Fragment key={idx}>
                 <NavCard
-                id={item?.id}
+                  id={item?.id}
                   image={item?.sliderImages[0]?.imageUrl}
                   title={item?.title}
                   icon={`/icons/figma.svg`}

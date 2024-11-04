@@ -19,8 +19,6 @@ const page = async({ params }: { params: { id: string } }) => {
           });
         if (!response) return null
 
-    //    console.log(response);
-       
         return await response.json();
     };
 
@@ -41,7 +39,6 @@ const page = async({ params }: { params: { id: string } }) => {
             <Suspense fallback={`<><div>Loading...</div></>`}>
                 <TemplateForm  initialData={getData} type='edit' id={params?.id}/>
                 {/* {(getData) === null ? <Dashborad404 /> : <Propertyform type="edit" initialData={getData} />} */}
-
             </Suspense>
         </>
     )

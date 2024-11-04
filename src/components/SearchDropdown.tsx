@@ -11,17 +11,17 @@ import { navtabprops, subCat } from "@/types/type";
  */
 
 
-const SearchDropdown: React.FC<navtabprops> = ({ subCat,onSelect  }) => {
+const SearchDropdown: React.FC<navtabprops> = ({ subCat, onSelect }) => {
   const [open, setOpen] = useState(false);
   const [prodcuts, setProducts] = useState("all products");
 
- 
+
 
   return (
     <>
       <div className="relative">
         <div
-          className="flex items-center justify-between bg-primary-300 cursor-pointer py-[5px] px-[15px] min-w-[125px] w-full"
+          className="flex items-center justify-between bg-primary-300 cursor-pointer py-[5px] md:px-[15px] px-[7px] min-w-[125px] w-full"
           onClick={() => setOpen(!open)}
         >
           <h4 className="capitalize text-subparagraph inline-block max-w-[80px]  leading-5 text-sm text-nowrap overflow-hidden text-ellipsis ">
@@ -34,10 +34,10 @@ const SearchDropdown: React.FC<navtabprops> = ({ subCat,onSelect  }) => {
           />
         </div>
         <div
-          className={cn`absolute max-h-[420px] overflow-y-scroll scroll-smooth shadow-1 transition-all duration-[0.3s] navsearch bg-white ${open !== false ? "visible opacity-[1]" : "opacity-0 invisible"
+          className={cn`absolute max-h-[420px] overflow-y-scroll z-[999] scroll-smooth shadow-1 transition-all duration-[0.3s] navsearch bg-white ${open !== false ? "visible opacity-[1]" : "opacity-0 invisible"
             } `}
         >
-          {subCat && subCat?.length>0 && subCat?.map((item: subCat, index: number) => {
+          {subCat && subCat?.length > 0 && subCat?.map((item: subCat, index: number) => {
 
             return (
               <h4

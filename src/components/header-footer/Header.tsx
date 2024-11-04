@@ -16,19 +16,30 @@ import { signOut, useSession } from 'next-auth/react';
 import { TemplateType } from "@/app/(dashboard)/dashboard/addtemplate/components/templateForm";
 import SearchComponent from "./SearchComponent";
 
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+  role: "USER" | "ADMIN"; // Adjust roles as necessary
+  profileImg: string | null;
+  number: string | null;
+  token: string | null;
+  freeDownloads: number;
+}
+
+
+
 const Header = () => {
+  const [sidebar, setSidebar] = useState<boolean>(false);
+  const [loadingdata, setLoadingdata] = useState(true);  // Initially true while loading
   const { data, fetchData, loading } = useFetch<TemplateType[]>();
+  const [searchbar, setsearchbar] = useState<boolean>()
   const { data: session } = useSession();
-
   const { data: subCatData, fetchData: fetchsubCatData } = useFetch<subCat[]>();
-
-  // State to manage desktop search bar visibility
+  const { data: userdata, fetchData: fetchUserdata } = useFetch<User>();
   const [opensearch, setOpensearch] = useState(false)
 
-  // State to manage sidebar visibility
-  const [sidebar, setSidebar] = useState<boolean>(false);
-
-  // Sections for the accordion in the sidebar
 
 
   const [openAccordions, setOpenAccordions] = useState<boolean[]>(
@@ -52,18 +63,38 @@ const Header = () => {
 
 
 
+  const fetchUserData = async () => {
+    try {
+      fetchUserdata(`/get-user`);
+    } catch (error) {
+      console.log(error)
+    }
+  };
+
+
+  // open search bar input 
+  const openinput = () => {
+    setOpensearch(!opensearch)
+  }
+
+  const resinputoff = () => {
+    setOpensearch(false)
+  }
+
   const isLoggedIn = session && session.token;
 
   useEffect(() => {
     try {
+      setLoadingdata(true)
       fetchData(`/template-types`);
       fetchsubCatData(`/sub-categories`);
+      fetchUserData()
     } catch (error) {
     }
+    finally {
+      setLoadingdata(false)
+    }
   }, [])
-
-
-
 
   return (
     <>
@@ -81,7 +112,7 @@ const Header = () => {
                 />
               </Link>
               <div className="flex items-center max-w-[473px] w-full justify-between">
-                {loading ? <>
+                {loadingdata ? <>
                   <div className="flex items-center animate-pulse w-full">
                     <div className="h-4  bg-gray-200 rounded mr-2 w-full"></div>
                     <div className="h-4  bg-gray-200 rounded mr-2 w-full"></div>
@@ -89,7 +120,7 @@ const Header = () => {
                   </div>
                 </> : <>
                   {
-                    data && data?.length>0 &&  data?.map((item, index) => {
+                    data && data?.length > 0 && data?.map((item, index) => {
                       return (
                         <Fragment key={index}>
                           <NavDropdown title={item?.name} subCat={item?.subCategories} />
@@ -105,33 +136,54 @@ const Header = () => {
               </div>
             </div>
             <div className={cn`max-w-[576px] w-full flex items-center justify-end gap-x-5 `}>
-              <SearchComponent subCat={subCatData || undefined}/>
-              {/* <div className={cn`flex items-center relative  justify-end ${opensearch !== false ? "" : "overflow-hidden"}`}>
-                <div className="p-[11px]" >
-                  <Icon name="search" className={cn` cursor-pointer transition-all duration-[0.3s] ${opensearch !== false ? " opacity-0 invisible" : "visible opacity-[1]"}`} onClick={() => setOpensearch(!opensearch)} />
-                </div>
-                <div className={cn` flex items-center justify-between max-w-[410px] opacity-0 border-[1px] bg-white border-primary-100 transition-all duration-[0.5s] absolute   ${opensearch !== false ? "opacity-[1] visible  p-[10px] right-0 " : "opacity-0 invisible right-[-100%] p-0 "}`}>
-                  <div className="border-r-[1px] border-divider-200 pr-[10px] mr-[10px]">
-                    <SearchDropdown subCat={subCatData || undefined} />
+              <SearchComponent classname="max-w-[410px]" searchresults="max-h-60" openinput={openinput} opensearch={opensearch} setOpensearch={setOpensearch} subCat={subCatData || undefined} />
+              {
+                isLoggedIn &&
+                <div className="group ">
+                  <div className="w-[50px] h-[50px] cursor-pointer ">
+                    <Image
+                      width={50}
+                      height={50}
+                      className="rounded-full object-contain"
+                      src={userdata?.user?.profileImg || "/images/userdummy.png"}
+                      alt="diamond"
+                    />
                   </div>
-                  <input type="text" placeholder="Search all templates...." className="my-[10px] placeholder:text-sm placeholder:text-subparagraph leading-5 outline-none " />
-                  <Icon name="crossicon" className={`cursor-pointer fill-primary-100  ${opensearch !== false ? "opacity-100" : "opacity-0"}`} onClick={() => setOpensearch(!opensearch)} />
+                  <div className="absolute group-hover:opacity-100 transition-all group-hover:visible invisible opacity-0  duration-[0.5s] top-full max-[1678px]:right-[15px] right-[85px] mt-2 max-w-[256px] w-full bg-white shadow-lg rounded-lg">
+                    <div className="pt-[46px] mt-[-46px]" >
+                      <div className="py-2.5 ">
+                        <h2 className="leading-6 text-[16px] font-semibold text-textheading py-2 pl-[30px] pr-[27px] mb-2.5">
+                          {session?.email}
+                        </h2>
+                        <div className="px-[30px] mb-2.5 " >
+                          <h2 className="text-[13px] font-medium leading-5 text-textheading" >Daily Download Balance</h2>
+                          <div className="py-[3px] px-[3px] h-[12px] border-[#E8CFFB] border-[1px] rounded-[6px] my-[5px] "  >
+                            <span className="h-1 block bg-primary-100 rounded-[5px] w-[33.33%] " ></span>
+                          </div>
+                          <h3 className="text-[12px] font-normal leading-5 text-textheading" >1 remaining out of 3</h3>
+                        </div>
+                        <div className="flex flex-col " >
+                          <Link href={"/profile"} >
+                            <button className={` w-full text-textheading text-start leading-6 hover:text-subparagraph py-2 px-[30px] capitalize cursor-pointer text-nowrap hover:bg-primary-200 border-l-[2px] border-white hover:border-primary-100`}>
+                              Profile
+                            </button>
+                          </Link>
+                          <button onClick={() => signOut()} className={`text-textheading text-start hover:text-subparagraph leading-6 py-2 px-[30px] capitalize cursor-pointer text-nowrap hover:bg-primary-200 border-white border-l-[2px] hover:border-primary-100`}>
+                            Log out
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div> */}
-              {!isLoggedIn ? (
+              }
+
+              {!isLoggedIn && (
                 <>
                   <Button link="/register">Sign Up</Button>
                   <Button link="/login">Log In</Button>
                 </>
-              ) : (<>
-                <Button
-                  variant="primary"
-                  className="py-2 px-[18px] w-full max-w-[50%] flex justify-center"
-                  onClick={() => signOut()}
-                >
-                  Log out
-                </Button>
-              </>)}
+              )}
             </div>
           </div>
         </div>
@@ -141,11 +193,66 @@ const Header = () => {
         <div className="container min-[1028px]:hidden ">
           <div className="flex items-center justify-between py-4 relative">
             <div onClick={() => setSidebar(!sidebar)}> <Icon name="menuicon" className="w-8 h-8" /></div>
-            <div> <Link href={'/'}>
-              <Image className="cursor-pointer h-9" width={193} height={38} src={'/icons/logo.svg'} alt="logo" /> </Link>
+            <Link href={'/'}>
+              <Image className="cursor-pointer h-9" width={193} height={38} src={'/icons/logo.svg'} alt="logo" />
+            </Link>
+            <div className="flex flex-row gap-1 items-center" >
+              <div onClick={() => setsearchbar(true)} >
+                <Icon name="solidsearch" className="w-9 h-9 cursor-pointer" />
+              </div>
+
+              <div className="group ">
+                <div className="w-[30px] h-[30px] cursor-pointer ">
+                  <Image
+                    width={50}
+                    height={50}
+                    className="rounded-full object-contain"
+                    src={userdata?.user?.profileImg || "/images/userdummy.png"}
+                    alt="diamond"
+                  />
+                </div>
+                <div className="absolute group-hover:opacity-100 transition-all group-hover:visible invisible opacity-0  duration-[0.5s] top-full max-[1678px]:right-[0] right-[85px] mt-2 max-w-[256px] w-full bg-white shadow-lg rounded-lg">
+                  <div className="pt-[46px] mt-[-46px] " >
+                    <div className="py-2.5 ">
+                      <h2 className="leading-6 text-[16px] font-semibold text-textheading py-2 pl-[30px] pr-[27px] mb-2.5">
+                        {session?.email}
+                      </h2>
+                      <div className="px-[30px] mb-2.5 " >
+                        <h2 className="text-[13px] font-medium leading-5 text-textheading" >Daily Download Balance</h2>
+                        <div className="py-[3px] px-[3px] h-[12px] border-[#E8CFFB] border-[1px] rounded-[6px] my-[5px] "  >
+                          <span className="h-1 block bg-primary-100 rounded-[5px] w-[33.33%] " ></span>
+                        </div>
+                        <h3 className="text-[12px] font-normal leading-5 text-textheading" >1 remaining out of 3</h3>
+                      </div>
+                      <div className="flex flex-col " >
+                        <Link href={"/profile"} >
+                          <button className={` w-full text-textheading text-start leading-6 hover:text-subparagraph py-2 px-[30px] capitalize cursor-pointer text-nowrap hover:bg-primary-200 border-l-[2px] border-white hover:border-primary-100`}>
+                            Profile
+                          </button>
+                        </Link>
+                        <button onClick={() => signOut()} className={`text-textheading text-start hover:text-subparagraph leading-6 py-2 px-[30px] capitalize cursor-pointer text-nowrap hover:bg-primary-200 border-white border-l-[2px] hover:border-primary-100`}>
+                          Log out
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div onClick={() => setSidebar(!sidebar)}> <Icon name="solidsearch" className="w-9 h-9" /></div>
+
+            <div className={`w-[100%] duration-[0.5s] fixed top-0 bg-white h-full  px-2 ${searchbar ? "right-0 " : "right-[-100%]"}`} >
+              <div className="flex flex-row justify-between items-center py-4 " >
+                <Link href={'/'}>
+                  <Image className="cursor-pointer h-9" width={193} height={38} src={'/icons/logo.svg'} alt="logo" />
+                </Link>
+                <div onClick={() => setsearchbar(false)} >
+                  <Icon className="w-8 h-5 fill-primary-100" name="crossicon" />
+                </div>
+              </div>
+              <SearchComponent resinputoff={resinputoff} searchresults="h-screen" mainclass="pt-[30px]" opensearch={true} classname="w-full max-w-[100%]" subCat={subCatData || undefined} />
+            </div>
           </div>
+
           <div className={cn`flex z-[2] flex-col fixed bg-white w-full transition-all duration-[1s] h-screen p-5 top-0 ${sidebar ? "left-0" : "left-[-100%]"}`}>
             <div className="flex items-center justify-between pb-5">
               <Link href={'/'}>
@@ -156,13 +263,9 @@ const Header = () => {
               </div>
             </div>
             <div className="overflow-scroll hiddenscroll" >
-              <div className="p-[10px] flex items-center justify-center gap-x-1 w-full border border-divider-100">
-                <Image width={30} height={30} src={'/icons/solidsearch.svg'} alt="searchicon" />
-                {/* <Input register={} name="search" placeholder="Search" /> */}
-              </div>
               <div className="flex flex-col mt-8">
                 {
-                  data &&data?.length>0 && data?.map((item, index) => {
+                  data && data?.length > 0 && data?.map((item, index) => {
                     return (<Fragment key={index}>
                       <Accordion
                         isOpen={openAccordions[index]} // Check if this specific accordion is open
@@ -193,6 +296,8 @@ const Header = () => {
               </>)}
             </div>
           </div>
+
+
         </div>
       </header>
     </>

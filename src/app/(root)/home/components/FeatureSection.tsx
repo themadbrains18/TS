@@ -70,7 +70,7 @@ const FeatureSection = () => {
                     ) : (
                         <div className='mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-[30px]'>
                             {
-                                items.map((item, index) => {
+                                items?.map((item, index) => {
                                     return (
                                         <Fragment key={index}>
                                             <FeatureCard

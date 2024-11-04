@@ -50,6 +50,7 @@ const Page: FC<fullscreen> = ({
                     onBeforeInit={(swiper) => (swiperRef.current = swiper)}
                     autoHeight={true} // Automatically adjusts height based on slide content
                 >
+                    
                     {previewImages && previewImages?.map((image, index) => (
                         <SwiperSlide key={index}>
                             <div className="flex justify-center">
@@ -64,6 +65,7 @@ const Page: FC<fullscreen> = ({
                             </div>
                         </SwiperSlide>
                     ))}
+
                     {previewMobileImages && previewMobileImages?.map((image, index) => (
                         <SwiperSlide key={index}>
                             <div className="flex justify-center">

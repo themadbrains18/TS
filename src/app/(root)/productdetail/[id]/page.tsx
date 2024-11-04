@@ -29,6 +29,7 @@ const Page = async ({ params }: { params: Params }) => {
     headers: {
       'Content-Type': 'application/json',
     },
+    next: { revalidate: 1800 }
   });
 
 

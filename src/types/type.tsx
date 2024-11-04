@@ -39,6 +39,13 @@ export interface navtabprops {
   // title: string;
   subCat?: subCat[]
   onSelect?: (id: string) => void;
+  classname?: string
+  opensearch?: boolean
+  setOpensearch?: React.Dispatch<React.SetStateAction<boolean>>;
+  openinput?: () => void
+  mainclass?: string
+  searchresults?:string
+  resinputoff?:() => void;
 }
 
 export interface subCat {

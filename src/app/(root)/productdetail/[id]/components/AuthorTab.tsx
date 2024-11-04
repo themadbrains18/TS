@@ -9,7 +9,7 @@ import React, { Fragment, useEffect } from 'react';
 interface UserDetailProps {
   userDetail: {
     name: string;
-    id?:string 
+    id?: string
   };
 }
 
@@ -18,8 +18,8 @@ interface ApiResponse {
 }
 
 const AuthorTab: React.FC<UserDetailProps> = ({ userDetail }) => {
-  console.log(userDetail,"==userDetail");
-  
+  console.log(userDetail, "==userDetail");
+
   const { data, fetchData } = useFetch<ApiResponse>();
 
   const getUserTemplates = async () => {
@@ -35,7 +35,7 @@ const AuthorTab: React.FC<UserDetailProps> = ({ userDetail }) => {
   }, []);
 
   // console.log(data,"==data");
-  
+
   return (
     <div className="mt-10 lg:mt-20">
       <div className="flex justify-between flex-col md:flex-row items-center md:items-end">
@@ -82,7 +82,7 @@ const AuthorTab: React.FC<UserDetailProps> = ({ userDetail }) => {
           </Button>
         </div>
         <div className="max-w-[1560px] overflow-scroll hiddenscroll">
-          <div className="flex items-center justify-between gap-x-[10px] md:gap-x-[30px] mt-5">
+          <div className="flex items-center justify-between gap-x-[10px] md:gap-x-[20px] mt-5">
             {data && data?.data?.length > 0 && data?.data?.map((item) => (
               <Fragment key={item.id}>
                 <NavCard
