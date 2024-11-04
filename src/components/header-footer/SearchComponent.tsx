@@ -2,14 +2,15 @@ import { useState, useEffect } from 'react';
 import useFetch from '@/hooks/useFetch';
 import Icon from '../Icon';
 import SearchDropdown from '../SearchDropdown';
-import { navtabprops, TechTemplate } from '@/types/type';
+import { navtabprops } from '@/types/type';
 import { cn } from '@/libs/utils';
 import Link from 'next/link';
+import { Template } from '@/app/(dashboard)/dashboard/components/AddTemplate';
 
 const SearchComponent: React.FC<navtabprops> = ({ subCat, classname, opensearch, openinput, mainclass, searchresults, resinputoff }) => {
     const [selectedCategory, setSelectedCategory] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
-    const { data: templates, error, loading, fetchData } = useFetch<TechTemplate[]>();
+    const { data: templates, error, loading, fetchData } = useFetch<Template>();
     // State to manage desktop search bar visibility
     // const [opensearch, setOpensearch] = useState(false)
 
@@ -20,9 +21,10 @@ const SearchComponent: React.FC<navtabprops> = ({ subCat, classname, opensearch,
     };
 
     useEffect(() => {
-        if (searchQuery) {
+        // console.log(searchQuery,"==searchQuery")
+            
             handleSearch(searchQuery, selectedCategory);
-        }
+        
     }, [searchQuery, selectedCategory]);
 
     return (
@@ -60,8 +62,8 @@ const SearchComponent: React.FC<navtabprops> = ({ subCat, classname, opensearch,
             {/* Render search results */}
             {opensearch && <div className={cn`${searchresults} search-results absolute top-[104%] mt-2 w-full min-w-[180px] bg-white shadow-lg rounded-md overflow-y-auto z-[99]`}>
                 {loading && <p className="p-4 text-gray-500 text-center">Loading...</p>}
-                {templates && templates?.length > 0 ? (
-                    templates?.map((template) => (
+                {templates?.templates && templates?.templates?.length > 0 ? (
+                    templates?.templates?.map((template) => (
                         <Link href={`/productdetail/${template?.id}`} key={template?.id}>
                             <div
                                 onClick={() => console.log("hell0")}

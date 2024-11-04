@@ -123,6 +123,7 @@ const RelatedProducts = () => {
                                     data.data.slice(0, 4).map((item, index) => (
                                         <Fragment key={index}>
                                             <FeatureCard
+                                            id={item?.id}
                                                 buttonprops={item.price}
                                                 category={item.subCategory.name}
                                                 poster={item.sliderImages[0]?.imageUrl}

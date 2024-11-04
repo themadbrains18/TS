@@ -26,7 +26,7 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
     const [isEmailDisabled, setIsEmailDisabled] = useState<boolean>(true);
     const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
     const [profileImage, setProfileImage] = useState<any>(profileimage);
-    const [name, setName] = useState('');
+    const [name, setName] = useState(session?.user ?session?.user?.name:'');
     const [nameError, setNameeror] = useState<boolean>();
     const [phoneNumber, setPhoneNumber] = useState('');
     const [phoneNumberError, setPhoneNumberError] = useState<boolean>();
@@ -68,7 +68,7 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
     const fetchUserData = async () => {
         try {
             fetchData(`/get-user`);
-            setProfileImage(response?.user?.profileImg || profileimage);
+          
         } catch (error) {
             console.log(error)
         }
@@ -136,6 +136,15 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
         fetchUserData();
     }, []);
 
+    useEffect(()=>{
+        // console.log(response,"==response");
+        
+if(response){
+    setProfileImage(response?.user?.profileImg || profileimage);
+}
+    },[response])
+    
+
     return (
         <>
             <section>
@@ -180,7 +189,7 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
                                             placeholder='Name'
                                             name='name'
                                             type='text'
-                                            value={name}
+                                            value={response?.user ? response?.user?.name : name}
                                             onChange={(e) => setName(e?.target?.value)}
                                         />
 
@@ -222,7 +231,7 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
                                             placeholder='Number'
                                             name='number'
                                             type='text'
-                                            value={phoneNumber}
+                                            value={response?.user ? response?.user?.number:phoneNumber}
                                             onChange={(e) => setPhoneNumber(e.target.value)}
                                         />
                                         {
@@ -285,7 +294,7 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
 
                                     <div className='py-[18px] px-5 border border-divider-100 flex items-center justify-between'>
                                         <h3 className='text-neutral-900 font-semibold capitalize leading-6'>Daily Download Balance :</h3>
-                                        <p className='text-neutral-900 font-semibold capitalize leading-6'>3</p>
+                                        <p className='text-neutral-900 font-semibold capitalize leading-6'>{response?.user?.freeDownloads || 0}</p>
                                     </div>
                                 </div>
                             </div>

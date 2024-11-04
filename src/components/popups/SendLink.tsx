@@ -66,7 +66,7 @@ const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url }: Download
 
 
     useEffect(() => {
-        console.log("herer", response);
+        // console.log("herer", response);
         if (response) {
             // If successful, you can handle the response here
             openthirdpopup(); // Open third popup after successful submission
@@ -98,7 +98,7 @@ const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url }: Download
                         />
                         {errors.email && (
                             <span className="text-red-500">
-                                {errors?.email?.message}
+                                {errors.email?.message }
                             </span>
                         )}
                         <Button type="submit" variant='primary' className='w-full justify-center mt-4'>Send Link</Button>

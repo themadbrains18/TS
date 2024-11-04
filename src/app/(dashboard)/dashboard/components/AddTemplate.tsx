@@ -9,27 +9,28 @@ import HideTemplate from '@/components/popups/HideTemplate';
 import DeleteTemplate from '@/components/popups/DeleteTemplate';
 import DashInput from '../addtemplate/components/DashInput';
 import useFetch from '@/hooks/useFetch';
+import { signOut } from 'next-auth/react';
 
+export interface Template {
+  templates:
+  {
+    id: string; // Add ID to template
+    title: string;
+    templateType: string;
+    version: string;
+    price: number;
+    deleted: boolean
+  }[]
+
+}
 const AddTemplate = () => {
-  interface Template {
-    templates: 
-      {
-        id: string; // Add ID to template
-        title: string;
-        templateType: string;
-        version: string;
-        price: number;
-        deleted:boolean
-      }[]
-    
-  }
 
-  const { data: response, error, loading, fetchData } = useFetch<Template[]>();
+  const { data: response, error, loading, fetchData } = useFetch<Template>();
 
+  const fetchTemplates = async () => {
+    await fetchData("/all-templates", { method: "GET" });
+  };
   useEffect(() => {
-    const fetchTemplates = async () => {
-      await fetchData("/all-templates", { method: "GET" });
-    };
 
     fetchTemplates();
   }, [fetchData]);
@@ -73,7 +74,7 @@ const AddTemplate = () => {
 
   // Function to handle the DELETE request
   const handleDelete = async (id: string) => {
-    console.log(id,"i am id ")
+    // console.log(id, "i am id ")
     try {
       await fetchData(`/templates/${id}`, { method: 'DELETE' });
       // Optionally refetch templates after deletion
@@ -88,6 +89,20 @@ const AddTemplate = () => {
     router.push(`/addtemplate`);
   };
 
+  useEffect(() => {
+    if (response) {
+      closePopup()
+    }
+  }, [response])
+
+
+  const handleSearch = async(value: string) => {
+    if(value===""){
+      fetchTemplates()
+    }
+    await fetchData(`/templates/search?query=${value}`)
+  }
+
   return (
     <>
       <section className="py-5">
@@ -95,16 +110,16 @@ const AddTemplate = () => {
           <HideTemplate isPopupOpen={isPopupOpen} setHide={confirmHide} closePopup={closePopup} />
         )}
         {deletePopupIndex !== null && (
-          <DeleteTemplate setDelete={() => handleDelete(response?.templates[deletePopupIndex].id)} isPopupOpen={deletePopupIndex !== null} closePopup={closePopup} />
+          <DeleteTemplate setDelete={() => handleDelete(response?.templates[deletePopupIndex]?.id || "")} isPopupOpen={deletePopupIndex !== null} closePopup={closePopup} />
         )}
         <div className="container">
           <div className="px-5">
             <div className="flex flex-col gap-y-5">
               <div className="flex items-center justify-end">
-                <Button className="py-2" >logout</Button>
+                <Button className="py-2" onClick={() => { signOut() }}>logout</Button>
               </div>
               <div className="flex justify-center items-center">
-                <DashInput className="max-w-lg w-full hover:border-primary-100 focus:border-primary-100" placeholder="Search" type="text" onChange={() => { }} />
+                <DashInput className="max-w-lg w-full hover:border-primary-100 focus:border-primary-100" placeholder="Search" type="text" onChange={(e) => { handleSearch(e.target.value) }} />
               </div>
             </div>
           </div>
@@ -129,7 +144,7 @@ const AddTemplate = () => {
                 <tbody className="divide-y divide-gray-200">
                   {response?.templates && response?.templates.length > 0 ? (
                     <>
-                      {response?.templates.map((template:any, index:any) => (
+                      {response?.templates.map((template: any, index: any) => (
                         <tr key={index} className="hover:bg-gray-50">
                           <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize max-w-[200px] truncate md:max-w-full font-semibold">
                             {template.title}

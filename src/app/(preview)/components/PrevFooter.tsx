@@ -7,7 +7,7 @@ const PrevFooter = () => {
         "terms & conditions",
         "privacy policy"
     ]
-    const date= new Date()
+    const date = new Date()
     return (
         <>
             <footer className='bg-bgcolor'>

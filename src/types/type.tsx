@@ -28,6 +28,7 @@ export interface ButtonProps {
   editicon?: boolean;
   direction?: string;
   hideChild?: string
+  disabled?:boolean
 }
 
 
@@ -186,7 +187,7 @@ export interface Downloadpopup {
 
 export interface TemplateResponse {
   data: TechTemplate[];
-  pagination: Pagination;
+  pagination?: Pagination;
 }
 
 interface Pagination {
