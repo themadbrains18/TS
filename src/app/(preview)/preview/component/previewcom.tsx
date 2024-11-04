@@ -9,6 +9,7 @@ interface previewimagesprops {
     previewImages?: PreviewImage[],
     previewMobileImages?: PreviewImage[],
     params: Params;
+
 }
 
 interface Params {
