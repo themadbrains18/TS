@@ -61,8 +61,11 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
     const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
 
     const openPopup = () => {
-        setIsPopupOpen(true);
-        setIsFirstPopupOpen(true)
+        if(template?.isPaid==false){
+            setIsPopupOpen(true);
+            setIsFirstPopupOpen(true)
+
+        }
     }
 
     const [isFirstPopupOpen, setIsFirstPopupOpen] = useState<boolean>(true);

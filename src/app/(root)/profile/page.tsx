@@ -14,7 +14,7 @@ const Page = async () => {
 
     return (
         <>
-            <MainScreen session={session}/>
+            <MainScreen/>
         </>
     )
 }

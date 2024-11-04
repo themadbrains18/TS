@@ -2,15 +2,16 @@
 
 import { cn } from '@/libs/utils';
 import React, { useState, useRef, useEffect } from 'react';
-import { UseFormRegister, UseFormSetValue } from 'react-hook-form';
+import { UseFormClearErrors, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 
 interface InputOtpProps {
     register: UseFormRegister<any>;
     setValue: UseFormSetValue<any>; // Add setValue to props
-    className?:string
+    className?: string
+    clearErrors?: UseFormClearErrors<any>;
 }
 
-const InputOtp: React.FC<InputOtpProps> = ({ register, setValue,className }) => {
+const InputOtp: React.FC<InputOtpProps> = ({ register, setValue, className, clearErrors }) => {
     const [activeInput, setActiveInput] = useState<number>(0);
     const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -23,6 +24,7 @@ const InputOtp: React.FC<InputOtpProps> = ({ register, setValue,className }) => 
         if (value.length > 1) return; // Prevent input of more than 1 character
 
         element.value = value; // Update input value directly
+        clearErrors && clearErrors("otp")
         setValue(`otp[${index}]`, value); // Update form value with react-hook-form's setValue
 
         // Move to the next input if a value is entered
@@ -57,6 +59,7 @@ const InputOtp: React.FC<InputOtpProps> = ({ register, setValue,className }) => 
             <div className={cn`flex space-x-[30px] m-[15px] ${className}`}>
                 {new Array(6).fill("").map((_, index) => (
                     <input
+                 
                         key={index}
                         type="text"
                         className="max-w-[60px] w-full h-[30px] md:h-[50px] text-center border placeholder:text-[#110833] shadow-[0px_1px_2px_0px_rgba(10,57,79,0.05)] rounded bg-divider-100 border-none outline-none"

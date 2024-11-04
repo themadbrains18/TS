@@ -19,7 +19,8 @@ const Button: React.FC<ButtonProps> = ({
   editicon,
   direction,
   hideChild,
-  downloadicon
+  downloadicon,
+  disabled
 }) => {
   const buttonClasses = cn({
     "bg-primary-100 text-white capitalize font-semibold leading-6 transition-all duration-300 hover:bg-[#872fcb] py-[13px] px-[30px]":
@@ -38,9 +39,9 @@ const Button: React.FC<ButtonProps> = ({
       {
         link === undefined ?
           <button
-            className={cn`${buttonClasses} ${className}  capitalize flex items-center gap-x-[2px] cursor-pointer `}
+            className={cn`${buttonClasses} ${className}  capitalize flex items-center gap-x-[2px] cursor-pointer  ${disabled ?'cursor-not-allowed opacity-80':"cursor-pointer opacity-100"}`}
             onClick={onClick}
-            disabled={isLoading}
+            disabled={isLoading || disabled}
             type={type}
           >
             <div className={cn`flex items-center ${direction}`}>
