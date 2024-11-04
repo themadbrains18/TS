@@ -37,7 +37,7 @@ const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
     setSubCategory(item)
     fetchData(`/templates?templateTypeId=${item?.templateTypeId}&subCatId=${item?.id}&page=1&limit=4`)
   }
-  console.log(data,"==data");
+  // console.log(data,"==data");
   
 
   return (

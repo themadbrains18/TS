@@ -44,11 +44,13 @@ const FeatureSection = () => {
         fetchData("/feature-templates");
     }, []);
 
+
     useEffect(() => {
         if (response) {
             setItems(response.templates);
         }
     }, [response]);
+
 
     return (
         <section className='bg-bgcolor py-10 lg:py-[100px] '>
@@ -71,9 +73,7 @@ const FeatureSection = () => {
                                 items.map((item, index) => {
                                     return (
                                         <>
-                                        {
-                                            console.log(item.softwareType.name,"helosoft")
-                                        }
+
                                             <Fragment key={index}>
                                                 <FeatureCard
                                                     id={item.id}

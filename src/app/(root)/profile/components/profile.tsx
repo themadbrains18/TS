@@ -16,6 +16,7 @@ interface sessionProps {
 }
 
 const Profile: React.FC<sessionProps> = ({ session }) => {
+
     // Separate state for each button
     const [isNameActive, setIsNameActive] = useState<boolean>(false)
     const [isUsernameActive, setIsUsernameActive] = useState<boolean>(false)
@@ -25,6 +26,10 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
     const [isEmailDisabled, setIsEmailDisabled] = useState<boolean>(true);
     const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
     const [profileImage, setProfileImage] = useState<any>(profileimage);
+    const [name, setName] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+
+    console.log(phoneNumber, "phoneNumber")
 
     const closePopup = () => {
         setIsPopupOpen(false);
@@ -34,7 +39,12 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
     };
 
     const { data: response, error, loading, fetchData } = useFetch<any>();
-    console.log(response?.user, response, "user data")
+    const { data: updateData, error: updateError, loading: updateLoading, fetchData: updateFetchData } = useFetch<any>();
+    const { data: updateNumberdata, error: updateNumbererror, loading: updateloadingNumber, fetchData: updateNumber } = useFetch<any>();
+    const { data: updatePassworddata, error: updatePassworderror, loading: updateloadingPassword, fetchData: updatePassword } = useFetch<any>();
+
+
+
 
     const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -42,7 +52,6 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
             setProfileImage(URL.createObjectURL(file)); // Preview image
             const formData = new FormData();
             formData.append('profileImg', file);
-
             try {
                 await fetchData("/user/update-image", {
                     method: "PUT",
@@ -53,21 +62,76 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
             }
         }
     };
+
+
+
     const fetchUserData = async () => {
         try {
-            const userdata = await fetchData(`/get-user`);
+            fetchData(`/get-user`);
+            setProfileImage(response?.user?.profileImg || profileimage);
         } catch (error) {
             console.log(error)
         }
     };
+
+
+
+    const handleNameUpdate = async () => {
+        try {
+            await updateFetchData('/update-details', {
+                method: 'PUT',
+                body: JSON.stringify({ name, id: session?.id }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            setIsNameActive(false);
+            setIsNameDisabled(true);
+        } catch (error) {
+            console.error("Error updating name:", error);
+        }
+    };
+
+
+    const handlePhonenumberUpdate = async () => {
+
+        let number = phoneNumber
+
+        try {
+            await updateNumber('/update-details', {
+                method: 'PUT',
+                body: JSON.stringify({ number, id: session?.id }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+        } catch (error) {
+            console.error("Error updating number:", error);
+        }
+    };
+
+    const handlepasswordUpdate = async () => {
+        try {
+            await updatePassword('/update-details', {
+                method: 'PUT',
+                body: JSON.stringify({ currentEmail: session.email, id: session?.id }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+        } catch (error) {
+            console.error("Error updating password:", error);
+        }
+    };
+
     useEffect(() => {
         fetchUserData();
     }, []);
-    console.log(response, "=================responseresponse")
+
     return (
         <>
             <section>
-                <VerfiyOldEmail closePopup={() => closePopup()} isPopupOpen={isPopupOpen} />
+                <VerfiyOldEmail closePopup={() => closePopup()} isPopupOpen={isPopupOpen} handlepasswordUpdate={handlepasswordUpdate} />
                 <div className="container">
                     <div className='max-w-[1162px] w-full'>
                         <div className='max-w-[616px] w-full mb-4 md:mb-[50px]'>
@@ -77,7 +141,10 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
                                     <div className='relative max-w-[115px] md:max-w-[168px] w-full h-[168px]'>
                                         <Image
                                             className='rounded-full h-[168px]'
-                                            src={profileImage}
+                                            src={
+                                                loading ? profileImage :
+                                                    response?.user?.profileImg
+                                            }
                                             height={168}
                                             width={168}
                                             alt='userimage'
@@ -94,32 +161,108 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
                                 </div>
                                 <div className='mt-5 flex flex-col gap-y-4 lg:gap-y-[30px]'>
                                     <div className='flex items-end gap-x-[10px]'>
-                                        <Input disabled={isNameDisabled} className='px-4 py-[13px] md:py-[13px]' label='Name' placeholder='Name' name='name' type='text' />
+                                        <Input
+                                            disabled={isNameDisabled}
+                                            className='px-4 py-[13px] md:py-[13px]'
+                                            label='Name'
+                                            placeholder='Name'
+                                            name='name'
+                                            type='text'
+                                            value={name}
+                                            onChange={(e) => setName(e.target.value)}
+                                        />
                                         {
                                             isNameActive ?
-                                                <Button hideChild='hidden md:block' iconClass='w-6 h-6' direction='flex-row-reverse gap-x-[10px]' className='py-[13px] px-4 md:py-4 md:px-[14px]' onClick={() => { setIsNameActive(false), setIsNameDisabled(!isNameDisabled) }
-                                                } variant='primary' saveicon={true}>save</Button> :
-                                                <Button hideChild='hidden md:block' direction='flex-row-reverse gap-x-[10px]' className='py-[13px] px-4 md:py-4 md:px-[14px]' onClick={() => { setIsNameActive(true), setIsNameDisabled(!isNameDisabled), openPopup() }} variant='primary' iconClass='fill-white w-6 h-6' editicon={true} >edit</Button>
+                                                <Button
+                                                    hideChild='hidden md:block'
+                                                    iconClass='w-6 h-6'
+                                                    direction='flex-row-reverse gap-x-[10px]'
+                                                    className='py-[13px] px-4 md:py-4 md:px-[14px]'
+                                                    onClick={() => { setIsNameActive(false), setIsNameDisabled(!isNameDisabled), handleNameUpdate() }}
+                                                    variant='primary'
+                                                    saveicon={true}
+                                                >
+                                                    {updateLoading ? 'Saving...' : 'Save'}
+                                                </Button>
+                                                :
+                                                <Button
+                                                    hideChild='hidden md:block'
+                                                    direction='flex-row-reverse gap-x-[10px]'
+                                                    className='py-[13px] px-4 md:py-4 md:px-[14px]'
+                                                    onClick={() => { setIsNameActive(true), setIsNameDisabled(!isNameDisabled) }}
+                                                    variant='primary'
+                                                    iconClass='fill-white w-6 h-6'
+                                                    editicon={true} >edit</Button>
                                         }
+
                                     </div>
 
                                     <div className='flex items-end gap-x-[10px]'>
-                                        <Input disabled={isUserDisabled} className='px-4 py-[13px] md:py-[13px]' label='Number' placeholder='Number' name='number' type='text' />
+                                        <Input
+                                            disabled={isUserDisabled}
+                                            className='px-4 py-[13px] md:py-[13px]'
+                                            label='Number'
+                                            placeholder='Number'
+                                            name='number'
+                                            type='text'
+                                            value={phoneNumber}
+                                            onChange={(e) => setPhoneNumber(e.target.value)}
+                                        />
                                         {
                                             isUsernameActive ?
-                                                <Button hideChild='hidden md:block' direction='flex-row-reverse gap-x-[10px]' className='py-[13px] px-4 md:py-4 md:px-[14px]' iconClass='w-6 h-6' onClick={() => { setIsUsernameActive(false), setIsUserDisabled(!isUserDisabled) }} variant='primary' saveicon={true}>save</Button> :
-                                                <Button hideChild='hidden md:block' direction='flex-row-reverse gap-x-[10px]' className='py-[13px] px-4 md:py-4 md:px-[14px]' onClick={() => { setIsUsernameActive(true), setIsUserDisabled(!isUserDisabled) }} variant='primary' iconClass='fill-white w-6 h-6' editicon={true}>edit</Button>
+                                                <Button
+                                                    hideChild='hidden md:block'
+                                                    direction='flex-row-reverse gap-x-[10px]'
+                                                    className='py-[13px] px-4 md:py-4 md:px-[14px]'
+                                                    iconClass='w-6 h-6'
+                                                    onClick={() => { setIsUsernameActive(false), setIsUserDisabled(!isUserDisabled), handlePhonenumberUpdate() }}
+                                                    variant='primary'
+                                                    saveicon={true}> {updateloadingNumber ? 'Saving...' : 'Save'}</Button> :
+                                                <Button
+                                                    hideChild='hidden md:block'
+                                                    direction='flex-row-reverse gap-x-[10px]'
+                                                    className='py-[13px] px-4 md:py-4 md:px-[14px]' onClick={() => { setIsUsernameActive(true), setIsUserDisabled(!isUserDisabled) }} variant='primary' iconClass='fill-white w-6 h-6' editicon={true}>edit</Button>
                                         }
                                     </div>
 
+
+
                                     <div className='flex items-end gap-x-[10px]'>
-                                        <Input disabled={isEmailDisabled} className='px-4 py-[13px] md:py-[13px]' label='Email' placeholder='Email' name='email' type='email' />
+                                        <Input
+                                            disabled={isEmailDisabled}
+                                            className='px-4 py-[13px] md:py-[13px]'
+                                            label='Email'
+                                            placeholder='Email'
+                                            name='email'
+                                            type='email'
+                                            value={session?.email}
+                                        />
                                         {
                                             isEmailActive ?
-                                                <Button hideChild='hidden md:block' iconClass='w-6 h-6' direction='flex-row-reverse gap-x-[10px]' className='py-[13px] px-4 md:py-4 md:px-[14px]' onClick={() => { setIsEmailActive(false), setIsEmailDisabled(!isEmailDisabled) }} variant='primary' saveicon={true}>save</Button> :
-                                                <Button hideChild='hidden md:block' direction='flex-row-reverse gap-x-[10px]' className='py-[13px] px-4 md:py-4 md:px-[14px]' onClick={() => { setIsEmailActive(true), setIsEmailDisabled(!isEmailDisabled) }} variant='primary' iconClass='fill-white w-6 h-6' editicon={true}>edit</Button>
+                                                <Button
+                                                    hideChild='hidden md:block'
+                                                    iconClass='w-6 h-6' direction='flex-row-reverse gap-x-[10px]'
+                                                    className='py-[13px] px-4 md:py-4 md:px-[14px]'
+                                                    onClick={() => { setIsEmailActive(false), setIsEmailDisabled(!isEmailDisabled) }}
+                                                    variant='primary'
+                                                    saveicon={true}>
+                                                    {updateloadingPassword ? 'Saving...' : 'Save '}
+                                                </Button> :
+                                                <Button
+                                                    hideChild='hidden md:block'
+                                                    direction='flex-row-reverse gap-x-[10px]'
+                                                    className='py-[13px] px-4 md:py-4 md:px-[14px]'
+                                                    onClick={() => { setIsEmailActive(true), setIsEmailDisabled(!isEmailDisabled), openPopup() }}
+                                                    variant='primary'
+                                                    iconClass='fill-white w-6 h-6'
+                                                    editicon={true}>
+                                                    edit
+                                                </Button>
                                         }
                                     </div>
+
+
+
 
                                     <div className='py-[18px] px-5 border border-divider-100 flex items-center justify-between'>
                                         <h3 className='text-neutral-900 font-semibold capitalize leading-6'>Daily Download Balance :</h3>

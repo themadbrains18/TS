@@ -14,6 +14,7 @@ interface InputFieldProps {
     lableclass?: string;
     register?: UseFormRegister<any>; // Type from react-hook-form
     disabled?:boolean
+    autocomplete?:string
 }
 
 // Modify Input to accept a ref using React.forwardRef
@@ -28,7 +29,8 @@ const Input = React.forwardRef<HTMLInputElement, InputFieldProps>(({
     className = '',
     lableclass,
     register,
-    disabled
+    disabled,
+    autocomplete
 }, ref) => {
     return (
         <div className='w-full'>

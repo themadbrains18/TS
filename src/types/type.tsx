@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 import { FieldError, UseFormRegister } from "react-hook-form";
 
 export interface navcardprops {
-  id?:string
+  id?: string
   title?: string,
   image?: string,
   icon?: string,
@@ -135,8 +135,8 @@ export interface Downloadpopuptype {
 export interface DownloadTemplatetype {
   isFirstPopupOpen: boolean
   setIsFirstPopupOpen: React.Dispatch<React.SetStateAction<boolean>>
-  id:string
-  url:string
+  id: string
+  url: string
 }
 
 export interface dashinput {
@@ -260,7 +260,7 @@ export interface Industry {
 
 interface User {
   name: string;
-  id?:string | undefined
+  id?: string | undefined
 }
 
 export interface ProductDetailProps {
@@ -282,11 +282,12 @@ export interface downloadcard {
   bgClass?: string,
   parentClass?: string,
   bgParentClass?: string,
-  premium?:boolean
+  premium?: boolean
 }
 
 export interface verifyoldemail {
   isPopupOpen: boolean,
   closePopup: () => void;
-  register?:UseFormRegister<any>
+  register?: UseFormRegister<any>
+  handlepasswordUpdate: () => void;
 }

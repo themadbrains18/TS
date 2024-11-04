@@ -39,8 +39,6 @@ const SearchDropdown: React.FC<navtabprops> = ({ subCat,onSelect  }) => {
             } `}
         >
           {subCat && subCat?.map((item: subCat, index: number) => {
-            console.log(item,"-===id");
-            
             return (
               <h4
                 key={Date.now() + index + item.name}

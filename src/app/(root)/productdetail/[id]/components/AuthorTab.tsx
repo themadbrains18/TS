@@ -34,7 +34,7 @@ const AuthorTab: React.FC<UserDetailProps> = ({ userDetail }) => {
     getUserTemplates();
   }, []);
 
-  console.log(data,"==data");
+  // console.log(data,"==data");
   
   return (
     <div className="mt-10 lg:mt-20">
