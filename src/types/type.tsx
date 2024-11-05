@@ -10,6 +10,7 @@ export interface navcardprops {
   iconclass?: string,
   titleclass?: string,
   imageclass?: string
+  classname?:string
 }
 
 export interface ButtonProps {

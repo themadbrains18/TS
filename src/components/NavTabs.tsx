@@ -80,18 +80,27 @@ const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
           </div>
 
           {/* NavCards Section */}
+
           <div className="flex justify-between my-5 w-full gap-x-[10px] lg:gap-x-5 overflow-scroll hiddenscroll">
-            {data && data?.data?.length > 0 && data.data?.map((item: TechTemplate, idx: number) => (
-              <Fragment key={idx}>
-                <NavCard
-                  id={item?.id}
-                  image={item?.sliderImages[0]?.imageUrl}
-                  title={item?.title}
-                  icon={`/icons/figma.svg`}
-                />
-              </Fragment>
-            ))}
+            {data && data.data?.length > 0 ? (
+              data.data.map((item: TechTemplate, idx: number) => (
+                <Fragment key={idx}>
+                  <NavCard
+                    id={item.id}
+                    image={item.sliderImages[0]?.imageUrl}
+                    title={item.title}
+                    icon="/icons/figma.svg"
+                    classname="w-[248px]"
+                  />
+                </Fragment>
+              ))
+            ) : (
+              <div className="w-full text-center py-5">
+                <p>No items found.</p>
+              </div>
+            )}
           </div>
+
         </div>
       </div>
     </>

@@ -65,7 +65,10 @@ const Header = () => {
 
   const fetchUserData = async () => {
     try {
-      fetchUserdata(`/get-user`);
+      if (!session?.user) {
+        return
+      }
+      await fetchUserdata(`/get-user`);
     } catch (error) {
       console.log(error)
     }
@@ -101,7 +104,7 @@ const Header = () => {
       {/* Destop header */}
       <header className=" bg-[#ffffff80] backdrop:blur-xl relative border-b-[1px] border-[#11083319] z-10">
         <div className="container hidden min-[1028px]:block">
-          <div className="py-[35px] flex items-center justify-between">
+          <div className="py-10 flex items-center justify-between">
             <div className="flex items-center justify-between max-w-[809px] w-full cursor-pointer">
               <Link className="w-[276px]" href={'/'}>
                 <Image
@@ -111,7 +114,7 @@ const Header = () => {
                   alt="Logo"
                 />
               </Link>
-              <div className="flex items-center max-w-[473px] w-full justify-between">
+              <div className="flex gap-5 items-center max-w-[550px] w-full justify-between pl-[60px]">
                 {loadingdata ? <>
                   <div className="flex items-center animate-pulse w-full">
                     <div className="h-4  bg-gray-200 rounded mr-2 w-full"></div>
@@ -135,7 +138,7 @@ const Header = () => {
 
               </div>
             </div>
-            <div className={cn`max-w-[576px] w-full flex items-center justify-end gap-x-5 `}>
+            <div className={cn`max-w-[576px] w-full flex items-center justify-end gap-x-2.5 `}>
               <SearchComponent classname="max-w-[410px]" searchresults="max-h-60" openinput={openinput} opensearch={opensearch} setOpensearch={setOpensearch} subCat={subCatData || undefined} />
               {
                 isLoggedIn &&

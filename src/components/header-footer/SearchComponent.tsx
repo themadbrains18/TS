@@ -22,14 +22,14 @@ const SearchComponent: React.FC<navtabprops> = ({ subCat, classname, opensearch,
 
     useEffect(() => {
         // console.log(searchQuery,"==searchQuery")
-            
-            handleSearch(searchQuery, selectedCategory);
-        
+
+        handleSearch(searchQuery, selectedCategory);
+
     }, [searchQuery, selectedCategory]);
 
     return (
         <div className={` ${mainclass} flex items-center relative justify-end`}>
-            <div className="p-[11px]">
+            <div className="p-[10px]">
                 <Icon name="search" className="cursor-pointer" onClick={openinput} />
             </div>
             <div className={cn`

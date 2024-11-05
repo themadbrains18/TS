@@ -90,6 +90,7 @@ const AuthorTab: React.FC<UserDetailProps> = ({ userDetail }) => {
                   image={item.sliderImages[0]?.imageUrl}
                   imageclass="max-w-full"
                   title={item.title}
+                  classname='w-[218px]'
                 />
               </Fragment>
             ))}

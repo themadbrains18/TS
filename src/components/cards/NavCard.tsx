@@ -26,6 +26,7 @@ const NavCard: React.FC<navcardprops> = ({
   icon,
   image,
   title,
+  classname
 }) => {
   const [imgSrc, setImgSrc] = useState(image ? image : '/images/featureimg.png');
 
@@ -35,7 +36,7 @@ const NavCard: React.FC<navcardprops> = ({
   return (
     <>
       <div className=" cursor-pointer border border-divider-100">
-        <div className="relative w-[218px] ">
+        <div className={`relative ${classname} `}>
           <div className=" h-[106px]  object-cover" >
             <Image
               src={imgSrc}
@@ -43,7 +44,7 @@ const NavCard: React.FC<navcardprops> = ({
               height={106}
               alt="cardimage"
               onError={handleImageError}
-              className=" max-h-[106px] object-cover"
+              className=" max-h-[106px] w-full object-cover"
             />
           </div>
           <div className="bg-subheading opacity-[0] absolute top-0 right-0 left-0 bottom-0 transition-all duration-200 hover:opacity-[0.45] flex justify-center items-center">

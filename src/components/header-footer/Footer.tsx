@@ -59,18 +59,16 @@ const Footer = () => {
     <>
       <footer className="bg-white pt-10 md:pt-20 pb-10">
         <div className="container">
-          <div className="flex flex-col lg:flex-row items-center justify-between">
+          <div className="flex flex-col gap-5 lg:flex-row items-center justify-between">
             <div className=" lg:max-w-[368px] lg:h-[293px] w-full flex flex-col justify-between items-start">
               <div>
-                <Link href={'/'}>
-
+                <Link href={'/'} >
                   <Image className=" md:hidden cursor-pointer" src={'/icons/logofooter.svg'} width={247} height={35} alt="logo" />
                   <Image className="hidden md:block cursor-pointer" src={'/icons/footerlogo.svg'} width={247} height={35} alt="logo" />
-
                 </Link>
                 <p className=" mt-[15px] md:mt-8 text-subparagraph text-sm leading-5">Template Studio is the place to find free of cost high-quality design resources for designers, creative agencies and developers</p>
               </div>
-              <div className=" hidden md:flex items-center lg:max-w-[250px] w-full justify-between mt-10 lg:mt-0">
+              <div className=" hidden lg:flex items-center lg:max-w-[250px] w-full justify-between my-10 lg:mt-0">
                 {
                   socialicons?.map((item, index) => {
                     return (
@@ -131,23 +129,40 @@ const Footer = () => {
               </div>
             </div>
           </div>
-          <div className="mt-5 hidden  md:mt-[60px] md:pt-8 md:grid grid-cols-1 md:grid-cols-2 gap-y-5 ">
-            <div>
-              <h3 className="text-subparagraph leading-6 text-center md:text-start">Template Studio | © {date.getFullYear()} All Rights Reserved</h3>
+          <div className="  md:mt-[30px] pt-[30px] flex justify-between flex-col lg:flex-row gap-y-[30px]  border-t">
+            <div className=" col-span-1 lg:hidden flex items-center lg:max-w-[250px] w-full justify-around   ">
+              {
+                socialicons?.map((item, index) => {
+                  return (
+                    <Fragment key={index}>
+                      <Link href={'#'}>
+                        <Image className="transition-all duration-300 hover:translate-y-[-5px] hover:scale-[1.1] hover:rotate-6" width={30} height={30} src={`/icons/${item.icon}`} alt="icons" />
+                      </Link>
+                    </Fragment>
+                  )
+                })
+              }
             </div>
-            <div className="flex justify-center md:justify-end items-center">
-              <ul className="flex items-center  gap-x-6 ">
-                {
-                  agreements?.map((item, index) => {
-                    return (<Fragment key={index}>
-                      <Link href={'#'}><li className="h-6  overflow-hidden group inline-block"><p className="flex flex-col transition-all duration-500 group-hover:-translate-y-[26px]">
-                        <span className="text-[14px] md:text-[16px] text-subparagraph leading-6 capitalize text-nowrap ">{item}</span>
-                        <span className=" capitalize transition-all duration-500 text-subheading group-hover:border-b-[1px] group-hover:border-subheading text-nowrap">{item}</span>
-                      </p></li></Link>
-                    </Fragment>)
-                  })
-                }
-              </ul>
+            <div className="flex flex-col md:flex-row justify-between w-full items-center" >
+              <div>
+                <h3 className="text-subparagraph text-[14px] md:text-[16px] leading-6 text-center md:text-start pb-4 md:pb-0">Template Studio | © {date.getFullYear()} All Rights Reserved</h3>
+              </div>
+              <div className="flex justify-center md:justify-end items-center">
+                <ul className="flex items-center gap-[21px] md:gap-x-6 text-center ">
+                  {
+                    agreements?.map((item, index) => {
+                      return (<Fragment key={index}>
+                        <Link href={'#'}>
+                          <li className="h-6  overflow-hidden group inline-block"><p className="flex flex-col transition-all duration-500 group-hover:-translate-y-[26px]">
+                            <span className="text-[14px] md:text-[16px] text-subparagraph leading-6 capitalize text-nowrap ">{item}</span>
+                            <span className=" capitalize transition-all duration-500 text-subheading group-hover:border-b-[1px] group-hover:border-subheading text-nowrap">{item}</span>
+                          </p>
+                          </li></Link>
+                      </Fragment>)
+                    })
+                  }
+                </ul>
+              </div>
             </div>
           </div>
         </div>
