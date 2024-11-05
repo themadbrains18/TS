@@ -23,7 +23,7 @@ const Otp = ({ formData, api, setFormData }: any) => {
     const { register, handleSubmit, setValue } = useForm<FormData>();
     const { data: response, error, loading, fetchData } = useFetch<any>();
     const { data: session } = useSession()
-    const [startTimer, setStartTimer] = useState(60); // Timer set to 10 minutes (600 seconds)
+    const [startTimer, setStartTimer] = useState(600); // Timer set to 10 minutes (600 seconds)
     const [canResend, setCanResend] = useState(false);
 
     useEffect(() => {
@@ -92,7 +92,7 @@ const Otp = ({ formData, api, setFormData }: any) => {
                 }
             }).then(res => {
                 if (res.ok) {
-                    setStartTimer(60); // Reset timer to 10 minutes
+                    setStartTimer(600); // Reset timer to 10 minutes
                     setCanResend(false); // Reset resend availability
                     toast.success("OTP resent successfully");
                 } else {
@@ -161,7 +161,7 @@ const Otp = ({ formData, api, setFormData }: any) => {
                                 <div className="flex flex-col justify-center h-[500px] md:h-[653px]">
                                     <div>
                                         <h2 className='text-[18px] font-normal leading-7 text-neutral-900 pb-[30px]'>Please enter one-time OTP</h2>
-                                        <InputOtp setValue={setValue} register={register} reset={resendCode}/>
+                                        <InputOtp setValue={setValue} register={register} reset={canResend}/>
                                     </div>
                                     <div className='my-10 md:my-[60px]'>
                                         <p className='text-sm leading-5 text-neutral-600'>Please check your email, 6-digit confirmation code sent to {formData.email}, please enter the confirmation code to verify it's you.</p>
