@@ -57,35 +57,17 @@ const {data:session} = useSession()
                     otp: formData.otp,
                     password: formData.password
                 });
-<<<<<<< HEAD
-                //   console.log(result,"==result");
-                if (result?.ok) {
-                    router.push('/')
-                }
-
-            }
-            else {
-=======
                 if (result?.ok) {
                     router.push('/');
                 }
             } else {
->>>>>>> f10673d4593dde8ae30ac6aecf74bbfd28eb3684
                 await fetchData(`/${api}`, {
                     method: "POST",
                     body: JSON.stringify(formData),
                     headers: {
                         'Content-Type': 'application/json'
                     }
-<<<<<<< HEAD
-                }).then(res => {
-
-                    // console.log(res)
-                })
-
-=======
                 });
->>>>>>> f10673d4593dde8ae30ac6aecf74bbfd28eb3684
             }
         } catch (err) {
             toast.error("Submission error");
@@ -104,11 +86,6 @@ const {data:session} = useSession()
                     Authorization: session?.token ? `Bearer ${session?.token}` : "",
                 }
             }).then(res => {
-<<<<<<< HEAD
-                console.log(res)
-            })
-
-=======
                 console.log(res);
                 if (res.ok) {
                     setStartTimer(60); // Reset timer to 10 minutes
@@ -118,7 +95,6 @@ const {data:session} = useSession()
                     toast.error("Failed to resend OTP");
                 }
             });
->>>>>>> f10673d4593dde8ae30ac6aecf74bbfd28eb3684
         } catch (error) {
             console.log(error, "==error");
         }
@@ -178,17 +154,17 @@ const {data:session} = useSession()
                                     <h2 className="text-[18px] font-bold leading-7 text-primary-900">Back To Log In</h2>
                                 </Link>
 
-<<<<<<< HEAD
-                                    <div className="flex flex-col justify-center h-[500px] md:h-[653px]">
-                                        <div>
-                                            <h2 className='text-[18px] font-normal leading-7 text-neutral-900 pb-[30px]'>Please enter one-time OTP</h2>
-                                            <InputOtp setValue={setValue} register={register} /> {/* Pass setValue here */}
-                                        </div>
-                                        <div className='my-10 md:my-[60px]'>
-                                            <p className='text-sm leading-5 text-neutral-600'>Please check your email, 6-digit confirmation code sent to {formData.email}, please enter the confirmation code to verify it's you.</p>
-                                        </div>
+                                <div className="flex flex-col justify-center h-[500px] md:h-[653px]">
+                                    <div>
+                                        <h2 className='text-[18px] font-normal leading-7 text-neutral-900 pb-[30px]'>Please enter one-time OTP</h2>
+                                        <InputOtp setValue={setValue} register={register} />
+                                    </div>
+                                    <div className='my-10 md:my-[60px]'>
+                                        <p className='text-sm leading-5 text-neutral-600'>Please check your email, 6-digit confirmation code sent to {formData.email}, please enter the confirmation code to verify it's you.</p>
+                                    </div>
 
-                                        <div className='mb-[60px]'>
+                                   
+                                    <div className='mb-[60px]'>
                                             {
                                                 loading ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' >
                                                     Verifying
@@ -197,28 +173,6 @@ const {data:session} = useSession()
                                                 </Button>
                                             }
                                         </div>
-
-                                        {startTimer === "0" && <h3 className='text-center text-[14px] leading-5 font-normal text-neutral-600'>
-                                            Resend OTP After {startTimer}
-                                            <button className='ml-3 text-action-900' onClick={() => { resendCode }}>Resend Code</button>
-                                        </h3>}
-=======
-                                <div className="flex flex-col justify-center h-[500px] md:h-[653px]">
-                                    <div>
-                                        <h2 className='text-[18px] font-normal leading-7 text-neutral-900 pb-[30px]'>Please enter one-time OTP</h2>
-                                        <InputOtp setValue={setValue} register={register} />
-                                    </div>
-                                    <div className='my-10 md:my-[60px]'>
-                                        <p className='text-sm leading-5 text-neutral-600'>Please check your email, 6-digit confirmation code sent to {formData.email}, please enter the confirmation code to verify it's you.</p>
->>>>>>> f10673d4593dde8ae30ac6aecf74bbfd28eb3684
-                                    </div>
-
-                                    <div className='mb-[60px]'>
-                                        <Button className="w-full items-center justify-center" type="submit" variant='primary'>
-                                            {loading ? "Verify Now..." : "Verify Now"}
-                                        </Button>
-                                    </div>
-
                                     {startTimer > 0 ? (
                                         <h3 className='text-center text-[14px] leading-5 font-normal text-neutral-600'>
                                             Resend OTP in {Math.floor(startTimer / 60)}:{(startTimer % 60).toString().padStart(2, '0')}
