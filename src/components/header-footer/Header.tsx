@@ -17,15 +17,18 @@ import { TemplateType } from "@/app/(dashboard)/dashboard/addtemplate/components
 import SearchComponent from "./SearchComponent";
 
 interface User {
-  id: string;
-  name: string;
-  email: string;
-  password: string;
-  role: "USER" | "ADMIN"; // Adjust roles as necessary
-  profileImg: string | null;
-  number: string | null;
-  token: string | null;
-  freeDownloads: number;
+  user:{
+    id: string;
+    name: string;
+    email: string;
+    password: string;
+    role: "USER" | "ADMIN"; // Adjust roles as necessary
+    profileImg: string | null;
+    number: string | null;
+    token: string | null;
+    freeDownloads: number;
+
+  }
 }
 
 
@@ -89,8 +92,8 @@ const Header = () => {
   useEffect(() => {
     try {
       setLoadingdata(true)
-      fetchData(`/template-types`);
-      fetchsubCatData(`/sub-categories`);
+      fetchData(`/template-types`,{next:{revalidate:60*10}});
+      fetchsubCatData(`/sub-categories`,{next:{revalidate:60*10}});
       fetchUserData()
     } catch (error) {
     }
