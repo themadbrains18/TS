@@ -10,7 +10,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import useFetch from '@/hooks/useFetch';
 import 'react-toastify/dist/ReactToastify.css';
-import CheckBox from '@/components/ui/checkbox';
+import CheckBox from '@/components/ui/Checkbox';
 import Otp from '../otp/page';
 
 // Define FormData interface

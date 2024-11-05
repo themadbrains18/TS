@@ -22,6 +22,7 @@ const LoginForm = () => {
     const [otpPath, setOtppath] = useState(false);
     const [formData, setFormData] = useState({})
     
+//  console.log(status,"==status");
  
     // Form Values Interface
     interface FormValues {
@@ -62,10 +63,10 @@ const LoginForm = () => {
         if (response?.otp) {
             setOtppath(true)
         }
-        if (status === 'authenticated') {
+        if (session) {
             router.push('/'); // Redirect to the home page if the user is logged in
         }
-    }, [response, status, router]);
+    }, [response,session, router]);
 
     return (
         <>

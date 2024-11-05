@@ -84,7 +84,7 @@ const Header = () => {
     setOpensearch(false)
   }
 
-  const isLoggedIn = session && session.token;
+  const isLoggedIn = session && session?.token;
 
   useEffect(() => {
     try {

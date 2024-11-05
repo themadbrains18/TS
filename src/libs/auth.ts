@@ -11,7 +11,6 @@ declare module "next-auth" {
     token: string;
     freeDownloads:string
     image:string
-    // expiresAt: number; // Added to store expiration time
   }
 
   interface User {
@@ -20,7 +19,6 @@ declare module "next-auth" {
     role: string;
     token: string;
     freeDownloads:string,
-    // expiresAt: number; // Added to store expiration time
   }
 }
 
@@ -32,7 +30,6 @@ declare module "next-auth/jwt" {
     token: string;
     freeDownloads:string
     image:string
-    // expiresAt: number; // Added to store expiration time
   }
 }
 
@@ -73,7 +70,6 @@ export const authOptions: AuthOptions = {
             name:user.results.data.name,
             image:user.results.data.image,
             freeDownloads:user.results.data.freeDownloads,
-            // expiresAt: user.results.tokenExpiresAt, // Ensure API provides expiration
 
           };
         }
@@ -93,18 +89,18 @@ export const authOptions: AuthOptions = {
         token.token = user.token; // Store JWT token from API
         token.image = user.image || ""; // Store JWT token from API
         token.freeDownloads = user.freeDownloads; // Store JWT token from API
+        if (token.token && isTokenExpired(token.token)) {
+          // Instead of returning null, clear sensitive data and set an "expired" flag
+          return null
+        }
       }
-      // if (isTokenExpired(user.token)) {
-      //   return null; // Invalidate session
-      // }
       return token;
     },
     async session({ session, token }) {
       console.log(token.token,"==token");
-      // if (isTokenExpired(token.token)) {
-      //   // End session if token is expired
-      //   return null;
-      // }
+      if (isTokenExpired(token.token)) {
+        return null; // Or redirect the user to login
+      }
 
       
         session.id = token.id;
@@ -127,14 +123,15 @@ export const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
 };
 
-// const isTokenExpired = (token:string) => {
-//   if (!token) return true;
-//   try {
-//     const decodedToken = jwtDecode(token);
-//     const currentTime = Date.now() / 1000;
-//     return decodedToken.exp < currentTime;
-//   } catch (error) {
-//     console.error('Error decoding token:', error);
-//     return true;
-//   }
-// };
+const isTokenExpired = (token:string) => {
+  if (!token) return true;
+  try {
+    const decodedToken = jwtDecode(token);
+    const currentTime = Date.now() / 1000;
+    
+    return decodedToken.exp && decodedToken?.exp < currentTime;
+  } catch (error) {
+    console.error('Error decoding token:', error);
+    return true;
+  }
+};
