@@ -48,7 +48,6 @@ function useFetch<T>(): FetchResult<T> {
           headers,
           signal,
         });
-console.log(response,"==response");
 
         if (!response.ok) {
           const errorBody = await response.json();
@@ -62,8 +61,8 @@ console.log(response,"==response");
         }
 
         const result: ApiResponse<T> = await response.json();
-        
-        let res:any=result.results ? result?.results : result
+
+        let res: any = result.results ? result?.results : result
         setData(res);
         toaster && toast.success(result?.message);
         setError(null);
