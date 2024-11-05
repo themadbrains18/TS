@@ -207,7 +207,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
 
                                 {
                                     isPopupOpen &&
-                                    <DownloadTemplete isFirstPopupOpen={isFirstPopupOpen} setIsFirstPopupOpen={setIsFirstPopupOpen} id={template?.id} url={template?.sourceFiles[0]?.fileUrl} />
+                                    <DownloadTemplete  isFirstPopupOpen={isFirstPopupOpen} setIsFirstPopupOpen={setIsFirstPopupOpen} id={template?.id} url={template?.sourceFiles[0]?.fileUrl} />
                                 }
                             </div>
                         </div>

@@ -166,8 +166,8 @@ const {data:session} = useSession()
                                    
                                     <div className='mb-[60px]'>
                                             {
-                                                loading ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' >
-                                                    Verifying
+                                                loading ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' hideChild='hidden' >
+                                                  
                                                 </Button> : <Button type='submit' variant='primary' className='w-full items-center justify-center' >
                                                     Verify Now
                                                 </Button>

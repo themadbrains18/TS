@@ -141,8 +141,8 @@ const NewPassword = ({ formdata }: any) => {
                                     {loading ? "Save New Password..." : "Save New Password"}
                                 </Button> */}
                                   {
-                                        loading ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' >
-                                          Saving New Password
+                                        loading ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' hideChild='hidden'  >
+                                         
                                         </Button> : <Button type='submit' variant='primary' className='w-full items-center justify-center' >
                                         Save New Password
                                         </Button>

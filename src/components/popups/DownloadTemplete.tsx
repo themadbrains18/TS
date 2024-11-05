@@ -18,7 +18,6 @@ const DownloadTemplate = ({ isFirstPopupOpen, setIsFirstPopupOpen,id,url }: Down
     // State for managing the visibility of the second and third popups
     const [isSecondPopupOpen, setIsSecondPopupOpen] = useState(false);
     const [isThirdPopupOpen, setIsThirdPopupOpen] = useState(false);
-
     /**
      * Toggles the state of the first popup (Download) to close it.
      */

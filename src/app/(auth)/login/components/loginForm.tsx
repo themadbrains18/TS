@@ -152,8 +152,8 @@ const LoginForm = () => {
                                                 {loading ? "Logging in..." : "Login"}
                                             </Button> */}
                                               {
-                                        loading ? <Button type='submit' disabled loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' >
-                                            Logging
+                                        loading ? <Button type='submit' disabled loadingbtn={true} hideChild='hidden'  iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' >
+                                        
                                         </Button> : <Button type='submit' variant='primary' className='w-full items-center justify-center' >
                                            Login
                                         </Button>
