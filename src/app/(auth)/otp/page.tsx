@@ -169,7 +169,6 @@ const Otp = ({ formData, api, setFormData }: any) => {
 
 
                                     <div className='mb-[60px]'>
-<<<<<<< HEAD
                                             {
                                                 loading ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' hideChild='hidden' >
                                                   
@@ -178,16 +177,6 @@ const Otp = ({ formData, api, setFormData }: any) => {
                                                 </Button>
                                             }
                                         </div>
-=======
-                                        {
-                                            loading ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' >
-                                                Verifying
-                                            </Button> : <Button type='submit' variant='primary' className='w-full items-center justify-center' >
-                                                Verify Now
-                                            </Button>
-                                        }
-                                    </div>
->>>>>>> bf098359a0da3a645a811777024f1787137ff65e
                                     {startTimer > 0 ? (
                                         <h3 className='text-center text-[14px] leading-5 font-normal text-neutral-600'>
                                             Resend OTP in {Math.floor(startTimer / 60)}:{(startTimer % 60).toString().padStart(2, '0')}
