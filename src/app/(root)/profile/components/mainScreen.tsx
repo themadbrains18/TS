@@ -8,6 +8,8 @@ import { Session } from 'next-auth'
 const MainScreen = () => {
     const [activeTab, setActiveTab] = useState<number>(0) // 0 for Profile, 1 for Download
     const { data: session } = useSession();
+ 
+    
 
     return (
         <>
