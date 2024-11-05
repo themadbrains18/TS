@@ -27,8 +27,9 @@ export interface ButtonProps {
   downloadicon?: boolean;
   editicon?: boolean;
   direction?: string;
-  hideChild?: string
-  disabled?:boolean
+  hideChild?: string;
+  disabled?:boolean;
+  loadingbtn?:boolean
 }
 
 

@@ -135,16 +135,16 @@ const Header = () => {
 
               </div>
             </div>
-            <div className={cn`max-w-[576px] w-full flex items-center justify-end gap-x-5 `}>
+            <div className={cn`max-w-[576px] w-full flex items-center justify-end gap-x-[10px] `}>
               <SearchComponent classname="max-w-[410px]" searchresults="max-h-60" openinput={openinput} opensearch={opensearch} setOpensearch={setOpensearch} subCat={subCatData || undefined} />
               {
                 isLoggedIn &&
                 <div className="group ">
-                  <div className="w-[50px] h-[50px] cursor-pointer ">
+                  <div className="w-[50px] h-[50px] rounded-full cursor-pointer ">
                     <Image
                       width={50}
                       height={50}
-                      className="rounded-full object-contain"
+                      className="rounded-full object-cover w-[50px] h-[50px]"
                       src={userdata?.user?.profileImg || "/images/userdummy.png"}
                       alt="diamond"
                     />

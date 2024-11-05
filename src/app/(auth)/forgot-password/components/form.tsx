@@ -111,9 +111,16 @@ const Form = () => {
                                         </div>
                                         {/* Send OTP  Button */}
                                         <div className='my-[60px]' >
-                                            <Button type='submit' className="w-full items-center justify-center" variant="primary">
+                                            {/* <Button type='submit' className="w-full items-center justify-center" variant="primary">
                                                 {loading ? "Send Otp..." : "Send Otp"}
-                                            </Button>
+                                            </Button> */}
+                                              {
+                                        loading ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' >
+                                          Sending otp
+                                        </Button> : <Button type='submit' variant='primary' className='w-full items-center justify-center' >
+                                        Send Otp
+                                        </Button>
+                                    }
                                         </div>
                                     </form>
                                     {/* Social Media Buttons */}

@@ -39,20 +39,20 @@ const Otp = ({ formData, api, setFormData }: any) => {
             formData.otp = data.otp.join('');  // Join array into a single string
             setFormData(formData)
 
-            if(api==="login"){
+            if (api === "login") {
                 const result = await signIn('credentials', {
                     redirect: false,
-                    email:formData.email,
-                    otp:formData.otp,
-                    password:formData.password
-                  });
+                    email: formData.email,
+                    otp: formData.otp,
+                    password: formData.password
+                });
                 //   console.log(result,"==result");
-                  if(result?.ok){
-                        router.push('/')
-                  }
-                  
+                if (result?.ok) {
+                    router.push('/')
+                }
+
             }
-            else{
+            else {
                 await fetchData(`/${api}`, {
                     method: "POST",
                     body: JSON.stringify(formData),
@@ -60,7 +60,7 @@ const Otp = ({ formData, api, setFormData }: any) => {
                         'Content-Type': 'application/json'
                     }
                 }).then(res => {
-    
+
                     // console.log(res)
                 })
 
@@ -86,10 +86,9 @@ const Otp = ({ formData, api, setFormData }: any) => {
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            }).then(res=> {
-
+            }).then(res => {
                 console.log(res)
-              })
+            })
 
         } catch (error) {
             console.log(error, "==error");
@@ -169,9 +168,13 @@ const Otp = ({ formData, api, setFormData }: any) => {
                                         </div>
 
                                         <div className='mb-[60px]'>
-                                            <Button className="w-full items-center justify-center" type="submit" variant='primary'>
-                                                {loading ? "Verify Now..." : "Verify Now"}
-                                            </Button>
+                                            {
+                                                loading ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' >
+                                                    Verifying
+                                                </Button> : <Button type='submit' variant='primary' className='w-full items-center justify-center' >
+                                                    Verify Now
+                                                </Button>
+                                            }
                                         </div>
 
                                         {startTimer === "0" && <h3 className='text-center text-[14px] leading-5 font-normal text-neutral-600'>
