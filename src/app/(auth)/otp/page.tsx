@@ -26,6 +26,7 @@ const Otp = ({ formData, api, setFormData }: any) => {
     const [startTimer, setStartTimer] = useState(600); // Timer set to 10 minutes (600 seconds)
     const [canResend, setCanResend] = useState(false);
 
+    
     useEffect(() => {
         // Declare timer variable
         let timer: NodeJS.Timeout | null = null;
