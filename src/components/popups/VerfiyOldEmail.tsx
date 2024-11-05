@@ -74,6 +74,11 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
                 ? (session ? session.email : "")
                 : getValues("email");
 
+                if(email===""){
+                    setError("email", { message: "Please fill out this field" });
+                    return;  // Stop execution if the email is invalid
+                }
+
             // Validate the email format
             if (!emailRegex.test(email)) {
                 setError("email", { message: "Invalid email format" });
