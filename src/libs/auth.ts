@@ -1,5 +1,7 @@
 import { AuthOptions, DefaultSession } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { jwtDecode } from "jwt-decode";
+
 
 declare module "next-auth" {
   interface Session {
@@ -7,6 +9,9 @@ declare module "next-auth" {
     email: string;
     role: string;
     token: string;
+    freeDownloads:string
+    image:string
+    // expiresAt: number; // Added to store expiration time
   }
 
   interface User {
@@ -14,6 +19,8 @@ declare module "next-auth" {
     email: string;
     role: string;
     token: string;
+    freeDownloads:string,
+    // expiresAt: number; // Added to store expiration time
   }
 }
 
@@ -23,6 +30,9 @@ declare module "next-auth/jwt" {
     email: string;
     role: string;
     token: string;
+    freeDownloads:string
+    image:string
+    // expiresAt: number; // Added to store expiration time
   }
 }
 
@@ -50,6 +60,8 @@ export const authOptions: AuthOptions = {
         });
 
         const user = await res.json();
+        console.log(user,"==user");
+        
         // If login is successful, return the user object
         if (res.ok && user) {    
                 
@@ -58,7 +70,11 @@ export const authOptions: AuthOptions = {
             email: user.results.data.email,
             role: user.results.data.role,
             token: user.results.token, // Ensure this property is returned from your API
-            name:user.results.name
+            name:user.results.data.name,
+            image:user.results.data.image,
+            freeDownloads:user.results.data.freeDownloads,
+            // expiresAt: user.results.tokenExpiresAt, // Ensure API provides expiration
+
           };
         }
 
@@ -75,14 +91,28 @@ export const authOptions: AuthOptions = {
         token.email = user?.email;
         token.role = user?.role;
         token.token = user.token; // Store JWT token from API
+        token.image = user.image || ""; // Store JWT token from API
+        token.freeDownloads = user.freeDownloads; // Store JWT token from API
       }
+      // if (isTokenExpired(user.token)) {
+      //   return null; // Invalidate session
+      // }
       return token;
     },
     async session({ session, token }) {
+      console.log(token.token,"==token");
+      // if (isTokenExpired(token.token)) {
+      //   // End session if token is expired
+      //   return null;
+      // }
+
+      
         session.id = token.id;
         session.email = token.email;
         session.role = token.role;
         session.token = token.token; // JWT Token available in the session
+        session.image = token.image; // JWT Token available in the session
+        session.freeDownloads = token.freeDownloads; // JWT Token available in the session
         return session;
     },
 
@@ -96,3 +126,15 @@ export const authOptions: AuthOptions = {
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
+
+// const isTokenExpired = (token:string) => {
+//   if (!token) return true;
+//   try {
+//     const decodedToken = jwtDecode(token);
+//     const currentTime = Date.now() / 1000;
+//     return decodedToken.exp < currentTime;
+//   } catch (error) {
+//     console.error('Error decoding token:', error);
+//     return true;
+//   }
+// };
