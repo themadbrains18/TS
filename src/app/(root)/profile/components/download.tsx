@@ -326,7 +326,7 @@ const Download = () => {
   const [page, setPage] = useState(1);
   const [downloads, setDownloads] = useState<DownloadInterface[]>([]);
   const [hasMoreData, setHasMoreData] = useState(true);
-  const { data, loading, fetchData } = useFetch<{ downloads: DownloadInterface[] }>();
+  const { data, loading, error, fetchData } = useFetch<{ downloads: DownloadInterface[] }>();
 
   const Sortdata = [
     { title: "Last Day" },
@@ -379,6 +379,7 @@ const Download = () => {
       }
     }
   }, [data]);
+
 
   return (
     <section>
@@ -469,20 +470,25 @@ const Download = () => {
         </div>
 
         {/* Download Cards */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-[28px] mb-10">
-          {downloads.map((item) => (
-            <DownloadCard
-              tittle={item.template.title}
-              date={new Date(item.downloadedAt).toLocaleDateString()}
-              image={item.template.sliderImages[0]?.imageUrl}
-              premium={item.template.price > 0}
-              url={item?.template?.sourceFiles[0]?.fileUrl}
-            />
-          ))}
+        <div>
+          {
+            downloads.length < 0 || downloads.length === 0 ? <p className="text-center py-10 text-subheading">No downloads available.</p> : <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-[28px] mb-10">
+              {downloads.map((item) => (
+                <DownloadCard
+                  tittle={item.template.title}
+                  date={new Date(item.downloadedAt).toLocaleDateString()}
+                  image={item.template.sliderImages[0]?.imageUrl}
+                  premium={item.template.price > 0}
+                  url={item?.template?.sourceFiles[0]?.fileUrl}
+                />
+              ))}
+            </div>
+          }
         </div>
 
+
         {/* Load More Button */}
-        {hasMoreData && (
+        {hasMoreData && !error && (
           <div className="mt-5 flex justify-center">
             <Button
               className="w-full justify-center sm:w-auto"
