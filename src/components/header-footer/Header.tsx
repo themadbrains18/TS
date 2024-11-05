@@ -17,7 +17,7 @@ import { TemplateType } from "@/app/(dashboard)/dashboard/addtemplate/components
 import SearchComponent from "./SearchComponent";
 
 interface User {
-  user:{
+  user: {
     id: string;
     name: string;
     email: string;
@@ -92,8 +92,8 @@ const Header = () => {
   useEffect(() => {
     try {
       setLoadingdata(true)
-      fetchData(`/template-types`,{next:{revalidate:60*10}});
-      fetchsubCatData(`/sub-categories`,{next:{revalidate:60*10}});
+      fetchData(`/template-types`, { next: { revalidate: 60 * 10 } });
+      fetchsubCatData(`/sub-categories`, { next: { revalidate: 60 * 10 } });
       fetchUserData()
     } catch (error) {
     }
@@ -155,7 +155,7 @@ const Header = () => {
                       alt="diamond"
                     />
                   </div>
-                  <div className="absolute group-hover:opacity-100 transition-all group-hover:visible invisible opacity-0  duration-[0.5s] top-full max-[1678px]:right-[15px] right-[85px] mt-2 max-w-[256px] w-full bg-white shadow-lg rounded-lg">
+                  <div className="absolute group-hover:opacity-100 transition-all group-hover:visible invisible opacity-0  duration-[0.5s] top-[94%]  max-[1678px]:right-[15px] right-[85px] mt-2 max-w-[256px] w-full bg-white shadow-lg rounded-lg">
                     <div className="pt-[46px] mt-[-46px]" >
                       <div className="py-2.5 ">
                         <h2 className="leading-6 text-[16px] font-semibold text-textheading py-2 pl-[30px] pr-[27px] mb-2.5">
@@ -217,7 +217,7 @@ const Header = () => {
                     alt="diamond"
                   />
                 </div>
-                <div className="absolute group-hover:opacity-100 transition-all group-hover:visible invisible opacity-0  duration-[0.5s] top-full max-[1678px]:right-[0] right-[85px] mt-2 max-w-[256px] w-full bg-white shadow-lg rounded-lg">
+                <div className="absolute group-hover:opacity-100 transition-all group-hover:visible invisible opacity-0  duration-[0.5s] top-[90%] max-[1678px]:right-[0] right-[85px] mt-2 max-w-[256px] w-full bg-white shadow-lg rounded-lg">
                   <div className="pt-[46px] mt-[-46px] " >
                     <div className="py-2.5 ">
                       <h2 className="leading-6 text-[16px] font-semibold text-textheading py-2 pl-[30px] pr-[27px] mb-2.5">

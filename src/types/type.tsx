@@ -106,7 +106,7 @@ export interface CheckboxProps {
   id: string;
   setItems: (items: string[]) => void;
   items: string[];
-  className?: string;
+  classname?: string;
   labelClass?: string;
 }
 

@@ -8,16 +8,10 @@ import { PreviewImage } from '@/types/type'
 interface previewimagesprops {
     previewImages?: PreviewImage[],
     previewMobileImages?: PreviewImage[],
-    params: Params;
-
 }
 
-interface Params {
-    id: string;
-}
 
-const Previewcom: FC<previewimagesprops> = ({ previewImages, previewMobileImages, params }) => {
-    console.log(params?.id, "sdfszdgfkzsghdfkszgdkshdrkj")
+const Previewcom: FC<previewimagesprops> = ({ previewImages, previewMobileImages }) => {
     const [activebutton, setActiveButton] = useState<number>(0);
     const [showFullScreen, setShowFullScreen] = useState<boolean>(false);
     const views = [

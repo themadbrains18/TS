@@ -26,15 +26,15 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
     const [isEmailDisabled, setIsEmailDisabled] = useState<boolean>(true);
     const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
     const [profileImage, setProfileImage] = useState<any>(profileimage);
-    const [name, setName] = useState(session?.user ?session?.user?.name:'');
+    const [name, setName] = useState(session?.user ? session?.user?.name : '');
     const [nameError, setNameeror] = useState<boolean>();
     const [phoneNumber, setPhoneNumber] = useState('');
     const [phoneNumberError, setPhoneNumberError] = useState<boolean>();
 
-
     const closePopup = () => {
         setIsPopupOpen(false);
     }
+
     const openPopup = () => {
         setIsPopupOpen(true);
     };
@@ -68,7 +68,7 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
     const fetchUserData = async () => {
         try {
             fetchData(`/get-user`);
-          
+
         } catch (error) {
             console.log(error)
         }
@@ -136,14 +136,14 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
         fetchUserData();
     }, []);
 
-    useEffect(()=>{
+    useEffect(() => {
         // console.log(response,"==response");
-        
-if(response){
-    setProfileImage(response?.user?.profileImg || profileimage);
-}
-    },[response])
-    
+
+        if (response) {
+            setProfileImage(response?.user?.profileImg || profileimage);
+        }
+    }, [response])
+
 
     return (
         <>
@@ -169,7 +169,7 @@ if(response){
                                         />
 
 
-                                        
+
                                         <label htmlFor="profilepic" className='py-[5px] px-[14px] text-[11px] md:text-base md:py-2 text-nowrap absolute bottom-0 left-[6px] right-[6px] md:left-2 md:right-2 text-center bg-primary-300 text-[#282827] capitalize cursor-pointer border-b transition-all duration-200 hover:border-primary-100 font-regular leading-6'>change image</label>
                                         <input
                                             className='hidden'
@@ -231,7 +231,7 @@ if(response){
                                             placeholder='Number'
                                             name='number'
                                             type='text'
-                                            value={response?.user ? response?.user?.number:phoneNumber}
+                                            value={response?.user ? response?.user?.number : phoneNumber}
                                             onChange={(e) => setPhoneNumber(e.target.value)}
                                         />
                                         {

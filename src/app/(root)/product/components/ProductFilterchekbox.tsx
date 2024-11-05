@@ -12,13 +12,13 @@ import React from "react";
  * @param {string} id - The unique identifier for the checkbox.
  * @param {Function} setItems - Function to update the selected items in the parent component.
  * @param {string[]} items - Array of currently selected items.
- * @param {string} [className] - Optional class name for the checkbox.
+ * @param {string} [classname] - Optional class name for the checkbox.
  * @param {string} [labelClass] - Optional class name for the label.
  */
 
 const CheckboxFilter = ({
     labelClass,
-    className,
+    classname,
     value,
     id,
     setItems,
@@ -65,7 +65,7 @@ const CheckboxFilter = ({
                     <input
                         id={id}
                         type="checkbox"
-                        className={`hidden ${className}`}
+                        className={`hidden ${classname}`}
                         checked={isChecked}
                         onChange={handleCheckboxChange}
                     />

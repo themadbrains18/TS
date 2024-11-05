@@ -9,11 +9,11 @@ interface AccordionProps {
   children: React.ReactNode;
   className?: string;
   isOpen?: boolean;          // Prop to control if the accordion is open
-  onToggle?: () => void; 
-  titleclass?:string    // Function to handle accordion toggling
+  onToggle?: () => void;
+  titleclass?: string    // Function to handle accordion toggling
 }
 
-const Accordion: React.FC<AccordionProps> = ({ title, children, className, titleclass ,isOpen = false, onToggle }) => {
+const Accordion: React.FC<AccordionProps> = ({ title, children, className, titleclass, isOpen = false, onToggle }) => {
   const [internalOpen, setInternalOpen] = useState<boolean>(isOpen); // Internal state for managing open/close
   const [height, setHeight] = useState<string>('0px');
   const contentRef = useRef<HTMLDivElement>(null);
@@ -43,7 +43,7 @@ const Accordion: React.FC<AccordionProps> = ({ title, children, className, title
     <div className={`w-full px-[10px] mt-5 ${className || ''}`}>
       <div
         onClick={toggleAccordion}
-        className={`bg-white cursor-pointer pb-[10px] flex justify-between items-center border-b border-divider-100`}
+        className={`bg-white cursor-pointer pb-[10px] flex justify-between items-center`}
       >
         <h2 className={cn`text-subheading leading-6 font-medium ${titleclass}`}>{title}</h2>
         <Icon

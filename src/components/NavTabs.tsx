@@ -35,7 +35,7 @@ const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
   const handleActive = (item: subCat, index: number) => {
     setActivetab(index)
     setSubCategory(item)
-    fetchData(`/templates?templateTypeId=${item?.templateTypeId}&subCatId=${item?.id}&page=1&limit=4`, {next:{revalidate:60*2}})
+    fetchData(`/templates?templateTypeId=${item?.templateTypeId}&subCatId=${item?.id}&page=1&limit=4`, { next: { revalidate: 60 * 2 } })
   }
   // console.log(data,"==data");
 
@@ -81,7 +81,7 @@ const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
 
           {/* NavCards Section */}
 
-          <div className="flex justify-between my-5 w-full gap-x-[10px] lg:gap-x-5 overflow-scroll hiddenscroll">
+          <div className="flex my-5 w-full gap-x-[10px] lg:gap-x-5 overflow-scroll hiddenscroll">
             {data && data.data?.length > 0 ? (
               data.data.map((item: TechTemplate, idx: number) => (
                 <Fragment key={idx}>
@@ -96,7 +96,7 @@ const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
               ))
             ) : (
               <div className="w-full text-center py-5">
-                <p>No items found.</p>
+                <p className="text-subparagraph" >No Template Found.</p>
               </div>
             )}
           </div>

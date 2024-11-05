@@ -61,8 +61,8 @@ const ProductTags = () => {
     return (
         <div className='container'>
             <div className="flex gap-5 md:flex-row flex-col md:gap-[30px] py-5 md:py-10">
-                <div className='max-w-[357px] w-full md:border-r'>
-                    <h2 className='text-5 font-semibold left-7 text-[#110833]'>Category Tags</h2>
+                <div className='max-w-[357px] w-full '>
+                    <h2 className='text-[22px] md:text-[20px] font-semibold left-7 text-[#110833] md:border-r'>Category Tags</h2>
                 </div>
                 <div className='flex overflow-x-scroll xl:overflow-hidden hiddenscroll'>
                     {/* Add an "All" tab at the beginning */}

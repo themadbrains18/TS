@@ -11,7 +11,7 @@ const FeatureCard: React.FC<featurecardprops> = ({ id, buttonprops, category, cu
     // console.log(id, buttonprops, category, currentimage, poster, themeicon, title, totalimages, uploadericon, uploadername, isPaid, "id")
     // Ensure poster URL starts with a leading slash or is an absolute URL
     const [imgSrc, setImgSrc] = useState(poster ? poster : '/images/featureimg.png');
-    
+
     const handleImageError = () => {
         setImgSrc('/images/featureimg.png'); // Fallback image with a leading slash
     };
@@ -30,8 +30,8 @@ const FeatureCard: React.FC<featurecardprops> = ({ id, buttonprops, category, cu
                     />
 
                     <Link href={`/productdetail/${id}`}>
-                        <div className='absolute top-0 right-0 left-0 bottom-0 bg-subheading opacity-0 transition-all duration-[0.5s] group-hover:opacity-50 flex items-center justify-center gap-x-1 cursor-pointer'>
-                            <div className='flex items-center justify-center cursor-pointer'>
+                        <div className='absolute top-0 right-0 left-0 bottom-0 bg-subheading opacity-0 transition-all duration-[0.5s] group-hover:opacity-60 flex items-center justify-center gap-x-1 cursor-pointer'>
+                            <div className='flex items-center justify-center cursor-pointer z-10'>
                                 <h3 className='capitalize text-white text-lg font-bold leading-7'>view details</h3>
                                 <Icon name='share' />
                             </div>
@@ -74,13 +74,13 @@ const FeatureCard: React.FC<featurecardprops> = ({ id, buttonprops, category, cu
                             </p>
                         </div>
                         <Button variant='primary' className='py-[5px] px-[10px] text-sm leading-5 font-semibold capitalize'>
-                            {isPaid && buttonprops &&  buttonprops > 0
-                                    ? `$${buttonprops}`
+                            {isPaid && buttonprops && buttonprops > 0
+                                ? `$${buttonprops}`
 
-                                        : "Free"
+                                : "Free"
                             }
                         </Button>
- 
+
                     </div>
                 </div>
             </div>

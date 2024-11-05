@@ -21,7 +21,7 @@ const ProductMain = () => {
     const templateTypeId = searchParams.get('template-type');
     const subCatId = searchParams.get('subcat');
     const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(0);
+    const [totalPages, setTotalPages] = useState<number>(0);
     const [items, setItems] = useState<string[]>([]);
     const [products, setProducts] = useState<TemplateResponse | null>(null);
     const [loading, setLoading] = useState(true);  // Initially true while loading
@@ -123,8 +123,8 @@ const ProductMain = () => {
             const response = await fetch(apiUrl);
             const data: TemplateResponse = await response.json();
 
-            setTotalPages(data.pagination.totalPages);
-            setCurrentPage(data.pagination.currentPage);
+            setTotalPages(data?.pagination.totalPages);
+            setCurrentPage(data?.pagination.currentPage);
             return data;
 
         } catch (error) {
@@ -163,14 +163,14 @@ const ProductMain = () => {
             <ProductBanner />
             <ProductTags />
             <section>
-                <div className='pt-10 pb-10 lg:pb-20 bg-bgcolor'>
+                <div className='pt-[50px] pb-10 lg:pb-20 bg-bgcolor'>
                     <div className='container'>
                         <div className='flex gap-[30px] flex-col md:flex-row justify-between'>
                             <div className={`md:sticky md:top-10 fixed top-0 h-screen duration-[1s] z-10 transition-all ${filter ? "left-0" : "left-[-100%]"} max-w-full sm:max-w-[357px] w-full`}>
                                 <ProductFilterside closefilter={closefilter} items={items} setItems={setItems} setSelectedFilters={setSelectedFilters} /> {/* Pass setSelectedFilters */}
                             </div>
                             <div className='w-full'>
-                                <div className="flex max-[768px]:flex-col-reverse md:flex justify-between pb-5 border-b mb-[30px] items-center">
+                                <div className="flex max-[768px]:flex-col-reverse md:flex justify-between pb-5 md:border-b md:mb-[30px] items-center">
                                     <div className='md:max-w-[600px] w-full overflow-x-scroll md:overflow-hidden flex-nowrap flex md:flex-wrap gap-[10px] hiddenscroll'>
                                         {items.map((item, index) => (
                                             <div key={Date.now() + index}>
@@ -229,7 +229,7 @@ const ProductMain = () => {
                                     ) : products && products.data && products.data.length > 0 ? (
                                         // Show products when data is loaded and length is greater than 0
                                         <div className='grid gap-5  w-full lg:grid-cols-2 xl:grid-cols-3 xl:gap-[30px]'>
-                                            {products && products?.data?.length>0 && products?.data?.map((item: TechTemplate, index: number) => (
+                                            {products && products?.data?.length > 0 && products?.data?.map((item: TechTemplate, index: number) => (
                                                 <Fragment key={index}>
                                                     <FeatureCard
                                                         id={item?.id}
@@ -252,7 +252,7 @@ const ProductMain = () => {
                                     )}
                                     {currentPage < totalPages && (
                                         <Button
-                                            className='w-fit mt-[30px]'
+                                            className='w-fit mt-[30px] py-[13px] px-[30px] text-[18px] leading-6 font-semibold'
                                             variant='solidicon'
                                             onClick={handleLoadMore}
                                         >
