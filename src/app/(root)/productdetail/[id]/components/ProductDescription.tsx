@@ -24,7 +24,6 @@ const ProductDescription: React.FC<ProductDetailProps> = ({ template }) => {
     // State to manage the active tab index
     const [activetab, setActivetab] = useState(0);
 
-    // console.log(template,"=template");
     
 
     // Button data for the tab titles and icons
@@ -36,7 +35,6 @@ const ProductDescription: React.FC<ProductDetailProps> = ({ template }) => {
         { title: "About Author" }
     ]
 
-    // console.log(template,"==tempat");
     
 
     /**

@@ -47,7 +47,6 @@ const Form = () => {
 
     };
     useEffect(() => {
-        // console.log(response)
         if (response?.otp) {
             setOtppath(true)
             

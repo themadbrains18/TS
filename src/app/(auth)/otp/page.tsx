@@ -22,13 +22,13 @@ const Otp = ({ formData, api, setFormData }: any) => {
     const router = useRouter();
     const { register, handleSubmit, setValue } = useForm<FormData>();
     const { data: response, error, loading, fetchData } = useFetch<any>();
-const {data:session} = useSession()
+    const { data: session } = useSession()
     const [startTimer, setStartTimer] = useState(60); // Timer set to 10 minutes (600 seconds)
     const [canResend, setCanResend] = useState(false);
 
     useEffect(() => {
         // Declare timer variable
-        let timer: NodeJS.Timeout | null = null; 
+        let timer: NodeJS.Timeout | null = null;
 
         if (startTimer > 0) {
             timer = setInterval(() => {
@@ -91,7 +91,6 @@ const {data:session} = useSession()
                     Authorization: session?.token ? `Bearer ${session?.token}` : "",
                 }
             }).then(res => {
-                console.log(res);
                 if (res.ok) {
                     setStartTimer(60); // Reset timer to 10 minutes
                     setCanResend(false); // Reset resend availability
@@ -168,16 +167,16 @@ const {data:session} = useSession()
                                         <p className='text-sm leading-5 text-neutral-600'>Please check your email, 6-digit confirmation code sent to {formData.email}, please enter the confirmation code to verify it's you.</p>
                                     </div>
 
-                                   
+
                                     <div className='mb-[60px]'>
-                                            {
-                                                loading ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' >
-                                                    Verifying
-                                                </Button> : <Button type='submit' variant='primary' className='w-full items-center justify-center' >
-                                                    Verify Now
-                                                </Button>
-                                            }
-                                        </div>
+                                        {
+                                            loading ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' >
+                                                Verifying
+                                            </Button> : <Button type='submit' variant='primary' className='w-full items-center justify-center' >
+                                                Verify Now
+                                            </Button>
+                                        }
+                                    </div>
                                     {startTimer > 0 ? (
                                         <h3 className='text-center text-[14px] leading-5 font-normal text-neutral-600'>
                                             Resend OTP in {Math.floor(startTimer / 60)}:{(startTimer % 60).toString().padStart(2, '0')}

@@ -21,7 +21,6 @@ const SearchComponent: React.FC<navtabprops> = ({ subCat, classname, opensearch,
     };
 
     useEffect(() => {
-        // console.log(searchQuery,"==searchQuery")
 
         handleSearch(searchQuery, selectedCategory);
 

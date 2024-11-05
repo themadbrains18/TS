@@ -90,7 +90,6 @@ const ProductMain = () => {
                     groupedFilters[trimmedFilterType].push(trimmedValue);
                 });
 
-                // console.log(groupedFilters, "==grouped filters");
 
                 // Construct the query string
                 const filterQueryParts: string[] = [];

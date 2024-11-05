@@ -22,7 +22,6 @@ const LoginForm = () => {
     const [otpPath, setOtppath] = useState(false);
     const [formData, setFormData] = useState({})
     
-//  console.log(status,"==status");
  
     // Form Values Interface
     interface FormValues {

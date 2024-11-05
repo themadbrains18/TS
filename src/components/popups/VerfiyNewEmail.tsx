@@ -25,7 +25,6 @@ const VerfiyNewEmail: FC<verifyoldemail> = ({
   const { register, handleSubmit, setValue } = useForm<FormData>();
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
-      // console.log(data, "==dhfhkjdh");
 
       // data.currentEmail = session ? session?.email : ""
       const joinedOtp = data?.otp && data?.otp.join('') || "";
