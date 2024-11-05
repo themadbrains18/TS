@@ -43,7 +43,7 @@ const Header = () => {
   const { data: userdata, fetchData: fetchUserdata } = useFetch<User>();
   const [opensearch, setOpensearch] = useState(false)
 
-
+  // console.log(session,"==session");
 
   const [openAccordions, setOpenAccordions] = useState<boolean[]>(
     Array(data?.length).fill(true) // Set all accordions to open by default
@@ -168,9 +168,9 @@ const Header = () => {
                         <div className="px-[30px] mb-2.5 " >
                           <h2 className="text-[13px] font-medium leading-5 text-textheading" >Daily Download Balance</h2>
                           <div className="py-[3px] px-[3px] h-[12px] border-[#E8CFFB] border-[1px] rounded-[6px] my-[5px] "  >
-                            <span style={{ width: `${session?.user?.freeDownloads * 33.33}%` }} className="h-1 block bg-primary-100 rounded-[5px] " ></span>
+                            <span style={{ width: `${parseInt(session?.freeDownloads) * 33.33}%` }} className="h-1 block bg-primary-100 rounded-[5px] " ></span>
                           </div>
-                          <h3 className="text-[12px] font-normal leading-5 text-textheading" >1 remaining out of 3</h3>
+                          <h3 className="text-[12px] font-normal leading-5 text-textheading" >{session?.freeDownloads} remaining out of 3</h3>
                         </div>
                         <div className="flex flex-col " >
                           <Link href={"/profile"} >
@@ -230,9 +230,9 @@ const Header = () => {
                       <div className="px-[30px] mb-2.5 " >
                         <h2 className="text-[13px] font-medium leading-5 text-textheading" >Daily Download Balance</h2>
                         <div className="py-[3px] px-[3px] h-[12px] border-[#E8CFFB] border-[1px] rounded-[6px] my-[5px] "  >
-                          <span style={{ width: `${session?.user?.freeDownloads * 33.33}%` }} className="h-1 block bg-primary-100 rounded-[5px] " ></span>
+                          <span style={{ width: `${session?.freeDownloads * 33.33}%` }} className="h-1 block bg-primary-100 rounded-[5px] " ></span>
                         </div>
-                        <h3 className="text-[12px] font-normal leading-5 text-textheading" >1 remaining out of 3</h3>
+                        <h3 className="text-[12px] font-normal leading-5 text-textheading" >{session?.freeDownloads} remaining out of 3</h3>
                       </div>
                       <div className="flex flex-col " >
                         <Link href={"/profile"} >

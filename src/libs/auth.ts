@@ -102,7 +102,7 @@ export const authOptions: AuthOptions = {
       return token;
     },
     async session({ session, token }) {
-      console.log(token.token,"==token");
+      // console.log(token.token,"==token");
       if (isTokenExpired(token.token)) {
         return null; // Or redirect the user to login
       }
