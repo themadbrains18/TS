@@ -1,6 +1,7 @@
 import { AuthOptions, DefaultSession } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { jwtDecode } from "jwt-decode";
+import { toast } from "react-toastify";
 
 
 declare module "next-auth" {
@@ -11,6 +12,7 @@ declare module "next-auth" {
     token: string;
     freeDownloads:string
     image:string
+    number:string
   }
 
   interface User {
@@ -19,6 +21,7 @@ declare module "next-auth" {
     role: string;
     token: string;
     freeDownloads:string,
+    number:string
   }
 }
 
@@ -30,6 +33,7 @@ declare module "next-auth/jwt" {
     token: string;
     freeDownloads:string
     image:string
+    number:string
   }
 }
 
@@ -69,6 +73,7 @@ export const authOptions: AuthOptions = {
             token: user.results.token, // Ensure this property is returned from your API
             name:user.results.data.name,
             image:user.results.data.image,
+            number:user.results.data.number,
             freeDownloads:user.results.data.freeDownloads,
 
           };
@@ -89,6 +94,7 @@ export const authOptions: AuthOptions = {
         token.token = user.token; // Store JWT token from API
         token.image = user.image || ""; // Store JWT token from API
         token.freeDownloads = user.freeDownloads; // Store JWT token from API
+        token.number = user.number; // Store JWT token from API
         if (token.token && isTokenExpired(token.token)) {
           // Instead of returning null, clear sensitive data and set an "expired" flag
           return null
@@ -109,6 +115,7 @@ export const authOptions: AuthOptions = {
         session.token = token.token; // JWT Token available in the session
         session.image = token.image; // JWT Token available in the session
         session.freeDownloads = token.freeDownloads; // JWT Token available in the session
+        session.number = token.number; // JWT Token available in the session
         return session;
     },
 

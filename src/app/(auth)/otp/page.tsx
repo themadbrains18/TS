@@ -57,8 +57,13 @@ const {data:session} = useSession()
                     otp: formData.otp,
                     password: formData.password
                 });
+                console.log(result,"==result");
+                
                 if (result?.ok) {
                     router.push('/');
+                }
+                else{
+                    toast.error("Invalid or expire otp")
                 }
             } else {
                 await fetchData(`/${api}`, {
@@ -101,21 +106,21 @@ const {data:session} = useSession()
     };
 
     useEffect(() => {
-        console.log(response,"===response");
+
         
-        if (response && api === "login") {
-            signIn('credentials', response?.results?.data);
-        }
-        if (response && api === "register") {
-            router.push('/login');
-        }
-        if (response?.otp) {
-            setPath(true);
-        }
-        if (error) {
-            toast.error("Invalid OTP");
-        }
-    }, [response]);
+        // if (response && api === "login") {
+        //     signIn('credentials', response?.results?.data);
+        // }
+        // if (response && api === "register") {
+        //     router.push('/login');
+        // }
+        // if (response?.otp) {
+        //     setPath(true);
+        // }
+        // if (error) {
+        //     toast.error("Invalid OTP");
+        // }
+    }, [response,error]);
 
     return (
         <>
