@@ -22,7 +22,6 @@ const VerfiyNewEmail: FC<verifyoldemail> = ({
 }) => {
   const router = useRouter();
   const { data: response, error, loading, fetchData } = useFetch<any>();
-  const { data: session } = useSession()
   const { register, handleSubmit, setValue } = useForm<FormData>();
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
