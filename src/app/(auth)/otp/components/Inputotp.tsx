@@ -96,7 +96,7 @@ interface InputOtpProps {
     setValue: UseFormSetValue<any>;
     className?: string;
     clearErrors?: UseFormClearErrors<any>;
-    reset?: boolean; // Add reset prop
+    reset?: boolean | undefined; // Add reset prop
 }
 
 const InputOtp: React.FC<InputOtpProps> = ({ register, setValue, className, clearErrors, reset }) => {
