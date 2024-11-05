@@ -25,7 +25,7 @@ const DownloadCard: FC<downloadcard> = ({
         <section className={cn`p-[10px] md:p-5 bg-white ${parentClass}`}>
             <div className={cn`p-[10px] md:p-4 bg-primary-300 cursor-pointer ${bgParentClass}`}>
                 <Image
-                    className={cn`max-w-full w-full ${bgClass}`}
+                    className={cn` min-h-[234px] max-h-[234px] tab:max-h-full lg:max-h-[342px] lg:min-h-[342px]  w-full ${bgClass}`}
                     src={imgSrc}
                     width={415}
                     height={342}
@@ -35,7 +35,7 @@ const DownloadCard: FC<downloadcard> = ({
             </div>
             <div className='p-[10px] md:px-5  md:py-[15px] flex justify-between items-center'>
                 <div>
-                    <h3 className={cn`text-subheading text-base md:text-xl leading-6 md:leading-7 font-semibold ${tittleClass}`}>{tittle}</h3>
+                    <h3 className={cn`text-subheading text-base md:text-xl leading-6 md:leading-7 font-semibold capitalize max-w-[300px] truncate ${tittleClass}`}>{tittle}</h3>
                     <p className={cn`text-subheading text-xs leading-5 font-normal ${dateClass}`}>{date}</p>
                 </div>
                 <div className='flex items-center gap-x-[10px] max-w-[108px] w-full justify-end'>

@@ -157,8 +157,8 @@ const Page = () => {
                                     {/* Register Button */}
                                     <div className="my-[30px] tab:my-[60px]">
                                           {
-                                        loading ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' >
-                                         Creating Account
+                                        loading ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' hideChild='hidden' >
+                                      
                                         </Button> : <Button type='submit' variant='primary' className='w-full items-center justify-center' >
                                         Create Account
                                         </Button>

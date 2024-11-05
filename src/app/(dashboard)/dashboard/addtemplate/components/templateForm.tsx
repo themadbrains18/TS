@@ -640,8 +640,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                         }
                                     </div>
                                     {
-                                        loading ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='py-3 mt-5' >
-                                            uploading
+                                        loading ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='py-3 mt-5' hideChild='hidden'  >
+
                                         </Button> : <Button type='submit' variant='primary' className='py-3 mt-5' >
                                             upload
                                         </Button>
