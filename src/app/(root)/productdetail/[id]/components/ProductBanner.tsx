@@ -34,7 +34,6 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
 
     const [showFullDescription, setShowFullDescription] = useState(false);
     const [showPreviews, setShowPreviews] = useState<boolean>(false)
-    // console.log(template, "==template");
 
 
     const toggleDescription = () => {
@@ -69,7 +68,6 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
     }
 
     const [isFirstPopupOpen, setIsFirstPopupOpen] = useState<boolean>(true);
-    // console.log(template?.softwareType?.name, "softwaretype")
 
     type SoftwareType = {
         image: string;
@@ -88,7 +86,6 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
 
     const matchedSoftware = softwareImages[template?.softwareType?.name];
 
-    console.log(template?.id, "tem")
 
     return (
         <>

@@ -25,17 +25,13 @@ const NewPassword = ({ formdata }: any) => {
 
     const { data: response, error, loading, fetchData } = useFetch<FormValues>();
 
-    // console.log(error)
-    // console.log(response)
-    // console.log(response?.success)
+  
     const { handleSubmit, control, formState: { errors } } = useForm<FormValues>({
         resolver: zodResolver(newChangePassword)
     });
 
-    // console.log(errors)
 
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
-        // console.log(data,"==datatatat")
         formdata.newPassword = data.newPassword
         formdata.confirmPassword = data.confirmPassword
         try {
@@ -48,7 +44,6 @@ const NewPassword = ({ formdata }: any) => {
                     'Content-Type': 'application/json'
                 }
             });
-            // console.log(response?.success,"success")
 
             if (response?.success) {
                 router.push('/login')

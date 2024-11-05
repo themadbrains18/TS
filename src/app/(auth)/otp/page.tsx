@@ -22,13 +22,13 @@ const Otp = ({ formData, api, setFormData }: any) => {
     const router = useRouter();
     const { register, handleSubmit, setValue } = useForm<FormData>();
     const { data: response, error, loading, fetchData } = useFetch<any>();
-const {data:session} = useSession()
+    const { data: session } = useSession()
     const [startTimer, setStartTimer] = useState(60); // Timer set to 10 minutes (600 seconds)
     const [canResend, setCanResend] = useState(false);
 
     useEffect(() => {
         // Declare timer variable
-        let timer: NodeJS.Timeout | null = null; 
+        let timer: NodeJS.Timeout | null = null;
 
         if (startTimer > 0) {
             timer = setInterval(() => {
@@ -57,8 +57,13 @@ const {data:session} = useSession()
                     otp: formData.otp,
                     password: formData.password
                 });
+                console.log(result,"==result");
+                
                 if (result?.ok) {
                     router.push('/');
+                }
+                else{
+                    toast.error("Invalid or expire otp")
                 }
             } else {
                 await fetchData(`/${api}`, {
@@ -78,7 +83,7 @@ const {data:session} = useSession()
         if (!canResend) return; // Prevent resend if the timer has not completed
 
         try {
-            await fetch('/api/resend-otp', {
+            await fetch(`${process.env.NEXT_PUBLIC_APIURL}/resend-otp`, {
                 method: "POST",
                 body: JSON.stringify(formData),
                 headers: {
@@ -86,7 +91,6 @@ const {data:session} = useSession()
                     Authorization: session?.token ? `Bearer ${session?.token}` : "",
                 }
             }).then(res => {
-                console.log(res);
                 if (res.ok) {
                     setStartTimer(60); // Reset timer to 10 minutes
                     setCanResend(false); // Reset resend availability
@@ -101,7 +105,7 @@ const {data:session} = useSession()
     };
 
     useEffect(() => {
-        console.log(response,"===response");
+
         
         if (response && api === "login") {
             signIn('credentials', response?.results?.data);
@@ -115,7 +119,7 @@ const {data:session} = useSession()
         if (error) {
             toast.error("Invalid OTP");
         }
-    }, [response]);
+    }, [response,error]);
 
     return (
         <>
@@ -157,14 +161,15 @@ const {data:session} = useSession()
                                 <div className="flex flex-col justify-center h-[500px] md:h-[653px]">
                                     <div>
                                         <h2 className='text-[18px] font-normal leading-7 text-neutral-900 pb-[30px]'>Please enter one-time OTP</h2>
-                                        <InputOtp setValue={setValue} register={register} />
+                                        <InputOtp setValue={setValue} register={register} reset={resendCode}/>
                                     </div>
                                     <div className='my-10 md:my-[60px]'>
                                         <p className='text-sm leading-5 text-neutral-600'>Please check your email, 6-digit confirmation code sent to {formData.email}, please enter the confirmation code to verify it's you.</p>
                                     </div>
 
-                                   
+
                                     <div className='mb-[60px]'>
+<<<<<<< HEAD
                                             {
                                                 loading ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' hideChild='hidden' >
                                                   
@@ -173,13 +178,23 @@ const {data:session} = useSession()
                                                 </Button>
                                             }
                                         </div>
+=======
+                                        {
+                                            loading ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' >
+                                                Verifying
+                                            </Button> : <Button type='submit' variant='primary' className='w-full items-center justify-center' >
+                                                Verify Now
+                                            </Button>
+                                        }
+                                    </div>
+>>>>>>> bf098359a0da3a645a811777024f1787137ff65e
                                     {startTimer > 0 ? (
                                         <h3 className='text-center text-[14px] leading-5 font-normal text-neutral-600'>
                                             Resend OTP in {Math.floor(startTimer / 60)}:{(startTimer % 60).toString().padStart(2, '0')}
                                         </h3>
                                     ) : (
                                         <h3 className='text-center text-[14px] leading-5 font-normal text-neutral-600'>
-                                            <button className='text-action-900' onClick={resendCode}>Resend Code</button>
+                                            <button className='text-action-900' type='button' onClick={resendCode}>Resend Code</button>
                                         </h3>
                                     )}
                                 </div>

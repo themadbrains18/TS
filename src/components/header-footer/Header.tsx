@@ -26,7 +26,7 @@ interface User {
     profileImg: string | null;
     number: string | null;
     token: string | null;
-    freeDownloads: number;
+    freeDownloads: number | undefined | null;
 
   }
 }
@@ -92,8 +92,8 @@ const Header = () => {
   useEffect(() => {
     try {
       setLoadingdata(true)
-      fetchData(`/template-types`, { next: { revalidate: 60 * 10 } });
-      fetchsubCatData(`/sub-categories`, { next: { revalidate: 60 * 10 } });
+      fetchData(`/template-types`, { next: { revalidate: 1800 } });
+      fetchsubCatData(`/sub-categories`, { next: { revalidate: 1800 } });
       fetchUserData()
     } catch (error) {
     }
@@ -136,27 +136,31 @@ const Header = () => {
                   }
                 </>}
 
-                {/* <NavDropdown title="HTML Templatess" />
-                <NavDropdown title="Studio Spacials" /> */}
-
               </div>
             </div>
             <div className={cn`max-w-[576px] w-full flex items-center justify-end gap-x-2.5 `}>
-              <SearchComponent classname="max-w-[410px]" searchresults="max-h-60" openinput={openinput} opensearch={opensearch} setOpensearch={setOpensearch} subCat={subCatData || undefined} />
+
+              <SearchComponent
+                classname="max-w-[410px]"
+                searchresults="max-h-60"
+                openinput={openinput}
+                opensearch={opensearch}
+                setOpensearch={setOpensearch}
+                subCat={subCatData || undefined} />
               {
                 isLoggedIn &&
-                <div className="group ">
+                <div className="group relative ">
                   <div className="w-[50px] h-[50px] rounded-full cursor-pointer ">
                     <Image
                       width={50}
                       height={50}
                       className="rounded-full object-cover w-[50px] h-[50px]"
-                      src={userdata?.user?.profileImg || "/images/userdummy.png"}
+                      src={session?.user?.image || "/images/userdummy.png"}
                       alt="diamond"
                     />
                   </div>
-                  <div className="absolute group-hover:opacity-100 transition-all group-hover:visible invisible opacity-0  duration-[0.5s] top-[94%]  max-[1678px]:right-[15px] right-[85px] mt-2 max-w-[256px] w-full bg-white shadow-lg rounded-lg">
-                    <div className="pt-[46px] mt-[-46px]" >
+                  <div className="absolute group-hover:opacity-100 transition-all group-hover:visible invisible opacity-0  duration-[0.5s] top-[94%]  max-[1678px]:right-0 right-[-73px] mt-2 max-w-[256px]  bg-white shadow-lg rounded-lg">
+                    <div className="pt-[46px] mt-[-6px]" >
                       <div className="py-2.5 ">
                         <h2 className="leading-6 text-[16px] font-semibold text-textheading py-2 pl-[30px] pr-[27px] mb-2.5">
                           {session?.email}
@@ -164,7 +168,7 @@ const Header = () => {
                         <div className="px-[30px] mb-2.5 " >
                           <h2 className="text-[13px] font-medium leading-5 text-textheading" >Daily Download Balance</h2>
                           <div className="py-[3px] px-[3px] h-[12px] border-[#E8CFFB] border-[1px] rounded-[6px] my-[5px] "  >
-                            <span className="h-1 block bg-primary-100 rounded-[5px] w-[33.33%] " ></span>
+                            <span style={{ width: `${session?.user?.freeDownloads * 33.33}%` }} className="h-1 block bg-primary-100 rounded-[5px] " ></span>
                           </div>
                           <h3 className="text-[12px] font-normal leading-5 text-textheading" >1 remaining out of 3</h3>
                         </div>
@@ -207,7 +211,7 @@ const Header = () => {
                 <Icon name="solidsearch" className="w-9 h-9 cursor-pointer" />
               </div>
 
-              <div className="group ">
+              <div className="group">
                 <div className="w-[30px] h-[30px] cursor-pointer ">
                   <Image
                     width={50}
@@ -217,8 +221,8 @@ const Header = () => {
                     alt="diamond"
                   />
                 </div>
-                <div className="absolute group-hover:opacity-100 transition-all group-hover:visible invisible opacity-0  duration-[0.5s] top-[90%] max-[1678px]:right-[0] right-[85px] mt-2 max-w-[256px] w-full bg-white shadow-lg rounded-lg">
-                  <div className="pt-[46px] mt-[-46px] " >
+                <div className="absolute group-hover:opacity-100 transition-all group-hover:visible invisible opacity-0  duration-[0.5s] top-[90%] right-0   mt-2 max-w-[256px]  bg-white shadow-lg rounded-lg">
+                  <div className="pt-[46px] mt-[-46px]" >
                     <div className="py-2.5 ">
                       <h2 className="leading-6 text-[16px] font-semibold text-textheading py-2 pl-[30px] pr-[27px] mb-2.5">
                         {session?.email}
@@ -226,7 +230,7 @@ const Header = () => {
                       <div className="px-[30px] mb-2.5 " >
                         <h2 className="text-[13px] font-medium leading-5 text-textheading" >Daily Download Balance</h2>
                         <div className="py-[3px] px-[3px] h-[12px] border-[#E8CFFB] border-[1px] rounded-[6px] my-[5px] "  >
-                          <span className="h-1 block bg-primary-100 rounded-[5px] w-[33.33%] " ></span>
+                          <span style={{ width: `${session?.user?.freeDownloads * 33.33}%` }} className="h-1 block bg-primary-100 rounded-[5px] " ></span>
                         </div>
                         <h3 className="text-[12px] font-normal leading-5 text-textheading" >1 remaining out of 3</h3>
                       </div>
