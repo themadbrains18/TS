@@ -43,7 +43,7 @@ const Header = () => {
   const { data: userdata, fetchData: fetchUserdata } = useFetch<User>();
   const [opensearch, setOpensearch] = useState(false)
 
-  console.log(session,"==session");
+  // console.log(session,"==session");
 
   const [openAccordions, setOpenAccordions] = useState<boolean[]>(
     Array(data?.length).fill(true) // Set all accordions to open by default
