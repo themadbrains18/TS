@@ -11,7 +11,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { subCat } from '@/types/type';
 import StaticCheckBox from '@/components/ui/StaticCheckbox';
-import {uploadTemplateSchema, uploadTemplateUpdateSchema} from '@/validations/uploadTemplate';
+import { uploadTemplateSchema, uploadTemplateUpdateSchema } from '@/validations/uploadTemplate';
+import { useRouter } from 'next/navigation';
+import Icon from '@/components/Icon';
 
 // Define types for data structures
 export interface TemplateType {
@@ -57,12 +59,12 @@ interface Font {
 interface TemplateFormProps {
     initialData?: FormData | {} | any;
     type: 'create' | 'edit';
-    id?:string
+    id?: string
 }
 
 
 
-const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type,id }) => {
+const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) => {
     // Fetch data hooks for template types, subcategories, and industries
     const { data, fetchData, loading, error } = useFetch<TemplateType[]>();
     const { data: templateData, fetchData: fetchTemplateData, } = useFetch<any>();
@@ -87,12 +89,12 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type,id }) => 
 
     const { register, handleSubmit, control, formState: { errors }, setValue, clearErrors, setError, getValues } = useForm<FormData>({
         defaultValues: { ...initialData }, // FIXME: remove this when we
-        resolver: zodResolver(type=="create"?uploadTemplateSchema:uploadTemplateUpdateSchema)
+        resolver: zodResolver(type == "create" ? uploadTemplateSchema : uploadTemplateUpdateSchema)
     });
 
 
     // console.log(initialData,"===initialData");
-    
+
     // Handle template dropdown selection
     const handleTemplateSelect = (value: string) => {
         setSelectedValue(value);
@@ -112,8 +114,10 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type,id }) => 
     }, [fetchData, fetchIndustryData]);
 
     useEffect(() => {
-     if(initialData){   setValue('techDetails', initialData?.techDetails);
-        handleTemplateSelect(initialData?.templateTypeId)}
+        if (initialData) {
+            setValue('techDetails', initialData?.techDetails);
+            handleTemplateSelect(initialData?.templateTypeId)
+        }
         if (initialData && initialData?.credits.length > 0) {
             const creditData = initialData?.credits[0]; // Assuming you want the first entry
 
@@ -213,13 +217,54 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type,id }) => 
         </div>
     );
 
+    const router = useRouter();
+
+    // const onSubmit: SubmitHandler<FormData> = (data) => {
+
+    //     // console.log(data,"==dtatata");
+
+
+    //     const formData = new FormData();
+    //     // Append form fields to FormData
+    //     Object.entries(data).forEach(([key, value]) => {
+    //         if (Array.isArray(value)) {
+    //             value.forEach((item) => formData.append(key, item));
+    //         } else {
+    //             formData.append(key, value);
+    //         }
+    //     });
+
+    //     const credits = [
+    //         {
+    //             fonts: fonts.map(font => ({ name: font.name, url: font.url })),
+    //             images: images.map(image => ({ name: image.name, url: image.url })),
+    //             icons: icons.map(icon => ({ name: icon.name, url: icon.url })),
+    //             illustrations: illustrations.map(illustration => ({ name: illustration.name, url: illustration.url })),
+    //         }
+    //     ];
+    //     formData.append("credits", JSON.stringify(credits))
+
+    //     // Logging the FormData for demonstration using forEach
+    //     // formData.forEach((value, key) => {
+    //     //     console.log(`${key}:`, value);
+    //     // });
+    //     const endpoint = type == 'edit' ? `/templates/${id}` : '/templates';
+    //     const method = type == 'edit' ? 'PUT' : 'POST';
+    //     fetchData(endpoint, { method:method, body: formData })
+
+    //     if(formData){
+    //       router.push("/dashboard")  
+    //     }
+
+    // };
+
+
+    // console.log(errors,"==errors");
+    // console.log(getValues("sliderImages"),"==errors");
 
     const onSubmit: SubmitHandler<FormData> = (data) => {
-
-        // console.log(data,"==dtatata");
-        
-
         const formData = new FormData();
+
         // Append form fields to FormData
         Object.entries(data).forEach(([key, value]) => {
             if (Array.isArray(value)) {
@@ -237,21 +282,18 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type,id }) => 
                 illustrations: illustrations.map(illustration => ({ name: illustration.name, url: illustration.url })),
             }
         ];
-        formData.append("credits", JSON.stringify(credits))
+        formData.append("credits", JSON.stringify(credits));
 
-        // Logging the FormData for demonstration using forEach
-        // formData.forEach((value, key) => {
-        //     console.log(`${key}:`, value);
-        // });
-        const endpoint = type == 'edit' ? `/templates/${id}` : '/templates';
-        const method = type == 'edit' ? 'PUT' : 'POST';
-        fetchData(endpoint, { method:method, body: formData })
+        const endpoint = type === 'edit' ? `/templates/${id}` : '/templates';
+        const method = type === 'edit' ? 'PUT' : 'POST';
 
+        // Redirect only after fetchData completes
+        fetchData(endpoint, { method: method, body: formData }).then(() => {
+            router.push("/dashboard");
+        }).catch(error => {
+            console.error("An error occurred during submission:", error);
+        });
     };
-
-    // console.log(errors,"==errors");
-    // console.log(getValues("sliderImages"),"==errors");
-    
 
     return (
 
@@ -419,7 +461,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type,id }) => 
                                 <h3 className='text-xl font-semibold capitalize  pb-4'>Description</h3>
                                 <QuillEditor setValue={setValue} clearErrors={clearErrors} setError={setError} initialValue={initialData?.description} />
                                 {errors.description &&
-                                    <p style={{ color: 'red' }}>{errors.description.message}</p>
+                                    <p style={{ color: 'red', marginTop: "10px" }}>{errors.description.message}</p>
                                 }
                             </div>
 
@@ -601,9 +643,15 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type,id }) => 
                                             </div>
                                         }
                                     </div>
-                                    <Button type='submit' variant='primary' className='py-3 mt-5' >
-                                        {loading ? "Uploading..." : "Upload"}
+                                    {
+                                        loading ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='py-3 mt-5' >
+                                            uploading
+                                        </Button> : <Button type='submit' variant='primary' className='py-3 mt-5' >
+                                            upload
                                         </Button>
+                                    }
+
+
                                 </div>
                             </div>
                         </div>

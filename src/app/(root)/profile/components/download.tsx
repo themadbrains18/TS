@@ -89,9 +89,9 @@ const Download = () => {
                     {selectedCategory}
                   </h2>
                 </div>
-                <div className={`absolute right-0 ${category ? "opacity-1 visible" : "opacity-0 invisible"} duration-[0.5s] top-[45px] z-10 bg-white`}>
+                <div className={`absolute right-0 max-[640px]:left-0 ${category ? "opacity-1 visible" : "opacity-0 invisible"} duration-[0.5s] top-[45px] z-10 bg-white`}>
                   {Categorydata.map((item, index) => (
-                    <h4 key={index + item.title} onClick={() => handleCategoryClick(item.title)} className="text-subparagraph text-start leading-6 py-2 px-[30px] capitalize cursor-pointer hover:bg-primary-200 border-l-[2px] hover:border-primary-100">
+                    <h4 key={index + item.title} onClick={() => handleCategoryClick(item.title)} className="text-subparagraph text-start leading-6 py-2 px-3 sm:px-[30px]  capitalize cursor-pointer hover:bg-primary-200 border-l-[2px] hover:border-primary-100 text-nowrap truncate">
                       {item.title}
                     </h4>
                   ))}
@@ -99,15 +99,15 @@ const Download = () => {
               </div>
               {/* Sort Selector */}
               <div className="relative cursor-pointer w-full sm:w-auto" onMouseEnter={() => setSort(true)} onMouseLeave={() => setSort(false)}>
-                <div onClick={sorthandledropdown} className={`w-full border duration-[0.5s] ${sort ? "border-primary-100" : "border-divider-100"} group py-2 px-[10px] sm:px-5 items-center`}>
+                <div onClick={sorthandledropdown} className={`w-full border duration-[0.5s] flex flex-nowrap gap-x-[6px] ${sort ? "border-primary-100" : "border-divider-100"} group py-2 px-[10px] sm:px-5 sm:pr-[15px] items-center`}>
                   <h2 className={`text-primary text-base font-semibold leading-6 duration-[0.2s] ${sort ? "text-primary-100" : "text-subheading"} text-nowrap`}>
                     {selectedSort}
                   </h2>
                   <Icon className={`p-1 w-5 h-5 ${sort ? "[&>*]:fill-primary-100" : "[&>*]:fill-[#5D5775]"}`} name="sortaroow" />
                 </div>
-                <div className={`absolute right-0 ${sort ? "opacity-1 visible" : "opacity-0 invisible"} duration-[0.5s] top-[45px] z-10 bg-white`}>
+                <div className={`absolute right-0 max-[640px]:left-0 ${sort ? "opacity-1 visible" : "opacity-0 invisible"} duration-[0.5s] top-[45px] z-10 bg-white`}>
                   {Sortdata.map((item, index) => (
-                    <h4 key={index + item.title} onClick={() => handleItemClick(item.title)} className="text-subparagraph text-start leading-6 py-2 px-[30px] capitalize cursor-pointer hover:bg-primary-200 border-l-[2px] hover:border-primary-100">
+                    <h4 key={index + item.title} onClick={() => handleItemClick(item.title)} className="text-subparagraph text-start leading-6 py-2 px-[30px] capitalize cursor-pointer hover:bg-primary-200 border-l-[2px] hover:border-primary-100 text-nowrap truncate">
                       {item.title}
                     </h4>
                   ))}

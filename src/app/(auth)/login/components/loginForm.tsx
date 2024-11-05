@@ -8,7 +8,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
-import CheckBox from '@/components/ui/Checkbox';
+import CheckBox from '@/components/ui/checkbox';
 import useFetch from '@/hooks/useFetch';
 import Otp from "../../otp/page"
 import { useSession } from 'next-auth/react';
@@ -22,6 +22,7 @@ const LoginForm = () => {
     const [otpPath, setOtppath] = useState(false);
     const [formData, setFormData] = useState({})
     
+//  console.log(status,"==status");
  
     // Form Values Interface
     interface FormValues {
@@ -60,12 +61,12 @@ const LoginForm = () => {
 
     useEffect(() => {
         if (response?.otp) {
-            setOtppath(true)
+            setOtppath(true);
         }
-        if (status === 'authenticated') {
+        if (session) {
             router.push('/'); // Redirect to the home page if the user is logged in
         }
-    }, [response, status, router]);
+    }, [response,session, router]);
 
     return (
         <>
@@ -147,9 +148,16 @@ const LoginForm = () => {
 
                                         {/* Submit Button */}
                                         <div className="my-[60px]">
-                                            <Button className="w-full items-center justify-center" type="submit" variant="primary" >
+                                            {/* <Button className="w-full items-center justify-center" type="submit" variant="primary" >
                                                 {loading ? "Logging in..." : "Login"}
-                                            </Button>
+                                            </Button> */}
+                                              {
+                                        loading ? <Button type='submit' disabled loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' >
+                                            Logging
+                                        </Button> : <Button type='submit' variant='primary' className='w-full items-center justify-center' >
+                                           Login
+                                        </Button>
+                                    }
 
                                             {/* Error message display */}
                                             {/* {error && <p className="text-red-500 mt-2">Failed to login. Please try again.</p>} */}

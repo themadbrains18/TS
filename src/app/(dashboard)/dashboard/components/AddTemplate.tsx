@@ -10,6 +10,8 @@ import DeleteTemplate from '@/components/popups/DeleteTemplate';
 import DashInput from '../addtemplate/components/DashInput';
 import useFetch from '@/hooks/useFetch';
 import { signOut } from 'next-auth/react';
+import Link from 'next/link';
+import Image from 'next/image';
 
 export interface Template {
   templates:
@@ -96,8 +98,8 @@ const AddTemplate = () => {
   }, [response])
 
 
-  const handleSearch = async(value: string) => {
-    if(value===""){
+  const handleSearch = async (value: string) => {
+    if (value === "") {
       fetchTemplates()
     }
     await fetchData(`/templates/search?query=${value}`)
@@ -113,21 +115,30 @@ const AddTemplate = () => {
           <DeleteTemplate setDelete={() => handleDelete(response?.templates[deletePopupIndex]?.id || "")} isPopupOpen={deletePopupIndex !== null} closePopup={closePopup} />
         )}
         <div className="container">
-          <div className="px-5">
-            <div className="flex flex-col gap-y-5">
-              <div className="flex items-center justify-end">
-                <Button className="py-2" onClick={() => { signOut() }}>logout</Button>
+
+          <div>
+            <div>
+              <div className='flex justify-between gap-x-2 items-center pt-5 py-10'>
+
+                <div className=''>  <Link className="w-[276px]" href={'/'}>
+                  <Image
+                    src={"/icons/Logo.svg"}
+                    width={276}
+                    height={40}
+                    alt="Logo"
+                  />
+                </Link></div>
+                <div className="flex items-center justify-end">
+                  <Button className="py-2" onClick={() => { signOut() }}>logout</Button>
+                </div>
               </div>
-              <div className="flex justify-center items-center">
+              <div className="flex flex-col min-[600px]:flex-row gap-x-5 gap-y-5 min-[600px]:gap-y-0  justify-between items-center">
                 <DashInput className="max-w-lg w-full hover:border-primary-100 focus:border-primary-100" placeholder="Search" type="text" onChange={(e) => { handleSearch(e.target.value) }} />
+                  <Button link="/dashboard/addtemplate" className="py-2 min-[600px]:py-3 text-nowrap"  >add template</Button>
               </div>
             </div>
           </div>
           <div className="py-10">
-            <div className="flex justify-center md:justify-end md:pb-6 md:px-5">
-              <Button link="/dashboard/addtemplate" className="py-2"  >add template</Button>
-            </div>
-
             <div className="overflow-x-scroll w-full mt-10 hiddenscroll">
               <table className="min-w-full border-collapse table-auto">
                 <thead>

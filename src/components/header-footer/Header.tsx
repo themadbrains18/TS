@@ -87,7 +87,7 @@ const Header = () => {
     setOpensearch(false)
   }
 
-  const isLoggedIn = session && session.token;
+  const isLoggedIn = session && session?.token;
 
   useEffect(() => {
     try {
@@ -146,11 +146,11 @@ const Header = () => {
               {
                 isLoggedIn &&
                 <div className="group ">
-                  <div className="w-[50px] h-[50px] cursor-pointer ">
+                  <div className="w-[50px] h-[50px] rounded-full cursor-pointer ">
                     <Image
                       width={50}
                       height={50}
-                      className="rounded-full object-contain"
+                      className="rounded-full object-cover w-[50px] h-[50px]"
                       src={userdata?.user?.profileImg || "/images/userdummy.png"}
                       alt="diamond"
                     />

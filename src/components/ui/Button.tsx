@@ -20,7 +20,8 @@ const Button: React.FC<ButtonProps> = ({
   direction,
   hideChild,
   downloadicon,
-  disabled
+  disabled,
+  loadingbtn
 }) => {
   const buttonClasses = cn({
     "bg-primary-100 text-white capitalize font-semibold leading-6 transition-all duration-300 hover:bg-[#872fcb] py-[13px] px-[30px]":
@@ -39,7 +40,7 @@ const Button: React.FC<ButtonProps> = ({
       {
         link === undefined ?
           <button
-            className={cn`${buttonClasses} ${className}  capitalize flex items-center gap-x-[2px] cursor-pointer  ${disabled ?'cursor-not-allowed opacity-80':"cursor-pointer opacity-100"}`}
+            className={cn`${buttonClasses} ${className}  capitalize flex items-center gap-x-[2px] cursor-pointer  ${disabled ? 'cursor-not-allowed opacity-80' : "cursor-pointer opacity-100"}`}
             onClick={onClick}
             disabled={isLoading || disabled}
             type={type}
@@ -49,23 +50,28 @@ const Button: React.FC<ButtonProps> = ({
                 {isLoading ? "Loading..." : children}
               </div>
 
-              {icon === true ? (
+              {icon ? (
                 <Icon className={cn`${iconClass}`} name="soliddownicon" />
               ) : (
                 ""
               )}
-              {editicon === true ? (
+              {editicon ? (
                 <Icon className={cn`${iconClass}`} name="editicon" />
               ) : (
                 ""
               )}
-              {saveicon === true ? (
+              {saveicon ? (
                 <Icon className={cn`${iconClass}`} name="saveicon" />
               ) : (
                 ""
               )}
-              {downloadicon === true ? (
+              {downloadicon ? (
                 <Icon className={cn`${iconClass}`} name="downloadIcon" />
+              ) : (
+                ""
+              )}
+              {loadingbtn ? (
+                <Icon className={cn`${iconClass}`} name="loadingicon" />
               ) : (
                 ""
               )}
