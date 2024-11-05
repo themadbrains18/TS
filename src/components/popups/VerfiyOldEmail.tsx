@@ -34,7 +34,6 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
 
     const onSubmit: SubmitHandler<FormData> = async (data) => {
         try {
-            // console.log(data, "==dhfhkjdh");
 
             if (step === 1) data.currentEmail = session ? session?.email : ""
             else data.newEmail = data?.email || ""
@@ -50,7 +49,6 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
             }
 
             delete data?.otp
-            // console.log(data,"===data");
             
 
             await fetchData('/update-details', {
@@ -69,7 +67,6 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
         }
     }
 
-    // console.log(errors,"==errors");
     
     const handleEmmailUpdate = async () => {
         try {
@@ -102,7 +99,6 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
         }
     };
     
-    // console.log(response, "==response");
 
 
     useEffect(() => {

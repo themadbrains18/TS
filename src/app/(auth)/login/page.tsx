@@ -8,7 +8,6 @@ import LoginForm from './components/loginForm';
 const LoginPage = async () => {
   const session = await getServerSession(authOptions);
 
-  console.log(session,"==session");
   
   // If the user is logged in, redirect to the home page
   if (session) {

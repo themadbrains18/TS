@@ -18,7 +18,6 @@ interface ApiResponse {
 }
 
 const AuthorTab: React.FC<UserDetailProps> = ({ userDetail }) => {
-  console.log(userDetail, "==userDetail");
 
   const { data, fetchData } = useFetch<ApiResponse>();
 
@@ -34,7 +33,6 @@ const AuthorTab: React.FC<UserDetailProps> = ({ userDetail }) => {
     getUserTemplates();
   }, []);
 
-  // console.log(data,"==data");
 
   return (
     <div className="mt-10 lg:mt-20">

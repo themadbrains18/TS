@@ -27,9 +27,9 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
     const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
     const [profileImage, setProfileImage] = useState<any>(profileimage);
     const [name, setName] = useState(session?.user ? session?.user?.name : '');
-    const [nameError, setNameeror] = useState<boolean>();
+    const [nameError, setNameeror] = useState<string>();
     const [phoneNumber, setPhoneNumber] = useState('');
-    const [phoneNumberError, setPhoneNumberError] = useState<boolean>();
+    const [phoneNumberError, setPhoneNumberError] = useState<string>();
 
     const closePopup = () => {
         setIsPopupOpen(false);
@@ -78,8 +78,12 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
 
     const handleNameUpdate = async () => {
         try {
-            if (!name) {
-                setNameeror(true)
+            if (name === "") {
+                setNameeror("User Name Is Empty")
+                return
+            }
+            if (name === session?.user?.name) {
+                setNameeror("This User Already Exists ")
                 return
             }
             await updateFetchData('/update-details', {
@@ -102,10 +106,16 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
         let number = phoneNumber
 
         try {
-            if (!phoneNumberError) {
-                setPhoneNumberError(true)
+            if (phoneNumberError === "") {
+                setPhoneNumberError("")
                 return
             }
+
+            if (phoneNumberError === "") {
+                setPhoneNumberError("")
+                return
+            }
+            
             await updateNumber('/update-details', {
                 method: 'PUT',
                 body: JSON.stringify({ number, id: session?.id }),
@@ -137,7 +147,6 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
     }, []);
 
     useEffect(() => {
-        // console.log(response,"==response");
 
         if (response) {
             setProfileImage(response?.user?.profileImg || profileimage);
@@ -178,82 +187,83 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
                                             onChange={handleImageChange}
                                         />
                                     </div>
-                                    <Button className='py-[6px] px-5 text-sm md:text-base md:px-7 md:py-2' variant='basic'>Remove</Button>
+                                    {/* <Button className='py-[6px] px-5 text-sm md:text-base md:px-7 md:py-2' variant='basic'>Remove</Button> */}
                                 </div>
                                 <div className='mt-5 flex flex-col gap-y-4 lg:gap-y-[30px]'>
-                                    <div className='flex items-end gap-x-[10px]'>
-                                        <Input
-                                            disabled={isNameDisabled}
-                                            className='px-4 py-[13px] md:py-[13px]'
-                                            label='Name'
-                                            placeholder='Name'
-                                            name='name'
-                                            type='text'
-                                            value={response?.user ? response?.user?.name : name}
-                                            onChange={(e) => setName(e?.target?.value)}
-                                        />
+                                    <div >
+                                        <div className='flex items-end gap-x-[10px]' >
+                                            <Input
+                                                disabled={isNameDisabled}
+                                                className='px-4 py-[13px] md:py-[13px]'
+                                                label='Name'
+                                                placeholder='Name'
+                                                name='name'
+                                                type='text'
+                                                value={response?.user ? response?.user?.name : name}
+                                                onChange={(e) => setName(e?.target?.value)}
+                                            />
 
+                                            {
+                                                isNameActive ?
+                                                    <Button
+                                                        hideChild='hidden md:block'
+                                                        iconClass='w-6 h-6'
+                                                        direction='flex-row-reverse gap-x-[10px]'
+                                                        className='py-[13px] px-4 md:py-4 md:px-[14px]'
+                                                        onClick={() => { setIsNameActive(false), setIsNameDisabled(!isNameDisabled), handleNameUpdate() }}
+                                                        variant='primary'
+                                                        saveicon={true}
+                                                    >
+                                                        {updateLoading ? 'Saving...' : 'Save'}
+                                                    </Button>
+                                                    :
+                                                    <Button
+                                                        hideChild='hidden md:block'
+                                                        direction='flex-row-reverse gap-x-[10px]'
+                                                        className='py-[13px] px-4 md:py-4 md:px-[14px]'
+                                                        onClick={() => { setIsNameActive(true), setIsNameDisabled(!isNameDisabled) }}
+                                                        variant='primary'
+                                                        iconClass='fill-white w-6 h-6'
+                                                        editicon={true} >edit</Button>
+                                            }
+                                        </div>
                                         {
-                                            isNameActive ?
-                                                <Button
-                                                    hideChild='hidden md:block'
-                                                    iconClass='w-6 h-6'
-                                                    direction='flex-row-reverse gap-x-[10px]'
-                                                    className='py-[13px] px-4 md:py-4 md:px-[14px]'
-                                                    onClick={() => { setIsNameActive(false), setIsNameDisabled(!isNameDisabled), handleNameUpdate() }}
-                                                    variant='primary'
-                                                    saveicon={true}
-                                                >
-                                                    {updateLoading ? 'Saving...' : 'Save'}
-                                                </Button>
-                                                :
-                                                <Button
-                                                    hideChild='hidden md:block'
-                                                    direction='flex-row-reverse gap-x-[10px]'
-                                                    className='py-[13px] px-4 md:py-4 md:px-[14px]'
-                                                    onClick={() => { setIsNameActive(true), setIsNameDisabled(!isNameDisabled) }}
-                                                    variant='primary'
-                                                    iconClass='fill-white w-6 h-6'
-                                                    editicon={true} >edit</Button>
-                                        }
-
-
-                                    </div>
-                                    {
-                                        nameError && <p className='text-red-300'> Your Name Is Empty</p>
-                                    }
-
-                                    <div className='flex items-end gap-x-[10px]'>
-                                        <Input
-                                            disabled={isUserDisabled}
-                                            className='px-4 py-[13px] md:py-[13px]'
-                                            label='Number'
-                                            placeholder='Number'
-                                            name='number'
-                                            type='text'
-                                            value={response?.user ? response?.user?.number : phoneNumber}
-                                            onChange={(e) => setPhoneNumber(e.target.value)}
-                                        />
-                                        {
-                                            isUsernameActive ?
-                                                <Button
-                                                    hideChild='hidden md:block'
-                                                    direction='flex-row-reverse gap-x-[10px]'
-                                                    className='py-[13px] px-4 md:py-4 md:px-[14px]'
-                                                    iconClass='w-6 h-6'
-                                                    onClick={() => { setIsUsernameActive(false), setIsUserDisabled(!isUserDisabled), handlePhonenumberUpdate() }}
-                                                    variant='primary'
-                                                    saveicon={true}> {updateloadingNumber ? 'Saving...' : 'Save'}</Button> :
-                                                <Button
-                                                    hideChild='hidden md:block'
-                                                    direction='flex-row-reverse gap-x-[10px]'
-                                                    className='py-[13px] px-4 md:py-4 md:px-[14px]' onClick={() => { setIsUsernameActive(true), setIsUserDisabled(!isUserDisabled) }} variant='primary' iconClass='fill-white w-6 h-6' editicon={true}>edit</Button>
+                                            nameError && <p className='text-red-500'> {nameError}</p>
                                         }
                                     </div>
 
-                                    {
-                                        phoneNumberError && <p className='text-red-300'> Your Phone Number Is Empty</p>
-                                    }
+                                    <div>
+                                        <div className='flex items-end gap-x-[10px]' >
+                                            <Input
+                                                disabled={isUserDisabled}
+                                                className='px-4 py-[13px] md:py-[13px]'
+                                                label='Number'
+                                                placeholder='Number'
+                                                name='number'
+                                                type='text'
+                                                value={response?.user ? response?.user?.number : phoneNumber}
+                                                onChange={(e) => setPhoneNumber(e.target.value)}
+                                            />
+                                            {
+                                                isUsernameActive ?
+                                                    <Button
+                                                        hideChild='hidden md:block'
+                                                        direction='flex-row-reverse gap-x-[10px]'
+                                                        className='py-[13px] px-4 md:py-4 md:px-[14px]'
+                                                        iconClass='w-6 h-6'
+                                                        onClick={() => { setIsUsernameActive(false), setIsUserDisabled(!isUserDisabled), handlePhonenumberUpdate() }}
+                                                        variant='primary'
+                                                        saveicon={true}> {updateloadingNumber ? 'Saving...' : 'Save'}</Button> :
+                                                    <Button
+                                                        hideChild='hidden md:block'
+                                                        direction='flex-row-reverse gap-x-[10px]'
+                                                        className='py-[13px] px-4 md:py-4 md:px-[14px]' onClick={() => { setIsUsernameActive(true), setIsUserDisabled(!isUserDisabled) }} variant='primary' iconClass='fill-white w-6 h-6' editicon={true}>edit</Button>
+                                            }
+                                        </div>
+                                        {
+                                            phoneNumberError && <p className='text-red-500'> {phoneNumberError}</p>
+                                        }
+                                    </div>
 
                                     <div className='flex items-end gap-x-[10px]'>
                                         <Input

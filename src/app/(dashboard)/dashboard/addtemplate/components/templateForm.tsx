@@ -93,7 +93,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     });
 
 
-    // console.log(initialData,"===initialData");
 
     // Handle template dropdown selection
     const handleTemplateSelect = (value: string) => {
@@ -221,7 +220,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
     // const onSubmit: SubmitHandler<FormData> = (data) => {
 
-    //     // console.log(data,"==dtatata");
 
 
     //     const formData = new FormData();
@@ -246,7 +244,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
     //     // Logging the FormData for demonstration using forEach
     //     // formData.forEach((value, key) => {
-    //     //     console.log(`${key}:`, value);
     //     // });
     //     const endpoint = type == 'edit' ? `/templates/${id}` : '/templates';
     //     const method = type == 'edit' ? 'PUT' : 'POST';
@@ -259,8 +256,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     // };
 
 
-    // console.log(errors,"==errors");
-    // console.log(getValues("sliderImages"),"==errors");
+    
 
     const onSubmit: SubmitHandler<FormData> = (data) => {
         const formData = new FormData();

@@ -57,7 +57,6 @@ export const authOptions: AuthOptions = {
         });
 
         const user = await res.json();
-        console.log(user,"==user");
         
         // If login is successful, return the user object
         if (res.ok && user) {    

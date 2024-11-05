@@ -10,7 +10,7 @@ export interface navcardprops {
   iconclass?: string,
   titleclass?: string,
   imageclass?: string
-  classname?:string
+  classname?: string
 }
 
 export interface ButtonProps {
@@ -29,8 +29,8 @@ export interface ButtonProps {
   editicon?: boolean;
   direction?: string;
   hideChild?: string;
-  disabled?:boolean;
-  loadingbtn?:boolean
+  disabled?: boolean;
+  loadingbtn?: boolean
 }
 
 
@@ -47,8 +47,8 @@ export interface navtabprops {
   setOpensearch?: React.Dispatch<React.SetStateAction<boolean>>;
   openinput?: () => void
   mainclass?: string
-  searchresults?:string
-  resinputoff?:() => void;
+  searchresults?: string
+  resinputoff?: () => void;
 }
 
 export interface subCat {

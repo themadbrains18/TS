@@ -76,7 +76,6 @@ const AddTemplate = () => {
 
   // Function to handle the DELETE request
   const handleDelete = async (id: string) => {
-    // console.log(id, "i am id ")
     try {
       await fetchData(`/templates/${id}`, { method: 'DELETE' });
       // Optionally refetch templates after deletion

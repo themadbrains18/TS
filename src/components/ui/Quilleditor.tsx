@@ -29,7 +29,6 @@ const RichTextEditor: React.FC<EditerProps> = ({setValue,clearErrors, setError,i
       clearErrors('description')
     }
 
-    // console.log(value, '==value');
   };
 
   useEffect(() => {
