@@ -24,11 +24,11 @@ const Form = () => {
     const [formData, setFormData] = useState({})
     const router = useRouter();
 
-    const {  control, handleSubmit, formState: { errors } } = useForm<FormValues>({
+    const { control, handleSubmit, formState: { errors } } = useForm<FormValues>({
         resolver: zodResolver(forgotPassword)
     });
 
-    const { data: response,  loading, fetchData } = useFetch<ApiResponse>();
+    const { data: response, loading, fetchData } = useFetch<ApiResponse>();
 
     console.log(errors)
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
@@ -39,7 +39,7 @@ const Form = () => {
                 body: JSON.stringify(data),
                 headers: {
                     'Content-Type': 'application/json',
-                  },
+                },
             });
         } catch (error) {
             toast.error("Submission error");
@@ -49,7 +49,7 @@ const Form = () => {
     useEffect(() => {
         if (response?.otp) {
             setOtppath(true)
-            
+
         }
     }, [response, router]);
 
@@ -57,7 +57,7 @@ const Form = () => {
         <>
             {
                 otpPath ? (
-                    <Otp formData={formData} api="reset-password" setFormData={setFormData}/>
+                    <Otp formData={formData} api="reset-password" setFormData={setFormData} />
                 ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-2 ">
                         {/* Left Section with Image and Text */}
@@ -113,13 +113,12 @@ const Form = () => {
                                             {/* <Button type='submit' className="w-full items-center justify-center" variant="primary">
                                                 {loading ? "Send Otp..." : "Send Otp"}
                                             </Button> */}
-                                              {
-                                        loading ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' >
-                                          Sending otp
-                                        </Button> : <Button type='submit' variant='primary' className='w-full items-center justify-center' >
-                                        Send Otp
-                                        </Button>
-                                    }
+                                            {
+                                                loading ? <Button disabled type='submit' loadingbtn={true} hideChild='hidden' iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' >
+                                                </Button> : <Button type='submit' variant='primary' className='w-full items-center justify-center' >
+                                                    Send Otp
+                                                </Button>
+                                            }
                                         </div>
                                     </form>
                                     {/* Social Media Buttons */}
