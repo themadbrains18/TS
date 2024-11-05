@@ -160,7 +160,7 @@ const Header = () => {
                     />
                   </div>
                   <div className="absolute group-hover:opacity-100 transition-all group-hover:visible invisible opacity-0  duration-[0.5s] top-[94%]  max-[1678px]:right-0 right-[-73px] mt-2 max-w-[256px]  bg-white shadow-lg rounded-lg">
-                    <div className="pt-[46px] mt-[-46px]" >
+                    <div className="pt-[46px] mt-[-6px]" >
                       <div className="py-2.5 ">
                         <h2 className="leading-6 text-[16px] font-semibold text-textheading py-2 pl-[30px] pr-[27px] mb-2.5">
                           {session?.email}
