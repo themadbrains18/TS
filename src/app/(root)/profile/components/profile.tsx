@@ -29,6 +29,7 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
     const [name, setName] = useState(session?.user ? session?.user?.name : '');
     const [nameError, setNameeror] = useState<string>();
     const [phoneNumber, setPhoneNumber] = useState('');
+    console.log(phoneNumber)
     const [phoneNumberError, setPhoneNumberError] = useState<string>();
 
     const closePopup = () => {
@@ -93,6 +94,7 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
                     'Content-Type': 'application/json',
                 },
             });
+            setNameeror("")
             setIsNameActive(false);
             setIsNameDisabled(true);
         } catch (error) {
@@ -106,23 +108,28 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
         let number = phoneNumber
 
         try {
-            if (phoneNumberError === "") {
-                setPhoneNumberError("")
+            if (phoneNumber === "") {
+                setPhoneNumberError("Number Is Empty")
                 return
             }
 
-            if (phoneNumberError === "") {
-                setPhoneNumberError("")
+            if (phoneNumber === session?.number) {
+                setPhoneNumberError("This Number Is  Already Exists")
                 return
             }
-            
-            await updateNumber('/update-details', {
+
+            const result = await updateNumber('/update-details', {
                 method: 'PUT',
                 body: JSON.stringify({ number, id: session?.id }),
                 headers: {
                     'Content-Type': 'application/json',
                 },
             });
+
+            // if (result) {
+            //     setPhoneNumberError("")
+            // }
+
         } catch (error) {
             console.error("Error updating number:", error);
         }
@@ -191,7 +198,7 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
                                 </div>
                                 <div className='mt-5 flex flex-col gap-y-4 lg:gap-y-[30px]'>
                                     <div >
-                                        <div className='flex items-end gap-x-[10px]' >
+                                        <div className='flex items-end gap-x-[10px]'>
                                             <Input
                                                 disabled={isNameDisabled}
                                                 className='px-4 py-[13px] md:py-[13px]'
