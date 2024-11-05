@@ -83,7 +83,7 @@ const Otp = ({ formData, api, setFormData }: any) => {
         if (!canResend) return; // Prevent resend if the timer has not completed
 
         try {
-            await fetch('/api/resend-otp', {
+            await fetch(`${process.env.NEXT_PUBLIC_APIURL}/resend-otp`, {
                 method: "POST",
                 body: JSON.stringify(formData),
                 headers: {
@@ -107,18 +107,18 @@ const Otp = ({ formData, api, setFormData }: any) => {
     useEffect(() => {
 
         
-        // if (response && api === "login") {
-        //     signIn('credentials', response?.results?.data);
-        // }
-        // if (response && api === "register") {
-        //     router.push('/login');
-        // }
-        // if (response?.otp) {
-        //     setPath(true);
-        // }
-        // if (error) {
-        //     toast.error("Invalid OTP");
-        // }
+        if (response && api === "login") {
+            signIn('credentials', response?.results?.data);
+        }
+        if (response && api === "register") {
+            router.push('/login');
+        }
+        if (response?.otp) {
+            setPath(true);
+        }
+        if (error) {
+            toast.error("Invalid OTP");
+        }
     }, [response,error]);
 
     return (
@@ -161,7 +161,7 @@ const Otp = ({ formData, api, setFormData }: any) => {
                                 <div className="flex flex-col justify-center h-[500px] md:h-[653px]">
                                     <div>
                                         <h2 className='text-[18px] font-normal leading-7 text-neutral-900 pb-[30px]'>Please enter one-time OTP</h2>
-                                        <InputOtp setValue={setValue} register={register} />
+                                        <InputOtp setValue={setValue} register={register} reset={resendCode}/>
                                     </div>
                                     <div className='my-10 md:my-[60px]'>
                                         <p className='text-sm leading-5 text-neutral-600'>Please check your email, 6-digit confirmation code sent to {formData.email}, please enter the confirmation code to verify it's you.</p>
@@ -183,7 +183,7 @@ const Otp = ({ formData, api, setFormData }: any) => {
                                         </h3>
                                     ) : (
                                         <h3 className='text-center text-[14px] leading-5 font-normal text-neutral-600'>
-                                            <button className='text-action-900' onClick={resendCode}>Resend Code</button>
+                                            <button className='text-action-900' type='button' onClick={resendCode}>Resend Code</button>
                                         </h3>
                                     )}
                                 </div>
