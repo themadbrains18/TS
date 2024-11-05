@@ -28,8 +28,7 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
     const [profileImage, setProfileImage] = useState<any>(profileimage);
     const [name, setName] = useState(session?.user ? session?.user?.name : '');
     const [nameError, setNameeror] = useState<string>();
-    const [phoneNumber, setPhoneNumber] = useState('');
-    console.log(phoneNumber)
+    const [number, setNumber] = useState(session?.user ? session?.number : '');
     const [phoneNumberError, setPhoneNumberError] = useState<string>();
 
     const closePopup = () => {
@@ -64,8 +63,6 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
         }
     };
 
-
-
     const fetchUserData = async () => {
         try {
             fetchData(`/get-user`);
@@ -74,8 +71,6 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
             console.log(error)
         }
     };
-
-
 
     const handleNameUpdate = async () => {
         try {
@@ -102,34 +97,26 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
         }
     };
 
-
     const handlePhonenumberUpdate = async () => {
-
-        let number = phoneNumber
-
         try {
-            if (phoneNumber === "") {
+            if (number === "") {
                 setPhoneNumberError("Number Is Empty")
                 return
             }
 
-            if (phoneNumber === session?.number) {
+            if (number === session?.number) {
                 setPhoneNumberError("This Number Is  Already Exists")
                 return
             }
 
-            const result = await updateNumber('/update-details', {
+            await updateNumber('/update-details', {
                 method: 'PUT',
                 body: JSON.stringify({ number, id: session?.id }),
                 headers: {
                     'Content-Type': 'application/json',
                 },
             });
-
-            // if (result) {
-            //     setPhoneNumberError("")
-            // }
-
+            setPhoneNumberError("")
         } catch (error) {
             console.error("Error updating number:", error);
         }
@@ -248,8 +235,8 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
                                                 placeholder='Number'
                                                 name='number'
                                                 type='text'
-                                                value={response?.user ? response?.user?.number : phoneNumber}
-                                                onChange={(e) => setPhoneNumber(e.target.value)}
+                                                value={response?.user ? response?.user?.number : number}
+                                                onChange={(e) => setNumber(e.target.value)}
                                             />
                                             {
                                                 isUsernameActive ?
@@ -283,26 +270,17 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
                                             value={session?.email}
                                         />
                                         {
-                                            isEmailActive ?
-                                                <Button
-                                                    hideChild='hidden md:block'
-                                                    iconClass='w-6 h-6' direction='flex-row-reverse gap-x-[10px]'
-                                                    className='py-[13px] px-4 md:py-4 md:px-[14px]'
-                                                    onClick={() => { setIsEmailActive(false), setIsEmailDisabled(!isEmailDisabled) }}
-                                                    variant='primary'
-                                                    saveicon={true}>
-                                                    {updateloadingPassword ? 'Saving...' : 'Save '}
-                                                </Button> :
-                                                <Button
-                                                    hideChild='hidden md:block'
-                                                    direction='flex-row-reverse gap-x-[10px]'
-                                                    className='py-[13px] px-4 md:py-4 md:px-[14px]'
-                                                    onClick={() => { setIsEmailActive(true), setIsEmailDisabled(!isEmailDisabled), openPopup() }}
-                                                    variant='primary'
-                                                    iconClass='fill-white w-6 h-6'
-                                                    editicon={true}>
-                                                    edit
-                                                </Button>
+
+                                            <Button
+                                                hideChild='hidden md:block'
+                                                direction='flex-row-reverse gap-x-[10px]'
+                                                className='py-[13px] px-4 md:py-4 md:px-[14px]'
+                                                onClick={() => { setIsEmailActive(true), setIsEmailDisabled(!isEmailDisabled), openPopup() }}
+                                                variant='primary'
+                                                iconClass='fill-white w-6 h-6'
+                                                editicon={true}>
+                                                edit
+                                            </Button>
                                         }
                                     </div>
 
