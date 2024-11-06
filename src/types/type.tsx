@@ -11,6 +11,7 @@ export interface navcardprops {
   titleclass?: string,
   imageclass?: string
   classname?: string
+  classnamemain?: string
 }
 
 export interface ButtonProps {
