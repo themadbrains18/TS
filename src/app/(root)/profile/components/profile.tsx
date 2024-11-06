@@ -9,13 +9,20 @@ import Toggle from '@/components/ui/ToggleButton'
 import VerfiyOldEmail from '@/components/popups/VerfiyOldEmail'
 import useFetch from '@/hooks/useFetch'
 import { Session } from 'next-auth'
+import NewPassword from '@/components/popups/NewPassword'
+import DeleteUser from '@/components/popups/DeleteUser'
+import { METHODS } from 'http'
+import { useDownload } from '@/app/contexts/DailyDownloadsContext'
+// import { useDownload } from '@/app/contexts/DailyDownloadsContext'
+import { UserDetail } from '@/types/type'
 
 
 interface sessionProps {
-    session: Session
+    session: Session,
+    userData: UserDetail
 }
 
-const Profile: React.FC<sessionProps> = ({ session }) => {
+const Profile: React.FC<sessionProps> = ({ session,userData }) => {
 
     // Separate state for each button
     const [isNameActive, setIsNameActive] = useState<boolean>(false)
@@ -25,21 +32,28 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
     const [isUserDisabled, setIsUserDisabled] = useState<boolean>(true);
     const [isEmailDisabled, setIsEmailDisabled] = useState<boolean>(true);
     const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
-    const [profileImage, setProfileImage] = useState<any>(profileimage);
-    const [name, setName] = useState(session?.user ? session?.user?.name : '');
+    const [profileImage, setProfileImage] = useState<any>(userData?.user?.profileImg);
+    const [name, setName] = useState(userData?.user ? userData?.user?.name : '');
+    const [isDeletepopup, setisDeletepopup] = useState<boolean>(false);
+    const [isDeleteUSer, setIsDeleteUser] = useState<boolean>(false);
     const [nameError, setNameeror] = useState<string>();
-    const [number, setNumber] = useState(session?.user ? session?.number : '');
+    const [number, setNumber] = useState(userData?.user ? userData?.user.number : '');
     const [phoneNumberError, setPhoneNumberError] = useState<string>();
+    const {fetchDailyDownloads } = useDownload()
 
     const closePopup = () => {
         setIsPopupOpen(false);
+        setisDeletepopup(false);
     }
 
     const openPopup = () => {
         setIsPopupOpen(true);
     };
 
+    console.log(userData,"==user data");
+    
     const { data: response, error, loading, fetchData } = useFetch<any>();
+    const { data: deleteUseracc, error: deleteerror, loading: deleteloading, fetchData: deleteuser } = useFetch<any>();
     const { data: updateData, error: updateError, loading: updateLoading, fetchData: updateFetchData } = useFetch<any>();
     const { data: updateNumberdata, error: updateNumbererror, loading: updateloadingNumber, fetchData: updateNumber } = useFetch<any>();
     const { data: updatePassworddata, error: updatePassworderror, loading: updateloadingPassword, fetchData: updatePassword } = useFetch<any>();
@@ -78,13 +92,13 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
                 setNameeror("User Name Is Empty")
                 return
             }
-            if (name === session?.user?.name) {
+            if (name === userData?.user?.name) {
                 setNameeror("This User Already Exists ")
                 return
             }
             await updateFetchData('/update-details', {
                 method: 'PUT',
-                body: JSON.stringify({ name, id: session?.id }),
+                body: JSON.stringify({ name, id: userData?.user?.id }),
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -104,7 +118,7 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
                 return
             }
 
-            if (number === session?.number) {
+            if (number === userData?.user?.number) {
                 setPhoneNumberError("This Number Is  Already Exists")
                 return
             }
@@ -136,6 +150,17 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
         }
     };
 
+    const deleteUser = async () => {
+        try {
+            await deleteuser(`/delete-account/${session?.id}`,{
+                method:"Delete"
+            })
+        } catch (error) {
+            console.log(deleteerror)
+        }
+       
+    }
+
     useEffect(() => {
         fetchUserData();
     }, []);
@@ -143,15 +168,23 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
     useEffect(() => {
 
         if (response) {
-            setProfileImage(response?.user?.profileImg || profileimage);
+    //   console.log(response,"==response");
+      
+            fetchDailyDownloads()
+            setProfileImage(response?.user?.profileImageUrl || response?.user?.profileImg || profileimage);
         }
     }, [response])
 
 
+    // console.log(response,"==response");
+    
     return (
         <>
             <section>
                 <VerfiyOldEmail closePopup={() => closePopup()} isPopupOpen={isPopupOpen} handlepasswordUpdate={handlepasswordUpdate} />
+                <NewPassword closePopup={() => closePopup()} isPopupOpen={isDeletepopup} />
+                <DeleteUser isPopupOpen={isDeleteUSer} closePopup={() => { setIsDeleteUser(false) }} deleteAccount={() => { deleteUser() }} />
+
                 <div className="container">
                     <div className='max-w-[1162px] w-full'>
                         <div className='max-w-[616px] w-full mb-4 md:mb-[50px]'>
@@ -289,7 +322,7 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
 
                                     <div className='py-[18px] px-5 border border-divider-100 flex items-center justify-between'>
                                         <h3 className='text-neutral-900 font-semibold capitalize leading-6'>Daily Download Balance :</h3>
-                                        <p className='text-neutral-900 font-semibold capitalize leading-6'>{response?.user?.freeDownloads || 0}</p>
+                                        <p className='text-neutral-900 font-semibold capitalize leading-6'>{userData?.user?.freeDownloads || 0}</p>
                                     </div>
                                 </div>
                             </div>
@@ -302,7 +335,7 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
                                     <p className=' text-sm md:text-base  font-normal leading-5 md:leading-6 text-textparagraph'>You will be redirected to a new page and must follow the instructions</p>
                                 </div>
                             </div>
-                            <Button className='py-[13px] text-lg mt-5 md:mt-0 text-nowrap' link='/forgot-password' variant='secondary'>Set new password</Button>
+                            <Button onClick={() => setisDeletepopup(true)} className='py-[13px] text-lg mt-5 md:mt-0 text-nowrap' variant='secondary'>Set new password</Button>
                         </div>
                         <div className='py-4 md:py-[50px] border-b border-[#D9D9D9] flex items-end justify-between'>
                             <div>

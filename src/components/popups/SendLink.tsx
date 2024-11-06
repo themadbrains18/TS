@@ -9,6 +9,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
 import useFetch from '@/hooks/useFetch';
+import { useDownload } from '@/app/contexts/DailyDownloadsContext';
 
 // Define the validation schema with Zod
 const emailSchema = z.object({
@@ -28,6 +29,7 @@ interface Downloadpopup {
 const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url }: Downloadpopup) => {
     const { data: session } = useSession();
     const { data: response, error, loading, fetchData } = useFetch<any>();
+    const { fetchDailyDownloads} = useDownload()
 
     const socialicons = [
         { icon: "dribbble-logo.svg" },
@@ -56,7 +58,9 @@ const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url }: Download
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(data),
-            });
+            },
+            false
+        );
 
         } catch (error) {
             console.error('Error:', error);
@@ -67,6 +71,9 @@ const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url }: Download
 
     useEffect(() => {
         if (response) {
+            // console.log(response,"==response");
+            fetchDailyDownloads()
+            // setDownloads()
             // If successful, you can handle the response here
             openthirdpopup(); // Open third popup after successful submission
         }
