@@ -46,7 +46,6 @@ const Input = React.forwardRef<HTMLInputElement, InputFieldProps>(({
                 type={type}
                 name={name}
                 defaultValue={value}
-                // value={value}
                 disabled={disabled ? true : false}
                 onChange={onChange}
                 placeholder={placeholder}

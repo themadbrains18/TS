@@ -9,6 +9,7 @@ import Icon from '../Icon'
 import { signOut, useSession } from 'next-auth/react'
 import useFetch from '@/hooks/useFetch'
 import { useRouter } from 'next/navigation'
+import { toast } from 'react-toastify'
 
 
 interface FormData {
@@ -16,6 +17,7 @@ interface FormData {
     newEmail?: String
     email: string
     otp?: string[]
+    newemail?: string
 }
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -30,10 +32,16 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
     const { register, handleSubmit, setValue, reset, setError, formState: { errors }, clearErrors, getValues } = useForm<FormData>();
     const [disabled, setDisabled] = useState(true)
     const [step, setStep] = useState<number>(1)
+    const [loadingbtn, setLoadingbtn] = useState<boolean>(false)
+    const [startTimer, setStartTimer] = useState(0); // Timer set to 10 minutes (600 seconds)
+    const [canResend, setCanResend] = useState(false);
+    const [resendData, SetresendData] = useState({})
+    const [initialSend, setInitialSend] = useState(true); // Track initial send state
 
 
     const onSubmit: SubmitHandler<FormData> = async (data) => {
         try {
+console.log("in submit",session);
 
             if (step === 1) data.currentEmail = session ? session?.email : ""
             else data.newEmail = data?.email || ""
@@ -49,7 +57,8 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
             }
 
             delete data?.otp
-
+           console.log(data,"==daatta");
+           
 
             await fetchData('/update-details', {
                 method: 'PUT',
@@ -65,19 +74,22 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
         } catch (error) {
             console.error("Error updating password:", error);
         }
+
     }
 
 
     const handleEmmailUpdate = async () => {
         try {
+            setLoadingbtn(true)
+
             const email = step === 1
                 ? (session ? session.email : "")
                 : getValues("email");
 
-                if(email===""){
-                    setError("email", { message: "Please fill out this field" });
-                    return;  // Stop execution if the email is invalid
-                }
+            if (email === "") {
+                setError("email", { message: "Please fill out this field" });
+                return;  // Stop execution if the email is invalid
+            }
 
             // Validate the email format
             if (!emailRegex.test(email)) {
@@ -90,6 +102,7 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
                 [step === 1 ? "currentEmail" : "newEmail"]: email,
             };
 
+            SetresendData(payload)
             // Perform the fetch request
             await fetchData('/update-details', {
                 method: 'PUT',
@@ -101,6 +114,36 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
 
         } catch (error) {
             console.error("Error updating email:", error);
+        }
+        finally {
+            setLoadingbtn(false)
+        }
+    };
+
+    const resendCode = async () => {
+        if (!canResend) return; // Prevent resend if the timer has not completed
+console.log("here",resendData);
+
+
+        try {
+            await fetch(`${process.env.NEXT_PUBLIC_APIURL}/resend-otp`, {
+                method: "POST",
+                body: JSON.stringify({email:resendData?.currentEmail}),
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: session?.token ? `Bearer ${session?.token}` : "",
+                }
+            }).then(res => {
+                if (res.ok) {
+                    setStartTimer(60); // Reset timer to 10 minutes
+                    setCanResend(false); // Reset resend availability
+                    toast.success("OTP resent successfully");
+                } else {
+                    toast.error("Failed to resend OTP");
+                }
+            });
+        } catch (error) {
+            console.log(error, "==error");
         }
     };
 
@@ -114,6 +157,8 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
             setDisabled(true)
         }
         if (response?.sendotp === true) {
+            setInitialSend(false); // Switch to resend state
+            setStartTimer(60)
             setDisabled(false)
         }
         if (response?.redirect) {
@@ -121,6 +166,34 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
         }
 
     }, [response])
+
+
+
+    useEffect(() => {
+        // Declare timer variable
+        let timer: NodeJS.Timeout | null = null;
+
+        if (startTimer > 0) {
+            timer = setInterval(() => {
+                console.log("herereer");
+
+                setStartTimer((prev) => prev - 1);
+            }, 1000);
+        }
+        else {
+            setCanResend(true)
+        }
+        return () => {
+            if (timer) {
+                clearInterval(timer); // Clear the timer on unmount
+            }
+        };
+
+    }, [startTimer]);
+
+
+
+    console.log(canResend);
 
 
 
@@ -132,21 +205,50 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
                     <div className='py-[50px]'>
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <div className='flex justify-between items-end gap-x-[10px] sm:gap-x-5'>
-                                <Input
+                                {step === 1 ? <Input
                                     register={register}
-                                    label={step === 1 ? 'Current Email*' : "New Email*"}
+                                    label='Current Email*'
                                     name='email'
-                                    placeholder={`Enter ${step === 1 ? "current" : "new"} email`}
-                                    value={step === 1 ? session?.email : ""}
-                                    disabled={step === 1}
+                                    placeholder={`Enter current email`}
+                                    value={session?.email}
+                                    disabled={true}
                                     onChange={() => { clearErrors("email") }}
-                                />
-                                <Button
-                                    onClick={() => handleEmmailUpdate()}
-                                    // type='submit'
-                                    className='text-nowrap py-[13px] px-[10px] text-sm sm:text-lg font-normal leading-6'>
-                                    Send OTP
-                                </Button>
+                                /> :
+                                    <Input
+                                        register={register}
+                                        label="New Email"
+                                        name='email'
+                                        placeholder={`Enter new email`}
+                                        onChange={() => { clearErrors("email") }}
+                                    />
+                                }
+
+                                {/* <Button
+                                    loadingbtn={loadingbtn}
+                                    onClick={handleEmmailUpdate}
+                                    disabled={loadingbtn}
+                                    className={`text-nowrap py-[13px] justify-center max-w-[142px] md:h-[54px] h-[50px] px-[10px] text-sm sm:text-lg w-full font-normal leading-6 ${loadingbtn ? "opacity-50 cursor-not-allowed" : ""
+                                        }`}
+                                >
+                                    {loadingbtn ? (
+                                        // You can add a spinner or loading indicator here
+                                        <></>
+                                    ) : (
+                                        <h3 className="text-center text-[14px] leading-5 font-normal text-neutral-600">
+                                           Send OTP
+                                        </h3>
+                                    )}
+                                </Button> */}
+                                {startTimer > 0 ? (
+                                    <h3 className='text-center text-[14px] leading-5 font-normal text-neutral-600'>
+                                        Resend OTP in {Math.floor(startTimer / 60)}:{(startTimer % 60).toString().padStart(2, '0')}
+                                    </h3>
+                                ) : (
+                                    <h3 className='text-center text-[14px] leading-5 font-normal text-neutral-600'>
+                                        <button className='text-action-900' type='button' onClick={() => { !initialSend ? resendCode() : handleEmmailUpdate() }}>{initialSend ? 'Send OTP' : 'Resend Code'}</button>
+                                    </h3>
+                                )}
+
                             </div>
                             {errors?.email && <p className='text-red-500'>{errors?.email?.message}</p>}
 
@@ -165,7 +267,7 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
                                 <p className='mt-5 text-xs sm:text-sm font-normal leading-5 sm:leading-6 text-[#4B5563]'>Please check your mail, 6-digit confirmation code to {session?.email}, please enter the confirmation code to verify it's you.</p>
                                 <div className='mt-[30px] sm:mt-[60px]'>
                                     <Button className='w-full justify-center py-2 sm:py-[13px] text-lg font-normal leading-6' type='submit' variant='primary' disabled={disabled}>verify now</Button>
-                                    <Button className='w-full justify-center bg-transparent border-transparent mt-4 py-2 sm:py-[13px] text-lg font-normal leading-6' variant='liquid'>Resend Code</Button>
+                                    {/* <Button className='w-full justify-center bg-transparent border-transparent mt-4 py-2 sm:py-[13px] text-lg font-normal leading-6' variant='liquid'>Resend Code</Button> */}
                                 </div>
                             </div>
                         </form>

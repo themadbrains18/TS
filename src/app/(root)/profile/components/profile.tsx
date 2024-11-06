@@ -314,10 +314,10 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
                                 <p className='pt-1 md:pt-5 text-sm md:text-base  font-normal leading-5 md:leading-6 text-textparagraph max-w-[1106px]'>Freepik will process your data to send you information about our products and services, promotions, surveys, raffles, based on our legitimate interest, and updates from the creators you follow, if you have consented to this. Your data will not be disclosed to third parties. They will be communicated outside the EU under the terms of the <a href='#' className='text-primary-100'>privacy policy</a> . You can opt out of our notifications with the slider.<a href='#' className='text-primary-100'> More information</a></p>
                             </div>
                         </div>
-                        <div className='max-w-[670px] mt-4 md:mt-[50px]'>
+                        {/* <div className='max-w-[670px] mt-4 md:mt-[50px]'>
                             <Button className='py-[13px] text-lg px-[30px]' variant='secondary'>delete account</Button>
                             <p className='pt-5 text-textparagraph'><strong>Note:</strong> As you have an active paid plan, you can't delete your account directly. Please contact <a href="#" className='text-primary-100 '>support@freepik.com</a> for assistance </p>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </section>
