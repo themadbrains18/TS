@@ -14,6 +14,8 @@ import StaticCheckBox from '@/components/ui/StaticCheckbox';
 import { uploadTemplateSchema, uploadTemplateUpdateSchema } from '@/validations/uploadTemplate';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
+import { useSession } from 'next-auth/react';
+import { toast } from 'react-toastify';
 
 // Define types for data structures
 export interface TemplateType {
@@ -44,7 +46,7 @@ interface FormData {
     previewImages: FileList;
     previewMobileImages: FileList;
     description: string;
-    industry: string[]
+    industry: string
     techDetails: string[]
     isPaid: boolean
 
@@ -75,16 +77,19 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     const [images, setImages] = useState<Font[]>([{ name: '', url: '' }]);
     const [icons, setIcons] = useState<Font[]>([{ name: '', url: '' }]);
     const [illustrations, setIllustrations] = useState<Font[]>([{ name: '', url: '' }]);
+    const [loader, setLoader] = useState(false)
     // Technical details state (4 inputs by default)
     const [technicalDetails, setTechnicalDetails] = useState(
         initialData?.techDetails?.length ? initialData?.techDetails : Array(4).fill("")
     );
 
+    const { data: session } = useSession()
+
     // Dropdown selection states
     const [selectedValue, setSelectedValue] = useState<string | null>(null);
     const [categoryValue, setCategoryValue] = useState<string | null>(null);
+    const [staticcheck, setStaticCheck] = useState<boolean>(initialData?.isPaid || false);
 
-    const [staticcheck, setStaticCheck] = useState(false);
 
 
     const { register, handleSubmit, control, formState: { errors }, setValue, clearErrors, setError, getValues } = useForm<FormData>({
@@ -116,6 +121,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         if (initialData) {
             setValue('techDetails', initialData?.techDetails);
             handleTemplateSelect(initialData?.templateTypeId)
+            setValue('industry', initialData.industryTypeId)
         }
         if (initialData && initialData?.credits.length > 0) {
             const creditData = initialData?.credits[0]; // Assuming you want the first entry
@@ -256,10 +262,15 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     // };
 
 
-    
 
-    const onSubmit: SubmitHandler<FormData> = (data) => {
+
+    const onSubmit: SubmitHandler<FormData> = async (data) => {
+        console.log(session, "==session  ");
+
+        setLoader(true)
         const formData = new FormData();
+
+
 
         // Append form fields to FormData
         Object.entries(data).forEach(([key, value]) => {
@@ -270,6 +281,11 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             }
         });
 
+        console.log(formData, "==formdata");
+        console.log(data, "==data");
+        // return
+        formData.delete("industry")
+        formData.append('industry', data?.industry);
         const credits = [
             {
                 fonts: fonts.map(font => ({ name: font.name, url: font.url })),
@@ -280,12 +296,27 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         ];
         formData.append("credits", JSON.stringify(credits));
 
-        const endpoint = type === 'edit' ? `/templates/${id}` : '/templates';
+        const endpoint = type === 'edit' ? `${process.env.NEXT_PUBLIC_APIURL}/templates/${id}` : `${process.env.NEXT_PUBLIC_APIURL}/templates`;
         const method = type === 'edit' ? 'PUT' : 'POST';
 
         // Redirect only after fetchData completes
-        fetchData(endpoint, { method: method, body: formData }).then(() => {
-            router.push("/dashboard");
+        await fetch(endpoint, {
+            method: method, body: formData, headers: {
+                'Authorization': `Bearer ${session?.token}`, // Adding Authorization header with Bearer token
+            },
+        }).then(async (res) => {
+            let result = await res.json()
+            if (!res?.ok) {
+                toast.error(result.message)
+                setLoader(false )
+            }
+            else {
+                toast.success(result.message)
+                setLoader(false)
+                router.push('/dashboard')
+            }
+
+            // router.push("/dashboard");
         }).catch(error => {
             console.error("An error occurred during submission:", error);
         });
@@ -615,7 +646,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                         {errors.seoTags && <p style={{ color: 'red' }}>{errors.seoTags.message}</p>}
                                     </div>
                                     <div className='pt-5'>
-                                        <StaticCheckBox onClick={() => { setStaticCheck(!staticcheck), setValue('isPaid', !staticcheck) }} checked={initialData ? initialData?.isPaid : staticcheck} label='Paid' />
+                                        <StaticCheckBox onClick={() => { setStaticCheck(!staticcheck), setValue('isPaid', !staticcheck) }} checked={ staticcheck} label='Paid' />
                                         {
                                             (initialData?.isPaid || staticcheck) &&
                                             <div className='flex flex-col'>
@@ -641,7 +672,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                         }
                                     </div>
                                     {
-                                        loading ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='py-3 mt-5' hideChild='hidden'  >
+                                        loading || loader ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='py-3 mt-5' hideChild='hidden'  >
 
                                         </Button> : <Button type='submit' variant='primary' className='py-3 mt-5' >
                                             upload

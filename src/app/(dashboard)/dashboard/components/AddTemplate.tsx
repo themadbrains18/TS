@@ -137,7 +137,7 @@ const AddTemplate = () => {
               </div>
             </div>
           </div>
-          <div className="py-10">
+          <div className="">
             <div className="overflow-x-scroll w-full mt-10 hiddenscroll">
               <table className="min-w-full border-collapse table-auto">
                 <thead>
