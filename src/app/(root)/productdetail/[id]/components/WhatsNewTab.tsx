@@ -11,11 +11,11 @@ import React, { Fragment } from 'react'
  * @returns {JSX.Element} The rendered WhatsNewTab component.
  */
 
-interface whatsNewProps{
-    details:TechTemplate
+interface whatsNewProps {
+    details: TechTemplate
 }
 
-const WhatsNewTab:React.FC<whatsNewProps> = ({details}) => {
+const WhatsNewTab: React.FC<whatsNewProps> = ({ details }) => {
 
     // Data for the update cards
     const carddata = [
@@ -48,7 +48,6 @@ const WhatsNewTab:React.FC<whatsNewProps> = ({details}) => {
                             )
                         })
                     }
-
                 </div>
                 <h3 className='text-xl font-bold leading-7 mt-10'>New Updates</h3>
                 <div className='mt-5 py-5 px-[10px] md:py-10 md:px-[50px] border border-divider-200'>
