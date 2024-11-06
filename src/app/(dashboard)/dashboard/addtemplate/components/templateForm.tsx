@@ -77,6 +77,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     const [images, setImages] = useState<Font[]>([{ name: '', url: '' }]);
     const [icons, setIcons] = useState<Font[]>([{ name: '', url: '' }]);
     const [illustrations, setIllustrations] = useState<Font[]>([{ name: '', url: '' }]);
+    const [loader, setLoader] = useState(false)
     // Technical details state (4 inputs by default)
     const [technicalDetails, setTechnicalDetails] = useState(
         initialData?.techDetails?.length ? initialData?.techDetails : Array(4).fill("")
@@ -87,8 +88,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     // Dropdown selection states
     const [selectedValue, setSelectedValue] = useState<string | null>(null);
     const [categoryValue, setCategoryValue] = useState<string | null>(null);
+    const [staticcheck, setStaticCheck] = useState<boolean>(initialData?.isPaid || false);
 
-    const [staticcheck, setStaticCheck] = useState(false);
 
 
     const { register, handleSubmit, control, formState: { errors }, setValue, clearErrors, setError, getValues } = useForm<FormData>({
@@ -266,7 +267,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     const onSubmit: SubmitHandler<FormData> = async (data) => {
         console.log(session, "==session  ");
 
-
+        setLoader(true)
         const formData = new FormData();
 
 
@@ -306,11 +307,12 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         }).then(async (res) => {
             let result = await res.json()
             if (!res?.ok) {
-
                 toast.error(result.message)
+                setLoader(false )
             }
             else {
                 toast.success(result.message)
+                setLoader(false)
                 router.push('/dashboard')
             }
 
@@ -644,7 +646,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                         {errors.seoTags && <p style={{ color: 'red' }}>{errors.seoTags.message}</p>}
                                     </div>
                                     <div className='pt-5'>
-                                        <StaticCheckBox onClick={() => { setStaticCheck(!staticcheck), setValue('isPaid', !staticcheck) }} checked={initialData ? initialData?.isPaid : staticcheck} label='Paid' />
+                                        <StaticCheckBox onClick={() => { setStaticCheck(!staticcheck), setValue('isPaid', !staticcheck) }} checked={ staticcheck} label='Paid' />
                                         {
                                             (initialData?.isPaid || staticcheck) &&
                                             <div className='flex flex-col'>
@@ -670,7 +672,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                         }
                                     </div>
                                     {
-                                        loading ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='py-3 mt-5' hideChild='hidden'  >
+                                        loading || loader ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='py-3 mt-5' hideChild='hidden'  >
 
                                         </Button> : <Button type='submit' variant='primary' className='py-3 mt-5' >
                                             upload
