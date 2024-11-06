@@ -85,7 +85,7 @@ const CreditTab: React.FC<CreditsProps> = ({ credits }) => {
                                         <h3 className="text-subparagraph leading-6 mb-5 text-sm tab:text-base">Illustrations Used</h3>
                                         <ul>
                                             {credit?.illustrations?.map((illustration, illustrationIndex) => (
-                                                <li className='list-disc' key={illustrationIndex}>
+                                                <li className='list-disc max-w-[150px] truncate' key={illustrationIndex}>
                                                     <p className="text-xs tab:text-sm leading-5 text-primarycyan inline-block font-semibold capitalize">
                                                         {illustration?.name}
                                                     </p>
