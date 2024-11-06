@@ -29,7 +29,7 @@ const FeatureCard: React.FC<featurecardprops> = ({ id, buttonprops, category, cu
                     />
 
                     <Link href={`/productdetail/${id}`}>
-                        <div className='absolute top-0 right-0 left-0 bottom-0 bg-subheading opacity-0 transition-all duration-[0.5s] group-hover:opacity-60 flex items-center justify-center gap-x-1 cursor-pointer'>
+                        <div className='absolute top-0 right-0 left-0 bottom-0 bg-subheading opacity-[0.5] sm:opacity-0 transition-all duration-[0.5s] group-hover:opacity-60 flex items-center justify-center gap-x-1 cursor-pointer'>
                             <div className='flex items-center justify-center cursor-pointer z-10'>
                                 <h3 className='capitalize text-white text-lg font-bold leading-7'>view details</h3>
                                 <Icon name='share' />
