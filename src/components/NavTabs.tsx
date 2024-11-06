@@ -42,8 +42,8 @@ const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
   return (
     <>
       {/* Tabs Section */}
-      <div className="bg-white shadow-lg overflow-scroll hiddenscroll  w-full">
-        <div className="pt-5 lg:px-10 lg:pt-10 lg:pb-[30px] flex gap-x-[5px] lg:gap-x-5 items-center overflow-scroll hiddenscroll">
+      <div className="bg-white lg:shadow-lg overflow-scroll hiddenscroll  w-full">
+        <div className=" lg:px-10 lg:pt-10 lg:pb-[30px] flex gap-x-[5px] lg:gap-x-5 items-center overflow-scroll hiddenscroll">
           {subCat && subCat.map((item, index) => (
             <Fragment key={index}>
               {/* <Link href={`/product?template-type=${item?.templateTypeId}&&subcat=${item?.id}`}> */}
@@ -64,7 +64,7 @@ const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
 
         {/* Feature Product Section */}
         <div className="lg:px-10 lg:pb-10">
-          <div className="flex justify-between items-center border-t-[1px] border-divider-100 pt-[30px]">
+          <div className="flex justify-between items-center lg:border-t-[1px] border-divider-100 lg:pt-[30px] pt-[20px] ">
             <h4 className="border-l-[1px] pl-[6px] border-subparagraph text-subheading text-lg font-bold leading-7 bg-gradient-to-r from-primary-300 to-primary-200 cursor-pointer">
               Feature Product
             </h4>
@@ -80,7 +80,7 @@ const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
 
           {/* NavCards Section */}
 
-          <div className="flex my-5 w-full gap-x-[10px] lg:gap-x-5 overflow-scroll hiddenscroll">
+          <div className="flex my-5 w-full gap-x-[10px] lg:gap-x-5 overflow-scroll hiddenscroll ">
             {data && data.data?.length > 0 ? (
               data.data.map((item: TechTemplate, idx: number) => (
                 <Fragment key={idx}>
@@ -89,12 +89,12 @@ const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
                     image={item.sliderImages[0]?.imageUrl}
                     title={item.title}
                     icon="/icons/figma.svg"
-                    classname="w-[248px]"
+                    classnamemain="md:w-[248px] w-[148px] "
                   />
                 </Fragment>
               ))
             ) : (
-              <div className="w-full text-center py-5">
+              <div className="w-full text-center lg:py-5 py-2 h-[152px] flex justify-center items-center">
                 <p className="text-subparagraph" >No Template Found.</p>
               </div>
             )}

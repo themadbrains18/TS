@@ -1,6 +1,6 @@
 'use client'
 import Image from "next/image";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useRef, useEffect, useState } from "react";
 import NavDropdown from "../NavDropdown";
 import Icon from "../Icon";
 import Button from "../ui/Button";
@@ -16,6 +16,7 @@ import { signOut, useSession } from 'next-auth/react';
 import { TemplateType } from "@/app/(dashboard)/dashboard/addtemplate/components/templateForm";
 import SearchComponent from "./SearchComponent";
 import { useDownload } from "@/app/contexts/DailyDownloadsContext";
+import useOnClickOutside from "@/hooks/useOnClickOutside";
 
 interface User {
   user: {
@@ -47,8 +48,27 @@ const Header = () => {
   const { data: subCatData, fetchData: fetchsubCatData } = useFetch<subCat[]>();
   const { data: userdata, fetchData: fetchUserdata } = useFetch<User>();
   const [opensearch, setOpensearch] = useState(false)
+  const [profile, setProfile] = useState<boolean>(false)
+  const [profileres, setProfileres] = useState<boolean>(false)
 
-  // console.log(session,"==session");
+
+  const openProfile = () => {
+    setProfile(!profile)
+  }
+
+  const openProfileres = () => {
+    setProfileres(!profileres)
+  }
+
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const dropdownRef1 = useRef<HTMLDivElement>(null);
+
+
+  useOnClickOutside(dropdownRef, () => setProfile(false));
+  useOnClickOutside(dropdownRef1, () => setProfileres(false));
+
+
 
   const [openAccordions, setOpenAccordions] = useState<boolean[]>(
     Array(data?.length).fill(true) // Set all accordions to open by default
@@ -110,10 +130,10 @@ const Header = () => {
   return (
     <>
       <header className=" bg-[#ffffff80] backdrop:blur-xl relative border-b-[1px] border-[#11083319] z-10">
-      {/* Destop header */}
+        {/* Destop header */}
         <div className="container hidden min-[1028px]:block">
           <div className="py-10 flex items-center justify-between">
-            <div className="flex items-center justify-between max-w-[809px] w-full cursor-pointer">
+            <div className="flex items-center justify-between xl:max-w-[809px] max-w-[690px] w-full cursor-pointer">
               <Link className="w-[276px]" href={'/'}>
                 <Image
                   src={"/icons/Logo.svg"}
@@ -122,24 +142,25 @@ const Header = () => {
                   alt="Logo"
                 />
               </Link>
-              <div className="flex gap-5 items-center max-w-[550px] w-full justify-between pl-[60px]">
-                {loadingdata ? <>
-                  <div className="flex items-center animate-pulse w-full">
-                    <div className="h-4  bg-gray-200 rounded mr-2 w-full"></div>
-                    <div className="h-4  bg-gray-200 rounded mr-2 w-full"></div>
-                    <div className="h-4  bg-gray-200 rounded w-full"></div>
-                  </div>
-                </> : <>
-                  {
-                    data && data?.length > 0 && data?.map((item, index) => {
-                      return (
-                        <Fragment key={index}>
-                          <NavDropdown title={item?.name} subCat={item?.subCategories} />
-                        </Fragment>
-                      )
-                    })
-                  }
-                </>}
+              <div className="flex xl:gap-5 items-center xl:max-w-[550px] max-w-[500px] w-full justify-between xl:pl-[60px] pl-5 ">
+                {loadingdata ?
+                  <>
+                    <div className="flex items-center animate-pulse w-full">
+                      <div className="h-4  bg-gray-200 rounded mr-2 w-full"></div>
+                      <div className="h-4  bg-gray-200 rounded mr-2 w-full"></div>
+                      <div className="h-4  bg-gray-200 rounded w-full"></div>
+                    </div>
+                  </> : <>
+                    {
+                      data && data?.length > 0 && data?.map((item, index) => {
+                        return (
+                          <Fragment key={index}>
+                            <NavDropdown title={item?.name} subCat={item?.subCategories} />
+                          </Fragment>
+                        )
+                      })
+                    }
+                  </>}
 
               </div>
             </div>
@@ -154,8 +175,8 @@ const Header = () => {
                 subCat={subCatData || undefined} />
               {
                 isLoggedIn &&
-                <div className="group relative ">
-                  <div className="w-[50px] h-[50px] rounded-full cursor-pointer ">
+                <div className="relative">
+                  <div ref={dropdownRef} onClick={openProfile} className="w-[50px] h-[50px] rounded-full cursor-pointer ">
                     <Image
                       width={50}
                       height={50}
@@ -164,8 +185,8 @@ const Header = () => {
                       alt="diamond"
                     />
                   </div>
-                  <div className="absolute group-hover:opacity-100 transition-all group-hover:visible invisible opacity-0  duration-[0.5s] top-[94%]  max-[1678px]:right-0 right-[-73px] mt-2 max-w-[256px]  bg-white shadow-lg rounded-lg">
-                    <div className="pt-[46px] mt-[-6px]" >
+                  <div className={`absolute ${profile ? "opacity-100 visible" : "invisible opacity-0"}  transition-all  duration-[0.5s] top-[94%]  max-[1678px]:right-0 right-[-73px] mt-2 w-[216px]  bg-white shadow-lg rounded-lg`}>
+                    <div className="pt-[6px] mt-[-6px]" >
                       <div className="py-2.5 ">
                         <h2 className="leading-6 text-[16px] font-semibold text-textheading py-2 pl-[30px] pr-[27px] mb-2.5">
                           {session?.email}
@@ -177,7 +198,7 @@ const Header = () => {
                           </div>
                           <h3 className="text-[12px] font-normal leading-5 text-textheading" >{downloads} remaining out of 3</h3>
                         </div>
-                        <div className="flex flex-col " >
+                        <div className="flex flex-col">
                           <Link href={"/profile"} >
                             <button className={` w-full text-textheading text-start leading-6 hover:text-subparagraph py-2 px-[30px] capitalize cursor-pointer text-nowrap hover:bg-primary-200 border-l-[2px] border-white hover:border-primary-100`}>
                               Profile
@@ -209,15 +230,17 @@ const Header = () => {
           <div className="flex items-center justify-between py-4 relative">
             <div onClick={() => setSidebar(!sidebar)}> <Icon name="menuicon" className="w-8 h-8" /></div>
             <Link href={'/'}>
-              <Image className="cursor-pointer h-9" width={193} height={38} src={'/icons/logo.svg'} alt="logo" />
+              <Image className="cursor-pointer h-9 w-[170px]" width={193} height={38} src={'/icons/logo.svg'} alt="logo" />
             </Link>
             <div className="flex flex-row gap-1 items-center" >
               <div onClick={() => setsearchbar(true)} >
                 <Icon name="solidsearch" className="w-9 h-9 cursor-pointer" />
               </div>
-
-              <div className="group">
-                <div className="w-[30px] h-[30px] cursor-pointer ">
+  {
+    session?.user
+    &&
+              <div >
+                <div ref={dropdownRef1} onClick={openProfileres} className="w-[30px] h-[30px] cursor-pointer ">
                   <Image
                     width={50}
                     height={50}
@@ -243,16 +266,18 @@ const Header = () => {
                         <Link href={"/profile"} >
                           <button className={` w-full text-textheading text-start leading-6 hover:text-subparagraph py-2 px-[30px] capitalize cursor-pointer text-nowrap hover:bg-primary-200 border-l-[2px] border-white hover:border-primary-100`}>
                             Profile
+                            </button>
+                          </Link>
+                          <button onClick={() => signOut()} className={`text-textheading text-start hover:text-subparagraph leading-6 py-2 px-[30px] capitalize cursor-pointer text-nowrap hover:bg-primary-200 border-white border-l-[2px] hover:border-primary-100`}>
+                            Log out
                           </button>
-                        </Link>
-                        <button onClick={() => signOut()} className={`text-textheading text-start hover:text-subparagraph leading-6 py-2 px-[30px] capitalize cursor-pointer text-nowrap hover:bg-primary-200 border-white border-l-[2px] hover:border-primary-100`}>
-                          Log out
-                        </button>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              }
+
             </div>
 
             <div className={`w-[100%] duration-[0.5s] fixed top-0 bg-white h-full  px-2 ${searchbar ? "right-0 " : "right-[-100%]"}`} >
@@ -268,17 +293,17 @@ const Header = () => {
             </div>
           </div>
 
-          <div className={cn`flex z-[2] flex-col fixed bg-white w-full transition-all duration-[1s] h-screen p-5 top-0 ${sidebar ? "left-0" : "left-[-100%]"}`}>
-            <div className="flex items-center justify-between pb-5">
+          <div className={cn`flex z-[2] flex-col fixed bg-white w-full transition-all duration-[1s] h-screen  top-0 ${sidebar ? "left-0" : "left-[-100%]"}`}>
+            <div className="flex items-center justify-between p-[15px]">
               <Link href={'/'}>
                 <Image className="cursor-pointer h-9" width={193} height={38} src={'/icons/logo.svg'} alt="logo" />
               </Link>
               <div onClick={() => { setSidebar(!sidebar) }}>
-                <Icon className="w-8 h-5 fill-primary-100" name="crossicon" />
+                <Icon className="fill-primary-100" name="crossicon" />
               </div>
             </div>
             <div className="overflow-scroll hiddenscroll" >
-              <div className="flex flex-col mt-8">
+              <div className="flex flex-col px-2.5">
                 {
                   data && data?.length > 0 && data?.map((item, index) => {
                     return (<Fragment key={index}>
@@ -286,8 +311,9 @@ const Header = () => {
                         isOpen={openAccordions[index]} // Check if this specific accordion is open
                         onToggle={() => handleAccordionClick(index)} // Toggle the accordion on click
                         title={`${item?.name}`}
+                        titleboxclass="border-b"
                       >
-                        <NavTabs subCat={item?.subCategories}/>
+                        <NavTabs subCat={item?.subCategories} />
                       </Accordion>
                     </Fragment>)
                   })
@@ -297,10 +323,10 @@ const Header = () => {
             <div className="flex justify-center items-center mt-8 gap-2">
               {!isLoggedIn ? (
                 <>
-                  <Button variant="primary" className=" py-2 px-[18px] w-full max-w-[50%] flex justify-center">
+                  <Button linkclass="w-full" link="/resister" variant="primary" className=" py-2 px-[18px] w-full flex justify-center">
                     sign up
                   </Button>
-                  <Button variant="primary" className=" py-2 px-[18px] w-full max-w-[50%] flex justify-center">
+                  <Button linkclass="w-full" link="/login" variant="primary" className=" py-2 px-[18px] w-full  flex justify-center">
                     log in
                   </Button>
                 </>
@@ -314,7 +340,7 @@ const Header = () => {
 
 
         </div>
-      </header>
+      </header >
     </>
   );
 };

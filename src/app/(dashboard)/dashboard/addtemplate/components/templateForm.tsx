@@ -16,6 +16,8 @@ import { useRouter } from 'next/navigation';
 import Icon from '@/components/Icon';
 import { useSession } from 'next-auth/react';
 import { toast } from 'react-toastify';
+import Link from 'next/link';
+import Image from 'next/image';
 
 // Define types for data structures
 export interface TemplateType {
@@ -308,7 +310,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             let result = await res.json()
             if (!res?.ok) {
                 toast.error(result.message)
-                setLoader(false )
+                setLoader(false)
             }
             else {
                 toast.success(result.message)
@@ -326,8 +328,20 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     return (
 
         <>
-            <section className='py-10 md:py-20'>
-                <div className="max-w-[802px] w-full py-0 px-4 my-0 mx-auto">
+            <section className='pb-10 md:pb-20'>
+                <div className='py-10 border-b border-divider-200 bg-[#ffffff80]'>
+                    <div className="container">
+                        <Link className="w-[276px]" href={'/'}>
+                            <Image
+                                src={"/icons/Logo.svg"}
+                                width={276}
+                                height={40}
+                                alt="Logo"
+                            />
+                        </Link>
+                    </div>
+                </div>
+                <div className="max-w-[802px] w-full py-0 px-4 my-0 mx-auto pt-10">
                     <h2 className='text-3xl capitalize font-bold pb-8 '>Upload Product</h2>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="flex flex-col gap-y-5 justify-center items-center w-full">
@@ -419,7 +433,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                         <div className='mt-5'>
                             <h3 className='text-xl font-semibold capitalize '>Industry</h3>
 
-                            <div className='flex justify-between  mb-3'>
+                            <div className='flex justify-between gap-x-3  mb-3 max-w-full overflow-scroll hiddenscroll py-2'>
                                 {industryData?.map((item) => (
                                     <Controller
                                         key={item.id} // Add key here for each map iteration
@@ -436,7 +450,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                     onChange={() => field.onChange(item.id)}
                                                     className="cursor-pointer"
                                                 />
-                                                <span className="ml-2">{item.name}</span> {/* Label text next to the radio */}
+                                                <span className="ml-1 text-nowrap">{item.name}</span> {/* Label text next to the radio */}
                                             </label>
                                         )}
                                     />
@@ -646,7 +660,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                         {errors.seoTags && <p style={{ color: 'red' }}>{errors.seoTags.message}</p>}
                                     </div>
                                     <div className='pt-5'>
-                                        <StaticCheckBox onClick={() => { setStaticCheck(!staticcheck), setValue('isPaid', !staticcheck) }} checked={ staticcheck} label='Paid' />
+                                        <StaticCheckBox onClick={() => { setStaticCheck(!staticcheck), setValue('isPaid', !staticcheck) }} checked={staticcheck} label='Paid' />
                                         {
                                             (initialData?.isPaid || staticcheck) &&
                                             <div className='flex flex-col'>

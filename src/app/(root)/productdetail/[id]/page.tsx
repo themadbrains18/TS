@@ -43,9 +43,11 @@ const Page = async ({ params }: { params: Params }) => {
 
   return (
     <>
-      <BreadCrumbs />
-      <ProductBanner template={template} />
-      <ProductDescription template={template} />
+      <div className=' relative xl:after:h-full xl:after:w-full xl:after:absolute xl:after:top-0 xl:after:left-0 xl:after:bg-[url(/images/bgeffect.png)] ' >
+        <BreadCrumbs />
+        <ProductBanner template={template} />
+        <ProductDescription template={template} />
+      </div>
       <RelatedProducts />
     </>
   );

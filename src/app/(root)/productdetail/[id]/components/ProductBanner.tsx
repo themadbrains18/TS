@@ -32,6 +32,7 @@ import { useRouter } from 'next/navigation';
 
 const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
 
+
     const [showFullDescription, setShowFullDescription] = useState(false);
     const [showPreviews, setShowPreviews] = useState<boolean>(false)
 
@@ -60,7 +61,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
     const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
 
     const openPopup = () => {
-        if(template?.isPaid==false){
+        if (template?.isPaid == false) {
             setIsPopupOpen(true);
             setIsFirstPopupOpen(true)
 
@@ -92,15 +93,15 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
             <section className='pb-10'>
                 <div className="container">
                     <div>
-                        <div className='flex items-center gap-x-2 pt-2.5 md:pt-5 border-t md:mt-5 mb-5'>
+                        <div className='flex items-center gap-x-2 pt-2.5 md:pt-5 border-t  mb-5'>
                             <Image src={`/icons/mdb.svg`} width={20} height={20} alt='uploadericon' />
                             <p className='text-subparagraph text-sx leading-5 capitalize text-nowrap text-ellipsis overflow-hidden'>by <span className='text-[12px] font-semibold leading-5 text-subheading  capitalize'>{template?.user?.name}</span> <span className='text-primary-100' >|</span> <span className='text-xs text-subheading font-semibold leading-5 capitalize'>{`UI templates`}</span></p>
                         </div>
 
                         {/* Main Grid Section */}
-                        <div className='grid grid-cols-1 gap-5 lg:grid-cols-[57.5%,40.5%] lg:gap-x-[30px]'>
+                        <div className="grid grid-cols-1 gap-5 lg:grid-cols-[57.5%,40.5%] lg:gap-x-[30px] ">
                             <div>
-                                <div className="lg:max-w-[874px] w-full">
+                                <div className="lg:max-w-[874px] w-full relative z-10 bg-[#FFFFFF]">
                                     {/* Large Image */}
                                     <div className="p-[10px]  md:p-5 h-[250px]  md:h-[540px] group overflow-hidden border border-divider-100">
                                         <div className="overflow-hidden relative   h-[225px]  md:h-[500px] ">
@@ -152,9 +153,9 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                                 <SwiperSlide className='w-full' key={id}>
                                                     <div
                                                         onClick={() => setActiveImageId(id)} // Set active image by ID
-                                                        className={`cursor-pointer min-w-[50px] md:max-w-[120px] w-full border-2 overflow-hidden h-[77px] ${activeImageId === id ? 'border-primary-900' : 'border-transparent'} rounded-lg`}
+                                                        className={`cursor-pointer min-w-[50px] md:max-w-[120px] w-full border-2 overflow-hidden p-[5px] h-[88px] ${activeImageId === id ? 'border-primary-900 border-[0.5px] md:border-[2px]' : 'border-transparent'}`}
                                                     >
-                                                        <Image className="w-full object-cover rounded-lg h-[76px]" src={`${imageUrl}`} height={76} width={120} alt={`Thumbnail ${id}`} />
+                                                        <Image className="w-full object-cover h-[76px]" src={`${imageUrl}`} height={76} width={120} alt={`Thumbnail ${id}`} />
                                                     </div>
                                                 </SwiperSlide>
                                             ))}
@@ -198,13 +199,13 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                         <span className='text-[20px] leading-7 text-subparagraph font-bold' >{template?.isPaid ? '$' + template?.price : "$0.00"}</span>
                                     </div>
                                 </div>
-                                <Button onClick={openPopup} className='w-full mb-2.5 mt-5  md:mt-[30px] md:mb-5 justify-center py-2 md:py-[13px]' variant='primary' > Download</Button>
+                                <Button onClick={openPopup} className='w-full mb-2.5 mt-5  md:mt-[30px] md:mb-5 justify-center py-2 md:py-[13px]' variant='primary' > Free — Download</Button>
                                 <Button link={`/preview/${template?.id}`} className='w-full justify-center' variant='liquid' >Preview</Button>
                                 {/* onClick={() => setShowPreviews(true)} */}
 
                                 {
                                     isPopupOpen &&
-                                    <DownloadTemplete  isFirstPopupOpen={isFirstPopupOpen} setIsFirstPopupOpen={setIsFirstPopupOpen} id={template?.id} url={template?.sourceFiles[0]?.fileUrl} />
+                                    <DownloadTemplete isFirstPopupOpen={isFirstPopupOpen} setIsFirstPopupOpen={setIsFirstPopupOpen} id={template?.id} url={template?.sourceFiles[0]?.fileUrl} />
                                 }
                             </div>
                         </div>

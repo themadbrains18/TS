@@ -343,7 +343,7 @@ const Download = () => {
         </div>
 
         {/* Load More Button */}
-        {hasMoreData && !error && downloads.length > 0 && (
+        {downloads && !error && downloads.length > 6 && (
           <div className="mt-5 flex justify-center">
             <Button
               className="w-full justify-center sm:w-auto"
@@ -360,3 +360,4 @@ const Download = () => {
 };
 
 export default Download;
+

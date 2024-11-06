@@ -59,7 +59,7 @@ const BuissnessProducts = () => {
             <section className='py-10 lg:py-[100px] bg-[url("/images/buissnessbg.png")] bg-no-repeat bg-contain bg-right'>
                 <div className="container">
                     <div>
-                        <h2 className='text-subheading leading-9 font-bold text-[22px] tab:text-[28px]'>Products For Your Business Free of Cost</h2>
+                        <h2 className='text-subheading sm:leading-9 font-bold text-[22px] tab:text-[28px]'>Products For Your Business Free of Cost</h2>
                         <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-5 gap-y-5 gap-x-[15px] md:gap-[30px]'>
                             {
                                 data?.map((item, index) => {

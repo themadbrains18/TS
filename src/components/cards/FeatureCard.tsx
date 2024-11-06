@@ -16,7 +16,7 @@ const FeatureCard: React.FC<featurecardprops> = ({ id, buttonprops, category, cu
     };
     return (
         <>
-            <div className='group'>
+            <div className='group border border-divider-100'>
 
                 <div className='relative h-[278px]'>
                     <Image
@@ -42,7 +42,7 @@ const FeatureCard: React.FC<featurecardprops> = ({ id, buttonprops, category, cu
                 <div>
                     <div className='px-[10px] pt-[10px] md:px-5 md:pt-3 bg-white'>
                         <div className='flex items-center justify-between w-full border-b border-divider-100 pb-[10px] md:pb-5'>
-                            <h3 className='text-subparagraph font-semibold leading-6 capitalize text-xs tab:text-base max-w-[294px] truncate'>{title}</h3>
+                            <h3 className='text-subparagraph font-semibold leading-6 capitalize text-xs tab:text-base max-w-[190px] sm:max-w-[255px] truncate'>{title}</h3>
                             {
                                 themeicon === "Figma" ? <Icon className='max-w-6 w-full h-6' name='figma' /> : ""}
                             {

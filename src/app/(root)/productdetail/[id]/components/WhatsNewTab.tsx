@@ -11,11 +11,11 @@ import React, { Fragment } from 'react'
  * @returns {JSX.Element} The rendered WhatsNewTab component.
  */
 
-interface whatsNewProps{
-    details:TechTemplate
+interface whatsNewProps {
+    details: TechTemplate
 }
 
-const WhatsNewTab:React.FC<whatsNewProps> = ({details}) => {
+const WhatsNewTab: React.FC<whatsNewProps> = ({ details }) => {
 
     // Data for the update cards
     const carddata = [
@@ -48,25 +48,24 @@ const WhatsNewTab:React.FC<whatsNewProps> = ({details}) => {
                             )
                         })
                     }
-
                 </div>
                 <h3 className='text-xl font-bold leading-7 mt-10'>New Updates</h3>
                 <div className='mt-5 py-5 px-[10px] md:py-10 md:px-[50px] border border-divider-200'>
                     <div className='grid gap-y-[10px] md:gap-y-0 tab:grid-cols-2 mb-[10px] pb-[10px] md:pb-5 md:mb-5 gap-x-[15px] border-b border-divider-200'>
-                        <div><li className='text-sm text-subparagraph md:text-base md:leading-6' >400+ Exclusive Pre-Built Templates</li></div>
-                        <div><li className='text-sm text-subparagraph md:text-base md:leading-6' >200+ Components</li></div>
+                        <div><li className='text-sm text-subparagraph md:text-base md:leading-6 capitalize' >400+ Exclusive Pre-Built Templates</li></div>
+                        <div><li className='text-sm text-subparagraph md:text-base md:leading-6 capitalize' >200+ Components</li></div>
                     </div>
                     <div className='grid gap-y-[10px] md:gap-y-0 tab:grid-cols-2 mb-[10px] pb-[10px] md:pb-5 md:mb-5 gap-x-[15px] border-b border-divider-200'>
-                        <div><li className='text-sm text-subparagraph md:text-base md:leading-6' >400+ Exclusive Pre-Built Templates</li></div>
-                        <div><li className='text-sm text-subparagraph md:text-base md:leading-6' >200+ Components</li></div>
+                        <div><li className='text-sm text-subparagraph md:text-base md:leading-6 capitalize' >400+ Exclusive Pre-Built Templates</li></div>
+                        <div><li className='text-sm text-subparagraph md:text-base md:leading-6 capitalize' >200+ Components</li></div>
                     </div>
                     <div className='grid gap-y-[10px] md:gap-y-0 tab:grid-cols-2 mb-[10px] pb-[10px] md:pb-5 md:mb-5 gap-x-[15px] border-b border-divider-200'>
-                        <div><li className='text-sm text-subparagraph md:text-base md:leading-6' >400+ Exclusive Pre-Built Templates</li></div>
-                        <div><li className='text-sm text-subparagraph md:text-base md:leading-6' >200+ Components</li></div>
+                        <div><li className='text-sm text-subparagraph md:text-base md:leading-6 capitalize' >400+ Exclusive Pre-Built Templates</li></div>
+                        <div><li className='text-sm text-subparagraph md:text-base md:leading-6 capitalize' >200+ Components</li></div>
                     </div>
                     <div className='grid gap-y-[10px] md:gap-y-0 tab:grid-cols-2 gap-x-[15px] '>
-                        <div><li className='text-sm text-subparagraph md:text-base md:leading-6' >400+ Exclusive Pre-Built Templates</li></div>
-                        <div><li className='text-sm text-subparagraph md:text-base md:leading-6' >200+ Components</li></div>
+                        <div><li className='text-sm text-subparagraph md:text-base md:leading-6 capitalize' >400+ Exclusive Pre-Built Templates</li></div>
+                        <div><li className='text-sm text-subparagraph md:text-base md:leading-6 capitalize' >200+ Components</li></div>
                     </div>
                 </div>
             </div>
