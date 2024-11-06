@@ -56,7 +56,7 @@ const FeatureSection = () => {
         <section className='bg-bgcolor py-10 lg:py-[100px] '>
             <div className='bg-[url("/images/featurecolor.png")] bg-no-repeat bg-cover bg-right'>
                 <div className="container">
-                    <h2 className='text-subheading leading-9 font-bold text-[22px] tab:text-[28px]'>Feature Products</h2>
+                    <h2 className='text-subheading sm:leading-9 font-bold text-[22px] tab:text-[28px]'>Feature Products</h2>
 
                     {loading ? (
                         <div className='transition-all duration-300 w-full grid gap-5 lg:grid-cols-2 xl:grid-cols-3 xl:gap-[30px]'>

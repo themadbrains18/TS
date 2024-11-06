@@ -175,7 +175,7 @@ const ProductMain = () => {
                                         {items.map((item, index) => (
                                             <div key={Date.now() + index}>
                                                 <div className="border-[1px] py-[6px] px-[14px] flex items-center w-full max-w-max bg-primary-300 gap-[5px]">
-                                                    <span className="whitespace-nowrap text-[14px] font-normal leading-4 text-subparagraph">
+                                                    <span className="whitespace-nowrap text-xs tab:text-sm font-normal leading-5 text-subparagraph">
                                                         {item.split(',')[2]}
                                                     </span>
                                                     <div className="cursor-pointer" onClick={() => removeItem(index)}>

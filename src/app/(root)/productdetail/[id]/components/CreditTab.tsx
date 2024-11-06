@@ -38,39 +38,56 @@ const CreditTab: React.FC<CreditsProps> = ({ credits }) => {
                         <div className="grid grid-cols-2 mb-[10px] pb-[10px] md:pb-5 md:mb-5 border-b border-divider-200">
                             {credit?.fonts[0]?.name !== "" && <div>
                                 <h3 className="text-subparagraph leading-6 mb-5 text-sm tab:text-base">Fonts Used</h3>
-                                {credit?.fonts?.map((font, fontIndex) => (
-                                    <p key={fontIndex} className="text-xs tab:text-sm leading-5 text-primarycyan inline-block">
-                                        {font?.name}
-                                    </p>
-                                ))}
+                                <ul>
+                                    {credit?.fonts?.map((font, fontIndex) => (
+                                        <li className='list-disc' key={fontIndex}>
+
+                                            <p className="text-xs tab:text-sm font-semibold leading-5 text-primarycyan inline-block capitalize">
+                                                {font?.name}
+                                            </p>
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>}
                             {credit?.icons[0]?.name !== "" && <div>
                                 <h3 className="text-subparagraph leading-6 mb-5 text-sm tab:text-base">Icons Used</h3>
-                                {credit?.icons.map((icon, iconIndex) => (
-                                    <p key={iconIndex} className="text-xs tab:text-sm leading-5 text-primarycyan inline-block">
-                                        {icon?.name}
-                                    </p>
-                                ))}
+                                <ul>
+                                    {credit?.icons.map((icon, iconIndex) => (
+                                        <li className='list-disc' key={iconIndex}>
+
+                                            <p className="text-xs tab:text-sm leading-5 text-primarycyan inline-block font-semibold capitalize">
+                                                {icon?.name}
+                                            </p>
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>}
                         </div>
                         <div className="grid grid-cols-2">
                             {credit?.images[0]?.name !== "" && <div>
                                 <h3 className="text-subparagraph leading-6 mb-5 text-sm tab:text-base">Images Used</h3>
-                                {credit?.images?.map((image, imageIndex) => (
-                                    <p key={imageIndex} className="text-xs tab:text-sm leading-5 text-primarycyan inline-block">
-                                        {image?.name}
-                                    </p>
-                                ))}
+                                <ul>
+                                    {credit?.images?.map((image, imageIndex) => (
+                                        <li className='list-disc' key={imageIndex}>
+
+                                            <p className="text-xs tab:text-sm leading-5 text-primarycyan inline-block font-semibold capitalize">
+                                                {image?.name}
+                                            </p>
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>}
                             {credit?.illustrations[0]?.name !== "" && <div>
                                 <h3 className="text-subparagraph leading-6 mb-5 text-sm tab:text-base">Illustrations Used</h3>
-                                {credit?.illustrations?.map((illustration, illustrationIndex) => (
-                                    <li key={illustrationIndex}>
-                                        <p className="text-xs tab:text-sm leading-5 text-primarycyan inline-block">
-                                            {illustration?.name}
-                                        </p>
-                                    </li>
-                                ))}
+                                <ul>
+                                    {credit?.illustrations?.map((illustration, illustrationIndex) => (
+                                        <li className='list-disc' key={illustrationIndex}>
+                                            <p className="text-xs tab:text-sm leading-5 text-primarycyan inline-block font-semibold capitalize">
+                                                {illustration?.name}
+                                            </p>
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>}
                         </div>
                     </div>
