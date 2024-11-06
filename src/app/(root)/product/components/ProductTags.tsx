@@ -64,7 +64,7 @@ const ProductTags = () => {
                 <div className='max-w-[357px] w-full '>
                     <h2 className='text-[22px] md:text-[20px] font-semibold left-7 text-[#110833] md:border-r'>Category Tags</h2>
                 </div>
-                <div className='flex overflow-x-scroll xl:overflow-hidden hiddenscroll'>
+                <div className='flex overflow-x-scroll hiddenscroll'>
                     {/* Add an "All" tab at the beginning */}
                     <div
                         onClick={handleAllClick} // Set active index to 0 for "All"
@@ -95,7 +95,7 @@ const ProductTags = () => {
                                 className={`relative mx-[7px] cursor-pointer text-nowrap group`}
                             >
                                 <h2
-                                    className={`px-[10px] py-[5px] leading-7 font-normal transition-all duration-500
+                                    className={`px-[10px] py-[5px] text-lg leading-7 font-normal transition-all duration-500
                                         ${isActive ? 'text-primary-100' : 'text-subparagraph'}
                                     `}
                                 >

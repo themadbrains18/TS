@@ -76,7 +76,7 @@ const PopularSection = () => {
                 <div className='bg-[url("/images/featurecolor.png")] bg-no-repeat bg-cover bg-right'>
                     <div className="container">
                         <div>
-                            <h2 className='text-subheading leading-9 font-bold text-[22px] tab:text-[28px]'>Popular Template</h2>
+                            <h2 className='text-subheading sm:leading-9 font-bold text-[22px] tab:text-[28px]'>Popular Template</h2>
                             {loading ? (
                                 <div className='transition-all duration-300 w-full grid gap-5 lg:grid-cols-2 xl:grid-cols-3 xl:gap-[30px]'>
                                     <FeatureSkeleton />
