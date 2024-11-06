@@ -15,8 +15,10 @@ const StaticCheckBox: React.FC<StaticCheckBoxProps> = ({
     customClass = '',
     onClick
 }) => {
+    console.log(checked,"==checked");
+    
     return (
-        <div onClick={onClick} className={`form-group mb-4 flex items-center cursor-pointer ${customClass}`}>
+        <div onClick={onClick} className={`form-group mb-4 w-max flex items-center cursor-pointer ${customClass}`}>
             {/* Static checkbox box */}
             <span
                 className={`block border-2 border-gray-300 p-2 mr-2 transition duration-200 relative
@@ -36,5 +38,5 @@ const StaticCheckBox: React.FC<StaticCheckBoxProps> = ({
         </div>
     );
 };
-
+ 
 export default StaticCheckBox;
