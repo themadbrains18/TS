@@ -88,7 +88,6 @@ const NewPassword = ({ isPopupOpen, closePopup }: newpasswordpopup) => {
                             <div className='mt-6' >
                                 {
                                     loading ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' hideChild='hidden'  >
-
                                     </Button> : <Button type='submit' variant='primary' className='w-full items-center justify-center' >
                                         Save
                                     </Button>

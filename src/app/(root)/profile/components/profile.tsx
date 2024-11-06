@@ -10,6 +10,8 @@ import VerfiyOldEmail from '@/components/popups/VerfiyOldEmail'
 import useFetch from '@/hooks/useFetch'
 import { Session } from 'next-auth'
 import NewPassword from '@/components/popups/NewPassword'
+import DeleteUser from '@/components/popups/DeleteUser'
+import { METHODS } from 'http'
 
 
 interface sessionProps {
@@ -27,6 +29,7 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
     const [isEmailDisabled, setIsEmailDisabled] = useState<boolean>(true);
     const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
     const [isDeletepopup, setisDeletepopup] = useState<boolean>(false);
+    const [isDeleteUSer, setIsDeleteUser] = useState<boolean>(false);
     const [profileImage, setProfileImage] = useState<any>(profileimage);
     const [name, setName] = useState(session?.user ? session?.user?.name : '');
     const [nameError, setNameeror] = useState<string>();
@@ -43,6 +46,7 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
     };
 
     const { data: response, error, loading, fetchData } = useFetch<any>();
+    const { data: deleteUseracc, error: deleteerror, loading: deleteloading, fetchData: deleteuser } = useFetch<any>();
     const { data: updateData, error: updateError, loading: updateLoading, fetchData: updateFetchData } = useFetch<any>();
     const { data: updateNumberdata, error: updateNumbererror, loading: updateloadingNumber, fetchData: updateNumber } = useFetch<any>();
     const { data: updatePassworddata, error: updatePassworderror, loading: updateloadingPassword, fetchData: updatePassword } = useFetch<any>();
@@ -139,6 +143,17 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
         }
     };
 
+    const deleteUser = async () => {
+        try {
+            await deleteuser(`/delete-account/${session?.id}`,{
+                method:"Delete"
+            })
+        } catch (error) {
+            console.log(deleteerror)
+        }
+       
+    }
+
     useEffect(() => {
         fetchUserData();
     }, []);
@@ -155,7 +170,9 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
         <>
             <section>
                 <VerfiyOldEmail closePopup={() => closePopup()} isPopupOpen={isPopupOpen} handlepasswordUpdate={handlepasswordUpdate} />
-                    <NewPassword closePopup={()=>closePopup()} isPopupOpen={isDeletepopup}/>
+                <NewPassword closePopup={() => closePopup()} isPopupOpen={isDeletepopup} />
+                <DeleteUser isPopupOpen={isDeleteUSer} closePopup={() => { setIsDeleteUser(false) }} deleteAccount={() => { deleteUser() }} />
+
                 <div className="container">
                     <div className='max-w-[1162px] w-full'>
                         <div className='max-w-[616px] w-full mb-4 md:mb-[50px]'>
@@ -306,7 +323,7 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
                                     <p className=' text-sm md:text-base  font-normal leading-5 md:leading-6 text-textparagraph'>You will be redirected to a new page and must follow the instructions</p>
                                 </div>
                             </div>
-                            <Button onClick={()=>setisDeletepopup(true)} className='py-[13px] text-lg mt-5 md:mt-0 text-nowrap'  variant='secondary'>Set new password</Button>
+                            <Button onClick={() => setisDeletepopup(true)} className='py-[13px] text-lg mt-5 md:mt-0 text-nowrap' variant='secondary'>Set new password</Button>
                         </div>
                         <div className='py-4 md:py-[50px] border-b border-[#D9D9D9] flex items-end justify-between'>
                             <div>
@@ -319,7 +336,7 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
                             </div>
                         </div>
                         <div className='max-w-[670px] mt-4 md:mt-[50px]'>
-                            <Button className='py-[13px] text-lg px-[30px]' variant='secondary'>delete account</Button>
+                            <Button onClick={() => { setIsDeleteUser(true) }} className='py-[13px] text-lg px-[30px]' variant='secondary'>delete account</Button>
                             <p className='pt-5 text-textparagraph'><strong>Note:</strong> As you have an active paid plan, you can't delete your account directly. Please contact <a href="#" className='text-primary-100 '>support@freepik.com</a> for assistance </p>
                         </div>
                     </div>
