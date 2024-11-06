@@ -108,7 +108,7 @@ const Header = () => {
       <header className=" bg-[#ffffff80] backdrop:blur-xl relative border-b-[1px] border-[#11083319] z-10">
         <div className="container hidden min-[1028px]:block">
           <div className="py-10 flex items-center justify-between">
-            <div className="flex items-center justify-between max-w-[809px] w-full cursor-pointer">
+            <div className="flex items-center justify-between xl:max-w-[809px] max-w-[690px] w-full cursor-pointer">
               <Link className="w-[276px]" href={'/'}>
                 <Image
                   src={"/icons/Logo.svg"}
@@ -117,24 +117,25 @@ const Header = () => {
                   alt="Logo"
                 />
               </Link>
-              <div className="flex gap-5 items-center max-w-[550px] w-full justify-between pl-[60px]">
-                {loadingdata ? <>
-                  <div className="flex items-center animate-pulse w-full">
-                    <div className="h-4  bg-gray-200 rounded mr-2 w-full"></div>
-                    <div className="h-4  bg-gray-200 rounded mr-2 w-full"></div>
-                    <div className="h-4  bg-gray-200 rounded w-full"></div>
-                  </div>
-                </> : <>
-                  {
-                    data && data?.length > 0 && data?.map((item, index) => {
-                      return (
-                        <Fragment key={index}>
-                          <NavDropdown title={item?.name} subCat={item?.subCategories} />
-                        </Fragment>
-                      )
-                    })
-                  }
-                </>}
+              <div className="flex xl:gap-5 items-center xl:max-w-[550px] max-w-[500px] w-full justify-between xl:pl-[60px] pl-5 ">
+                {loadingdata ?
+                  <>
+                    <div className="flex items-center animate-pulse w-full">
+                      <div className="h-4  bg-gray-200 rounded mr-2 w-full"></div>
+                      <div className="h-4  bg-gray-200 rounded mr-2 w-full"></div>
+                      <div className="h-4  bg-gray-200 rounded w-full"></div>
+                    </div>
+                  </> : <>
+                    {
+                      data && data?.length > 0 && data?.map((item, index) => {
+                        return (
+                          <Fragment key={index}>
+                            <NavDropdown title={item?.name} subCat={item?.subCategories} />
+                          </Fragment>
+                        )
+                      })
+                    }
+                  </>}
 
               </div>
             </div>
@@ -211,43 +212,48 @@ const Header = () => {
                 <Icon name="solidsearch" className="w-9 h-9 cursor-pointer" />
               </div>
 
-              <div className="group">
-                <div className="w-[30px] h-[30px] cursor-pointer ">
-                  <Image
-                    width={50}
-                    height={50}
-                    className="rounded-full object-contain"
-                    src={userdata?.user?.profileImg || "/images/userdummy.png"}
-                    alt="diamond"
-                  />
-                </div>
-                <div className="absolute group-hover:opacity-100 transition-all group-hover:visible invisible opacity-0  duration-[0.5s] top-[90%] right-0   mt-2 w-[216px]  bg-white shadow-lg rounded-lg">
-                  <div className="pt-[46px] mt-[-46px]" >
-                    <div className="py-2.5 ">
-                      <h2 className="leading-6 text-[16px] font-semibold text-textheading py-2 pl-[30px] pr-[27px] mb-2.5">
-                        {session?.email}
-                      </h2>
-                      <div className="px-[30px] mb-2.5 " >
-                        <h2 className="text-[13px] font-medium leading-5 text-textheading" >Daily Download Balance</h2>
-                        <div className="py-[3px] px-[3px] h-[12px] border-[#E8CFFB] border-[1px] rounded-[6px] my-[5px] "  >
-                          <span style={{ width: `${session?.freeDownloads * 33.33}%` }} className="h-1 block bg-primary-100 rounded-[5px]"></span>
+              {
+                session?.user
+                &&
+                < div className="group">
+                  <div className="w-[30px] h-[30px] cursor-pointer ">
+                    <Image
+                      width={50}
+                      height={50}
+                      className="rounded-full object-contain"
+                      src={userdata?.user?.profileImg || "/images/userdummy.png"}
+                      alt="diamond"
+                    />
+                  </div>
+                  <div className="absolute group-hover:opacity-100 transition-all group-hover:visible invisible opacity-0  duration-[0.5s] top-[90%] right-0   mt-2 w-[216px]  bg-white shadow-lg rounded-lg">
+                    <div className="pt-[46px] mt-[-46px]" >
+                      <div className="py-2.5 ">
+                        <h2 className="leading-6 text-[16px] font-semibold text-textheading py-2 pl-[30px] pr-[27px] mb-2.5">
+                          {session?.email}
+                        </h2>
+                        <div className="px-[30px] mb-2.5 " >
+                          <h2 className="text-[13px] font-medium leading-5 text-textheading" >Daily Download Balance</h2>
+                          <div className="py-[3px] px-[3px] h-[12px] border-[#E8CFFB] border-[1px] rounded-[6px] my-[5px] "  >
+                            <span style={{ width: `${session?.freeDownloads * 33.33}%` }} className="h-1 block bg-primary-100 rounded-[5px]"></span>
+                          </div>
+                          <h3 className="text-[12px] font-normal leading-5 text-textheading" >{session?.freeDownloads} remaining out of 3</h3>
                         </div>
-                        <h3 className="text-[12px] font-normal leading-5 text-textheading" >{session?.freeDownloads} remaining out of 3</h3>
-                      </div>
-                      <div className="flex flex-col " >
-                        <Link href={"/profile"} >
-                          <button className={` w-full text-textheading text-start leading-6 hover:text-subparagraph py-2 px-[30px] capitalize cursor-pointer text-nowrap hover:bg-primary-200 border-l-[2px] border-white hover:border-primary-100`}>
-                            Profile
+                        <div className="flex flex-col " >
+                          <Link href={"/profile"} >
+                            <button className={` w-full text-textheading text-start leading-6 hover:text-subparagraph py-2 px-[30px] capitalize cursor-pointer text-nowrap hover:bg-primary-200 border-l-[2px] border-white hover:border-primary-100`}>
+                              Profile
+                            </button>
+                          </Link>
+                          <button onClick={() => signOut()} className={`text-textheading text-start hover:text-subparagraph leading-6 py-2 px-[30px] capitalize cursor-pointer text-nowrap hover:bg-primary-200 border-white border-l-[2px] hover:border-primary-100`}>
+                            Log out
                           </button>
-                        </Link>
-                        <button onClick={() => signOut()} className={`text-textheading text-start hover:text-subparagraph leading-6 py-2 px-[30px] capitalize cursor-pointer text-nowrap hover:bg-primary-200 border-white border-l-[2px] hover:border-primary-100`}>
-                          Log out
-                        </button>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              }
+
             </div>
 
             <div className={`w-[100%] duration-[0.5s] fixed top-0 bg-white h-full  px-2 ${searchbar ? "right-0 " : "right-[-100%]"}`} >
@@ -292,10 +298,10 @@ const Header = () => {
             <div className="flex justify-center items-center mt-8 gap-2">
               {!isLoggedIn ? (
                 <>
-                  <Button variant="primary" className=" py-2 px-[18px] w-full max-w-[50%] flex justify-center">
+                  <Button linkclass="w-full" link="/resister" variant="primary" className=" py-2 px-[18px] w-full flex justify-center">
                     sign up
                   </Button>
-                  <Button variant="primary" className=" py-2 px-[18px] w-full max-w-[50%] flex justify-center">
+                  <Button linkclass="w-full" link="/login" variant="primary" className=" py-2 px-[18px] w-full  flex justify-center">
                     log in
                   </Button>
                 </>
@@ -309,7 +315,7 @@ const Header = () => {
 
 
         </div>
-      </header>
+      </header >
     </>
   );
 };
