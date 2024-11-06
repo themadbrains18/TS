@@ -48,7 +48,6 @@ const WhatsNewTab: React.FC<whatsNewProps> = ({ details }) => {
                             )
                         })
                     }
-
                 </div>
                 <h3 className='text-xl font-bold leading-7 mt-10'>New Updates</h3>
                 <div className='mt-5 py-5 px-[10px] md:py-10 md:px-[50px] border border-divider-200'>

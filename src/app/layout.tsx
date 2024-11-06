@@ -57,6 +57,7 @@ export default async function RootLayout({ children, }: Readonly<{ children: Rea
         <ToastContainer
           style={{ zIndex: "1000" }}
         />
+        
         <SessionProvider session={session} refetchInterval={1 * 60}>
           <StoreProvider>
             {children}

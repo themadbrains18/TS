@@ -61,13 +61,14 @@ const ProductMain = () => {
 
     const handleItemClick = (itemTitle: string) => {
         setSelectedSort(itemTitle);
+
         setSort(false);
     };
 
     const dropdownRef = useRef<HTMLDivElement>(null);
     useOnClickOutside(dropdownRef, sorthandledropdown);
 
-    const fetchProducts = async (page: number, filters: string[] = []): Promise<TemplateResponse> => {
+    const fetchProducts = async (page: number, filters: string[] = [], sort: string): Promise<TemplateResponse> => {
         try {
             setLoading(true);
             let apiUrl = `${process.env.NEXT_PUBLIC_APIURL}/templates?page=${page}&limit=12`;
@@ -118,13 +119,15 @@ const ProductMain = () => {
                     apiUrl += `&${filterQuery}`;
                 }
             }
-
+            if (sort) {
+                apiUrl += `&sortBy=${sort}`;
+            }
 
             const response = await fetch(apiUrl);
             const data: TemplateResponse = await response.json();
 
-            setTotalPages(data?.pagination.totalPages);
-            setCurrentPage(data?.pagination.currentPage);
+            setTotalPages(data?.pagination?.totalPages || 1);
+            setCurrentPage(data?.pagination?.currentPage || 1);
             return data;
 
         } catch (error) {
@@ -141,16 +144,16 @@ const ProductMain = () => {
 
     useEffect(() => {
         const getProducts = async () => {
-            const initialProducts = await fetchProducts(1, debouncedFilters);
+            const initialProducts = await fetchProducts(1, debouncedFilters,selectedSort);
             setProducts(initialProducts);
         };
         getProducts();
-    }, [templateTypeId, subCatId, debouncedFilters]); // Add debouncedFilters as a dependency
+    }, [templateTypeId, subCatId, debouncedFilters,selectedSort]); // Add debouncedFilters as a dependency
 
 
     const handleLoadMore = async () => {
         if (currentPage < totalPages) {
-            const newProducts = await fetchProducts(currentPage + 1, debouncedFilters);
+            const newProducts = await fetchProducts(currentPage + 1, debouncedFilters,selectedSort);
             setProducts((prev) => ({
                 ...prev,
                 data: [...(prev?.data || []), ...newProducts.data],

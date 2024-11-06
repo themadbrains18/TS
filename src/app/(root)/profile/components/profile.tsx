@@ -12,13 +12,17 @@ import { Session } from 'next-auth'
 import NewPassword from '@/components/popups/NewPassword'
 import DeleteUser from '@/components/popups/DeleteUser'
 import { METHODS } from 'http'
+import { useDownload } from '@/app/contexts/DailyDownloadsContext'
+// import { useDownload } from '@/app/contexts/DailyDownloadsContext'
+import { UserDetail } from '@/types/type'
 
 
 interface sessionProps {
-    session: Session
+    session: Session,
+    userData: UserDetail
 }
 
-const Profile: React.FC<sessionProps> = ({ session }) => {
+const Profile: React.FC<sessionProps> = ({ session,userData }) => {
 
     // Separate state for each button
     const [isNameActive, setIsNameActive] = useState<boolean>(false)
@@ -28,13 +32,14 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
     const [isUserDisabled, setIsUserDisabled] = useState<boolean>(true);
     const [isEmailDisabled, setIsEmailDisabled] = useState<boolean>(true);
     const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
+    const [profileImage, setProfileImage] = useState<any>(userData?.user?.profileImg);
+    const [name, setName] = useState(userData?.user ? userData?.user?.name : '');
     const [isDeletepopup, setisDeletepopup] = useState<boolean>(false);
     const [isDeleteUSer, setIsDeleteUser] = useState<boolean>(false);
-    const [profileImage, setProfileImage] = useState<any>(profileimage);
-    const [name, setName] = useState(session?.user ? session?.user?.name : '');
     const [nameError, setNameeror] = useState<string>();
-    const [number, setNumber] = useState(session?.user ? session?.number : '');
+    const [number, setNumber] = useState(userData?.user ? userData?.user.number : '');
     const [phoneNumberError, setPhoneNumberError] = useState<string>();
+    const {fetchDailyDownloads } = useDownload()
 
     const closePopup = () => {
         setIsPopupOpen(false);
@@ -45,6 +50,8 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
         setIsPopupOpen(true);
     };
 
+    console.log(userData,"==user data");
+    
     const { data: response, error, loading, fetchData } = useFetch<any>();
     const { data: deleteUseracc, error: deleteerror, loading: deleteloading, fetchData: deleteuser } = useFetch<any>();
     const { data: updateData, error: updateError, loading: updateLoading, fetchData: updateFetchData } = useFetch<any>();
@@ -85,13 +92,13 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
                 setNameeror("User Name Is Empty")
                 return
             }
-            if (name === session?.user?.name) {
+            if (name === userData?.user?.name) {
                 setNameeror("This User Already Exists ")
                 return
             }
             await updateFetchData('/update-details', {
                 method: 'PUT',
-                body: JSON.stringify({ name, id: session?.id }),
+                body: JSON.stringify({ name, id: userData?.user?.id }),
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -111,7 +118,7 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
                 return
             }
 
-            if (number === session?.number) {
+            if (number === userData?.user?.number) {
                 setPhoneNumberError("This Number Is  Already Exists")
                 return
             }
@@ -161,11 +168,16 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
     useEffect(() => {
 
         if (response) {
-            setProfileImage(response?.user?.profileImg || profileimage);
+    //   console.log(response,"==response");
+      
+            fetchDailyDownloads()
+            setProfileImage(response?.user?.profileImageUrl || response?.user?.profileImg || profileimage);
         }
     }, [response])
 
 
+    // console.log(response,"==response");
+    
     return (
         <>
             <section>
@@ -310,7 +322,7 @@ const Profile: React.FC<sessionProps> = ({ session }) => {
 
                                     <div className='py-[18px] px-5 border border-divider-100 flex items-center justify-between'>
                                         <h3 className='text-neutral-900 font-semibold capitalize leading-6'>Daily Download Balance :</h3>
-                                        <p className='text-neutral-900 font-semibold capitalize leading-6'>{response?.user?.freeDownloads || 0}</p>
+                                        <p className='text-neutral-900 font-semibold capitalize leading-6'>{userData?.user?.freeDownloads || 0}</p>
                                     </div>
                                 </div>
                             </div>
