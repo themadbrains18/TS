@@ -187,14 +187,19 @@ const Download = () => {
     { title: "Premium" },
   ];
 
+
   const handleItemClick = (itemTitle: string) => {
-    setSelectedSort(itemTitle);
-    resetDownloads();
+    if (selectedSort !== itemTitle) { // Only update if the sort option changes
+      setSelectedSort(itemTitle);
+      resetDownloads();
+    }
   };
 
   const handleCategoryClick = (itemTitle: string) => {
-    setSelectedCategory(itemTitle);
-    resetDownloads();
+    if (selectedCategory !== itemTitle) { // Only update if the category option changes
+      setSelectedCategory(itemTitle);
+      resetDownloads();
+    }
   };
 
   const resetDownloads = () => {
@@ -332,7 +337,7 @@ const Download = () => {
             ))
           ) : (
             <div className="text-center col-span-full text-gray-500">
-              Oops! the content you looking for was not found 
+              Oops! the content you looking for was not found
             </div>
           )}
         </div>
