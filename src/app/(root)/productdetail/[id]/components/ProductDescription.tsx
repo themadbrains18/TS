@@ -24,7 +24,7 @@ const ProductDescription: React.FC<ProductDetailProps> = ({ template }) => {
     // State to manage the active tab index
     const [activetab, setActivetab] = useState(0);
 
-    
+
 
     // Button data for the tab titles and icons
     const btndata = [
@@ -35,7 +35,7 @@ const ProductDescription: React.FC<ProductDetailProps> = ({ template }) => {
         { title: "About Author" }
     ]
 
-    
+
 
     /**
     * Renders the content of the currently active tab.
@@ -45,15 +45,15 @@ const ProductDescription: React.FC<ProductDetailProps> = ({ template }) => {
     const renderTabContent = () => {
         switch (activetab) {
             case 0:
-                return <DescriptionTab description={template?.description}/>
+                return <DescriptionTab description={template?.description} />
             case 1:
-                return <TechnicalTab technicalDetails={template?.techDetails }/>
+                return <TechnicalTab technicalDetails={template?.techDetails} />
             case 2:
-                return <CreditTab credits={template?.credits}/>
+                return <CreditTab credits={template?.credits} />
             case 3:
-                return <WhatsNewTab details={template}/>  
+                return <WhatsNewTab details={template} />
             case 4:
-                return <AuthorTab userDetail={template?.user}/>
+                return <AuthorTab userDetail={template?.user} />
             default:
                 return null
         }
@@ -61,7 +61,7 @@ const ProductDescription: React.FC<ProductDetailProps> = ({ template }) => {
 
     return (
         <>
-            <section className='py-10 lg:py-20'>
+            <section className='py-10 lg:py-20 relative z-10'>
                 <div className='container'>
                     <div className='flex items-center md:justify-center gap-4 md:gap-x-[30px] max-w-[1560px] overflow-scroll hiddenscroll'>
                         {btndata.map((item, index) => (
