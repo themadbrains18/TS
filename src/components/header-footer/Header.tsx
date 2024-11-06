@@ -282,7 +282,7 @@ const Header = () => {
                         onToggle={() => handleAccordionClick(index)} // Toggle the accordion on click
                         title={`${item?.name}`}
                       >
-                        <NavTabs />
+                        <NavTabs subCat={item?.subCategories}/>
                       </Accordion>
                     </Fragment>)
                   })
