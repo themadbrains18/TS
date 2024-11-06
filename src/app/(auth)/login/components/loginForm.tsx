@@ -21,8 +21,8 @@ const LoginForm = () => {
     const [isChecked1, setIsChecked1] = useState(false);
     const [otpPath, setOtppath] = useState(false);
     const [formData, setFormData] = useState({})
-    
- 
+
+
     // Form Values Interface
     interface FormValues {
         email: string;
@@ -65,7 +65,7 @@ const LoginForm = () => {
         if (session) {
             router.push('/'); // Redirect to the home page if the user is logged in
         }
-    }, [response,session, router]);
+    }, [response, session, router]);
 
     return (
         <>
@@ -150,13 +150,13 @@ const LoginForm = () => {
                                             {/* <Button className="w-full items-center justify-center" type="submit" variant="primary" >
                                                 {loading ? "Logging in..." : "Login"}
                                             </Button> */}
-                                              {
-                                        loading ? <Button type='submit' disabled loadingbtn={true} hideChild='hidden'  iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' >
-                                        
-                                        </Button> : <Button type='submit' variant='primary' className='w-full items-center justify-center' >
-                                           Login
-                                        </Button>
-                                    }
+                                            {
+                                                loading ? <Button type='submit' disabled loadingbtn={true} hideChild='hidden' iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' >
+
+                                                </Button> : <Button type='submit' variant='primary' className='w-full items-center justify-center' >
+                                                    Login
+                                                </Button>
+                                            }
 
                                             {/* Error message display */}
                                             {/* {error && <p className="text-red-500 mt-2">Failed to login. Please try again.</p>} */}

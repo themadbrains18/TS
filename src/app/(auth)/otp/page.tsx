@@ -26,7 +26,6 @@ const Otp = ({ formData, api, setFormData }: any) => {
     const [startTimer, setStartTimer] = useState(600); // Timer set to 10 minutes (600 seconds)
     const [canResend, setCanResend] = useState(false);
 
-    
     useEffect(() => {
         // Declare timer variable
         let timer: NodeJS.Timeout | null = null;
@@ -38,7 +37,6 @@ const Otp = ({ formData, api, setFormData }: any) => {
         } else {
             setCanResend(true); // Allow resending OTP after 10 minutes
         }
-
         return () => {
             if (timer) {
                 clearInterval(timer); // Clear the timer on unmount
@@ -58,12 +56,12 @@ const Otp = ({ formData, api, setFormData }: any) => {
                     otp: formData.otp,
                     password: formData.password
                 });
-                console.log(result,"==result");
-                
+                console.log(result, "==result");
+
                 if (result?.ok) {
                     router.push('/');
                 }
-                else{
+                else {
                     toast.error("Invalid or expire otp")
                 }
             } else {
@@ -106,8 +104,6 @@ const Otp = ({ formData, api, setFormData }: any) => {
     };
 
     useEffect(() => {
-
-        
         if (response && api === "login") {
             signIn('credentials', response?.results?.data);
         }
@@ -120,7 +116,7 @@ const Otp = ({ formData, api, setFormData }: any) => {
         if (error) {
             toast.error("Invalid OTP");
         }
-    }, [response,error]);
+    }, [response, error]);
 
     return (
         <>
@@ -162,7 +158,7 @@ const Otp = ({ formData, api, setFormData }: any) => {
                                 <div className="flex flex-col justify-center h-[500px] md:h-[653px]">
                                     <div>
                                         <h2 className='text-[18px] font-normal leading-7 text-neutral-900 pb-[30px]'>Please enter one-time OTP</h2>
-                                        <InputOtp setValue={setValue} register={register} reset={canResend}/>
+                                        <InputOtp setValue={setValue} register={register} reset={canResend} />
                                     </div>
                                     <div className='my-10 md:my-[60px]'>
                                         <p className='text-sm leading-5 text-neutral-600'>Please check your email, 6-digit confirmation code sent to {formData.email}, please enter the confirmation code to verify it's you.</p>

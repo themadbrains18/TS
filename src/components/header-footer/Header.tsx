@@ -36,9 +36,9 @@ interface User {
 
 
 const Header = () => {
-  const { downloads,imageUrl } = useDownload();
-  console.log(downloads,"===downloads");
-  
+  const { downloads, imageUrl } = useDownload();
+  console.log(downloads, "===downloads");
+
 
   const [sidebar, setSidebar] = useState<boolean>(false);
   const [loadingdata, setLoadingdata] = useState(true);  // Initially true while loading
@@ -50,6 +50,7 @@ const Header = () => {
   const [opensearch, setOpensearch] = useState(false)
   const [profile, setProfile] = useState<boolean>(false)
   const [profileres, setProfileres] = useState<boolean>(false)
+  console.log(profileres, "profileresprofileresprofileresprofileres")
 
 
   const openProfile = () => {
@@ -61,12 +62,12 @@ const Header = () => {
   }
 
 
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const dropdownRef1 = useRef<HTMLDivElement>(null);
+  // const dropdownRef = useRef<HTMLDivElement>(null);
+  // const dropdownRef1 = useRef<HTMLDivElement>(null);
 
 
-  useOnClickOutside(dropdownRef, () => setProfile(false));
-  useOnClickOutside(dropdownRef1, () => setProfileres(false));
+  // useOnClickOutside(dropdownRef, () => setProfile(!profile));
+  // useOnClickOutside(dropdownRef1, () => setProfileres(!profileres));
 
 
 
@@ -176,7 +177,7 @@ const Header = () => {
               {
                 isLoggedIn &&
                 <div className="relative">
-                  <div ref={dropdownRef} onClick={openProfile} className="w-[50px] h-[50px] rounded-full cursor-pointer ">
+                  <div onClick={openProfile} className="w-[50px] h-[50px] rounded-full cursor-pointer ">
                     <Image
                       width={50}
                       height={50}
@@ -236,36 +237,37 @@ const Header = () => {
               <div onClick={() => setsearchbar(true)} >
                 <Icon name="solidsearch" className="w-9 h-9 cursor-pointer" />
               </div>
-  {
-    session?.user
-    &&
-              <div >
-                <div ref={dropdownRef1} onClick={openProfileres} className="w-[30px] h-[30px] cursor-pointer ">
-                  <Image
-                    width={50}
-                    height={50}
-                    className="rounded-full object-contain"
-                    src={imageUrl || "/images/userdummy.png"}
-                    alt="diamond"
-                  />
-                </div>
-                <div className="absolute group-hover:opacity-100 transition-all group-hover:visible invisible opacity-0  duration-[0.5s] top-[90%] right-0   mt-2 max-w-[256px]  bg-white shadow-lg rounded-lg">
-                  <div className="pt-[46px] mt-[-46px]" >
-                    <div className="py-2.5 ">
-                      <h2 className="leading-6 text-[16px] font-semibold text-textheading py-2 pl-[30px] pr-[27px] mb-2.5">
-                        {session?.email}
-                      </h2>
-                      <div className="px-[30px] mb-2.5 " >
-                        <h2 className="text-[13px] font-medium leading-5 text-textheading" >Daily Download Balance</h2>
-                        <div className="py-[3px] px-[3px] h-[12px] border-[#E8CFFB] border-[1px] rounded-[6px] my-[5px] "  >
-                          <span style={{ width: `${(downloads || 3) * 33.33}%` }} className="h-1 block bg-primary-100 rounded-[5px] " ></span>
+              {
+                session?.user
+                &&
+                <div>
+                  <div onClick={openProfileres} className="w-[30px] h-[30px] cursor-pointer ">
+                    <Image
+                      width={50}
+                      height={50}
+                      className="rounded-full object-contain"
+                      src={imageUrl || "/images/userdummy.png"}
+                      alt="diamond"
+                    />
+                  </div>
+                  <div className={`absolute ${profileres ? "opacity-100 visible" : "invisible opacity-0"}  transition-all 
+                      duration-[0.5s] top-[90%] right-0 mt-2 max-w-[256px] bg-white shadow-lg rounded-lg`}>
+                    <div className="" >
+                      <div className="py-2.5 ">
+                        <h2 className="leading-6 text-[16px] font-semibold text-textheading py-2 pl-[30px] pr-[27px] mb-2.5">
+                          {session?.email}
+                        </h2>
+                        <div className="px-[30px] mb-2.5 " >
+                          <h2 className="text-[13px] font-medium leading-5 text-textheading" >Daily Download Balance</h2>
+                          <div className="py-[3px] px-[3px] h-[12px] border-[#E8CFFB] border-[1px] rounded-[6px] my-[5px] "  >
+                            <span style={{ width: `${(downloads || 3) * 33.33}%` }} className="h-1 block bg-primary-100 rounded-[5px] " ></span>
+                          </div>
+                          <h3 className="text-[12px] font-normal leading-5 text-textheading" >{downloads} remaining out of 3</h3>
                         </div>
-                        <h3 className="text-[12px] font-normal leading-5 text-textheading" >{downloads} remaining out of 3</h3>
-                      </div>
-                      <div className="flex flex-col " >
-                        <Link href={"/profile"} >
-                          <button className={` w-full text-textheading text-start leading-6 hover:text-subparagraph py-2 px-[30px] capitalize cursor-pointer text-nowrap hover:bg-primary-200 border-l-[2px] border-white hover:border-primary-100`}>
-                            Profile
+                        <div className="flex flex-col " >
+                          <Link href={"/profile"} >
+                            <button className={` w-full text-textheading text-start leading-6 hover:text-subparagraph py-2 px-[30px] capitalize cursor-pointer text-nowrap hover:bg-primary-200 border-l-[2px] border-white hover:border-primary-100`}>
+                              Profile
                             </button>
                           </Link>
                           <button onClick={() => signOut()} className={`text-textheading text-start hover:text-subparagraph leading-6 py-2 px-[30px] capitalize cursor-pointer text-nowrap hover:bg-primary-200 border-white border-l-[2px] hover:border-primary-100`}>

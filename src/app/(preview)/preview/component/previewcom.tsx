@@ -23,7 +23,6 @@ const Previewcom: FC<previewimagesprops> = ({ previewImages, previewMobileImages
         <>
             <section className='pt-10 md:pt-20 bg-bgcolor'>
                 <div className="container">
-
                     <div className='flex items-center gap-x-5'>
                         {
                             views?.map((item, index) => {
@@ -38,7 +37,6 @@ const Previewcom: FC<previewimagesprops> = ({ previewImages, previewMobileImages
                             })
                         }
                     </div>
-
                     <div className='pt-10 grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-x-[30px] md:gap-y-10'>
                         {
                             activebutton === 0 ? (<>
@@ -46,7 +44,6 @@ const Previewcom: FC<previewimagesprops> = ({ previewImages, previewMobileImages
                                     previewImages?.map((item, index) => {
                                         return (
                                             <>
-                                                {console.log(item.imageUrl, "heloo ji")}
                                                 <Fragment key={Date.now() + index + "imagesdesktop"}>
                                                     <Image onClick={() => setShowFullScreen(true)} className='cursor-pointer' src={item.imageUrl} width={358} height={1000} style={{ width: "100%", }} alt='images' />
                                                 </Fragment>

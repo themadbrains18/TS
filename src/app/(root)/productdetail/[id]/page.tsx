@@ -14,9 +14,11 @@ import BreadCrumbs from './components/BreadCrumbs';
  * @returns {JSX.Element} The rendered Page component.
  */
 
+
 interface Params {
   id: string;
 }
+
 
 
 const Page = async ({ params }: { params: Params }) => {
@@ -39,11 +41,9 @@ const Page = async ({ params }: { params: Params }) => {
 
   const template = await response.json(); // Parse the JSON response
 
-
-
   return (
     <>
-      <div className=' relative xl:after:h-full xl:after:w-full xl:after:absolute xl:after:top-0 xl:after:left-0 xl:after:bg-[url(/images/bgeffect.png)] ' >
+      <div className=' relative xl:after:h-full xl:after:w-full xl:after:absolute xl:after:top-0 xl:after:left-0 xl:after:bg-[url(/images/bgeffect.png)] after:z-[-1] ' >
         <BreadCrumbs />
         <ProductBanner template={template} />
         <ProductDescription template={template} />

@@ -31,8 +31,6 @@ const Page = async ({ params }: { params: Params }) => {
     }
     const res = await response.json()
 
-    console.log(res, "res")
-
 
     return (
         <>
