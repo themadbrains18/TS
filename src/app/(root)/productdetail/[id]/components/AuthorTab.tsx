@@ -80,7 +80,7 @@ const AuthorTab: React.FC<UserDetailProps> = ({ userDetail }) => {
           </Button>
         </div>
         <div className="max-w-[1560px] overflow-scroll hiddenscroll">
-          <div className="flex items-center justify-between gap-x-[10px] md:gap-x-[20px] mt-5">
+          <div className="flex items-center    gap-x-[10px] md:gap-x-[20px] mt-5">
             {data && data?.data?.length > 0 && data?.data?.map((item) => (
               <Fragment key={item.id}>
                 <NavCard
