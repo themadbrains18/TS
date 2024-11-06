@@ -48,7 +48,7 @@ const Page = async ({ params }: { params: Params }) => {
         <ProductBanner template={template} />
         <ProductDescription template={template} />
       </div>
-      <RelatedProducts />
+        <RelatedProducts />
     </>
   );
 };
