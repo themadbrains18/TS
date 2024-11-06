@@ -15,6 +15,7 @@ import { subCat } from "@/types/type";
 import { signOut, useSession } from 'next-auth/react';
 import { TemplateType } from "@/app/(dashboard)/dashboard/addtemplate/components/templateForm";
 import SearchComponent from "./SearchComponent";
+import { useDownload } from "@/app/contexts/DailyDownloadsContext";
 
 interface User {
   user: {
@@ -34,6 +35,10 @@ interface User {
 
 
 const Header = () => {
+  const { downloads,imageUrl } = useDownload();
+  console.log(downloads,"===downloads");
+  
+
   const [sidebar, setSidebar] = useState<boolean>(false);
   const [loadingdata, setLoadingdata] = useState(true);  // Initially true while loading
   const { data, fetchData, loading } = useFetch<TemplateType[]>();
@@ -155,7 +160,7 @@ const Header = () => {
                       width={50}
                       height={50}
                       className="rounded-full object-cover w-[50px] h-[50px]"
-                      src={session?.user?.image || "/images/userdummy.png"}
+                      src={imageUrl || "/images/userdummy.png"}
                       alt="diamond"
                     />
                   </div>
@@ -168,9 +173,9 @@ const Header = () => {
                         <div className="px-[30px] mb-2.5 " >
                           <h2 className="text-[13px] font-medium leading-5 text-textheading" >Daily Download Balance</h2>
                           <div className="py-[3px] px-[3px] h-[12px] border-[#E8CFFB] border-[1px] rounded-[6px] my-[5px] "  >
-                            <span style={{ width: `${parseInt(session?.freeDownloads) * 33.33}%` }} className="h-1 block bg-primary-100 rounded-[5px] " ></span>
+                            <span style={{ width: `${(downloads || 3) * 33.33}%` }} className="h-1 block bg-primary-100 rounded-[5px] " ></span>
                           </div>
-                          <h3 className="text-[12px] font-normal leading-5 text-textheading" >{session?.freeDownloads} remaining out of 3</h3>
+                          <h3 className="text-[12px] font-normal leading-5 text-textheading" >{downloads} remaining out of 3</h3>
                         </div>
                         <div className="flex flex-col " >
                           <Link href={"/profile"} >
@@ -217,7 +222,7 @@ const Header = () => {
                     width={50}
                     height={50}
                     className="rounded-full object-contain"
-                    src={userdata?.user?.profileImg || "/images/userdummy.png"}
+                    src={imageUrl || "/images/userdummy.png"}
                     alt="diamond"
                   />
                 </div>
@@ -230,9 +235,9 @@ const Header = () => {
                       <div className="px-[30px] mb-2.5 " >
                         <h2 className="text-[13px] font-medium leading-5 text-textheading" >Daily Download Balance</h2>
                         <div className="py-[3px] px-[3px] h-[12px] border-[#E8CFFB] border-[1px] rounded-[6px] my-[5px] "  >
-                          <span style={{ width: `${session?.freeDownloads * 33.33}%` }} className="h-1 block bg-primary-100 rounded-[5px] " ></span>
+                          <span style={{ width: `${(downloads || 3) * 33.33}%` }} className="h-1 block bg-primary-100 rounded-[5px] " ></span>
                         </div>
-                        <h3 className="text-[12px] font-normal leading-5 text-textheading" >{session?.freeDownloads} remaining out of 3</h3>
+                        <h3 className="text-[12px] font-normal leading-5 text-textheading" >{downloads} remaining out of 3</h3>
                       </div>
                       <div className="flex flex-col " >
                         <Link href={"/profile"} >

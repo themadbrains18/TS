@@ -320,3 +320,19 @@ export interface DownloadInterface {
   downloadedAt: string;
   template: Template;
 }
+
+// Define the User interface
+export interface UserDetail {user:{
+  id: string;
+  email: string;
+  name: string;
+  password: string;
+  token: string | null;
+  profileImg: string;
+  number: string | null;
+  freeDownloads: number;
+  role: "ADMIN" | "USER"; // assuming "USER" could be another possible role
+  createdAt: string; // ISO date string
+  updatedAt: string; // ISO date string
+}
+}

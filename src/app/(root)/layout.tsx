@@ -4,6 +4,7 @@
 
 import Footer from "@/components/header-footer/Footer";
 import Header from "@/components/header-footer/Header";
+import { DownloadProvider } from "../contexts/DailyDownloadsContext";
 
 export default function customerLayout({
     children
@@ -13,9 +14,12 @@ export default function customerLayout({
     }>) {
     return (
         <>
+         <DownloadProvider>
+
             <Header />  {/* <Header /> */}
             {children}
             <Footer /> {/* footer */}
+         </DownloadProvider>
         </>
     );
 }
