@@ -11,9 +11,10 @@ interface AccordionProps {
   isOpen?: boolean;          // Prop to control if the accordion is open
   onToggle?: () => void;
   titleclass?: string    // Function to handle accordion toggling
+  titleboxclass?: string
 }
 
-const Accordion: React.FC<AccordionProps> = ({ title, children, className, titleclass, isOpen = false, onToggle }) => {
+const Accordion: React.FC<AccordionProps> = ({ title, children, className, titleclass, isOpen = false, onToggle, titleboxclass }) => {
   const [internalOpen, setInternalOpen] = useState<boolean>(isOpen); // Internal state for managing open/close
   const [height, setHeight] = useState<string>('0px');
   const contentRef = useRef<HTMLDivElement>(null);
@@ -43,7 +44,7 @@ const Accordion: React.FC<AccordionProps> = ({ title, children, className, title
     <div className={`w-full px-[10px] mt-5 ${className || ''}`}>
       <div
         onClick={toggleAccordion}
-        className={`bg-white cursor-pointer pb-[10px] flex justify-between items-center`}
+        className={`bg-white  cursor-pointer pb-[10px] ${titleboxclass} flex justify-between items-center  `}
       >
         <h2 className={cn`text-subheading leading-6 font-medium ${titleclass}`}>{title}</h2>
         <Icon
@@ -53,7 +54,7 @@ const Accordion: React.FC<AccordionProps> = ({ title, children, className, title
       </div>
       <div
         ref={contentRef}
-        style={{ maxHeight: height }}
+        style={{ height: height }}
         className={`transition-max-height transition-all duration-[0.5s] ease overflow-hidden bg-white ${internalOpen ? 'opacity-100 my-5' : 'opacity-0'}`}
       >
         {children}

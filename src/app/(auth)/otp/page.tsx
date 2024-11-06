@@ -84,7 +84,7 @@ const Otp = ({ formData, api, setFormData }: any) => {
         if (!canResend) return; // Prevent resend if the timer has not completed
 
         try {
-            await fetch(`${process.env.NEXT_PUBLIC_APIURL}/resend-otp`, {
+            await fetch('/api/resend-otp', {
                 method: "POST",
                 body: JSON.stringify(formData),
                 headers: {
@@ -170,21 +170,21 @@ const Otp = ({ formData, api, setFormData }: any) => {
 
 
                                     <div className='mb-[60px]'>
-                                            {
-                                                loading ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' hideChild='hidden' >
-                                                  
-                                                </Button> : <Button type='submit' variant='primary' className='w-full items-center justify-center' >
-                                                    Verify Now
-                                                </Button>
-                                            }
-                                        </div>
+                                        {
+                                            loading ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' >
+                                                Verifying
+                                            </Button> : <Button type='submit' variant='primary' className='w-full items-center justify-center' >
+                                                Verify Now
+                                            </Button>
+                                        }
+                                    </div>
                                     {startTimer > 0 ? (
                                         <h3 className='text-center text-[14px] leading-5 font-normal text-neutral-600'>
                                             Resend OTP in {Math.floor(startTimer / 60)}:{(startTimer % 60).toString().padStart(2, '0')}
                                         </h3>
                                     ) : (
                                         <h3 className='text-center text-[14px] leading-5 font-normal text-neutral-600'>
-                                            <button className='text-action-900' type='button' onClick={resendCode}>Resend Code</button>
+                                            <button className='text-action-900' onClick={resendCode}>Resend Code</button>
                                         </h3>
                                     )}
                                 </div>

@@ -58,6 +58,7 @@ const ProductMain = () => {
     const [selectedSort, setSelectedSort] = useState("Sort by");
 
     const sorthandledropdown = () => setSort(!sort);
+    
     const handleItemClick = (itemTitle: string) => {
         setSelectedSort(itemTitle);
         setSort(false);
