@@ -32,6 +32,7 @@ import { useRouter } from 'next/navigation';
 
 const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
 
+    
     const [showFullDescription, setShowFullDescription] = useState(false);
     const [showPreviews, setShowPreviews] = useState<boolean>(false)
 
