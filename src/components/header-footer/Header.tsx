@@ -125,7 +125,7 @@ const Header = () => {
   return (
     <>
       <header className=" bg-[#ffffff80] backdrop:blur-xl relative border-b-[1px] border-[#11083319] z-10">
-      {/* Destop header */}
+        {/* Destop header */}
         <div className="container hidden min-[1028px]:block">
           <div className="py-10 flex items-center justify-between">
             <div className="flex items-center justify-between xl:max-w-[809px] max-w-[690px] w-full cursor-pointer">
@@ -225,7 +225,7 @@ const Header = () => {
           <div className="flex items-center justify-between py-4 relative">
             <div onClick={() => setSidebar(!sidebar)}> <Icon name="menuicon" className="w-8 h-8" /></div>
             <Link href={'/'}>
-              <Image className="cursor-pointer h-9" width={193} height={38} src={'/icons/logo.svg'} alt="logo" />
+              <Image className="cursor-pointer h-9 w-[170px]" width={193} height={38} src={'/icons/logo.svg'} alt="logo" />
             </Link>
             <div className="flex flex-row gap-1 items-center" >
               <div onClick={() => setsearchbar(true)} >

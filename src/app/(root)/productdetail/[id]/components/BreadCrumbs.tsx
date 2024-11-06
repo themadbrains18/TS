@@ -73,7 +73,7 @@ const BreadCrumbs = () => {
             <Link href="/productdetail"> Product Details</Link>
           </h2>
           <div className='relative group flex gap-[6px] items-center cursor-pointer'>
-            <p className='text-sm text-subparagraph leading-5'>4.9</p>
+            <p className='text-sm   :text-subparagraph leading-5'>4.9</p>
             <Icon className='inline-block w-6 h-6' name='star' />
 
             {/* The button and ratingbottom icon */}
