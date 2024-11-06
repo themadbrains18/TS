@@ -311,6 +311,391 @@
 
 // export default Download;
 
+// import React, { useEffect, useState } from 'react';
+// import DownloadCard from '@/components/cards/DownloadCard';
+// import Icon from '@/components/Icon';
+// import Button from '@/components/ui/Button';
+// import useFetch from '@/hooks/useFetch';
+// import { DownloadInterface } from '@/types/type';
+
+// const Download = () => {
+//   const [sort, setSort] = useState(false);
+//   const [category, setCategory] = useState(false);
+//   const [selectedSort, setSelectedSort] = useState("Last Day");
+//   const [selectedCategory, setSelectedCategory] = useState("All");
+//   const [page, setPage] = useState(1);
+//   const [downloads, setDownloads] = useState<DownloadInterface[]>([]);
+//   const [hasMoreData, setHasMoreData] = useState(true);
+//   const { data, loading, error, fetchData } = useFetch<{ downloads: DownloadInterface[] }>();
+
+//   const Sortdata = [
+//     { title: "Last Day" },
+//     { title: "Last 7 Day" },
+//     { title: "Last 30 Day" },
+//     { title: "Last Quarter" },
+//     { title: "Last Year" },
+//   ];
+
+//   const Categorydata = [
+//     { title: "All" },
+//     { title: "Free Download" },
+//     { title: "Premium" },
+//   ];
+
+//   // Function to handle sort item click
+//   const handleItemClick = (itemTitle: string) => {
+//     setSelectedSort(itemTitle);
+//     resetDownloads();
+//   };
+
+//   // Function to handle category item click
+//   const handleCategoryClick = (itemTitle: string) => {
+//     setSelectedCategory(itemTitle);
+//     resetDownloads();
+//   };
+
+//   // Reset the downloads list and page count on filter change
+//   const resetDownloads = () => {
+//     setPage(1);
+//     setDownloads([]);
+//     setHasMoreData(true);
+//   };
+
+//   // Fetch data when filters or page change
+//   useEffect(() => {
+//     fetchData(`/get-user-downloads?page=${page}&sort=${selectedSort}&category=${selectedCategory}`);
+//   }, [page, selectedSort, selectedCategory]);
+
+//   // Update the downloads list when data is received
+//   useEffect(() => {
+//     if (data) {
+//       const newDownloads = data.downloads.filter(
+//         (download) => !downloads.some((prev) => prev.id === download.id)
+//       );
+//       if (newDownloads.length === 0) {
+//         setHasMoreData(false);
+//       } else {
+//         setDownloads((prevDownloads) => [...prevDownloads, ...newDownloads]);
+//       }
+//     }
+//   }, [data]);
+
+
+//   return (
+//     <section>
+//       <div className="container">
+//         <div className="flex flex-col sm:flex-row items-start gap-[10px] sm:gap-0 sm:items-center justify-start sm:justify-between">
+//           <h2 className="text-[28px] font-bold leading-9 text-subheading">Downloads</h2>
+//           <div className="flex gap-x-4 max-w-full w-full sm:w-auto">
+//             {/* Category Dropdown */}
+//             <div
+//               className="relative cursor-pointer w-full sm:w-auto"
+//               onMouseEnter={() => setCategory(true)}
+//               onMouseLeave={() => setCategory(false)}
+//             >
+//               <div
+//                 onClick={() => setCategory(!category)}
+//                 className={`w-full border duration-[0.5s] flex gap-x-[5px] bg-white ${category ? "border-primary-100" : "border-divider-100"
+//                   } group py-2 px-[10px] sm:px-5 items-center`}
+//               >
+//                 <Icon
+//                   className={`w-5 h-5 ${category ? "[&>*]:fill-primary-100" : "[&>*]:fill-[#5D5775]"
+//                     }`}
+//                   name="setting"
+//                 />
+//                 <h2
+//                   className={`text-primary text-lg font-normal leading-7 duration-[0.2s] ${category ? "text-primary-100" : "text-subheading"
+//                     } text-nowrap max-w-14 truncate`}
+//                 >
+//                   {selectedCategory}
+//                 </h2>
+//               </div>
+//               {/* Category Dropdown Items */}
+//               <div
+//                 className={`absolute right-0 max-[640px]:left-0 ${category ? "opacity-1 visible" : "opacity-0 invisible"
+//                   } duration-[0.5s] top-[45px] z-10 bg-white`}
+//               >
+//                 {Categorydata.map((item, index) => (
+//                   <h4
+//                     key={index + item.title}
+//                     onClick={() => handleCategoryClick(item.title)}
+//                     className="text-subparagraph text-start leading-6 py-2 px-3 sm:px-[30px] capitalize cursor-pointer hover:bg-primary-200 border-l-[2px] hover:border-primary-100 text-nowrap max-w-[208px] truncate"
+//                   >
+//                     {item.title}
+//                   </h4>
+//                 ))}
+//               </div>
+//             </div>
+
+//             {/* Sort Dropdown */}
+//             <div
+//               className="relative cursor-pointer w-full sm:w-auto"
+//               onMouseEnter={() => setSort(true)}
+//               onMouseLeave={() => setSort(false)}
+//             >
+//               <div
+//                 onClick={() => setSort(!sort)}
+//                 className={`w-full border duration-[0.5s] flex flex-nowrap gap-x-[6px] ${sort ? "border-primary-100" : "border-divider-100"
+//                   } group py-2 px-[10px] sm:px-5 sm:pr-[15px] items-center`}
+//               >
+//                 <h2
+//                   className={`text-primary text-base font-semibold leading-6 duration-[0.2s] ${sort ? "text-primary-100" : "text-subheading"
+//                     } text-nowrap max-w-20 truncate`}
+//                 >
+//                   {selectedSort}
+//                 </h2>
+//                 <Icon
+//                   className={`p-1 w-5 h-5 transition-all duration-300 ${sort ? "[&>*]:fill-primary-100 rotate-180 " : " rotate-0 [&>*]:fill-[#5D5775]"
+//                     }`}
+//                   name="sortaroow"
+//                 />
+//               </div>
+//               {/* Sort Dropdown Items */}
+//               <div
+//                 className={`absolute right-0 max-[640px]:left-0 ${sort ? "opacity-1 visible" : "opacity-0 invisible"
+//                   } duration-[0.5s] top-[45px] z-10 bg-white`}
+//               >
+//                 {Sortdata.map((item, index) => (
+//                   <h4
+//                     key={index + item.title}
+//                     onClick={() => handleItemClick(item.title)}
+//                     className="text-subparagraph text-start leading-6 py-2 px-3 sm:px-[30px] capitalize cursor-pointer hover:bg-primary-200 border-l-[2px] hover:border-primary-100 text-nowrap max-w-[208px] truncate"
+//                   >
+//                     {item.title}
+//                   </h4>
+//                 ))}
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+
+//         {/* Download Cards */}
+//         <div>
+//           {
+//             downloads.length < 0 || downloads.length === 0 ? <p className="text-center py-10 text-subheading">No downloads available.</p> : <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-[28px] mb-10">
+//               {downloads.map((item) => (
+//                 <DownloadCard
+//                   tittle={item.template.title}
+//                   date={new Date(item.downloadedAt).toLocaleDateString()}
+//                   image={item.template.sliderImages[0]?.imageUrl}
+//                   premium={item.template.price > 0}
+//                   url={item?.template?.sourceFiles[0]?.fileUrl}
+//                 />
+//               ))}
+//             </div>
+//           }
+//         </div>
+
+
+//         {/* Load More Button */}
+//         {hasMoreData && !error && (
+//           <div className="mt-5 flex justify-center">
+//             <Button
+//               className="w-full justify-center sm:w-auto"
+//               variant="primary"
+//               onClick={() => setPage((prevPage) => prevPage + 1)}
+//             >
+//               {loading ? "Loading..." : "Load More"}
+//             </Button>
+//           </div>
+//         )}
+//       </div>
+//     </section>
+//   );
+// };
+
+// export default Download;
+
+// import React, { useEffect, useState } from 'react';
+// import DownloadCard from '@/components/cards/DownloadCard';
+// import Icon from '@/components/Icon';
+// import Button from '@/components/ui/Button';
+// import useFetch from '@/hooks/useFetch';
+// import { DownloadInterface } from '@/types/type';
+
+// const Download = () => {
+//   const [sort, setSort] = useState(false);
+//   const [category, setCategory] = useState(false);
+//   const [selectedSort, setSelectedSort] = useState("All Downloads"); // Default to show all downloads
+//   const [selectedCategory, setSelectedCategory] = useState("All"); // Default to show all downloads
+//   const [page, setPage] = useState(1);
+//   const [downloads, setDownloads] = useState<DownloadInterface[]>([]);
+//   const [hasMoreData, setHasMoreData] = useState(true);
+//   const { data, loading, error, fetchData } = useFetch<{ downloads: DownloadInterface[] }>();
+
+//   const Sortdata = [
+//     { title: "All Downloads" },
+//     { title: "Last Day" },
+//     { title: "Last 7 Day" },
+//     { title: "Last 30 Day" },
+//     { title: "Last Quarter" },
+//     { title: "Last Year" },
+//   ];
+
+//   const Categorydata = [
+//     { title: "All" },
+//     { title: "Free Download" },
+//     { title: "Premium" },
+//   ];
+
+//   // Function to handle sort item click
+//   const handleItemClick = (itemTitle: string) => {
+//     setSelectedSort(itemTitle);
+//     resetDownloads();
+//   };
+
+//   // Function to handle category item click
+//   const handleCategoryClick = (itemTitle: string) => {
+//     setSelectedCategory(itemTitle);
+//     resetDownloads();
+//   };
+
+//   // Reset the downloads list and page count on filter change
+//   const resetDownloads = () => {
+//     setPage(1);
+//     setDownloads([]);
+//     setHasMoreData(true);
+//   };
+
+//   // Fetch data when filters or page change
+//   useEffect(() => {
+//     fetchData(`/get-user-downloads?page=${page}&sort=${selectedSort}&category=${selectedCategory}`);
+//   }, [page, selectedSort, selectedCategory]);
+
+//   // Update the downloads list when data is received
+//   useEffect(() => {
+//     if (data) {
+//       const newDownloads = data.downloads.filter(
+//         (download) => !downloads.some((prev) => prev.id === download.id)
+//       );
+//       if (newDownloads.length === 0) {
+//         setHasMoreData(false);
+//       } else {
+//         setDownloads((prevDownloads) => [...prevDownloads, ...newDownloads]);
+//       }
+//     }
+//   }, [data]);
+
+//   return (
+//     <section>
+//       <div className="container">
+//         <div className="flex flex-col sm:flex-row items-start gap-[10px] sm:gap-0 sm:items-center justify-start sm:justify-between">
+//           <h2 className="text-[28px] font-bold leading-9 text-subheading">Downloads</h2>
+//           <div className="flex gap-x-4 max-w-full w-full sm:w-auto">
+//             {/* Category Dropdown */}
+//             <div
+//               className="relative cursor-pointer w-full sm:w-auto"
+//               onMouseEnter={() => setCategory(true)}
+//               onMouseLeave={() => setCategory(false)}
+//             >
+//               <div
+//                 onClick={() => setCategory(!category)}
+//                 className={`w-full border duration-[0.5s] flex gap-x-[5px] bg-white ${category ? "border-primary-100" : "border-divider-100"
+//                   } group py-2 px-[10px] sm:px-5 items-center`}
+//               >
+//                 <Icon
+//                   className={`w-5 h-5 ${category ? "[&>*]:fill-primary-100" : "[&>*]:fill-[#5D5775]"
+//                     }`}
+//                   name="setting"
+//                 />
+//                 <h2
+//                   className={`text-primary text-lg font-normal leading-7 duration-[0.2s] ${category ? "text-primary-100" : "text-subheading"
+//                     } text-nowrap max-w-14 truncate`}
+//                 >
+//                   {selectedCategory}
+//                 </h2>
+//               </div>
+//               {/* Category Dropdown Items */}
+//               <div
+//                 className={`absolute right-0 max-[640px]:left-0 ${category ? "opacity-1 visible" : "opacity-0 invisible"
+//                   } duration-[0.5s] top-[45px] z-10 bg-white`}
+//               >
+//                 {Categorydata.map((item, index) => (
+//                   <h4
+//                     key={index + item.title}
+//                     onClick={() => handleCategoryClick(item.title)}
+//                     className="text-subparagraph text-start leading-6 py-2 px-3 sm:px-[30px] capitalize cursor-pointer hover:bg-primary-200 border-l-[2px] hover:border-primary-100 text-nowrap max-w-[208px] truncate"
+//                   >
+//                     {item.title}
+//                   </h4>
+//                 ))}
+//               </div>
+//             </div>
+
+//             {/* Sort Dropdown */}
+//             <div
+//               className="relative cursor-pointer w-full sm:w-auto"
+//               onMouseEnter={() => setSort(true)}
+//               onMouseLeave={() => setSort(false)}
+//             >
+//               <div
+//                 onClick={() => setSort(!sort)}
+//                 className={`w-full border duration-[0.5s] flex flex-nowrap gap-x-[6px] ${sort ? "border-primary-100" : "border-divider-100"
+//                   } group py-2 px-[10px] sm:px-5 sm:pr-[15px] items-center`}
+//               >
+//                 <h2
+//                   className={`text-primary text-base font-semibold leading-6 duration-[0.2s] ${sort ? "text-primary-100" : "text-subheading"
+//                     } text-nowrap max-w-20 truncate`}
+//                 >
+//                   {selectedSort}
+//                 </h2>
+//                 <Icon
+//                   className={`p-1 w-5 h-5 transition-all duration-300 ${sort ? "[&>*]:fill-primary-100 rotate-180 " : " rotate-0 [&>*]:fill-[#5D5775]"
+//                     }`}
+//                   name="sortaroow"
+//                 />
+//               </div>
+//               {/* Sort Dropdown Items */}
+//               <div
+//                 className={`absolute right-0 max-[640px]:left-0 ${sort ? "opacity-1 visible" : "opacity-0 invisible"
+//                   } duration-[0.5s] top-[45px] z-10 bg-white`}
+//               >
+//                 {Sortdata.map((item, index) => (
+//                   <h4
+//                     key={index + item.title}
+//                     onClick={() => handleItemClick(item.title)}
+//                     className="text-subparagraph text-start leading-6 py-2 px-3 sm:px-[30px] capitalize cursor-pointer hover:bg-primary-200 border-l-[2px] hover:border-primary-100 text-nowrap max-w-[208px] truncate"
+//                   >
+//                     {item.title}
+//                   </h4>
+//                 ))}
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+
+//         {/* Download Cards */}
+//         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-[28px] mb-10">
+//           {downloads.map((item) => (
+//             <DownloadCard
+//               tittle={item.template.title}
+//               date={new Date(item.downloadedAt).toLocaleDateString()}
+//               image={item.template.sliderImages[0]?.imageUrl}
+//               premium={item.template.price > 0}
+//               url={item?.template?.sourceFiles[0]?.fileUrl}
+//             />
+//           ))}
+//         </div>
+
+//         {/* Load More Button */}
+//         {hasMoreData && !error && (
+//           <div className="mt-5 flex justify-center">
+//             <Button
+//               className="w-full justify-center sm:w-auto"
+//               variant="primary"
+//               onClick={() => setPage((prevPage) => prevPage + 1)}
+//             >
+//               {loading ? "Loading..." : "Load More"}
+//             </Button>
+//           </div>
+//         )}
+//       </div>
+//     </section>
+//   );
+// };
+
+// export default Download;
+
 import React, { useEffect, useState } from 'react';
 import DownloadCard from '@/components/cards/DownloadCard';
 import Icon from '@/components/Icon';
@@ -321,14 +706,15 @@ import { DownloadInterface } from '@/types/type';
 const Download = () => {
   const [sort, setSort] = useState(false);
   const [category, setCategory] = useState(false);
-  const [selectedSort, setSelectedSort] = useState("Last Day");
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedSort, setSelectedSort] = useState("All Time"); // Default to show all downloads
+  const [selectedCategory, setSelectedCategory] = useState("All"); // Default to show all downloads
   const [page, setPage] = useState(1);
   const [downloads, setDownloads] = useState<DownloadInterface[]>([]);
-  const [hasMoreData, setHasMoreData] = useState(true);
-  const { data, loading, error, fetchData } = useFetch<{ downloads: DownloadInterface[] }>();
+  const [totalDownloads, setTotalDownloads] = useState(0); // Track total downloads count
+  const { data, loading, fetchData } = useFetch<{ downloads: DownloadInterface[], totalCount: number }>();
 
   const Sortdata = [
+    { title: "All Time" },
     { title: "Last Day" },
     { title: "Last 7 Day" },
     { title: "Last 30 Day" },
@@ -358,7 +744,6 @@ const Download = () => {
   const resetDownloads = () => {
     setPage(1);
     setDownloads([]);
-    setHasMoreData(true);
   };
 
   // Fetch data when filters or page change
@@ -366,20 +751,19 @@ const Download = () => {
     fetchData(`/get-user-downloads?page=${page}&sort=${selectedSort}&category=${selectedCategory}`);
   }, [page, selectedSort, selectedCategory]);
 
-  // Update the downloads list when data is received
+  // Update the downloads list and total download count when data is received
   useEffect(() => {
     if (data) {
       const newDownloads = data.downloads.filter(
         (download) => !downloads.some((prev) => prev.id === download.id)
       );
-      if (newDownloads.length === 0) {
-        setHasMoreData(false);
-      } else {
+      setTotalDownloads(data.totalCount); // Set the total download count
+
+      if (newDownloads.length > 0) {
         setDownloads((prevDownloads) => [...prevDownloads, ...newDownloads]);
       }
     }
   }, [data]);
-
 
   return (
     <section>
@@ -470,34 +854,27 @@ const Download = () => {
         </div>
 
         {/* Download Cards */}
-        <div>
-          {
-            downloads.length < 0 || downloads.length === 0 ? <p className="text-center py-10 text-subheading">No downloads available.</p> : <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-[28px] mb-10">
-              {downloads.map((item) => (
-                <DownloadCard
-                  tittle={item.template.title}
-                  date={new Date(item.downloadedAt).toLocaleDateString()}
-                  image={item.template.sliderImages[0]?.imageUrl}
-                  premium={item.template.price > 0}
-                  url={item?.template?.sourceFiles[0]?.fileUrl}
-                />
-              ))}
-            </div>
-          }
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-[28px] mb-10">
+          {downloads.slice(0, 6).map((item) => (
+            <DownloadCard
+              tittle={item.template.title}
+              date={new Date(item.downloadedAt).toLocaleDateString()}
+              image={item.template.sliderImages[0]?.imageUrl}
+              premium={item.template.price > 0}
+              url={item?.template?.sourceFiles[0]?.fileUrl}
+            />
+          ))}
         </div>
 
-
         {/* Load More Button */}
-        {hasMoreData && !error && (
-          <div className="mt-5 flex justify-center">
-            <Button
-              className="w-full justify-center sm:w-auto"
-              variant="primary"
-              onClick={() => setPage((prevPage) => prevPage + 1)}
-            >
-              {loading ? "Loading..." : "Load More"}
-            </Button>
-          </div>
+        {totalDownloads > 12 && downloads.length > 5 && (
+          <Button
+            className="w-full justify-center sm:w-auto"
+            variant="primary"
+            onClick={() => setPage((prevPage) => prevPage + 1)}
+          >
+            {loading ? "Loading..." : "Load More"}
+          </Button>
         )}
       </div>
     </section>
