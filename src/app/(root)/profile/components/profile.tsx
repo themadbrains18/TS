@@ -15,6 +15,7 @@ import { METHODS } from 'http'
 import { useDownload } from '@/app/contexts/DailyDownloadsContext'
 // import { useDownload } from '@/app/contexts/DailyDownloadsContext'
 import { UserDetail } from '@/types/type'
+import NewPasswordProcess from '@/components/popups/NewPasswordProcess'
 import { signOut } from 'next-auth/react'
 
 
@@ -185,7 +186,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
         <>
             <section>
                 <VerfiyOldEmail closePopup={() => closePopup()} isPopupOpen={isPopupOpen} handlepasswordUpdate={handlepasswordUpdate} />
-                <NewPassword closePopup={() => closePopup()} isPopupOpen={isDeletepopup} />
+                <NewPasswordProcess closePopup={() => closePopup()} isPopupOpen={isDeletepopup} />
                 <DeleteUser isPopupOpen={isDeleteUSer} closePopup={() => { setIsDeleteUser(false) }} deleteAccount={() => { deleteUser() }} />
 
                 <div className="container">

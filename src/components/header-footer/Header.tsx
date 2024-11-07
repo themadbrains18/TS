@@ -115,6 +115,7 @@ const Header = () => {
 
   // handleoutside click 
   useOnClickOutside(profileoutsideclick, () => setProfile(false));
+  useOnClickOutside(profileoutsideclick, () => setProfileres(false));
 
   const isLoggedIn = session && session?.token;
 
@@ -133,7 +134,7 @@ const Header = () => {
 
   return (
     <>
-      <header className=" bg-[#ffffff80] backdrop:blur-xl relative border-b-[1px] border-[#11083319] z-10">
+      <header className=" bg-[#ffffff80] backdrop:blur-xl relative border-b-[1px] border-[#11083319] z-20">
         {/* Destop header */}
         <div className="container hidden min-[1028px]:block">
           <div className="py-10 flex items-center justify-between">
@@ -245,7 +246,7 @@ const Header = () => {
                 session?.user
                 &&
                 <div>
-                  <div onClick={openProfileres} className="w-[30px] h-[30px] cursor-pointer ">
+                  <div ref={profileoutsideclick} onClick={openProfileres} className="w-[30px] h-[30px] cursor-pointer ">
                     <Image
                       width={50}
                       height={50}
@@ -258,7 +259,7 @@ const Header = () => {
                       duration-[0.5s] top-[90%] right-0 mt-2 max-w-[256px] bg-white shadow-lg rounded-lg`}>
                     <div className="" >
                       <div className="py-2.5 ">
-                        <h2 className="leading-6 text-[16px] font-semibold text-textheading py-2 pl-[30px] pr-[27px] mb-2.5">
+                        <h2 className="leading-6 text-[16px] font-semibold text-textheading py-2 pl-[30px] pr-[27px] mb-2.5 max-w-60 truncate">
                           {session?.email}
                         </h2>
                         <div className="px-[30px] mb-2.5 " >
@@ -343,8 +344,6 @@ const Header = () => {
               </>)}
             </div>
           </div>
-
-
         </div>
       </header >
     </>
