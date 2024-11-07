@@ -10,6 +10,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
 import useFetch from '@/hooks/useFetch';
 import { useDownload } from '@/app/contexts/DailyDownloadsContext';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Define the validation schema with Zod
 const emailSchema = z.object({
@@ -29,7 +31,7 @@ interface Downloadpopup {
 const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url }: Downloadpopup) => {
     const { data: session } = useSession();
     const { data: response, error, loading, fetchData } = useFetch<any>();
-    const { fetchDailyDownloads} = useDownload()
+    const { fetchDailyDownloads } = useDownload()
 
     const socialicons = [
         { icon: "dribbble-logo.svg" },
@@ -59,12 +61,10 @@ const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url }: Download
                 },
                 body: JSON.stringify(data),
             },
-            false
-        );
-
-        } catch (error) {
-            console.error('Error:', error);
-            // Handle error state
+                false
+            );
+        } catch (err) {
+            console.error('Error:', err);
         }
     };
 
@@ -104,10 +104,14 @@ const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url }: Download
                         />
                         {errors.email && (
                             <span className="text-red-500">
-                                {errors.email?.message }
+                                {errors.email?.message}
                             </span>
                         )}
-                        <Button type="submit" variant='primary' className='w-full justify-center mt-4'>Send Link</Button>
+                        {error && <p className='mt-1 text-xs text-red-600'>{error}</p>}
+
+                        <Button loadingbtn={loading ? true : false} disabled={loading ? true : false} type="submit" iconClass='w-7 h-7' variant='primary' className='w-full justify-center mt-4'>{
+                            loading ? "" : "Send Link"
+                        }</Button>
                     </form>
                 </div>
                 <div className='flex justify-center items-center flex-col pt-5 md:pt-[60px] px-5'>
@@ -115,7 +119,7 @@ const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url }: Download
                         Help us to expand the designer's community
                     </h3>
                     <div className="flex items-center lg:max-w-[250px] w-full justify-between mt-5 md:mt-10 lg:mt-0">
-                        {socialicons && socialicons.length>0 && socialicons?.map((item, index) => (
+                        {socialicons && socialicons.length > 0 && socialicons?.map((item, index) => (
                             <Fragment key={index}>
                                 <Link href={'#'}>
                                     <Image className="transition-all duration-300 hover:translate-y-[-5px] hover:scale-[1.1] hover:rotate-6" width={30} height={30} src={`/icons/${item?.icon}`} alt="icons" />
