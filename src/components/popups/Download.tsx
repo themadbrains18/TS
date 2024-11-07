@@ -11,7 +11,7 @@ import { Downloadpopup } from '@/types/type'
 
 
 
-const Download = ({ isPopupOpen, closePopup, opensecoundpopup }: Downloadpopup ) => {
+const Download = ({ isPopupOpen, closePopup, opensecoundpopup , tittle, poster  }: Downloadpopup ) => {
 
     const socialicons = [
         {
@@ -30,20 +30,18 @@ const Download = ({ isPopupOpen, closePopup, opensecoundpopup }: Downloadpopup )
             icon: "instagram.svg"
         },
     ];
+    console.log(poster)
     return (
         <>
-            <Modal className='bg-[#E5EFFF]  py-[30px]' isOpen={isPopupOpen} onClose={closePopup} >
+            <Modal className='bg-[#E5EFFF]  py-[30px] relative' isOpen={isPopupOpen} onClose={closePopup} >
                 <div className="max-w-[500px] w-full">
                     <div className='flex pb-5 border-b border-[#878787] items-start md:items-center px-4 md:px-[30px] '>
-                        <h2 className='text-lg md:text-[20px] leading-7 font-semibold text-subheading open_sans' >Enefty - NFT Marketplace UI Template Designed With Figma</h2>
-                        <div className='cursor-pointer' >
-                            <Icon onClick={closePopup} name='closeicon' className='w-6 h-6' />
-                        </div>
+                        <h2 className='text-lg md:text-[20px] leading-7 font-semibold text-subheading open_sans' >{tittle}</h2>
+                            <Icon onClick={closePopup} name='closeicon' className='w-6 h-6 cursor-pointer absolute top-5 right-5' />
                     </div>
                     <div className="px-5 md:px-[30px]">
-                        <Image className='my-[35px] w-full' alt='img' src={'/images/popimg.png'} width={437} height={270} />
+                        <Image className='my-[35px] max-w-[473px] max-h-[270px]  h-full object-cover ' alt='img' src={poster} width={437} height={270}  />
                         <Button onClick={opensecoundpopup} variant='primary' className='w-full justify-center open_sans' >Download Now</Button>
-                        <p className='text-[16p]  font-normal leading-6 pt-[15px] text-center text-subparagraph open_sans' >Complete your 1st Free Download</p>
                     </div>
                     <div className='flex justify-center items-center flex-col pt-5 md:pt-[60px] px-5' >
                         <h3 className=' open_sans font-normal leading-6 pb-[15px] text-subparagraph text-center' >Help us to expand the designer&apos;s community</h3>

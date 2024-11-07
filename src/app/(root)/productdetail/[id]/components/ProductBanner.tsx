@@ -18,6 +18,7 @@ import ProductDetailcheckbox from './ProductDetailcheckbox';
 import Link from 'next/link';
 import DownloadTemplete from '@/components/popups/DownloadTemplete';
 import { ProductDetailProps, TechTemplate } from '@/types/type';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
 const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
@@ -25,13 +26,13 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
 
     const [showFullDescription, setShowFullDescription] = useState(false);
     const [showPreviews, setShowPreviews] = useState<boolean>(false)
-
+    const { data: session, status } = useSession(); 
 
     const toggleDescription = () => {
         setShowFullDescription(!showFullDescription);
     };
 
-    const maxLength = 300; 
+    const maxLength = 300;
     const description = template?.description || '';
     const isLongDescription = description.length > maxLength;
 
@@ -45,7 +46,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
      * State to manage the currently active image ID
      */
     const [activeImageId, setActiveImageId] = useState(images[0]?.id);
-    const activeImage = images.find(image => image?.id === activeImageId)?.imageUrl; 
+    const activeImage = images.find(image => image?.id === activeImageId)?.imageUrl;
 
     /**
      * Reference to Swiper instance for custom navigation
@@ -56,12 +57,16 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
      * pop up handler
      */
     const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
-    const openPopup = () => {
-        if (template?.isPaid == false) {
+const router = useRouter()
+    const openPopup = async () => {
+        if (!session) {
+            router.push('/login')
+        }
+        else if (template?.isPaid == false) {
             setIsPopupOpen(true);
             setIsFirstPopupOpen(true)
-
         }
+
     }
 
     const [isFirstPopupOpen, setIsFirstPopupOpen] = useState<boolean>(true);
@@ -196,12 +201,13 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                     </div>
                                 </div>
                                 <Button onClick={openPopup} className='w-full mb-2.5 mt-5  md:mt-[30px] md:mb-5 justify-center py-2 md:py-[13px]' variant='primary' > {template?.isPaid ? '$' + template?.price : "Free — Download"} </Button>
+
                                 <Button link={`/preview/${template?.id}`} className='w-full justify-center' variant='liquid' >Preview</Button>
                                 {/* onClick={() => setShowPreviews(true)} */}
 
                                 {
                                     isPopupOpen &&
-                                    <DownloadTemplete isFirstPopupOpen={isFirstPopupOpen} setIsFirstPopupOpen={setIsFirstPopupOpen} id={template?.id} url={template?.sourceFiles[0]?.fileUrl} />
+                                    <DownloadTemplete poster={template.previewImages[0]?.imageUrl} tittle={template.title} isFirstPopupOpen={isFirstPopupOpen} setIsFirstPopupOpen={setIsFirstPopupOpen} id={template?.id} url={template?.sourceFiles[0]?.fileUrl} />
                                 }
                             </div>
                         </div>
