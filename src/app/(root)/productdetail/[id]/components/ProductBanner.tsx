@@ -31,7 +31,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
         setShowFullDescription(!showFullDescription);
     };
 
-    const maxLength = 300; 
+    const maxLength = 300;
     const description = template?.description || '';
     const isLongDescription = description.length > maxLength;
 
@@ -45,7 +45,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
      * State to manage the currently active image ID
      */
     const [activeImageId, setActiveImageId] = useState(images[0]?.id);
-    const activeImage = images.find(image => image?.id === activeImageId)?.imageUrl; 
+    const activeImage = images.find(image => image?.id === activeImageId)?.imageUrl;
 
     /**
      * Reference to Swiper instance for custom navigation
@@ -151,7 +151,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                                         onClick={() => setActiveImageId(id)} // Set active image by ID
                                                         className={`cursor-pointer min-w-[50px] md:max-w-[120px] w-full border-2 overflow-hidden p-[5px] h-[88px] ${activeImageId === id ? 'border-primary-900 border-[0.5px] md:border-[2px]' : 'border-transparent'}`}
                                                     >
-                                                        <Image className="w-full object-cover h-[76px]" src={`${imageUrl}`} height={76} width={120} alt={`Thumbnail ${id}`} />
+                                                        <Image className="w-full object-cover h-[76px]" src={`${imageUrl}`} height={76} width={120} alt={`Thumbnail ${id}`}  />
                                                     </div>
                                                 </SwiperSlide>
                                             ))}
