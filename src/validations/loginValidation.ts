@@ -1,7 +1,8 @@
-// validationSchema.ts
 import { z } from 'zod';
 
-// Defining the login schema with validation rules
+/**
+ * Defining the login schema with validation rules
+ */
 export const loginSchema = z.object({
     // Email validation: must be a string and a valid email format
     email: z.string().email({ message: "Invalid email" }),

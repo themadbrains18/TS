@@ -23,10 +23,15 @@ const VerfiyNewEmail: FC<verifyoldemail> = ({
   const router = useRouter();
   const { data: response, error, loading, fetchData } = useFetch<any>();
   const { register, handleSubmit, setValue } = useForm<FormData>();
+
+  /**
+   * onSubmit: This function handles the form submission for updating user details (likely related to email or password).
+   * 
+   * Error Handling:
+   * - If the request fails, an error is logged to the console.
+   */
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
-
-      // data.currentEmail = session ? session?.email : ""
       const joinedOtp = data?.otp && data?.otp.join('') || "";
 
       delete data?.otp
@@ -49,6 +54,9 @@ const VerfiyNewEmail: FC<verifyoldemail> = ({
   }
 
 
+  /**
+   * This hook listens for changes to the `response` object.
+   */
   useEffect(() => {
     if (response?.otp === true) {
 

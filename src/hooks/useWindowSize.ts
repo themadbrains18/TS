@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react';
 
+
+/**
+ * Custom hook to get the current window dimensions (width and height).
+ */
+
 const useWindowSize = () => {
   const [windowSize, setWindowSize] = useState({ width: window.innerWidth, height: window.innerHeight });
 

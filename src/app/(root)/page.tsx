@@ -15,8 +15,6 @@ import PopularSection from "./home/components/PopularSection";
  * @returns {JSX.Element} The rendered Home component containing various sections.
  */
 const Home = () => {
-
-
   return (
     <>
       <HeroSection />

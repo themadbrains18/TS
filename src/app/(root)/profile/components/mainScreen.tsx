@@ -13,7 +13,7 @@ interface profileProps{
 const MainScreen:React.FC<profileProps> = ({userData}) => {
     console.log(userData,"==userData");
     
-    const [activeTab, setActiveTab] = useState<number>(0) // 0 for Profile, 1 for Download
+    const [activeTab, setActiveTab] = useState<number>(0)
     const { data: session } = useSession();
  
     

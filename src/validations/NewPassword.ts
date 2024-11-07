@@ -1,7 +1,9 @@
-// validationSchema.ts
+
 import { z } from 'zod';
 
-// Defining the change password schema with validation rules
+/**
+ * Defining the change password schema with validation rules
+ */
 export const newChangePassword = z.object({
     // newPassword validation: must be at least 8 characters, include at least one lowercase letter, one uppercase letter, one number, and one special character
     newPassword: z.string()
@@ -17,11 +19,12 @@ export const newChangePassword = z.object({
             message: "Password must include at least one lowercase letter, one uppercase letter, one number, and one special character"
         }),
 })
-// Ensures the newPassword and confirmPassword fields match
+/**
+ * Ensures the newPassword and confirmPassword fields match
+ */
 .refine((data) => data.newPassword === data.confirmPassword, {
     message: "Passwords do not match",
     path: ["confirmPassword"], 
 });
 
-// Type definition for change password data using the inferred types from newChangePassword schema
 export type changePassword = z.infer<typeof newChangePassword>;

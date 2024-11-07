@@ -23,9 +23,6 @@ interface FormValues {
 }
 
 const NewPassword = ({ formData, otp }: newpasswordpopup) => {
-    console.log(otp, "otp")
-
-    console.log(formData, "formData")
     const [isChecked1, setIsChecked1] = useState(false);
     const [isLoading , setisLoading] = useState(false);
 
@@ -34,6 +31,13 @@ const NewPassword = ({ formData, otp }: newpasswordpopup) => {
     const { handleSubmit, control, formState: { errors } } = useForm<FormValues>({
         resolver: zodResolver(newChangePassword)
     });
+
+    /**
+     * onSubmit function handles form submission.
+     * It sends a POST request to reset the user's password.
+     * 
+     * @param data - The form data submitted by the user, which includes the new password, confirmation password, email, and OTP.
+     */
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
         console.log(data, "Form submission data");
 
