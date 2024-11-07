@@ -426,17 +426,10 @@ export interface downloadcard {
  * @interface verifyoldemail
  */
 export interface verifyoldemail {
-<<<<<<< HEAD
-  isPopupOpen: boolean,
-  closePopup: () => void;
-  register?: UseFormRegister<any>
-  handlepasswordUpdate?: () => void
-=======
   isPopupOpen: boolean; // Whether the popup is open
   closePopup: () => void; // Function to close the popup
   register?: UseFormRegister<any>; // Register function for form
   handlepasswordUpdate?: () => void; // Handler for updating password
->>>>>>> fd150a33b7d04f318f1a84a67139478ace0e3fdb
 }
 
 /**

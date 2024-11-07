@@ -41,7 +41,6 @@ export const DownloadProvider: React.FC<DownloadProviderProps> = ({ children }) 
       },
     });
     const data = await response.json();
-    console.log(data, "===");
 
     setDownloads(data.downloads?.freeDownloads || null);
     setImageUrl(data.downloads?.profileImg || null);

@@ -162,7 +162,7 @@ const NewPassword = ({ formdata }: any) => {
                 </div>
             </div>
         </div>
-    );
+    );                                                                                                                                                                                     
 };
 
 export default NewPassword;

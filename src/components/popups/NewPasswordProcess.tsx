@@ -43,7 +43,6 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
     const [resendData, setResendData] = useState({});
     const [initialSend, setInitialSend] = useState(true);
     const [FormData, setFormData] = useState({})
-    console.log(FormData, "check opt filed ")
 
     const onSubmit: SubmitHandler<FormData> = async (data) => {
         try {
@@ -140,7 +139,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
     };
 
 
-    console.log(response?.otp, "here otp")
+    // console.log(response?.otp, "here otp")
 
     useEffect(() => {
         if (response?.otp === true) {
@@ -178,7 +177,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
     }, [startTimer]);
 
 
-    console.log(errors, "==erros");
+    // console.log(errors, "==erros");
 
 
     // step 2 

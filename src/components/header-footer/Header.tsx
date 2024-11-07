@@ -37,7 +37,6 @@ interface User {
 
 const Header = () => {
   const { downloads, imageUrl } = useDownload();
-  console.log(downloads, "===downloads");
 
 
   const [sidebar, setSidebar] = useState<boolean>(false);
@@ -50,8 +49,9 @@ const Header = () => {
   const [opensearch, setOpensearch] = useState(false)
   const [profile, setProfile] = useState<boolean>(false)
   const [profileres, setProfileres] = useState<boolean>(false)
-  console.log(profileres, "profileresprofileresprofileresprofileres")
-  const profileoutsideclick = useRef<HTMLDivElement>(null);
+  const profileRef = useRef<HTMLDivElement>(null);
+  const profileresRef = useRef<HTMLDivElement>(null);
+
 
   const openProfile = () => {
     setProfile(!profile)
@@ -113,9 +113,9 @@ const Header = () => {
     setOpensearch(false)
   }
 
-  // handleoutside click 
-  useOnClickOutside(profileoutsideclick, () => setProfile(false));
-  useOnClickOutside(profileoutsideclick, () => setProfileres(false));
+  // Handle outside click for each ref separately
+  useOnClickOutside(profileRef, () => setProfile(false));
+  useOnClickOutside(profileresRef, () => setProfileres(false));
 
   const isLoggedIn = session && session?.token;
 
@@ -180,8 +180,8 @@ const Header = () => {
                 subCat={subCatData || undefined} />
               {
                 isLoggedIn &&
-                <div className="relative">
-                  <div ref={profileoutsideclick} onClick={()=>{openProfile()
+                <div className="relative" >
+                  <div onClick={()=>{openProfile()
                   }} className="w-[50px] h-[50px] rounded-full cursor-pointer ">
                     <Image
                       width={50}
@@ -191,7 +191,7 @@ const Header = () => {
                       alt="diamond"
                     />
                   </div>
-                  <div className={`absolute ${profile ? "opacity-100 visible" : "invisible opacity-0"}  transition-all  duration-[0.5s] top-[94%]  max-[1678px]:right-0 right-[-73px] mt-2 w-[216px]  bg-white shadow-lg rounded-lg`}>
+                  <div  ref={profileRef} className={`absolute ${profile ? "opacity-100 visible" : "invisible opacity-0"}  transition-all  duration-[0.5s] top-[94%]  max-[1678px]:right-0 right-[-73px] mt-2 w-[216px]  bg-white shadow-lg rounded-lg`}>
                     <div className="pt-[6px] mt-[-6px]" >
                       <div className="py-2.5 ">
                         <h2 className="leading-6 text-[16px] font-semibold text-textheading py-2 pl-[30px] pr-[27px] mb-2.5 max-w-60 truncate">
@@ -206,7 +206,7 @@ const Header = () => {
                         </div>
                         <div className="flex flex-col">
                           <Link href={"/profile"} >
-                            <button className={` w-full text-textheading text-start leading-6 hover:text-subparagraph py-2 px-[30px] capitalize cursor-pointer text-nowrap hover:bg-primary-200 border-l-[2px] border-white hover:border-primary-100`}>
+                            <button onClick={()=>{setProfile(false)}} className={` w-full text-textheading text-start leading-6 hover:text-subparagraph py-2 px-[30px] capitalize cursor-pointer text-nowrap hover:bg-primary-200 border-l-[2px] border-white hover:border-primary-100`}>
                               Profile
                             </button>
                           </Link>
@@ -245,8 +245,8 @@ const Header = () => {
               {
                 session?.user
                 &&
-                <div>
-                  <div ref={profileoutsideclick} onClick={openProfileres} className="w-[30px] h-[30px] cursor-pointer ">
+                <div ref={profileresRef}>
+                  <div  onClick={openProfileres} className="w-[30px] h-[30px] cursor-pointer ">
                     <Image
                       width={50}
                       height={50}
@@ -255,7 +255,7 @@ const Header = () => {
                       alt="diamond"
                     />
                   </div>
-                  <div className={`absolute ${profileres ? "opacity-100 visible" : "invisible opacity-0"}  transition-all 
+                  <div  className={`absolute ${profileres ? "opacity-100 visible" : "invisible opacity-0"}  transition-all 
                       duration-[0.5s] top-[90%] right-0 mt-2 max-w-[256px] bg-white shadow-lg rounded-lg`}>
                     <div className="" >
                       <div className="py-2.5 ">

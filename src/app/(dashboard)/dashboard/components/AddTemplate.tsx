@@ -158,7 +158,7 @@ const AddTemplate = () => {
                 <tbody className="divide-y divide-gray-200">
                   {response?.templates && response?.templates.length > 0 ? (
                     <>
-                      {response?.templates.map((template: any, index: any) => (
+                      {response?.templates.map((template: any, index: number) => (
                         <tr key={index} className="hover:bg-gray-50">
                           <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize max-w-[200px] truncate md:max-w-full font-semibold">
                             {template.title}
