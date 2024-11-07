@@ -32,7 +32,7 @@ const Profile: React.FC<sessionProps> = ({ session,userData }) => {
     const [isUserDisabled, setIsUserDisabled] = useState<boolean>(true);
     const [isEmailDisabled, setIsEmailDisabled] = useState<boolean>(true);
     const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
-    const [profileImage, setProfileImage] = useState<any>(userData?.user?.profileImg);
+    const [profileImage, setProfileImage] = useState<any>(userData?.user?.profileImg || "/images/profileimage.png");
     const [name, setName] = useState(userData?.user ? userData?.user?.name : '');
     const [isDeletepopup, setisDeletepopup] = useState<boolean>(false);
     const [isDeleteUSer, setIsDeleteUser] = useState<boolean>(false);
