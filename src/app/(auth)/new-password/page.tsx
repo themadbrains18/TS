@@ -15,10 +15,12 @@ import { toast } from 'react-toastify';
 
 
 const NewPassword = ({ formdata }: any) => {
-    const router = useRouter(); // Router for navigation after successful submission
-    const [isChecked1, setIsChecked1] = useState(false); // State to toggle password visibility
+    const router = useRouter(); 
+    const [isChecked1, setIsChecked1] = useState(false); 
 
-    // Interface defining the form values
+    /**
+     *  Interface defining the form values
+     */
     interface FormValues {
         newPassword: string;
         confirmPassword: string;
@@ -26,34 +28,38 @@ const NewPassword = ({ formdata }: any) => {
         success: boolean;
     }
 
-    // Fetch hook to handle API request
+    /**
+     * Fetch hook to handle API request
+     */
     const { data: response, error, loading, fetchData } = useFetch<FormValues>();
 
-    // React hook form setup with validation using zod
+    /**
+     * React hook form setup with validation using zod
+     */
     const { handleSubmit, control, formState: { errors } } = useForm<FormValues>({
-        resolver: zodResolver(newChangePassword), // Validation schema applied here
+        resolver: zodResolver(newChangePassword),
     });
 
-    // Submit handler for form data
+    /**
+     * 
+     * Submit handler for form data
+     */
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
-        // Attaching new password and confirm password to the formdata
         formdata.newPassword = data.newPassword;
         formdata.confirmPassword = data.confirmPassword;
 
         try {
-            // Sending form data to the backend for password reset
             const result = await fetchData(`/reset-password`, {
                 method: "POST",
-                body: JSON.stringify(formdata), // Body of the POST request
+                body: JSON.stringify(formdata), 
                 headers: {
-                    'Content-Type': 'application/json', // Setting content type for JSON
+                    'Content-Type': 'application/json',
                 },
             }
         );
       
             // Redirect to login page if the password reset is successful
         } catch (err) {
-            // Display error message if the request fails
             toast.error("Submission error");
         }
     };

@@ -21,6 +21,9 @@ const AuthorTab: React.FC<UserDetailProps> = ({ userDetail }) => {
 
   const { data, fetchData } = useFetch<ApiResponse>();
 
+  /**
+   * Fetches the templates associated with a specific user by their user ID.
+   */
   const getUserTemplates = async () => {
     try {
       await fetchData(`/templates-by-userid/${userDetail?.id}`);
@@ -29,6 +32,9 @@ const AuthorTab: React.FC<UserDetailProps> = ({ userDetail }) => {
     }
   };
 
+  /**
+   * Fetch templates when the component mounts
+   */
   useEffect(() => {
     getUserTemplates();
   }, []);

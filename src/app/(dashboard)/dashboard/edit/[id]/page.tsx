@@ -24,11 +24,6 @@ const page = async({ params }: { params: { id: string } }) => {
 
     let getData = await template();
 
-
-    // if (getData === 'Unauthorize') {
-    //     return <Unauthorize />
-    // }
-
     if (getData == null) {
         return <NotFound />
     }

@@ -15,36 +15,46 @@ import { useRouter } from 'next/navigation';
 
 
 const LoginForm = () => {
-    const { data: session, status } = useSession(); // Using session hook from NextAuth to get current session
-    const router = useRouter(); // Initializing router to handle redirects
+    const { data: session, status } = useSession(); 
+    const router = useRouter(); 
 
-    const [isChecked1, setIsChecked1] = useState(false); // State for controlling password visibility
-    const [otpPath, setOtppath] = useState(false); // State to determine whether to show OTP page
-    const [formData, setFormData] = useState({}); // State to store form data
+    const [isChecked1, setIsChecked1] = useState(false); 
+    const [otpPath, setOtppath] = useState(false); 
+    const [formData, setFormData] = useState({}); 
 
-    // Interface to define structure of form values
+    /**
+     * Interface to define structure of form values
+     */
     interface FormValues {
-        email: string; // User email
-        password: string; // User password
+        email: string; 
+        password: string; 
     }
 
-    // React Hook Form setup with Zod validation
+    /**
+     * React Hook Form setup with Zod validation
+     */
     const { control, reset, handleSubmit, formState: { errors } } = useForm<FormValues>({
-        resolver: zodResolver(loginSchema), // Applying Zod validation schema
+        resolver: zodResolver(loginSchema),
     });
 
-    // Interface to define structure of API response
+    /**
+     * Interface to define structure of API response
+     */
     interface ApiResponse {
-        otp: string; // OTP received from the API
-        success: boolean; // API success status
+        otp: string; 
+        success: boolean; 
     }
 
-    // Fetch hook to handle API requests for login
+    /**
+     * Fetch hook to handle API requests for login
+     */
     const { data: response, error, loading, fetchData } = useFetch<ApiResponse>();
 
-    // Submit handler for the login form
+    /**
+     * Submit handler for the login form
+     */
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
-        setFormData(data); // Set form data to state
+        setFormData(data); 
         // Make API request to login
         await fetchData("/login", {
             method: "POST",
@@ -59,22 +69,23 @@ const LoginForm = () => {
         }
     };
 
-    // Effect hook to manage redirection or OTP flow
+    /**
+     * Effect hook to manage redirection or OTP flow
+     */
     useEffect(() => {
         if (response?.otp) {
-            setOtppath(true); // Set OTP path if response contains OTP
+            setOtppath(true); 
         }
         if (session) {
-            router.push('/'); // Redirect to home if the user is already logged in
+            router.push('/'); 
         }
     }, [response, session, router]);
 
     return (
         <>
-            {/* Conditionally render OTP component or login form */}
             {
                 otpPath ? (
-                    <Otp formData={formData} api="login" setFormData={setFormData} /> // OTP page
+                    <Otp formData={formData} api="login" setFormData={setFormData} /> 
                 ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-2">
                         {/* Left Section with Image and Text */}

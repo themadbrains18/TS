@@ -7,14 +7,14 @@ import React from 'react'
 const HeroSection = () => {
 
     /**
- * Hero section component that highlights the main features, design resources, and animations.
- * 
- * @component
- * @example
- * return (
- *   <HeroSection />
- * )
- */
+     * Hero section component that highlights the main features, design resources, and animations.
+     * 
+     * @component
+     * @example
+     * return (
+     *   <HeroSection />
+     * )
+     */
     return (
         <>
             <section>

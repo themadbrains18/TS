@@ -2,30 +2,8 @@ import { CheckBoxComponentProps } from '@/types/type';
 import Image from 'next/image';
 import { useState } from 'react';
 
-/**
- * Props for the CheckBoxComponent.
- * 
- * @typedef {Object} CheckBoxComponentProps
- * @property {string} label - The label text displayed next to the checkbox.
- * @property {string} detailText - The detail text displayed on the right side.
- */
-
-/**
- * A functional component that renders a custom checkbox with a label and detail text.
- * 
- * @param {CheckBoxComponentProps} props - The properties passed to the component.
- * @returns {JSX.Element} The CheckBoxComponent.
- */
 const ProductDetailcheckbox: React.FC<CheckBoxComponentProps> = ({ label, detailText, image }) => {
     const [isChecked, setIsChecked] = useState(true);
-
-    /**
-     * Handles the checkbox click event by toggling the `isChecked` state.
-     */
-    // const handleCheckboxChange = () => {
-    //     setIsChecked(!isChecked);
-    // };
-    // onClick={handleCheckboxChange} 
     return (
         <div className="grid grid-cols-2 w-full justify-between items-center border  border-gray-200 p-2.5 md:p-4 rounded-lg  cursor-pointer">
             <div className="flex items-center space-x-2">
