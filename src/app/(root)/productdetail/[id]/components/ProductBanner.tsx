@@ -156,7 +156,7 @@ const router = useRouter()
                                                         onClick={() => setActiveImageId(id)} // Set active image by ID
                                                         className={`cursor-pointer min-w-[50px] md:max-w-[120px] w-full border-2 overflow-hidden p-[5px] h-[88px] ${activeImageId === id ? 'border-primary-900 border-[0.5px] md:border-[2px]' : 'border-transparent'}`}
                                                     >
-                                                        <Image className="w-full object-cover h-[76px]" src={`${imageUrl}`} height={76} width={120} alt={`Thumbnail ${id}`} />
+                                                        <Image className="w-full object-cover h-[76px]" src={`${imageUrl}`} height={76} width={120} alt={`Thumbnail ${id}`}  />
                                                     </div>
                                                 </SwiperSlide>
                                             ))}
