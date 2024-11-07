@@ -137,10 +137,12 @@ export interface ProductFiltersidetype {
   setSelectedFilters: any; // Function to set selected filters
 }
 
+
 /**
  * Interface for defining checkbox component properties.
  * @interface CheckboxProps
  */
+
 export interface CheckboxProps {
   value: string; // Checkbox value
   id: string; // ID of the checkbox
@@ -197,6 +199,8 @@ export interface DownloadTemplatetype {
   setIsFirstPopupOpen: React.Dispatch<React.SetStateAction<boolean>>; // State setter to control popup visibility
   id: string; // Template ID
   url: string; // Template download URL
+  tittle:string,
+  poster:string
 }
 
 /**
@@ -257,6 +261,8 @@ export interface Downloadpopup {
   isPopupOpen: boolean; // Whether the popup is open
   closePopup: () => void; // Function to close the popup
   opensecoundpopup: () => void; // Function to open second popup
+  tittle:string,
+  poster:string
 }
 
 /**

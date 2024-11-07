@@ -25,6 +25,33 @@ function useFetch<T>(): FetchResult<T> {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
+  /**
+   * This custom fetch function is designed to handle API requests with enhanced error handling, authentication, and response validation.
+   * 
+   * @param {string} url - The endpoint to make the request to.
+   * @param {RequestInit} options - Additional options for the fetch request, such as method, body, etc.
+   * @param {boolean} toaster - A flag to control whether a success or error toast should be displayed upon response. Default is true.
+   * 
+   * This function performs the following:
+   * - Sends a `Bearer` token for authentication if available.
+   * - Checks if the response is JSON and handles it accordingly.
+   * - Parses the JSON response and updates the `data` state with the results.
+   * - Handles errors by showing appropriate messages via a toast notification and updating the `error` state.
+   * - Supports aborting the request if the component unmounts or the request is no longer needed using an AbortController.
+   * - Handles possible API errors by checking `error` and `fieldErrors` in the response.
+   * - Displays success or error messages in toast notifications based on the result.
+   * 
+   * Notes:
+   * - This function is intended to be used with a session-based authentication token (`Bearer ${token}`).
+   * - If the response status is not OK, an error is thrown with the message from the API or a default error message.
+   * - If the response is not in JSON format, the function falls back to a default result with a non-JSON message.
+   * 
+   * Dependencies:
+   * - React's `useState` and `useCallback` hooks
+   * - `toast` from `react-toastify` for displaying notifications
+   * - The session token (`useSession` hook from `next-auth/react`)
+   */
+
   const fetchData = useCallback(
     async (
       url: string,
@@ -48,7 +75,7 @@ function useFetch<T>(): FetchResult<T> {
           headers,
           signal,
         });
-// console.log(response,"==response");
+        // console.log(response,"==response");
 
         if (!response.ok) {
           const errorBody = await response.json();

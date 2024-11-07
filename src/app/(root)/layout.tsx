@@ -15,9 +15,9 @@ export default function customerLayout({
     return (
         <>
          <DownloadProvider>
-            <Header />  {/* <Header /> */}
+            <Header />
             {children}
-            <Footer /> {/* footer */}
+            <Footer />
          </DownloadProvider>
         </>
     );

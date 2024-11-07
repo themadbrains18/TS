@@ -31,11 +31,11 @@ const Page = () => {
     const [otpPath, setOtppath] = useState(false);
     const [formData, setFormData] = useState({})
 
-    const { control, reset, handleSubmit, formState: { errors } } = useForm<FormData>({
+    const { control,  handleSubmit, formState: { errors } } = useForm<FormData>({
         resolver: zodResolver(signupSchema)
     });
 
-    const { data: response, error, loading, fetchData } = useFetch<ApiResponse>();
+    const { data: response,  loading, fetchData } = useFetch<ApiResponse>();
 
     /*
      * Handles form submission for user registration.
@@ -162,7 +162,12 @@ const Page = () => {
                                                 loading ? "" : "Create Account"
                                             }
                                         </Button>
-                                    <div className=" pt-5">
+                                        <div className="text-end pt-5">
+                                                <Link href={'/forgot-password'} className="text-[16px] font-semibold leading-6 text-subparagraph">
+                                                    Forgot Password?
+                                                </Link>
+                                            </div>
+                                    <div className=" mt-[60px] py-[6px]">
                                         <p className='text-[16px] font-normal leading-6 text-textparagraph'>Already Have Account ?   <Link href={'/login'} className="text-textheading font-semibold">
                                             Login
                                         </Link></p>

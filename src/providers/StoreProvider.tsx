@@ -3,6 +3,11 @@
 import { Provider } from 'react-redux';
 import store from '@/store/store';
 
+
+/**
+ * `StoreProvider` component to wrap the application with Redux store.
+ */
+
 const StoreProvider = ({ children }: { children: React.ReactNode }) => {
   return <Provider store={store}>{children}</Provider>;
 };

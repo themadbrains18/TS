@@ -65,7 +65,7 @@ const BreadCrumbs = () => {
             <Icon className='inline-block w-6 h-6' name='star' />
 
             {/* The button and ratingbottom icon */}
-            <div className='absolute z-[11] duration-500 transition-all opacity-0 invisible group-hover:visible group-hover:opacity-100 max-[1700px]:right-0 min-[1700px]:left-[-46px]  group-hover:translate-y-[-40px] translate-y-[20px]'>
+            <div className='absolute z-[30] duration-500 transition-all opacity-0 invisible group-hover:visible group-hover:opacity-100 max-[1700px]:right-0 min-[1700px]:left-[-46px]  group-hover:translate-y-[-40px] translate-y-[20px]'>
               <button className='bg-subparagraph whitespace-nowrap rounded-full flex gap-2 items-center px-5 py-2 text-white'>
                 <Icon name='rating' />
                 Rate Product

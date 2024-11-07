@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react';
 import CheckboxFilter from './ProductFilterchekbox';
 import useFetch from '@/hooks/useFetch';
 
-const ProductFilterside = ({ items, setItems, closefilter, setSelectedFilters }: ProductFiltersidetype) => {
+const ProductFilterside = ({ items, setItems, closefilter }: ProductFiltersidetype) => {
     const [openIndexes, setOpenIndexes] = useState<number[]>([0]);
     const { data: industryData, fetchData: fetchIndustryData } = useFetch<Industry[]>();
     const { data: softwareData, fetchData: fetchSoftwareData } = useFetch<SoftwareType[]>();
@@ -69,7 +69,7 @@ const ProductFilterside = ({ items, setItems, closefilter, setSelectedFilters }:
             <div className='overflow-y-scroll  h-[calc(100%_-_100px)] hiddenscroll   ' >
                 {filterData.map((filterSection, index) => (
                     <Accordion
-                        key={index}
+                        key={index || Date.now() + "acc"}
                         title={filterSection.title}
                         isOpen={openIndexes.includes(index)}
                         onToggle={() => toggleAccordion(index)}
@@ -80,7 +80,7 @@ const ProductFilterside = ({ items, setItems, closefilter, setSelectedFilters }:
                             {filterSection && filterSection?.items?.map((item, itemIndex) => (
                                 <div className='md:pl-5 md:pr-2  py-[5px]' >
                                     <CheckboxFilter
-                                        key={itemIndex}
+                                        key={itemIndex || Date.now() + "CheckboxFilter" }
                                         value={item?.name}
                                         id={`${item.id},${filterSection.title},${item.name}`}
                                         setItems={setItems}

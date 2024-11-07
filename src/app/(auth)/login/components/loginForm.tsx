@@ -15,7 +15,7 @@ import { useRouter } from 'next/navigation';
 
 
 const LoginForm = () => {
-    const { data: session, status } = useSession(); 
+    const { data: session } = useSession(); 
     const router = useRouter(); 
 
     const [isChecked1, setIsChecked1] = useState(false); 
@@ -48,7 +48,7 @@ const LoginForm = () => {
     /**
      * Fetch hook to handle API requests for login
      */
-    const { data: response, error, loading, fetchData } = useFetch<ApiResponse>();
+    const { data: response,  loading, fetchData } = useFetch<ApiResponse>();
 
     /**
      * Submit handler for the login form

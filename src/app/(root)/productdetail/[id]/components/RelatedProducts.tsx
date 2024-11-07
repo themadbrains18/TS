@@ -7,7 +7,7 @@ import React, { Fragment, useEffect } from 'react'
 
 const RelatedProducts = () => {
 
-    const { data, error, loading, fetchData } = useFetch<TemplateResponse>();
+    const { data,  fetchData } = useFetch<TemplateResponse>();
 
     useEffect(() => {
         fetchData('/templates');

@@ -4,6 +4,9 @@ import { useState } from 'react';
 const Toggle = () => {
   const [enabled, setEnabled] = useState(false);
 
+  /**
+   * Function to toggle the enabled state value
+   */
   const handleToggle = () => {
     setEnabled(!enabled);
   };

@@ -3,7 +3,9 @@
 import { useSession } from 'next-auth/react';
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 
-// Define the type for the context value
+/**
+ * Define the type for the context value
+ */
 interface DownloadContextType {
   downloads: number | null;
   imageUrl: string | null;
@@ -12,7 +14,9 @@ interface DownloadContextType {
   fetchDailyDownloads: () => Promise<void>;
 }
 
-// Provide a default value for the context
+/**
+ * Provide a default value for the context
+ */
 const DownloadContext = createContext<DownloadContextType | undefined>(undefined);
 
 export const useDownload = (): DownloadContextType => {
@@ -33,7 +37,9 @@ export const DownloadProvider: React.FC<DownloadProviderProps> = ({ children }) 
 
   const { data: session } = useSession();
 
-  // Fetch daily downloads and imageUrl from the API or session
+  /**
+   * Fetch daily downloads and imageUrl from the API or session
+   */
   const fetchDailyDownloads = async () => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/free-download`, {
       headers: {

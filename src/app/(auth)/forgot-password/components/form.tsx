@@ -12,7 +12,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
 import Otp from '../../otp/page';
 
 /**
@@ -58,7 +57,8 @@ const Form = () => {
                 },
             });
         } catch (error) {
-            toast.error("Submission error"); // Show error if submission fails
+            console.log(error)
+            // toast.error("Submission error"); // Show error if submission fails
         }
     };
 

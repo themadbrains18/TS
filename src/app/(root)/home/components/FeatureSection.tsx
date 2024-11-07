@@ -1,11 +1,10 @@
 "use client"
 
 import FeatureCard from '@/components/cards/FeatureCard'
-import Icon from '@/components/Icon'
 import FeatureSkeleton from '@/components/skeletons/FeatureSkeleton' 
 import Button from '@/components/ui/Button'
 import useFetch from '@/hooks/useFetch'
-import { SoftwareType, TechTemplate } from '@/types/type'
+import { SoftwareType } from '@/types/type'
 import React, { Fragment, useEffect, useState } from 'react'
 
 

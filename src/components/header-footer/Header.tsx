@@ -38,9 +38,8 @@ interface User {
 const Header = () => {
   const { downloads, imageUrl } = useDownload();
 
-
   const [sidebar, setSidebar] = useState<boolean>(false);
-  const [loadingdata, setLoadingdata] = useState(true);  // Initially true while loading
+  const [loadingdata, setLoadingdata] = useState(true);
   const { data, fetchData, loading } = useFetch<TemplateType[]>();
   const [searchbar, setsearchbar] = useState<boolean>()
   const { data: session } = useSession();
@@ -53,24 +52,26 @@ const Header = () => {
   const profileresRef = useRef<HTMLDivElement>(null);
 
 
+  /**
+  * Toggles the visibility of the profile section.
+  * This function flips the current state of the `profile` variable.
+  */
   const openProfile = () => {
-    setProfile(!profile)
+    setProfile(!profile); // Toggle the `profile` state to open or close the profile section
   }
 
+  /**
+  * Toggles the visibility of the profileres section.
+  * This function flips the current state of the `profileres` variable.
+  */
   const openProfileres = () => {
-    setProfileres(!profileres)
+    setProfileres(!profileres); // Toggle the `profileres` state to open or close the profileres section
   }
 
-
-  // const dropdownRef = useRef<HTMLDivElement>(null);
-  // const dropdownRef1 = useRef<HTMLDivElement>(null);
-
-
-  // useOnClickOutside(dropdownRef, () => setProfile(!profile));
-  // useOnClickOutside(dropdownRef1, () => setProfileres(!profileres));
-
-
-
+  /**
+  * Initializes the state to manage multiple accordion items.
+  * The state `openAccordions` is an array of booleans, where each element corresponds to an accordion item.
+  */
   const [openAccordions, setOpenAccordions] = useState<boolean[]>(
     Array(data?.length).fill(true) // Set all accordions to open by default
   );
@@ -92,6 +93,12 @@ const Header = () => {
 
 
 
+  /**
+   * Fetches user data from the server.
+   * This function retrieves user data by making a request to the `/get-user` endpoint.
+   * 
+   * @throws {Error} - If any error occurs during the fetch process, it will be logged to the console.
+   */
   const fetchUserData = async () => {
     try {
       if (!session?.user) {
@@ -104,21 +111,44 @@ const Header = () => {
   };
 
 
-  // open search bar input 
+  /**
+   * Opens or closes the search bar input.
+   * This function toggles the `opensearch` state between true and false, 
+   * showing or hiding the search bar input field based on the current state.
+   */
   const openinput = () => {
-    setOpensearch(!opensearch)
+    setOpensearch(!opensearch);
   }
 
+  /**
+  * Closes the search bar input.
+  * This function sets the `opensearch` state to false, effectively hiding the search bar input.
+  */
   const resinputoff = () => {
-    setOpensearch(false)
+    setOpensearch(false);
   }
 
-  // Handle outside click for each ref separately
+  /**
+  * Handles outside clicks to close the profile and profileres sections.
+  * These hooks listen for clicks outside the profile and profileres sections,
+  * and close them by updating their corresponding state variables when clicked outside.
+  * 
+  */
   useOnClickOutside(profileRef, () => setProfile(false));
   useOnClickOutside(profileresRef, () => setProfileres(false));
 
+
+  /**
+   * Determines if the user is logged in by checking the `session` and `session.token` values.
+   * If the session exists and contains a token, the user is considered logged in.
+   */
   const isLoggedIn = session && session?.token;
 
+
+  /**
+   * useEffect hook to fetch necessary data on component mount.
+   * This effect runs once when the component is mounted, as indicated by the empty dependency array.
+   */
   useEffect(() => {
     try {
       setLoadingdata(true)
@@ -134,7 +164,7 @@ const Header = () => {
 
   return (
     <>
-      <header className=" bg-[#ffffff80] backdrop:blur-xl relative border-b-[1px] border-[#11083319] z-20">
+      <header className=" bg-[#ffffff80] backdrop:blur-xl relative border-b-[1px] border-[#11083319] z-20 ">
         {/* Destop header */}
         <div className="container hidden min-[1028px]:block">
           <div className="py-10 flex items-center justify-between">

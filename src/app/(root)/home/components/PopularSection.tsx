@@ -57,7 +57,7 @@ const PopularSection = () => {
 
 
     const [items, setItems] = useState<Template[]>([]);
-    const { data: response, error, loading, fetchData } = useFetch<ApiResponse>();
+    const { data: response,  loading, fetchData } = useFetch<ApiResponse>();
 
     useEffect(() => {
         fetchData("/feature-templates");

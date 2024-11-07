@@ -13,7 +13,9 @@ import { useDownload } from '@/app/contexts/DailyDownloadsContext';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// Define the validation schema with Zod
+/**
+ * Define the validation schema with Zod
+ */
 const emailSchema = z.object({
     email: z.string().email({ message: "Invalid email" }),
 });
@@ -25,14 +27,17 @@ interface Downloadpopup {
     openthirdpopup: () => void;
     id: string;
     url: string;
+    tittle:string
 }
 
 
-const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url }: Downloadpopup) => {
+const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url , tittle }: Downloadpopup) => {
     const { data: session } = useSession();
     const { data: response, error, loading, fetchData } = useFetch<any>();
-    const { fetchDailyDownloads } = useDownload()
+    const { fetchDailyDownloads,downloads } = useDownload()
 
+    // console.log(downloads,"==downloads");
+    
     const socialicons = [
         { icon: "dribbble-logo.svg" },
         { icon: "linkedin.svg" },
@@ -41,19 +46,21 @@ const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url }: Download
         { icon: "instagram.svg" },
     ];
 
-    // Set up React Hook Form
+    /**
+     * Set up React Hook Form
+     */
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(emailSchema),
     });
 
 
-    // Handle form submission
+    /**
+     * Handle form submission
+     */
     const onSubmit = async (data: any) => {
         try {
             data.url = url || "";
-            data.userId = session?.id;  // Include userId only if it exists
-
-            // Call your API here. Example:
+            data.userId = session?.id; 
             await fetchData(`/templates/${id}/download`, {
                 method: 'POST',
                 headers: {
@@ -68,31 +75,33 @@ const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url }: Download
         }
     };
 
-
+    /**
+     * This `useEffect` hook listens for changes in the `response` object and performs two actions when `response` is available:
+     * 
+     * Dependencies:
+     * - This effect runs every time the `response` object changes (i.e., when `response` is updated with new data).
+     */
     useEffect(() => {
+        
         if (response) {
-            // console.log(response,"==response");
             fetchDailyDownloads()
-            // setDownloads()
-            // If successful, you can handle the response here
-            openthirdpopup(); // Open third popup after successful submission
+            openthirdpopup();
         }
     }, [response]);
 
     return (
-        <Modal className='bg-[#E5EFFF] py-5 md:py-[30px]' isOpen={isPopupOpen} onClose={closePopup}>
+        <Modal className='bg-[#E5EFFF] py-5 md:py-[30px] relative' isOpen={isPopupOpen} onClose={closePopup}>
+                        <Icon onClick={closePopup} name='closeicon' className='cursor-pointer w-6 h-6 absolute top-5 right-5' />
+
             <div className="max-w-[500px] w-full">
                 <div className='flex pb-5 border-b border-[#878787] items-center px-5 md:px-[30px]'>
                     <h2 className='text-lg md:text-[20px] leading-7 font-semibold open_sans text-subheading'>
-                        Enefty - NFT Marketplace UI Template Designed With Figma
+                        {tittle}
                     </h2>
-                    <div className='w-6 h-6'>
-                        <Icon onClick={closePopup} name='closeicon' className='cursor-pointer w-6 h-6' />
-                    </div>
                 </div>
                 <div className="px-[30px] flex justify-center items-center flex-col gap-5 md:gap-[39px] mt-5 md:mt-[50px]">
                     <p className='text-[16px] font-normal leading-6 open_sans text-subparagraph'>
-                        You have just completed your 3 free downloads per day. Do not worry! Enter your email to get this product free.
+                        You have 3 free downloads per day. Enter your email to get this product free.
                     </p>
                     <Image className='md:my-[35px] max-w-[232px] w-full' alt='img' src={'/images/sendemailpopimage.png'} width={232} height={148} />
                     <form onSubmit={handleSubmit(onSubmit)} className='w-full'>
@@ -104,7 +113,7 @@ const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url }: Download
                         />
                         {errors.email && (
                             <span className="text-red-500">
-                                {errors.email?.message}
+                               Email is invalid
                             </span>
                         )}
                         {error && <p className='mt-1 text-xs text-red-600'>{error}</p>}

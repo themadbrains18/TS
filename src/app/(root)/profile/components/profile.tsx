@@ -9,11 +9,8 @@ import Toggle from '@/components/ui/ToggleButton'
 import VerfiyOldEmail from '@/components/popups/VerfiyOldEmail'
 import useFetch from '@/hooks/useFetch'
 import { Session } from 'next-auth'
-import NewPassword from '@/components/popups/NewPassword'
 import DeleteUser from '@/components/popups/DeleteUser'
-import { METHODS } from 'http'
 import { useDownload } from '@/app/contexts/DailyDownloadsContext'
-// import { useDownload } from '@/app/contexts/DailyDownloadsContext'
 import { UserDetail } from '@/types/type'
 import NewPasswordProcess from '@/components/popups/NewPasswordProcess'
 import { signOut } from 'next-auth/react'
@@ -53,14 +50,19 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
     };
 
 
-    const { data: response, error, loading, fetchData } = useFetch<any>();
-    const { data: deleteUseracc, error: deleteerror, loading: deleteloading, fetchData: deleteuser } = useFetch<any>();
-    const { data: updateData, error: updateError, loading: updateLoading, fetchData: updateFetchData } = useFetch<any>();
-    const { data: updateNumberdata, error: updateNumbererror, loading: updateloadingNumber, fetchData: updateNumber } = useFetch<any>();
-    const { data: updatePassworddata, error: updatePassworderror, loading: updateloadingPassword, fetchData: updatePassword } = useFetch<any>();
+    const { data: response, fetchData } = useFetch<any>();
+    const { error: deleteerror, loading: deleteloading, fetchData: deleteuser } = useFetch<any>();
+    const { loading: updateLoading, fetchData: updateFetchData } = useFetch<any>();
+    const { loading: updateloadingNumber, fetchData: updateNumber } = useFetch<any>();
+    const { fetchData: updatePassword } = useFetch<any>();
 
 
-
+    /**
+     * Handles the change event for the image input field.
+     * This function is called when the user selects a new image to update their profile picture.
+     * 
+     * @param event - The change event triggered by the input field when a user selects a file.
+     */
     const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
@@ -78,6 +80,12 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
         }
     };
 
+    /**
+      * Fetches user data from the server.
+      * This function sends a request to retrieve the user data by calling the `/get-user` API endpoint.
+      *
+      * @throws {Error} - If an error occurs during the data fetch operation, it will be logged to the console.
+      */
     const fetchUserData = async () => {
         try {
             fetchData(`/get-user`);
@@ -87,6 +95,12 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
         }
     };
 
+    /**
+      * Handles the name update process for the user.
+      * This function is triggered when the user attempts to update their name.
+      *
+      * @throws {Error} - If an error occurs during the name update operation, it will be logged to the console.
+      */
     const handleNameUpdate = async () => {
         try {
             if (name === "") {
@@ -112,6 +126,12 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
         }
     };
 
+    /**
+     * Handles the phone number update process for the user.
+     * This function is triggered when the user attempts to update their phone number.
+     *
+     * @throws {Error} - If an error occurs during the phone number update operation, it will be logged to the console.
+     */
     const handlePhonenumberUpdate = async () => {
         try {
             console.log(number, "==number", response?.user?.number);
@@ -139,6 +159,14 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
         }
     };
 
+
+
+    /**
+     * Handles the password update process for the user.
+     * This function is triggered when the user attempts to update their password.
+     *
+     * @throws {Error} - If an error occurs during the password update operation, it will be logged to the console.
+     */
     const handlepasswordUpdate = async () => {
         try {
             await updatePassword('/update-details', {
@@ -153,6 +181,13 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
         }
     };
 
+
+    /**
+     * Handles the user account deletion process.
+     * This function is triggered when the user attempts to delete their account.
+     *
+     * @throws {Error} - If an error occurs during the account deletion operation, it will be logged to the console.
+     */
     const deleteUser = async () => {
         try {
             await deleteuser(`/delete-account`, {
@@ -166,10 +201,18 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
 
     }
 
+    /**
+      * useEffect to fetch user data when the component mounts.
+      * This effect runs only once when the component is first rendered.
+      */
     useEffect(() => {
         fetchUserData();
     }, []);
 
+    /**
+     * useEffect to handle response changes.
+     * This effect runs every time the `response` state changes.
+     */
     useEffect(() => {
 
         if (response) {
@@ -202,7 +245,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
             <section>
                 <VerfiyOldEmail closePopup={() => closePopup()} isPopupOpen={isPopupOpen} handlepasswordUpdate={handlepasswordUpdate} />
                 <NewPasswordProcess closePopup={() => closePopup()} isPopupOpen={isDeletepopup} />
-                <DeleteUser isPopupOpen={isDeleteUSer} closePopup={() => { setIsDeleteUser(false) }} deleteAccount={() => { deleteUser() }} />
+                <DeleteUser loading={deleteloading} isPopupOpen={isDeleteUSer} closePopup={() => { setIsDeleteUser(false) }} deleteAccount={() => { deleteUser() }} />
 
                 <div className="container">
                     <div className='max-w-[1162px] w-full'>
