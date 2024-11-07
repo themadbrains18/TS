@@ -30,8 +30,11 @@ const NavCard: React.FC<navcardprops> = ({
 }) => {
   const [imgSrc, setImgSrc] = useState(image ? image : '/images/featureimg.png');
 
+  /**
+   * Fallback image with a leading slash
+   */
   const handleImageError = () => {
-    setImgSrc('/images/featureimg.png'); // Fallback image with a leading slash
+    setImgSrc('/images/featureimg.png');
   };
   return (
     <>

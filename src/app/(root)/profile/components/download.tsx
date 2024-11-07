@@ -9,7 +9,7 @@ import DownloadSkeleton from '@/components/skeletons/DownloadSkeleton';
 const Download = () => {
   const [sort, setSort] = useState(false);
   const [category, setCategory] = useState(false);
-  const [selectedSort, setSelectedSort] = useState("All Downloads"); 
+  const [selectedSort, setSelectedSort] = useState("All Downloads");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [page, setPage] = useState(1);
   const [downloads, setDownloads] = useState<DownloadInterface[]>([]);
@@ -32,13 +32,24 @@ const Download = () => {
   ];
 
 
+  /**
+   * 
+   * This function is triggered when a user clicks an item (likely a sort option).
+   * It checks if the selected sort option has changed. If so, it updates the selected
+   * sort and resets the downloads by calling resetDownloads().
+   */
   const handleItemClick = (itemTitle: string) => {
-    if (selectedSort !== itemTitle) { 
+    if (selectedSort !== itemTitle) {
       setSelectedSort(itemTitle);
       resetDownloads();
     }
   };
 
+  /**
+   * - Similar to handleItemClick, this function is triggered when a user clicks a category.
+    * - It checks if the selected category has changed and updates the selected category.
+    *- It also calls resetDownloads() to reset the data.
+   */
   const handleCategoryClick = (itemTitle: string) => {
     if (selectedCategory !== itemTitle) {
       setSelectedCategory(itemTitle);
@@ -46,12 +57,19 @@ const Download = () => {
     }
   };
 
+
+ /**
+   * - This function resets the pagination (sets page to 1), clears the existing downloads, 
+  */
   const resetDownloads = () => {
     setPage(1);
     setDownloads([]);
     setHasMoreData(true);
   };
 
+  /**
+   * This hook is triggered when the data from fetchData is available.
+   */
   useEffect(() => {
     fetchData(`/get-user-downloads?page=${page}&sort=${selectedSort}&category=${selectedCategory}`);
   }, [page, selectedSort, selectedCategory]);

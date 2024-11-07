@@ -1,5 +1,11 @@
 import { useState } from 'react';
 
+/**
+ * Custom React hook to toggle a boolean value between true and false.
+ * 
+ * @param {boolean} initialValue - The initial value for the toggle state (default is `false`).
+ */
+
 const useToggle = (initialValue: boolean = false) => {
     const [value, setValue] = useState(initialValue);
 
@@ -9,7 +15,4 @@ const useToggle = (initialValue: boolean = false) => {
 };
 
 export default useToggle;
-
-// use like this :==
-// const [isToggled, toggle] = useToggle();
 

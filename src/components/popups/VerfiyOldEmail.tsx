@@ -37,6 +37,12 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
     const [resendData, setResendData] = useState({});
     const [initialSend, setInitialSend] = useState(true);
 
+    /**
+     * This function handles the form submission for updating user email and handling OTP validation.
+     * 
+     * Error Handling:
+     * - If an error occurs during the request, it is caught and logged to the console.
+     */
     const onSubmit: SubmitHandler<FormData> = async (data) => {
         try {
             if (step === 1) data.currentEmail = session?.email || "";
@@ -71,6 +77,14 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
         }
     };
 
+   
+   
+   /**
+     * handleEmailUpdate: This function handles updating the user's email address based on the current step in the process.
+     * 
+     * Error Handling:
+     * - If an error occurs during the request, it is caught and logged to the console.
+     */
     const handleEmmailUpdate = async () => {
         try {
             setLoadingbtn(true);
@@ -110,6 +124,10 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
         }
     };
 
+   
+   /**
+     * This function handles the process of resending the OTP to the user's email address.
+     */
     const resendCode = async () => {
         if (!canResend) return;
 
@@ -137,6 +155,9 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
         }
     };
 
+    /**
+     * This effect runs whenever the `response` object changes.
+     */
     useEffect(() => {
         if (response?.otp === true) {
             setStep(2);
@@ -156,6 +177,9 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
         }
     }, [response]);
 
+    /**
+     * This effect runs whenever the `startTimer` object changes.
+     */
     useEffect(() => {
         let timer: NodeJS.Timeout | null = null;
 

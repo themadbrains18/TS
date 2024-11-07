@@ -8,32 +8,38 @@ interface AccordionProps {
   title: string;
   children: React.ReactNode;
   className?: string;
-  isOpen?: boolean;          // Prop to control if the accordion is open
+  isOpen?: boolean;       
   onToggle?: () => void;
-  titleclass?: string    // Function to handle accordion toggling
+  titleclass?: string    
   titleboxclass?: string
 }
 
 const Accordion: React.FC<AccordionProps> = ({ title, children, className, titleclass, isOpen = false, onToggle, titleboxclass }) => {
-  const [internalOpen, setInternalOpen] = useState<boolean>(isOpen); // Internal state for managing open/close
+  const [internalOpen, setInternalOpen] = useState<boolean>(isOpen); 
   const [height, setHeight] = useState<string>('0px');
   const contentRef = useRef<HTMLDivElement>(null);
 
-  // Toggle accordion, either using external `onToggle` or internal state
+  /**
+   * Toggle accordion, either using external `onToggle` or internal state
+   */
   const toggleAccordion = () => {
     if (onToggle) {
-      onToggle(); // Use the parent-provided onToggle function if available
+      onToggle(); 
     } else {
-      setInternalOpen(!internalOpen); // Fallback to internal state
+      setInternalOpen(!internalOpen);
     }
   };
 
-  // Synchronize internal open state with the external prop `isOpen`
+  /**
+   * Toggle accordion, either using external `onToggle` or internal state
+   */
   useEffect(() => {
     setInternalOpen(isOpen);
   }, [isOpen]);
 
-  // Dynamically calculate height based on the content
+  /**
+   * Dynamically calculate height based on the content
+   */
   useEffect(() => {
     if (contentRef.current) {
       setHeight(internalOpen ? `${contentRef.current.scrollHeight}px` : '0px');

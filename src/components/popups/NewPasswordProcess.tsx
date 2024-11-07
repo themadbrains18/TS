@@ -46,6 +46,13 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
     const [FormData, setFormData] = useState({})
     console.log(FormData, "check opt filed ")
 
+    /**
+     * onSubmit function handles the form submission process.
+     * It processes the form data, checks for OTP completion, and sends the updated data to the server.
+     * 
+     * @param data - The form data that includes user input, such as email and OTP, to be processed and sent to the server.
+     */
+
     const onSubmit: SubmitHandler<FormData> = async (data) => {
         try {
             if (step === 1) data.currentEmail = session?.email || "";
@@ -76,6 +83,13 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
         }
     };
 
+    
+    /**
+     * handleEmailUpdate function handles the process of updating the user's email address.
+     * It validates the email, prepares the payload, and sends it to the server for updating.
+     * 
+     * @returns {void}
+     */
     const handleEmmailUpdate = async () => {
         try {
             setLoadingbtn(true);
@@ -115,6 +129,13 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
         }
     };
 
+
+    /**
+     * resendCode function handles the process of resending an OTP (One-Time Password) to the user's email.
+     * It checks if the resend action is allowed, sends a request to the server, and manages the UI state accordingly.
+     * 
+     * @returns {void}
+     */
     const resendCode = async () => {
         if (!canResend) return;
 
@@ -141,7 +162,14 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
     };
 
 
-    console.log(response?.otp, "here otp")
+
+
+    /**
+     * This hook listens for changes in the `response` object and updates various states accordingly.
+     * 
+     * Dependencies:
+     * - This effect runs every time `response` changes.
+    */
 
     useEffect(() => {
         if (response?.otp === true) {
@@ -162,6 +190,14 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
         }
     }, [response]);
 
+
+
+    /**
+     * This hook listens for changes in the `startTimer` object and updates various states accordingly.
+     * 
+     * Dependencies:
+     * - This effect runs every time `startTimer` changes.
+    */
     useEffect(() => {
         let timer: NodeJS.Timeout | null = null;
 
@@ -177,33 +213,6 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
             if (timer) clearInterval(timer);
         };
     }, [startTimer]);
-
-
-    console.log(errors, "==erros");
-
-
-    // step 2 
-    // const [isChecked1, setIsChecked1] = useState(false);
-    // interface FormValues {
-    //     newPassword: string,
-    //     confirmPassword: string,
-    //     otp: string,
-    //     success: boolean
-    // }
-
-    // const { data: response, error, loading, fetchData } = useFetch<FormValues>();
-
-
-    // const { handleSubmit: submitnewpassword, control, } = useForm<FormValues>({
-    //     resolver: zodResolver(newChangePassword)
-    // });
-
-
-    // const onSubmitstep2: SubmitHandler<FormValues> = async (data) => {
-    //     console.log(data, "==dataat")
-    // };
-
-
 
     return (
         <Modal isOpen={isPopupOpen} onClose={() => { closePopup(); setStep(1); }}>

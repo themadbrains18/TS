@@ -1,12 +1,18 @@
 import { z } from "zod";
 
-// Regular expression for validating email format
+/**
+ * Regular expression for validating email format
+ */
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-// Regular expression for validating phone number format (international format)
+/**
+ *  Regular expression for validating phone number format (international format)
+ */
 const phoneRegex = /^\+?\d{10,14}$/;
 
-// Schema validation for forgot password form
+/**
+ * Schema validation for forgot password form
+ */
 const forgotPassword = z.object({
     // Validates the email or phone field
     email: z

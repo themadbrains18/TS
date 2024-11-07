@@ -1,11 +1,13 @@
-import { AuthOptions, DefaultSession } from "next-auth"; // Importing necessary types from NextAuth
-import CredentialsProvider from "next-auth/providers/credentials"; // Importing Credentials provider for custom login
-import { jwtDecode } from "jwt-decode"; // Function to decode JWT tokens
-import GoogleProvider from "next-auth/providers/google"; // Google authentication provider
-import GithubProvider from "next-auth/providers/github"; // Github authentication provider
-import FacebookProvider from "next-auth/providers/facebook"; // Facebook authentication provider
+import { AuthOptions, DefaultSession } from "next-auth"; 
+import CredentialsProvider from "next-auth/providers/credentials"; 
+import { jwtDecode } from "jwt-decode"; 
+import GoogleProvider from "next-auth/providers/google"; 
+import GithubProvider from "next-auth/providers/github"; 
+import FacebookProvider from "next-auth/providers/facebook";
 
-// Extending NextAuth types to include additional fields
+/**
+ * Extending NextAuth types to include additional fields
+ */
 declare module "next-auth" {
   interface Session {
     id: string; // User ID
@@ -36,7 +38,9 @@ declare module "next-auth/jwt" {
   }
 }
 
-// NextAuth options
+/**
+ * NextAuth options
+ */
 export const authOptions: AuthOptions = {
   providers: [
     // Google authentication provider
@@ -146,14 +150,15 @@ export const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET, // Secret for JWT encryption
 };
 
-// Helper function to check if the token is expired
+/**
+ * Helper function to check if the token is expired
+ */
 const isTokenExpired = (token: string) => {
   if (!token) return true; // If token is missing, consider it expired
   try {
     const decodedToken = jwtDecode(token); // Decode the JWT token
     const currentTime = Date.now() / 1000; // Get the current time in seconds
 
-    // Check if the token's expiration time is less than the current time
     return decodedToken.exp && decodedToken?.exp < currentTime;
   } catch (error) {
     console.error('Error decoding token:', error);
