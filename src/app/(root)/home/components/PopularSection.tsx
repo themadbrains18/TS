@@ -36,7 +36,7 @@ type Template = {
     price: number;
     softwareType: SoftwareType;
     templateType: TemplateType;
-    sliderImages: SliderImage[]; // Updated sliderImages to hold an array of SliderImage objects
+    sliderImages: SliderImage[];
 };
 
 type ApiResponse = {

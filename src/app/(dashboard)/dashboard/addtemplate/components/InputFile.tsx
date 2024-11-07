@@ -52,7 +52,7 @@ const FileNameDisplay = ({
   return (
     <div className="relative border p-2 mb-2 z-50 mx-auto w-full">
       <p className='text-center'>{fileName}</p>
-      
+
     </div>
   );
 };
@@ -73,6 +73,16 @@ const FileUpload: React.FC<FileUploadProps> = ({
   const [fileError, setFileError] = useState<string | null>(null);
 
   const supportedFileTypes = supportedfiles.split(',');
+
+
+  /*
+   * Handles file input changes, including file validation, preview generation, and managing multiple file uploads.
+   * 
+   * This function is triggered when the user selects files through an input element and performs the following actions:
+   * 
+   * @param event - The change event that contains the selected files in `event.target.files`.
+   * 
+  */
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newFiles = event.target.files ? Array.from(event.target.files) : null;
@@ -117,6 +127,17 @@ const FileUpload: React.FC<FileUploadProps> = ({
       onFileSelect(multiple ? [...files, ...validFiles] : validFiles);
     }
   };
+
+
+
+  /*
+   * Handles the removal of a file from the list of selected files.
+   *
+   * This function is triggered when a user removes a file from the list. It performs the following actions:
+   *
+   * @param index - The index of the file to be removed from the lists of files, previews, and file names.
+   *
+   */
 
   const handleRemove = (index: number) => {
     const updatedFiles = files.filter((_, i) => i !== index);

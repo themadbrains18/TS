@@ -21,12 +21,16 @@ import { ProductDetailProps, TechTemplate } from '@/types/type'
 
 
 const ProductDescription: React.FC<ProductDetailProps> = ({ template }) => {
-    // State to manage the active tab index
+    /**
+     * State to manage the active tab index
+     */
     const [activetab, setActivetab] = useState(0);
 
 
 
-    // Button data for the tab titles and icons
+    /**
+     * Button data for the tab titles and icons
+     */
     const btndata = [
         { title: "Description" },
         { title: "Technical Details" },

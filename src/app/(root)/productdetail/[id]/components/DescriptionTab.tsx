@@ -1,17 +1,10 @@
 import { ProductDetailProps } from '@/types/type';
 import React, { useState } from 'react';
 
-/**
- * DescriptionTab component displays an overview with multiple paragraphs.
- *
- * @component
- * @example
- * return (
- *   <DescriptionTab description="Your description here" />
- * )
- */
 
-// Define the props interface
+/**
+ * Define the props interface
+ */
 interface DescriptionTabProps {
     description: string;
 }

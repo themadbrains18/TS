@@ -20,16 +20,6 @@ import DownloadTemplete from '@/components/popups/DownloadTemplete';
 import { ProductDetailProps, TechTemplate } from '@/types/type';
 import { useRouter } from 'next/navigation';
 
-/**
- * ProductBanner component displays the main product image and allows users to 
- * navigate through multiple images of the product. It also provides product details 
- * and options to download or preview the product.
- * 
- * @component
- * @returns {JSX.Element} The rendered ProductBanner component.
- */
-
-
 const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
 
 
@@ -41,25 +31,31 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
         setShowFullDescription(!showFullDescription);
     };
 
-    const maxLength = 300; // Set the max length for the description preview
+    const maxLength = 300; 
     const description = template?.description || '';
     const isLongDescription = description.length > maxLength;
 
-    // swiper images
+    /**
+     * swiper images
+     */
     const images = template.sliderImages
 
 
-    // State to manage the currently active image ID
+    /**
+     * State to manage the currently active image ID
+     */
     const [activeImageId, setActiveImageId] = useState(images[0]?.id);
-    const activeImage = images.find(image => image?.id === activeImageId)?.imageUrl; // Get the active image src
+    const activeImage = images.find(image => image?.id === activeImageId)?.imageUrl; 
 
-    // Reference to Swiper instance for custom navigation
+    /**
+     * Reference to Swiper instance for custom navigation
+     */
     const swiperRef = useRef<SwiperType | null>(null);
 
-    // pop up handler
-
+    /**
+     * pop up handler
+     */
     const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
-
     const openPopup = () => {
         if (template?.isPaid == false) {
             setIsPopupOpen(true);

@@ -37,6 +37,9 @@ const Page = () => {
 
     const { data: response, error, loading, fetchData } = useFetch<ApiResponse>();
 
+    /*
+     * Handles form submission for user registration.
+     */
     const onSubmit: SubmitHandler<FormData> = async (data) => {
         setFormData(data)
         await fetchData("/register", {
@@ -44,10 +47,8 @@ const Page = () => {
             body: JSON.stringify(data),
             headers: {
                 'Content-Type': 'application/json',
-              },
+            },
         });
-        // Uncomment reset when form successfully submitted
-        // reset();     
     };
 
     useEffect(() => {
@@ -60,7 +61,7 @@ const Page = () => {
         <>
             {
                 otpPath ? (
-                    <Otp formData={formData} api="register" setFormData={setFormData}/>
+                    <Otp formData={formData} api="register" setFormData={setFormData} />
                 ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-2">
                         {/* Left Section */}
@@ -156,11 +157,11 @@ const Page = () => {
 
                                     {/* Register Button */}
                                     <div className="my-[30px] tab:my-[60px]">
-                                         <Button disabled={loading ? true : false} loadingbtn={loading ? true : false} variant='primary' className='w-full items-center justify-center' type='submit' iconClass='w-7 h-7'>
-                                                {
-                                                    loading ? "" : "Create Account"
-                                                }
-                                            </Button>
+                                        <Button disabled={loading ? true : false} loadingbtn={loading ? true : false} variant='primary' className='w-full items-center justify-center' type='submit' iconClass='w-7 h-7'>
+                                            {
+                                                loading ? "" : "Create Account"
+                                            }
+                                        </Button>
                                     </div>
                                 </form>
                             </div>

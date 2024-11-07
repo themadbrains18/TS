@@ -30,7 +30,7 @@
 //     // Close the dropdown if clicked outside
 //     useOnClickOutside(dropdownRef, () => setIsOpen(false));
 
-    
+
 //     return (
 //         <div ref={dropdownRef} className="relative w-full">
 //             {/* Dropdown Button */}
@@ -100,19 +100,25 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
     options,
     onSelect,
     placeholder = 'Select an option',
-    error, // Error prop to handle validation
+    error,
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selected, setSelected] = useState<string | null>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
+    /*
+      * Handles the click event on an option in a selection list or dropdown.
+      * @param option - The selected option object, which includes details like the option's `name` and `id`.
+    */
     const handleOptionClick = (option: Option) => {
         setSelected(option.name);
         onSelect(option.id);
         // setIsOpen(false);
     };
 
-    // Close the dropdown if clicked outside
+    /**
+     * Close the dropdown if clicked outside
+    */
     useOnClickOutside(dropdownRef, () => setIsOpen(false));
 
     return (

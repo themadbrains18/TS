@@ -34,14 +34,18 @@ const Form = () => {
     const [formData, setFormData] = useState({}); // Stores form data for OTP submission
     const router = useRouter();
 
-    // Hook for managing form validation and submission
+    /**
+     * Hook for managing form validation and submission
+     */
     const { control, handleSubmit, formState: { errors } } = useForm<FormValues>({
         resolver: zodResolver(forgotPassword) // Using Zod validation for the form
     });
 
     const { data: response, loading, fetchData } = useFetch<ApiResponse>(); // Fetch hook to handle API requests
 
-    // Handle form submission
+    /**
+     * Handle form submission
+     */
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
         try {
             setFormData(data); // Save form data for OTP
@@ -58,7 +62,9 @@ const Form = () => {
         }
     };
 
-    // Handle OTP response and redirect to OTP page
+    /**
+     * Handle OTP response and redirect to OTP page
+     */
     useEffect(() => {
         if (response?.otp) {
             setOtppath(true); // Show OTP page if OTP was successfully sent

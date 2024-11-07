@@ -8,7 +8,9 @@ import { redirect } from 'next/navigation';
 const page = async() => {
     const session = await getServerSession(authOptions);
 
-    // If the user is logged in, redirect to the home page
+    /**
+     * If the user is logged in, redirect to the home page
+     */
     if (!session) {
         redirect('/login');
     }

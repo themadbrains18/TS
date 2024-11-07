@@ -2,7 +2,7 @@
 
 import FeatureCard from '@/components/cards/FeatureCard'
 import Icon from '@/components/Icon'
-import FeatureSkeleton from '@/components/skeletons/FeatureSkeleton' // Import your skeleton component
+import FeatureSkeleton from '@/components/skeletons/FeatureSkeleton' 
 import Button from '@/components/ui/Button'
 import useFetch from '@/hooks/useFetch'
 import { SoftwareType, TechTemplate } from '@/types/type'
@@ -27,7 +27,7 @@ type Template = {
     price: number;
     softwareType: SoftwareType;
     templateType: TemplateType;
-    sliderImages: SliderImage[]; // Updated sliderImages to hold an array of SliderImage objects
+    sliderImages: SliderImage[]; 
 };
 
 type ApiResponse = {

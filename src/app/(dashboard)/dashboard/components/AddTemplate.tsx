@@ -50,7 +50,7 @@ const AddTemplate = () => {
   const [hideIconStates, setHideIconStates] = useState<boolean[]>(Array(response?.templates?.length).fill(false));
   const [deletePopupIndex, setDeletePopupIndex] = useState<number | null>(null);
 
-  const router = useRouter(); // Initialize useRouter
+  const router = useRouter(); 
 
   const openPopup = (index: number) => {
     setCurrentTemplateIndex(index);
@@ -60,7 +60,7 @@ const AddTemplate = () => {
   const closePopup = () => {
     setIsPopupOpen(false);
     setCurrentTemplateIndex(null);
-    setDeletePopupIndex(null); // Reset delete popup index when closing
+    setDeletePopupIndex(null); 
   };
 
   const confirmHide = () => {
@@ -71,10 +71,12 @@ const AddTemplate = () => {
         return newStates;
       });
     }
-    closePopup(); // Close the popup after confirming
+    closePopup(); 
   };
 
-  // Function to handle the DELETE request
+  /**
+   * Function to handle the DELETE request
+   */
   const handleDelete = async (id: string) => {
     try {
       await fetchData(`/templates/${id}`, { method: 'DELETE' });
@@ -85,7 +87,9 @@ const AddTemplate = () => {
     }
   };
 
-  // Function to handle navigation to edit page
+  /**
+   * Function to handle navigation to edit page
+   */
   const handleEdit = (index: number) => {
     router.push(`/addtemplate`);
   };
