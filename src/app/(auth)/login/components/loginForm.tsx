@@ -8,7 +8,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
-import CheckBox from '@/components/ui/Checkbox';
+import CheckBox from '@/components/ui/checkbox';
 import useFetch from '@/hooks/useFetch';
 import Otp from "../../otp/page"
 import { useSession } from 'next-auth/react';
@@ -147,17 +147,11 @@ const LoginForm = () => {
 
                                         {/* Submit Button */}
                                         <div className="my-[60px]">
-                                            {/* <Button className="w-full items-center justify-center" type="submit" variant="primary" >
-                                                {loading ? "Logging in..." : "Login"}
-                                            </Button> */}
-                                            {
-                                                loading ? <Button type='submit' disabled loadingbtn={true} hideChild='hidden' iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' >
-
-                                                </Button> : <Button type='submit' variant='primary' className='w-full items-center justify-center' >
-                                                    Login
-                                                </Button>
-                                            }
-
+                                            <Button disabled={loading ? true : false} loadingbtn={loading ? true : false} variant='primary' className='w-full items-center justify-center' type='submit' iconClass='w-7 h-7'>
+                                                {
+                                                    loading ? "" : "Login"
+                                                }
+                                            </Button>
                                             {/* Error message display */}
                                             {/* {error && <p className="text-red-500 mt-2">Failed to login. Please try again.</p>} */}
 

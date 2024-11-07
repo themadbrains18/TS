@@ -343,7 +343,7 @@ const Download = () => {
         </div>
 
         {/* Load More Button */}
-        {downloads && !error && downloads.length > 6 && (
+        {downloads && !error && downloads.length >= 6 && (
           <div className="mt-5 flex justify-center">
             <Button
               className="w-full justify-center sm:w-auto"
