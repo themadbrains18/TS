@@ -199,7 +199,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                         <span className='text-[20px] leading-7 text-subparagraph font-bold' >{template?.isPaid ? '$' + template?.price : "$0.00"}</span>
                                     </div>
                                 </div>
-                                <Button onClick={openPopup} className='w-full mb-2.5 mt-5  md:mt-[30px] md:mb-5 justify-center py-2 md:py-[13px]' variant='primary' > Free — Download</Button>
+                                <Button onClick={openPopup} className='w-full mb-2.5 mt-5  md:mt-[30px] md:mb-5 justify-center py-2 md:py-[13px]' variant='primary' > {template?.isPaid ? '$' + template?.price : "Free — Download"} </Button>
                                 <Button link={`/preview/${template?.id}`} className='w-full justify-center' variant='liquid' >Preview</Button>
                                 {/* onClick={() => setShowPreviews(true)} */}
 

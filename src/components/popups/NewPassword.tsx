@@ -24,7 +24,7 @@ interface FormValues {
 }
 
 const NewPassword = ({ formData, otp }: newpasswordpopup) => {
-    console.log(otp ,"otp")
+    console.log(otp, "otp")
 
     console.log(formData, "formData")
     const [isChecked1, setIsChecked1] = useState(false);
@@ -110,10 +110,21 @@ const NewPassword = ({ formData, otp }: newpasswordpopup) => {
                 {/* Register Button */}
                 <div className='mt-6' >
                     {
-                        loading ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' hideChild='hidden'  >
-                        </Button> : <Button type='submit' variant='primary' className='w-full items-center justify-center' >
-                            Save
-                        </Button>
+                        loading ?
+                            <Button
+                                disabled type='submit'
+                                loadingbtn={true}
+                                iconClass='w-7 h-7'
+                                variant='primary'
+                                className='w-full items-center justify-center'
+                                hideChild='hidden'
+                            >
+                            </Button> :
+                            <Button type='submit'
+                                variant='primary'
+                                className='w-full items-center justify-center' >
+                                Save
+                            </Button>
                     }
                 </div>
             </form>

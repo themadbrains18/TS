@@ -9,7 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, {  useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
@@ -48,17 +48,20 @@ const NewPassword = ({ formdata }: any) => {
                 headers: {
                     'Content-Type': 'application/json', // Setting content type for JSON
                 },
-            });
-
-            // Redirect to login page if the password reset is successful
-            if (response?.success) {
-                router.push('/login');
             }
+        );
+      
+            // Redirect to login page if the password reset is successful
         } catch (err) {
             // Display error message if the request fails
             toast.error("Submission error");
         }
     };
+    useEffect(()=>{
+        if(response){
+            router.push('/login')
+        }
+    },[response])
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 ">
