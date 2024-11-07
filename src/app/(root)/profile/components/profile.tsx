@@ -156,7 +156,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
         try {
             await deleteuser(`/delete-account`, {
                 method: "delete",
-            }).then(()=>{
+            }).then(() => {
                 signOut()
             })
         } catch (error) {
@@ -320,10 +320,6 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                             </Button>
                                         }
                                     </div>
-
-
-
-
                                     <div className='py-[18px] px-5 border border-divider-100 flex items-center justify-between'>
                                         <h3 className='text-neutral-900 font-semibold capitalize leading-6'>Daily Download Balance :</h3>
                                         <p className='text-neutral-900 font-semibold capitalize leading-6'>{userData?.user?.freeDownloads || 0}</p>

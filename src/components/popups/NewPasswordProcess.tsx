@@ -10,7 +10,6 @@ import { signOut, useSession } from 'next-auth/react';
 import useFetch from '@/hooks/useFetch';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-import CheckBox from '../ui/Checkbox';
 import { newChangePassword } from '@/validations/NewPassword';
 import { zodResolver } from '@hookform/resolvers/zod';
 import NewPassword from './NewPassword';
