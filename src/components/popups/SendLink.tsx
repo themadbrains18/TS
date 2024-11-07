@@ -110,7 +110,7 @@ const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url }: Download
                         />
                         {errors.email && (
                             <span className="text-red-500">
-                                {errors.email?.message}
+                               Email is invalid
                             </span>
                         )}
                         {error && <p className='mt-1 text-xs text-red-600'>{error}</p>}

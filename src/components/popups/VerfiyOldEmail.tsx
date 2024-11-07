@@ -8,7 +8,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import Icon from '../Icon';
 import { signOut, useSession } from 'next-auth/react';
 import useFetch from '@/hooks/useFetch';
-import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 
 interface FormData {
@@ -18,16 +17,19 @@ interface FormData {
     otp?: string[];
     newemail?: string;
 }
+interface savedData {
+    currentEmail?: string;
+    newEmail?: string;
+    otp?: string[];
+}
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const VerfiyOldEmail: FC<verifyoldemail> = ({
     closePopup,
     isPopupOpen,
-    handlepasswordUpdate
 }) => {
 
-    const router = useRouter();
-    const { data: response, error, loading, fetchData } = useFetch<any>();
+    const { data: response, fetchData } = useFetch<any>();
     const { data: session } = useSession();
     const { register, handleSubmit, setValue, reset, setError, formState: { errors }, clearErrors, getValues } = useForm<FormData>();
     const [disabled, setDisabled] = useState(true);
@@ -35,9 +37,11 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
     const [loadingbtn, setLoadingbtn] = useState<boolean>(false);
     const [startTimer, setStartTimer] = useState(0); // Timer in seconds
     const [canResend, setCanResend] = useState(false);
-    const [resendData, setResendData] = useState({});
+    const [resendData, setResendData] = useState<savedData>();
     const [initialSend, setInitialSend] = useState(true);
 
+    console.log(resendData,"=resendData");
+    
     /**
      * This function handles the form submission for updating user email and handling OTP validation.
      * 
@@ -49,7 +53,7 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
             if (step === 1) data.currentEmail = session?.email || "";
             else data.newEmail = data?.email || "";
 
-            if (step === 2 && !emailRegex.test(data.email)) {
+            if (step === 2 &&  !emailRegex.test(data?.email)) {
                 setError("email", { message: "Invalid email format" });
                 return;
             }
@@ -78,14 +82,14 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
         }
     };
 
-   
-   
-   /**
-     * handleEmailUpdate: This function handles updating the user's email address based on the current step in the process.
-     * 
-     * Error Handling:
-     * - If an error occurs during the request, it is caught and logged to the console.
-     */
+
+
+    /**
+      * handleEmailUpdate: This function handles updating the user's email address based on the current step in the process.
+      * 
+      * Error Handling:
+      * - If an error occurs during the request, it is caught and logged to the console.
+      */
     const handleEmmailUpdate = async () => {
         try {
             setLoadingbtn(true);
@@ -105,8 +109,9 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
             }
 
             const payload = {
-                [step === 1 ? "currentEmail" : "newEmail"]: email,
+                [step === 1 ? "currentEmail" : "newEmail"]: email || "" ,
             };
+
 
             setResendData(payload);
 
@@ -125,10 +130,10 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
         }
     };
 
-   
-   /**
-     * This function handles the process of resending the OTP to the user's email address.
-     */
+
+    /**
+      * This function handles the process of resending the OTP to the user's email address.
+      */
     const resendCode = async () => {
         if (!canResend) return;
 

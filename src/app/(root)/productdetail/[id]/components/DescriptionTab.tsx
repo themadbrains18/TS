@@ -1,4 +1,3 @@
-import { ProductDetailProps } from '@/types/type';
 import React, { useState } from 'react';
 
 

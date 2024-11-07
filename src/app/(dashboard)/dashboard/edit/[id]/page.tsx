@@ -22,7 +22,7 @@ const page = async({ params }: { params: { id: string } }) => {
         return await response.json();
     };
 
-    let getData = await template();
+    const getData = await template();
 
     if (getData == null) {
         return <NotFound />
@@ -33,7 +33,6 @@ const page = async({ params }: { params: { id: string } }) => {
         <>
             <Suspense fallback={`<><div>Loading...</div></>`}>
                 <TemplateForm  initialData={getData} type='edit' id={params?.id}/>
-                {/* {(getData) === null ? <Dashborad404 /> : <Propertyform type="edit" initialData={getData} />} */}
             </Suspense>
         </>
     )

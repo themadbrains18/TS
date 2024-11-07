@@ -74,7 +74,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     /**
      * Fetch data hooks for template types, subcategories, and industries
      */
-    const { data, fetchData, loading, error } = useFetch<TemplateType[]>();
+    const { data, fetchData, loading } = useFetch<TemplateType[]>();
     const { data: templateData, fetchData: fetchTemplateData, } = useFetch<any>();
     const { data: industryData, fetchData: fetchIndustryData } = useFetch<IndustryType[]>();
 
@@ -104,7 +104,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
 
 
-    const { register, handleSubmit, control, formState: { errors }, setValue, clearErrors, setError, getValues } = useForm<FormData>({
+    const { register, handleSubmit, control, formState: { errors }, setValue, clearErrors, setError } = useForm<FormData>({
         defaultValues: { ...initialData },
         resolver: zodResolver(type == "create" ? uploadTemplateSchema : uploadTemplateUpdateSchema)
     });
@@ -332,7 +332,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                 'Authorization': `Bearer ${session?.token}`, // Adding Authorization header with Bearer token
             },
         }).then(async (res) => {
-            let result = await res.json()
+            const result = await res.json()
             if (!res?.ok) {
                 toast.error(result.message)
                 setLoader(false)

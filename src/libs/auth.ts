@@ -114,21 +114,21 @@ export const authOptions: AuthOptions = {
         token.token = user.token; // Store JWT token from API
         token.image = user.image || ""; // Store image URL
         token.freeDownloads = user.freeDownloads; // Store free downloads
-        // Check if the token has expired
-        if (token.token && isTokenExpired(token.token)) {
-          // Clear sensitive data and set an "expired" flag
-          return null;
-        }
       }
+      // // Check if the token has expired
+      // if (token.token && isTokenExpired(token.token)) {
+      //   // Clear sensitive data and set an "expired" flag
+      //   return null;
+      // }
       return token;
     },
 
     // Callback for session handling
     async session({ session, token }) {
-      // If the token is expired, return null (user will be logged out)
-      if (isTokenExpired(token.token)) {
-        return null;
-      }
+      // // If the token is expired, return null (user will be logged out)
+      // if (isTokenExpired(token.token)) {
+      //   return null;
+      // }
 
       // Add token data to the session object
       session.id = token.id;

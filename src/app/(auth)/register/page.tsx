@@ -31,11 +31,11 @@ const Page = () => {
     const [otpPath, setOtppath] = useState(false);
     const [formData, setFormData] = useState({})
 
-    const { control, reset, handleSubmit, formState: { errors } } = useForm<FormData>({
+    const { control,  handleSubmit, formState: { errors } } = useForm<FormData>({
         resolver: zodResolver(signupSchema)
     });
 
-    const { data: response, error, loading, fetchData } = useFetch<ApiResponse>();
+    const { data: response,  loading, fetchData } = useFetch<ApiResponse>();
 
     /*
      * Handles form submission for user registration.

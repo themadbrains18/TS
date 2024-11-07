@@ -4,26 +4,26 @@ import { verifyoldemail } from '@/types/type';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
 import InputOtp from '@/app/(auth)/otp/components/Inputotp';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import Icon from '../Icon';
 import { signOut, useSession } from 'next-auth/react';
 import useFetch from '@/hooks/useFetch';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-import CheckBox from '../ui/checkbox';
-import { newChangePassword } from '@/validations/NewPassword';
-import { zodResolver } from '@hookform/resolvers/zod';
 import NewPassword from './NewPassword';
 
 interface FormData {
     currentEmail: string;
     newEmail?: string;
-    email: string;
+    email?: string;
     otp?: string[];
     confirmPassword?: string,
     newPassword?: string
 
 }
+
+
+
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const NewPasswordProcess: FC<verifyoldemail> = ({
@@ -31,8 +31,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
     isPopupOpen,
     handlepasswordUpdate
 }) => {
-    const router = useRouter();
-    const { data: response, error, loading, fetchData } = useFetch<any>();
+    const { data: response, fetchData } = useFetch<any>();
 
     const { data: session } = useSession();
     const { register, handleSubmit, setValue, reset, setError, formState: { errors }, clearErrors, getValues } = useForm<FormData>();
@@ -42,7 +41,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
     const [loadingOtp, setLoadingOtp] = useState<boolean>(false);
     const [startTimer, setStartTimer] = useState(0); // Timer in seconds
     const [canResend, setCanResend] = useState(false);
-    const [resendData, setResendData] = useState({});
+    const [resendData, setResendData] = useState<FormData>();
     const [initialSend, setInitialSend] = useState(true);
     const [FormData, setFormData] = useState({})
     console.log(FormData, "check opt filed ")
@@ -56,7 +55,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
 
     const onSubmit: SubmitHandler<FormData> = async (data) => {
         try {
-          
+
 
             if (step === 1) data.currentEmail = session?.email || "";
             else data.newEmail = data?.email || "";
@@ -81,9 +80,9 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                     'Content-Type': 'application/json',
                 },
             });
-if(!response.ok){
-    setLoadingOtp(false) 
-}
+            if (!response.ok) {
+                setLoadingOtp(false)
+            }
         } catch (error) {
             console.error("Error updating email:", error);
             setLoadingOtp(false)
@@ -91,7 +90,7 @@ if(!response.ok){
         }
     };
 
-    
+
     /**
      * handleEmailUpdate function handles the process of updating the user's email address.
      * It validates the email, prepares the payload, and sends it to the server for updating.
@@ -110,13 +109,13 @@ if(!response.ok){
                 return;
             }
 
-            if (!emailRegex.test(email)) {
+            if (email && !emailRegex.test(email)) {
                 setError("email", { message: "Invalid email format" });
                 return;
             }
 
             const payload = {
-                ["currentEmail"]: email,
+                ["currentEmail"]: email||"",
             };
 
             setResendData(payload);
@@ -167,7 +166,7 @@ if(!response.ok){
         } catch (error) {
             console.log("Error resending OTP:", error);
         }
-        finally{
+        finally {
             setLoadingbtn(false)
         }
     };
@@ -252,7 +251,7 @@ if(!response.ok){
                                         // <button className="text-action-900" type="button" onClick={() => !initialSend ? resendCode() : handleEmmailUpdate()}>
                                         //     {initialSend ? (`${loadingbtn ? (<Icon name='loadingicon' />) : ("send otp")}`) : (`${loadingbtn ? (<Icon name='loadingicon' />) : ("Resend Code")}`)}
                                         // </button>
-                                    
+
                                         <button
                                             className="bg-primary-100 text-white capitalize font-semibold leading-6 transition-all duration-300 hover:bg-[#872fcb] py-[16px] px-[30px] text-nowrap"
                                             type="button"
@@ -283,7 +282,7 @@ if(!response.ok){
                                         Please check your mail for a 6-digit confirmation code to {session?.email}. Enter the confirmation code to verify.
                                     </p>
                                     <div className="mt-10">
-                                        <Button disabled={loadingOtp ? true : false} loadingbtn={loadingOtp? true : false} iconClass='w-7 h-7' className="w-full py-2 text-lg font-normal text-center justify-center" type="submit" variant="primary" >{loadingOtp ? "" : "Verify Now"}</Button>
+                                        <Button disabled={loadingOtp ? true : false} loadingbtn={loadingOtp ? true : false} iconClass='w-7 h-7' className="w-full py-2 text-lg font-normal text-center justify-center" type="submit" variant="primary" >{loadingOtp ? "" : "Verify Now"}</Button>
 
                                     </div>
                                 </div>

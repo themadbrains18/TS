@@ -6,7 +6,7 @@ import DescriptionTab from './DescriptionTab'
 import CreditTab from './CreditTab'
 import WhatsNewTab from './WhatsNewTab'
 import AuthorTab from './AuthorTab'
-import { ProductDetailProps, TechTemplate } from '@/types/type'
+import { ProductDetailProps } from '@/types/type'
 
 
 

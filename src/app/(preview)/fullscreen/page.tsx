@@ -12,13 +12,13 @@ import { useRouter } from 'next/navigation';
 import { PreviewImage } from '@/types/type';
 
 
-interface fullscreen {
-    previewMobileImages?: PreviewImage[],
-    previewImages?: PreviewImage[]
-}
+// interface fullscreen {
+//     previewMobileImages?: PreviewImage[],
+//     previewImages?: PreviewImage[]
+// }
 
 
-const FullScreen: FC<fullscreen> = ({
+const FullScreen: FC<any> = ({
     previewImages, previewMobileImages
 }) => {
     const router = useRouter();
@@ -53,7 +53,7 @@ const FullScreen: FC<fullscreen> = ({
                     autoHeight={true} // Automatically adjusts height based on slide content
                 >
                     
-                    {previewImages && previewImages?.map((image, index) => (
+                    {previewImages && previewImages?.map((image:PreviewImage, index:number) => (
                         <SwiperSlide key={index}>
                             <div className="flex justify-center">
                                 <Image
@@ -68,7 +68,7 @@ const FullScreen: FC<fullscreen> = ({
                         </SwiperSlide>
                     ))}
 
-                    {previewMobileImages && previewMobileImages?.map((image, index) => (
+                    {previewMobileImages && previewMobileImages?.map((image:PreviewImage, index:number) => (
                         <SwiperSlide key={index}>
                             <div className="flex justify-center">
                                 <Image

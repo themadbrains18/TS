@@ -17,14 +17,12 @@ import Icon from '@/components/Icon';
 import ProductDetailcheckbox from './ProductDetailcheckbox';
 import Link from 'next/link';
 import DownloadTemplete from '@/components/popups/DownloadTemplete';
-import { ProductDetailProps, TechTemplate } from '@/types/type';
-import { useRouter } from 'next/navigation';
+import { ProductDetailProps } from '@/types/type';
 
 const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
 
 
     const [showFullDescription, setShowFullDescription] = useState(false);
-    const [showPreviews, setShowPreviews] = useState<boolean>(false)
 
 
     const toggleDescription = () => {
@@ -197,7 +195,6 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                 </div>
                                 <Button onClick={openPopup} className='w-full mb-2.5 mt-5  md:mt-[30px] md:mb-5 justify-center py-2 md:py-[13px]' variant='primary' > {template?.isPaid ? '$' + template?.price : "Free — Download"} </Button>
                                 <Button link={`/preview/${template?.id}`} className='w-full justify-center' variant='liquid' >Preview</Button>
-                                {/* onClick={() => setShowPreviews(true)} */}
 
                                 {
                                     isPopupOpen &&

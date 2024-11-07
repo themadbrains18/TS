@@ -9,11 +9,8 @@ import Toggle from '@/components/ui/ToggleButton'
 import VerfiyOldEmail from '@/components/popups/VerfiyOldEmail'
 import useFetch from '@/hooks/useFetch'
 import { Session } from 'next-auth'
-import NewPassword from '@/components/popups/NewPassword'
 import DeleteUser from '@/components/popups/DeleteUser'
-import { METHODS } from 'http'
 import { useDownload } from '@/app/contexts/DailyDownloadsContext'
-// import { useDownload } from '@/app/contexts/DailyDownloadsContext'
 import { UserDetail } from '@/types/type'
 import NewPasswordProcess from '@/components/popups/NewPasswordProcess'
 import { signOut } from 'next-auth/react'
@@ -53,11 +50,11 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
     };
 
 
-    const { data: response, error, loading, fetchData } = useFetch<any>();
-    const { data: deleteUseracc, error: deleteerror, loading: deleteloading, fetchData: deleteuser } = useFetch<any>();
-    const { data: updateData, error: updateError, loading: updateLoading, fetchData: updateFetchData } = useFetch<any>();
-    const { data: updateNumberdata, error: updateNumbererror, loading: updateloadingNumber, fetchData: updateNumber } = useFetch<any>();
-    const { data: updatePassworddata, error: updatePassworderror, loading: updateloadingPassword, fetchData: updatePassword } = useFetch<any>();
+    const { data: response, fetchData } = useFetch<any>();
+    const { error: deleteerror, loading: deleteloading, fetchData: deleteuser } = useFetch<any>();
+    const { loading: updateLoading, fetchData: updateFetchData } = useFetch<any>();
+    const { loading: updateloadingNumber, fetchData: updateNumber } = useFetch<any>();
+    const { fetchData: updatePassword } = useFetch<any>();
 
 
     /**
@@ -83,12 +80,12 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
         }
     };
 
-   /**
-     * Fetches user data from the server.
-     * This function sends a request to retrieve the user data by calling the `/get-user` API endpoint.
-     *
-     * @throws {Error} - If an error occurs during the data fetch operation, it will be logged to the console.
-     */
+    /**
+      * Fetches user data from the server.
+      * This function sends a request to retrieve the user data by calling the `/get-user` API endpoint.
+      *
+      * @throws {Error} - If an error occurs during the data fetch operation, it will be logged to the console.
+      */
     const fetchUserData = async () => {
         try {
             fetchData(`/get-user`);
@@ -98,12 +95,12 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
         }
     };
 
-   /**
-     * Handles the name update process for the user.
-     * This function is triggered when the user attempts to update their name.
-     *
-     * @throws {Error} - If an error occurs during the name update operation, it will be logged to the console.
-     */
+    /**
+      * Handles the name update process for the user.
+      * This function is triggered when the user attempts to update their name.
+      *
+      * @throws {Error} - If an error occurs during the name update operation, it will be logged to the console.
+      */
     const handleNameUpdate = async () => {
         try {
             if (name === "") {
@@ -181,8 +178,8 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
             console.error("Error updating password:", error);
         }
     };
-    
-    
+
+
     /**
      * Handles the user account deletion process.
      * This function is triggered when the user attempts to delete their account.
@@ -202,10 +199,10 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
 
     }
 
-   /**
-     * useEffect to fetch user data when the component mounts.
-     * This effect runs only once when the component is first rendered.
-     */
+    /**
+      * useEffect to fetch user data when the component mounts.
+      * This effect runs only once when the component is first rendered.
+      */
     useEffect(() => {
         fetchUserData();
     }, []);

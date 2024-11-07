@@ -27,7 +27,7 @@ export interface Template {
 }
 const AddTemplate = () => {
 
-  const { data: response, error, loading, fetchData } = useFetch<Template>();
+  const { data: response,  fetchData } = useFetch<Template>();
 
   const fetchTemplates = async () => {
     await fetchData("/all-templates", { method: "GET" });
@@ -83,17 +83,11 @@ const AddTemplate = () => {
       // Optionally refetch templates after deletion
       await fetchData("/all-templates", { method: "GET" });
     } catch (error) {
-      console.error('Error deleting template:', error);
+      console.log('Error deleting template:', error);
     }
   };
 
-  /**
-   * Function to handle navigation to edit page
-   */
-  const handleEdit = (index: number) => {
-    router.push(`/addtemplate`);
-  };
-
+  
   useEffect(() => {
     if (response) {
       closePopup()

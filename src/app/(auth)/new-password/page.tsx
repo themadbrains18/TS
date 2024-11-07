@@ -9,14 +9,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, {  useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 
 const NewPassword = ({ formdata }: any) => {
-    const router = useRouter(); 
-    const [isChecked1, setIsChecked1] = useState(false); 
+    const router = useRouter();
+    const [isChecked1, setIsChecked1] = useState(false);
 
     /**
      *  Interface defining the form values
@@ -31,7 +31,7 @@ const NewPassword = ({ formdata }: any) => {
     /**
      * Fetch hook to handle API request
      */
-    const { data: response, error, loading, fetchData } = useFetch<FormValues>();
+    const { data: response, loading, fetchData } = useFetch<FormValues>();
 
     /**
      * React hook form setup with validation using zod
@@ -49,25 +49,26 @@ const NewPassword = ({ formdata }: any) => {
         formdata.confirmPassword = data.confirmPassword;
 
         try {
-            const result = await fetchData(`/reset-password`, {
+            await fetchData(`/reset-password`, {
                 method: "POST",
-                body: JSON.stringify(formdata), 
+                body: JSON.stringify(formdata),
                 headers: {
                     'Content-Type': 'application/json',
                 },
             }
-        );
-      
+            );
+
             // Redirect to login page if the password reset is successful
         } catch (err) {
-            toast.error("Submission error");
+            console.log(err)
+           
         }
     };
-    useEffect(()=>{
-        if(response){
+    useEffect(() => {
+        if (response) {
             router.push('/login')
         }
-    },[response])
+    }, [response])
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 ">
