@@ -301,7 +301,7 @@ export interface verifyoldemail {
   isPopupOpen: boolean,
   closePopup: () => void;
   register?: UseFormRegister<any>
-  handlepasswordUpdate: () => void
+  handlepasswordUpdate?: () => void
 }
 
 
