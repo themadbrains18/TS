@@ -162,7 +162,12 @@ const Page = () => {
                                                 loading ? "" : "Create Account"
                                             }
                                         </Button>
-                                    <div className=" pt-5">
+                                        <div className="text-end pt-5">
+                                                <Link href={'/forgot-password'} className="text-[16px] font-semibold leading-6 text-subparagraph">
+                                                    Forgot Password?
+                                                </Link>
+                                            </div>
+                                    <div className=" mt-[60px] py-[6px]">
                                         <p className='text-[16px] font-normal leading-6 text-textparagraph'>Already Have Account ?   <Link href={'/login'} className="text-textheading font-semibold">
                                             Login
                                         </Link></p>

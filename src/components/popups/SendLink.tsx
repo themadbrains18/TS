@@ -13,7 +13,9 @@ import { useDownload } from '@/app/contexts/DailyDownloadsContext';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// Define the validation schema with Zod
+/**
+ * Define the validation schema with Zod
+ */
 const emailSchema = z.object({
     email: z.string().email({ message: "Invalid email" }),
 });
@@ -41,19 +43,21 @@ const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url }: Download
         { icon: "instagram.svg" },
     ];
 
-    // Set up React Hook Form
+    /**
+     * Set up React Hook Form
+     */
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(emailSchema),
     });
 
 
-    // Handle form submission
+    /**
+     * Handle form submission
+     */
     const onSubmit = async (data: any) => {
         try {
             data.url = url || "";
-            data.userId = session?.id;  // Include userId only if it exists
-
-            // Call your API here. Example:
+            data.userId = session?.id; 
             await fetchData(`/templates/${id}/download`, {
                 method: 'POST',
                 headers: {
@@ -68,14 +72,16 @@ const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url }: Download
         }
     };
 
-
+    /**
+     * This `useEffect` hook listens for changes in the `response` object and performs two actions when `response` is available:
+     * 
+     * Dependencies:
+     * - This effect runs every time the `response` object changes (i.e., when `response` is updated with new data).
+     */
     useEffect(() => {
         if (response) {
-            // console.log(response,"==response");
             fetchDailyDownloads()
-            // setDownloads()
-            // If successful, you can handle the response here
-            openthirdpopup(); // Open third popup after successful submission
+            openthirdpopup();
         }
     }, [response]);
 

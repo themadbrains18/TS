@@ -1,13 +1,12 @@
 "use client"
-import React, { Fragment, useState } from 'react'
-import Modal from '../ui/Modal'
+import React, { Fragment, useEffect, useState } from 'react'
 import Button from '../ui/Button'
-import Icon from '../Icon';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import useFetch from '@/hooks/useFetch';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { newChangePassword } from '@/validations/NewPassword';
 import Input from '../ui/Input';
+import { signOut } from 'next-auth/react';
 import CheckBox from '../ui/checkbox';
 
 interface newpasswordpopup {
@@ -24,22 +23,27 @@ interface FormValues {
 }
 
 const NewPassword = ({ formData, otp }: newpasswordpopup) => {
-    console.log(otp, "otp")
-
-    console.log(formData, "formData")
     const [isChecked1, setIsChecked1] = useState(false);
-
+    const [isLoading , setisLoading] = useState(false);
 
     const { data: response, error, loading, fetchData } = useFetch<FormValues>();
 
     const { handleSubmit, control, formState: { errors } } = useForm<FormValues>({
         resolver: zodResolver(newChangePassword)
     });
+
+    /**
+     * onSubmit function handles form submission.
+     * It sends a POST request to reset the user's password.
+     * 
+     * @param data - The form data submitted by the user, which includes the new password, confirmation password, email, and OTP.
+     */
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
         console.log(data, "Form submission data");
 
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/reset-password`, {
+            setisLoading(true)
+            const result = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/reset-password`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -52,21 +56,23 @@ const NewPassword = ({ formData, otp }: newpasswordpopup) => {
                 }),
             });
 
-            if (response.ok) {
-                const result = await response.json();
-                console.log("Password reset successful:", result);
+            if (result.ok) {
+                const res = await result.json();
+                console.log("Password reset successful:", res);
+                signOut()
+
                 // Handle success (e.g., display a success message)
             } else {
-                console.error("Failed to reset password:", response.statusText);
+                console.error("Failed to reset password:", result.statusText);
+                setisLoading(false)
                 // Handle failure (e.g., display an error message)
             }
-        } catch (error) {
+        } catch (error) {   
             console.error("Error during password reset:", error);
         }
     };
     return (
         <>
-
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='  md:space-y-[30px] space-y-[15px] ' >
                     <Controller
@@ -109,23 +115,17 @@ const NewPassword = ({ formData, otp }: newpasswordpopup) => {
                 </div>
                 {/* Register Button */}
                 <div className='mt-6' >
-                    {
-                        loading ?
-                            <Button
-                                disabled type='submit'
-                                loadingbtn={true}
-                                iconClass='w-7 h-7'
-                                variant='primary'
-                                className='w-full items-center justify-center'
-                                hideChild='hidden'
-                            >
-                            </Button> :
-                            <Button type='submit'
-                                variant='primary'
-                                className='w-full items-center justify-center' >
-                                Save
-                            </Button>
-                    }
+
+                    <Button
+                        disabled={isLoading ? true : false}
+                        type='submit'
+                        loadingbtn={isLoading ? true : false}
+                        iconClass='w-7 h-7'
+                        variant='primary'
+                        className='w-full items-center justify-center'
+                    >
+                        {isLoading ? "" : "save"}
+                    </Button>
                 </div>
             </form>
 

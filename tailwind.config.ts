@@ -1,5 +1,7 @@
 import type { Config } from "tailwindcss";
-
+/**
+ *  Tailwind CSS Configuration
+ */
 const config: Config = {
   content: [
     "./index.html",

@@ -10,6 +10,7 @@ import { signOut, useSession } from 'next-auth/react';
 import useFetch from '@/hooks/useFetch';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
+import CheckBox from '../ui/checkbox';
 import { newChangePassword } from '@/validations/NewPassword';
 import { zodResolver } from '@hookform/resolvers/zod';
 import NewPassword from './NewPassword';
@@ -38,6 +39,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
     const [disabled, setDisabled] = useState(true);
     const [step, setStep] = useState<number>(1);
     const [loadingbtn, setLoadingbtn] = useState<boolean>(false);
+    const [loadingOtp, setLoadingOtp] = useState<boolean>(false);
     const [startTimer, setStartTimer] = useState(0); // Timer in seconds
     const [canResend, setCanResend] = useState(false);
     const [resendData, setResendData] = useState({});
@@ -45,8 +47,17 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
     const [FormData, setFormData] = useState({})
     console.log(FormData, "check opt filed ")
 
+    /**
+     * onSubmit function handles the form submission process.
+     * It processes the form data, checks for OTP completion, and sends the updated data to the server.
+     * 
+     * @param data - The form data that includes user input, such as email and OTP, to be processed and sent to the server.
+     */
+
     const onSubmit: SubmitHandler<FormData> = async (data) => {
         try {
+          
+
             if (step === 1) data.currentEmail = session?.email || "";
             else data.newEmail = data?.email || "";
 
@@ -59,6 +70,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
 
             delete data.otp;
             setFormData(data)
+            setLoadingOtp(true)
             await fetchData('/update-details', {
                 method: 'PUT',
                 body: JSON.stringify({
@@ -69,16 +81,26 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                     'Content-Type': 'application/json',
                 },
             });
-
+if(!response.ok){
+    setLoadingOtp(false) 
+}
         } catch (error) {
             console.error("Error updating email:", error);
+            setLoadingOtp(false)
+
         }
     };
 
+    
+    /**
+     * handleEmailUpdate function handles the process of updating the user's email address.
+     * It validates the email, prepares the payload, and sends it to the server for updating.
+     * 
+     * @returns {void}
+     */
     const handleEmmailUpdate = async () => {
         try {
             setLoadingbtn(true);
-
             const email = step === 1
                 ? (session?.email || "")
                 : getValues("email");
@@ -114,10 +136,18 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
         }
     };
 
+
+    /**
+     * resendCode function handles the process of resending an OTP (One-Time Password) to the user's email.
+     * It checks if the resend action is allowed, sends a request to the server, and manages the UI state accordingly.
+     * 
+     * @returns {void}
+     */
     const resendCode = async () => {
         if (!canResend) return;
 
         try {
+            setLoadingbtn(true)
             await fetch(`${process.env.NEXT_PUBLIC_APIURL}/resend-otp`, {
                 method: "POST",
                 body: JSON.stringify({ email: resendData?.currentEmail }),
@@ -137,10 +167,20 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
         } catch (error) {
             console.log("Error resending OTP:", error);
         }
+        finally{
+            setLoadingbtn(false)
+        }
     };
 
 
-    console.log(response?.otp, "here otp")
+
+
+    /**
+     * This hook listens for changes in the `response` object and updates various states accordingly.
+     * 
+     * Dependencies:
+     * - This effect runs every time `response` changes.
+    */
 
     useEffect(() => {
         if (response?.otp === true) {
@@ -161,6 +201,14 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
         }
     }, [response]);
 
+
+
+    /**
+     * This hook listens for changes in the `startTimer` object and updates various states accordingly.
+     * 
+     * Dependencies:
+     * - This effect runs every time `startTimer` changes.
+    */
     useEffect(() => {
         let timer: NodeJS.Timeout | null = null;
 
@@ -177,35 +225,8 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
         };
     }, [startTimer]);
 
-
-    console.log(errors, "==erros");
-
-
-    // step 2 
-    // const [isChecked1, setIsChecked1] = useState(false);
-    // interface FormValues {
-    //     newPassword: string,
-    //     confirmPassword: string,
-    //     otp: string,
-    //     success: boolean
-    // }
-
-    // const { data: response, error, loading, fetchData } = useFetch<FormValues>();
-
-
-    // const { handleSubmit: submitnewpassword, control, } = useForm<FormValues>({
-    //     resolver: zodResolver(newChangePassword)
-    // });
-
-
-    // const onSubmitstep2: SubmitHandler<FormValues> = async (data) => {
-    //     console.log(data, "==dataat")
-    // };
-
-
-
     return (
-        <Modal isOpen={isPopupOpen} onClose={() => { closePopup(); setStep(1); }}>
+        <Modal isOpen={isPopupOpen} className='max-w-[616px] w-full' onClose={() => { closePopup(); setStep(1); }}>
             <div className="relative px-4 py-9 sm:py-10 sm:px-10 max-w-[616px] bg-gradient-to-b from-[#E5EFFF] to-[#E5EFFF]">
                 <Icon onClick={() => { closePopup(); setStep(1); }} className="absolute top-5 right-5 fill-[#5D5775] w-5 h-5 cursor-pointer z-50" name="crossicon" />
                 <div className="py-10">
@@ -224,22 +245,23 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                                         onChange={() => clearErrors("email")}
                                     />
                                     {startTimer > 0 ? (
-                                        <span className="text-[14px] font-normal text-neutral-600">
+                                        <Button className='text-nowrap' variant='primary' type='button' disabled={true} >
                                             Resend OTP in {Math.floor(startTimer / 60)}:{(startTimer % 60).toString().padStart(2, '0')}
-                                        </span>
+                                        </Button>
                                     ) : (
                                         // <button className="text-action-900" type="button" onClick={() => !initialSend ? resendCode() : handleEmmailUpdate()}>
                                         //     {initialSend ? (`${loadingbtn ? (<Icon name='loadingicon' />) : ("send otp")}`) : (`${loadingbtn ? (<Icon name='loadingicon' />) : ("Resend Code")}`)}
                                         // </button>
+                                    
                                         <button
-                                            className="text-action-900"
+                                            className="bg-primary-100 text-white capitalize font-semibold leading-6 transition-all duration-300 hover:bg-[#872fcb] py-[16px] px-[30px] text-nowrap"
                                             type="button"
                                             onClick={() => !initialSend ? resendCode() : handleEmmailUpdate()}
                                         >
                                             {initialSend ? (
-                                                loadingbtn ? <Icon name="loadingicon" /> : "send otp"
+                                                loadingbtn ? <Icon className='w-7 h-7' name="loadingicon" /> : "send otp"
                                             ) : (
-                                                loadingbtn ? <Icon name="loadingicon" /> : "Resend Code"
+                                                loadingbtn ? <Icon className='w-7 h-7' name="loadingicon" /> : "Resend Code"
                                             )}
                                         </button>
 
@@ -249,7 +271,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                             </form>
                             <form onSubmit={handleSubmit(onSubmit)}>
                                 <div className="mt-10">
-                                    <label className="text-lg font-normal leading-7 text-neutral-900">Please enter one time OTP</label>
+                                    <label className="text-lg font-normal leading-7 text-neutral-900">Please enter OTP</label>
                                     <InputOtp
                                         className="space-x-5 m-5"
                                         register={register}
@@ -261,7 +283,8 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                                         Please check your mail for a 6-digit confirmation code to {session?.email}. Enter the confirmation code to verify.
                                     </p>
                                     <div className="mt-10">
-                                        <Button className="w-full py-2 text-lg font-normal" type="submit" variant="primary" >Verify Now</Button>
+                                        <Button disabled={loadingOtp ? true : false} loadingbtn={loadingOtp? true : false} iconClass='w-7 h-7' className="w-full py-2 text-lg font-normal text-center justify-center" type="submit" variant="primary" >{loadingOtp ? "" : "Verify Now"}</Button>
+
                                     </div>
                                 </div>
                             </form>

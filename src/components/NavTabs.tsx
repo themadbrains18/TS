@@ -17,21 +17,26 @@ import useFetch from "@/hooks/useFetch";
  */
 
 const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
-  const [activetab, setActivetab] = useState(0); // Track the currently active tab
+  const [activetab, setActivetab] = useState(0);
   const searchParams = useSearchParams();
   const [subCategory, setSubCategory] = useState<subCat>()
   const { data, loading, error, fetchData } = useFetch<TemplateResponse>()
 
+  /**
+   * useEffect Hook: This effect runs when either `searchParams` or `subCat` changes.
+   */
   useEffect(() => {
     const subCatId = searchParams.get('subcat');
 
-    // Find the index of the subcategory based on the subcat ID in the URL
     const index = subCat?.findIndex(item => item.id === subCatId) || 0;
     if (index !== -1) {
-      setActivetab(index); // Set active tab index based on the URL
+      setActivetab(index);
     }
   }, [searchParams, subCat]);
 
+  /**
+   * Handle the activation of a sub-category tab and fetch the corresponding templates.
+   */
   const handleActive = (item: subCat, index: number) => {
     setActivetab(index)
     setSubCategory(item)

@@ -11,15 +11,28 @@ const SearchComponent: React.FC<navtabprops> = ({ subCat, classname, opensearch,
     const [selectedCategory, setSelectedCategory] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
     const { data: templates, error, loading, fetchData } = useFetch<Template>();
-    // State to manage desktop search bar visibility
-    // const [opensearch, setOpensearch] = useState(false)
 
+
+    /**
+     * handleSearch function to fetch templates based on the provided query and category.
+     * This function triggers a GET request to the `/templates/search` endpoint, sending the search query and category ID as parameters.
+     * 
+     * @param query - The search term entered by the user.
+     * @param categoryId - The ID of the selected category to filter the templates.
+     */
     const handleSearch = async (query: string, categoryId: string) => {
         fetchData(`/templates/search?query=${query}&subCategoryId=${categoryId || ''}`, {
             method: 'GET',
         });
     };
 
+
+    /**
+     * useEffect hook that listens for changes to the `searchQuery` and `selectedCategory` states.
+     * Every time either of these values changes, the `handleSearch` function is called to fetch the templates.
+     * 
+     * The effect is dependent on `searchQuery` and `selectedCategory` to trigger the search whenever these values change.
+     */
     useEffect(() => {
 
         handleSearch(searchQuery, selectedCategory);

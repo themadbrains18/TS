@@ -19,7 +19,10 @@ const DownloadCard: FC<downloadcard> = ({
     premium,
     url
 }) => {
-    const [imgSrc, setImgSrc] = useState(image || downloadtemp); // Set initial image as `image` prop or fallback
+    /**
+     * Set initial image as `image` prop or fallback
+     */
+    const [imgSrc, setImgSrc] = useState(image || downloadtemp);
 
     return (
         <section className={cn`p-[10px] md:p-5 bg-white ${parentClass}`}>
@@ -30,7 +33,7 @@ const DownloadCard: FC<downloadcard> = ({
                     width={415}
                     height={342}
                     alt='download template'
-                    onError={() => setImgSrc(downloadtemp)} // Fallback to default image
+                    onError={() => setImgSrc(downloadtemp)} 
                 />
             </div>
             <div className='p-[10px] md:px-5  md:py-[15px] flex justify-between items-center'>

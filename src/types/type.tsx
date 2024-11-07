@@ -7,15 +7,15 @@ import { FieldError, UseFormRegister } from "react-hook-form";
  * @interface navcardprops
  */
 export interface navcardprops {
-  id?: string; // Unique identifier for the card
-  title?: string; // Title of the card
-  image?: string; // Image URL for the card
-  icon?: string; // Icon for the card
-  iconclass?: string; // Additional CSS classes for the icon
-  titleclass?: string; // Additional CSS classes for the title
-  imageclass?: string; // Additional CSS classes for the image
-  classname?: string; // CSS class for the card container
-  classnamemain?: string; // Main CSS class for the card container
+  id?: string; 
+  title?: string;
+  image?: string;
+  icon?: string; 
+  iconclass?: string;
+  titleclass?: string;
+  imageclass?: string;
+  classname?: string; 
+  classnamemain?: string;
 }
 
 /**
@@ -23,23 +23,23 @@ export interface navcardprops {
  * @interface ButtonProps
  */
 export interface ButtonProps {
-  variant?: "primary" | "secondary" | "liquid" | "solidicon" | "basic"; // Button style variant
-  isLoading?: boolean; // If true, shows loading state
-  type?: "button" | "submit" | "reset"; // Type of the button
-  children?: React.ReactNode; // Button content
-  onClick?: () => void; // Click handler
-  icon?: boolean; // If true, includes an icon
-  iconClass?: string; // Additional CSS class for the icon
-  link?: string; // URL for a link button
-  className?: string; // Additional CSS classes for the button
-  linkclass?: string; // CSS classes for the link
-  saveicon?: boolean; // If true, show save icon
-  downloadicon?: boolean; // If true, show download icon
-  editicon?: boolean; // If true, show edit icon
-  direction?: string; // Icon direction (e.g., left or right)
-  hideChild?: string; // CSS class to hide child components
-  disabled?: boolean; // If true, disables the button
-  loadingbtn?: boolean; // If true, shows loading state for button
+  variant?: "primary" | "secondary" | "liquid" | "solidicon" | "basic"; 
+  isLoading?: boolean; 
+  type?: "button" | "submit" | "reset"; 
+  children?: React.ReactNode; 
+  onClick?: () => void; 
+  icon?: boolean; 
+  iconClass?: string;
+  link?: string; 
+  className?: string; 
+  linkclass?: string; 
+  saveicon?: boolean; 
+  downloadicon?: boolean; 
+  editicon?: boolean; 
+  direction?: string; 
+  hideChild?: string; 
+  disabled?: boolean; 
+  loadingbtn?: boolean;
 }
 
 /**
@@ -426,17 +426,10 @@ export interface downloadcard {
  * @interface verifyoldemail
  */
 export interface verifyoldemail {
-<<<<<<< HEAD
-  isPopupOpen: boolean,
-  closePopup: () => void;
-  register?: UseFormRegister<any>
-  handlepasswordUpdate?: () => void
-=======
   isPopupOpen: boolean; // Whether the popup is open
   closePopup: () => void; // Function to close the popup
   register?: UseFormRegister<any>; // Register function for form
   handlepasswordUpdate?: () => void; // Handler for updating password
->>>>>>> fd150a33b7d04f318f1a84a67139478ace0e3fdb
 }
 
 /**

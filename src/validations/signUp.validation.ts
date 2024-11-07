@@ -1,7 +1,9 @@
 // validationSchema.ts
 import { z } from 'zod';
 
-// Defining the signup schema with validation rules
+/**
+ * Defining the signup schema with validation rules
+ */
 export const signupSchema = z.object({
     // Name validation: ensures the name field is not empty
     name: z.string().min(1, { message: "Name is required" }),
@@ -22,11 +24,12 @@ export const signupSchema = z.object({
     confirmPassword: z.string()
         .min(8, { message: "Confirm password must be at least 8 characters" }),
 })
-// Ensures the password and confirm password match
+/**
+ * Ensures the password and confirm password match
+ */
 .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
     path: ["confirmPassword"], 
 });
 
-// Type definition for signup form data using the inferred types from signupSchema
 export type SignupFormData = z.infer<typeof signupSchema>;
