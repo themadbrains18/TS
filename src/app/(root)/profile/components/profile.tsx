@@ -226,7 +226,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
             <section>
                 <VerfiyOldEmail closePopup={() => closePopup()} isPopupOpen={isPopupOpen} handlepasswordUpdate={handlepasswordUpdate} />
                 <NewPasswordProcess closePopup={() => closePopup()} isPopupOpen={isDeletepopup} />
-                <DeleteUser isPopupOpen={isDeleteUSer} closePopup={() => { setIsDeleteUser(false) }} deleteAccount={() => { deleteUser() }} />
+                <DeleteUser loading={deleteloading} isPopupOpen={isDeleteUSer} closePopup={() => { setIsDeleteUser(false) }} deleteAccount={() => { deleteUser() }} />
 
                 <div className="container">
                     <div className='max-w-[1162px] w-full'>
