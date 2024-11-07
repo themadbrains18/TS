@@ -3,12 +3,12 @@ import React, { Fragment, useState } from 'react'
 import Modal from '../ui/Modal'
 import Button from '../ui/Button'
 import Icon from '../Icon';
-import CheckBox from '../ui/Checkbox';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import useFetch from '@/hooks/useFetch';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { newChangePassword } from '@/validations/NewPassword';
 import Input from '../ui/Input';
+import CheckBox from '../ui/checkbox';
 
 interface newpasswordpopup {
     formData?: {
