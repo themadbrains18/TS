@@ -39,6 +39,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
     const [disabled, setDisabled] = useState(true);
     const [step, setStep] = useState<number>(1);
     const [loadingbtn, setLoadingbtn] = useState<boolean>(false);
+    const [loadingOtp, setLoadingOtp] = useState<boolean>(false);
     const [startTimer, setStartTimer] = useState(0); // Timer in seconds
     const [canResend, setCanResend] = useState(false);
     const [resendData, setResendData] = useState({});
@@ -48,6 +49,8 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
 
     const onSubmit: SubmitHandler<FormData> = async (data) => {
         try {
+          
+
             if (step === 1) data.currentEmail = session?.email || "";
             else data.newEmail = data?.email || "";
 
@@ -60,6 +63,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
 
             delete data.otp;
             setFormData(data)
+            setLoadingOtp(true)
             await fetchData('/update-details', {
                 method: 'PUT',
                 body: JSON.stringify({
@@ -70,16 +74,19 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                     'Content-Type': 'application/json',
                 },
             });
-
+if(!response.ok){
+    setLoadingOtp(false) 
+}
         } catch (error) {
             console.error("Error updating email:", error);
+            setLoadingOtp(false)
+
         }
     };
 
     const handleEmmailUpdate = async () => {
         try {
             setLoadingbtn(true);
-
             const email = step === 1
                 ? (session?.email || "")
                 : getValues("email");
@@ -267,7 +274,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                                         Please check your mail for a 6-digit confirmation code to {session?.email}. Enter the confirmation code to verify.
                                     </p>
                                     <div className="mt-10">
-                                        <Button disabled={loading ? true : false} loadingbtn={loading? true : false} iconClass='w-7 h-7' className="w-full py-2 text-lg font-normal text-center justify-center" type="submit" variant="primary" >{loading ? "" : "Verify Now"}</Button>
+                                        <Button disabled={loadingOtp ? true : false} loadingbtn={loadingOtp? true : false} iconClass='w-7 h-7' className="w-full py-2 text-lg font-normal text-center justify-center" type="submit" variant="primary" >{loadingOtp ? "" : "Verify Now"}</Button>
 
                                     </div>
                                 </div>
