@@ -1,7 +1,7 @@
 "use client";
 
 import Button from '@/components/ui/Button';
-import CheckBox from '@/components/ui/Checkbox';
+import CheckBox from '@/components/ui/checkbox';
 import Input from '@/components/ui/Input';
 import useFetch from '@/hooks/useFetch';
 import { newChangePassword } from '@/validations/NewPassword';
@@ -9,52 +9,56 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
+
 const NewPassword = ({ formdata }: any) => {
-    const router = useRouter();
-    const [isChecked1, setIsChecked1] = useState(false);
+    const router = useRouter(); // Router for navigation after successful submission
+    const [isChecked1, setIsChecked1] = useState(false); // State to toggle password visibility
+
+    // Interface defining the form values
     interface FormValues {
-        newPassword: string,
-        confirmPassword: string,
-        otp: string,
-        success: boolean
+        newPassword: string;
+        confirmPassword: string;
+        otp: string;
+        success: boolean;
     }
 
+    // Fetch hook to handle API request
     const { data: response, error, loading, fetchData } = useFetch<FormValues>();
 
-  
+    // React hook form setup with validation using zod
     const { handleSubmit, control, formState: { errors } } = useForm<FormValues>({
-        resolver: zodResolver(newChangePassword)
+        resolver: zodResolver(newChangePassword), // Validation schema applied here
     });
 
-
+    // Submit handler for form data
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
-        formdata.newPassword = data.newPassword
-        formdata.confirmPassword = data.confirmPassword
-        try {
-           
+        // Attaching new password and confirm password to the formdata
+        formdata.newPassword = data.newPassword;
+        formdata.confirmPassword = data.confirmPassword;
 
+        try {
+            // Sending form data to the backend for password reset
             const result = await fetchData(`/reset-password`, {
                 method: "POST",
-                body: JSON.stringify(formdata),
+                body: JSON.stringify(formdata), // Body of the POST request
                 headers: {
-                    'Content-Type': 'application/json'
-                }
+                    'Content-Type': 'application/json', // Setting content type for JSON
+                },
             });
 
+            // Redirect to login page if the password reset is successful
             if (response?.success) {
-                router.push('/login')
+                router.push('/login');
             }
-            
-
         } catch (err) {
+            // Display error message if the request fails
             toast.error("Submission error");
         }
     };
-
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 ">
@@ -87,18 +91,18 @@ const NewPassword = ({ formdata }: any) => {
 
                         <div className="flex flex-col justify-center h-[559px] md:h-[759px]">
                             <div className='  md:space-y-[30px] space-y-[15px] ' >
-                                {/* newPassword Input with Show Password Option */}
+                                {/* Input fields for new password and confirm password */}
                                 <Controller
                                     name='newPassword'
                                     control={control}
                                     render={({ field }) => (
                                         <Input
                                             {...field}
-                                            type={isChecked1 ? "text" : "password"}
+                                            type={isChecked1 ? "text" : "password"} // Toggle between password visibility
                                             placeholder="Email or Phone"
-                                            label=" Password"
+                                            label="Password"
                                             className=" placeholder:text-neutral-400 py-3 md:py-[18px]  px-5 bg-divider-100"
-                                            error={errors.newPassword?.message}
+                                            error={errors.newPassword?.message} // Display validation error
                                         />
                                     )}
                                 />
@@ -108,45 +112,43 @@ const NewPassword = ({ formdata }: any) => {
                                     render={({ field }) => (
                                         <Input
                                             {...field}
-                                            type={isChecked1 ? "text" : "password"}
+                                            type={isChecked1 ? "text" : "password"} // Toggle between password visibility
                                             placeholder="Your Password Again"
-                                            label=" Confirm Password"
+                                            label="Confirm Password"
                                             className=" placeholder:text-neutral-400 py-3 md:py-[18px]  px-5 bg-divider-100"
-                                            error={errors.confirmPassword?.message}
+                                            error={errors.confirmPassword?.message} // Display validation error
                                         />
                                     )}
                                 />
-                                {/* Checkbox to Toggle Password Visibility */}
+                                {/* Checkbox for showing password */}
                                 <CheckBox
                                     id="checkbox1"
                                     label="Show Password"
                                     checked={isChecked1}
-                                    onChange={() => setIsChecked1(!isChecked1)}
+                                    onChange={() => setIsChecked1(!isChecked1)} // Toggle password visibility
                                     labelPosition="left"
                                     customClass="my-custom-checkbox"
                                 />
                             </div>
 
+                            {/* Password reminder */}
                             <h2 className='text-[14px] font-normal leading-5 text-neutral-600  pt-[60px] ' >New Password Must Be Different From Previous Used Password.</h2>
 
-
-                            {/* Register Button */}
+                            {/* Submit Button */}
                             <div className='my-[60px]' >
-                                  {
-                                        loading ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' hideChild='hidden'  >
-                                         
-                                        </Button> : <Button type='submit' variant='primary' className='w-full items-center justify-center' >
-                                        Save New Password
-                                        </Button>
+                                <Button disabled={loading ? true : false} loadingbtn={loading ? true : false} variant='primary' className='w-full items-center justify-center' type='submit' iconClass='w-7 h-7'>
+                                    {
+                                        loading ? "" : "Save New Password" // Button text changes based on loading state
                                     }
+                                </Button>
                             </div>
                         </div>
                     </form>
-                    {/* Registration Prompt */}
+
+                    {/* Registration prompt */}
                     <h3 className="text-[16px] font-normal leading-6 text-textparagraph pt-[30px] ">
                         Not a member yet?{' '}
                         <Link href={"/register"} className="text-textheading font-semibold">Register Now</Link>
-
                     </h3>
                 </div>
             </div>

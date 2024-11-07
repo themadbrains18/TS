@@ -1,5 +1,4 @@
 "use client";
-import Icon from '@/components/Icon';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import { loginSchema } from '@/validations/loginValidation';
@@ -8,43 +7,45 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
-import CheckBox from '@/components/ui/Checkbox';
+import CheckBox from '@/components/ui/checkbox';
 import useFetch from '@/hooks/useFetch';
 import Otp from "../../otp/page"
-import { useSession } from 'next-auth/react';
+import {  useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
+
 const LoginForm = () => {
-    const { data: session, status } = useSession();
-    const router = useRouter();
+    const { data: session, status } = useSession(); // Using session hook from NextAuth to get current session
+    const router = useRouter(); // Initializing router to handle redirects
 
-    const [isChecked1, setIsChecked1] = useState(false);
-    const [otpPath, setOtppath] = useState(false);
-    const [formData, setFormData] = useState({})
+    const [isChecked1, setIsChecked1] = useState(false); // State for controlling password visibility
+    const [otpPath, setOtppath] = useState(false); // State to determine whether to show OTP page
+    const [formData, setFormData] = useState({}); // State to store form data
 
-
-    // Form Values Interface
+    // Interface to define structure of form values
     interface FormValues {
-        email: string;
-        password: string;
+        email: string; // User email
+        password: string; // User password
     }
 
+    // React Hook Form setup with Zod validation
     const { control, reset, handleSubmit, formState: { errors } } = useForm<FormValues>({
-        resolver: zodResolver(loginSchema),
+        resolver: zodResolver(loginSchema), // Applying Zod validation schema
     });
 
-    // Response Interface for Fetch Hook
+    // Interface to define structure of API response
     interface ApiResponse {
-        otp: string;
-        success: boolean;
+        otp: string; // OTP received from the API
+        success: boolean; // API success status
     }
 
-    // Fetch hook to make API requests
+    // Fetch hook to handle API requests for login
     const { data: response, error, loading, fetchData } = useFetch<ApiResponse>();
-    console.log(error, "erro")
-    // Submit handler with API request
+
+    // Submit handler for the login form
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
-        setFormData(data)
+        setFormData(data); // Set form data to state
+        // Make API request to login
         await fetchData("/login", {
             method: "POST",
             body: JSON.stringify(data),
@@ -52,26 +53,28 @@ const LoginForm = () => {
                 "Content-Type": "application/json",
             },
         });
-        // Uncomment reset when form successfully submitted
+        // Reset the form upon successful login response
         if (response?.success) {
             reset();
         }
     };
 
+    // Effect hook to manage redirection or OTP flow
     useEffect(() => {
         if (response?.otp) {
-            setOtppath(true);
+            setOtppath(true); // Set OTP path if response contains OTP
         }
         if (session) {
-            router.push('/'); // Redirect to the home page if the user is logged in
+            router.push('/'); // Redirect to home if the user is already logged in
         }
     }, [response, session, router]);
 
     return (
         <>
+            {/* Conditionally render OTP component or login form */}
             {
                 otpPath ? (
-                    <Otp formData={formData} api="login" setFormData={setFormData} />
+                    <Otp formData={formData} api="login" setFormData={setFormData} /> // OTP page
                 ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-2">
                         {/* Left Section with Image and Text */}
@@ -100,6 +103,7 @@ const LoginForm = () => {
                             <div className="max-w-[599px] m-auto flex flex-col">
                                 <h2 className="text-[22px] tab:text-[36px] font-bold leading-[44px] pb-[30px] md:pb-[60px]">Hi, Welcome Back!</h2>
                                 <div className="flex flex-col justify-center h-[759px]">
+                                    {/* Login Form */}
                                     <form onSubmit={handleSubmit(onSubmit)}>
                                         <div className="md:space-y-[30px] space-y-[15px]">
                                             {/* Email Input */}
@@ -147,18 +151,12 @@ const LoginForm = () => {
 
                                         {/* Submit Button */}
                                         <div className="my-[60px]">
-                                            {/* <Button className="w-full items-center justify-center" type="submit" variant="primary" >
-                                                {loading ? "Logging in..." : "Login"}
-                                            </Button> */}
-                                            {
-                                                loading ? <Button type='submit' disabled loadingbtn={true} hideChild='hidden' iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' >
-
-                                                </Button> : <Button type='submit' variant='primary' className='w-full items-center justify-center' >
-                                                    Login
-                                                </Button>
-                                            }
-
-                                            {/* Error message display */}
+                                            <Button disabled={loading ? true : false} loadingbtn={loading ? true : false} variant='primary' className='w-full items-center justify-center' type='submit' iconClass='w-7 h-7'>
+                                                {
+                                                    loading ? "" : "Login"
+                                                }
+                                            </Button>
+                                            {/* Error message display (commented out) */}
                                             {/* {error && <p className="text-red-500 mt-2">Failed to login. Please try again.</p>} */}
 
                                             {/* Forgot Password Link */}
@@ -170,39 +168,12 @@ const LoginForm = () => {
                                         </div>
                                     </form>
 
-                                    {/* Social Media Buttons */}
-                                    <div className="flex flex-col lg:flex-row gap-[15px] items-center">
-                                        <button
-                                            aria-label="Sign in with Google"
-                                            className="px-6 py-[10px] flex items-center border border-divider-100 justify-center lg:max-w-[189px] w-full gap-[10px]"
-                                        >
-                                            <Icon name="goggle" />
-                                            <h2 className="text-[16px] font-normal leading-6 text-action-900">Google</h2>
-                                        </button>
-
-                                        <button
-                                            aria-label="Sign in with Facebook"
-                                            className="px-6 py-[10px] flex items-center border border-divider-100 justify-center lg:max-w-[189px] w-full gap-[10px]"
-                                        >
-                                            <Icon name="facebook" />
-                                            <h2 className="text-[16px] font-normal leading-6 text-action-900">Facebook</h2>
-                                        </button>
-
-                                        <button
-                                            aria-label="Sign in with Twitter"
-                                            className="px-6 py-[10px] flex items-center border border-divider-100 justify-center lg:max-w-[189px] w-full gap-[10px]"
-                                        >
-                                            <Icon name="twitter" />
-                                            <h2 className="text-[16px] font-normal leading-6 text-action-900">Twitter</h2>
-                                        </button>
-                                    </div>
+                                    {/* Registration Prompt */}
+                                    <h3 className="text-[16px] font-normal leading-6 text-textparagraph pt-[30px] md:pt-[60px]">
+                                        Not a member yet?{' '}
+                                        <Link href={"/register"} className="text-textheading font-semibold">Register Now</Link>
+                                    </h3>
                                 </div>
-
-                                {/* Registration Prompt */}
-                                <h3 className="text-[16px] font-normal leading-6 text-textparagraph pt-[30px] md:pt-[60px]">
-                                    Not a member yet?{' '}
-                                    <Link href={"/register"} className="text-textheading font-semibold">Register Now</Link>
-                                </h3>
                             </div>
                         </div>
                     </div>

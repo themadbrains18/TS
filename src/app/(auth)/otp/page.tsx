@@ -166,13 +166,11 @@ const Otp = ({ formData, api, setFormData }: any) => {
 
 
                                     <div className='mb-[60px]'>
-                                        {
-                                            loading ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' >
-                                                Verifying
-                                            </Button> : <Button type='submit' variant='primary' className='w-full items-center justify-center' >
-                                                Verify Now
+                                             <Button disabled={loading ? true : false} loadingbtn={loading ? true : false} variant='primary' className='w-full items-center justify-center' type='submit' iconClass='w-7 h-7'>
+                                                {
+                                                    loading ? "" : "Verify Now"
+                                                }
                                             </Button>
-                                        }
                                     </div>
                                     {startTimer > 0 ? (
                                         <h3 className='text-center text-[14px] leading-5 font-normal text-neutral-600'>

@@ -16,6 +16,7 @@ import { useDownload } from '@/app/contexts/DailyDownloadsContext'
 // import { useDownload } from '@/app/contexts/DailyDownloadsContext'
 import { UserDetail } from '@/types/type'
 import NewPasswordProcess from '@/components/popups/NewPasswordProcess'
+import { signOut } from 'next-auth/react'
 
 
 interface sessionProps {
@@ -23,7 +24,7 @@ interface sessionProps {
     userData: UserDetail
 }
 
-const Profile: React.FC<sessionProps> = ({ session,userData }) => {
+const Profile: React.FC<sessionProps> = ({ session, userData }) => {
 
     // Separate state for each button
     const [isNameActive, setIsNameActive] = useState<boolean>(false)
@@ -40,7 +41,7 @@ const Profile: React.FC<sessionProps> = ({ session,userData }) => {
     const [nameError, setNameeror] = useState<string>();
     const [number, setNumber] = useState(userData?.user ? userData?.user.number : '');
     const [phoneNumberError, setPhoneNumberError] = useState<string>();
-    const {fetchDailyDownloads } = useDownload()
+    const { fetchDailyDownloads } = useDownload()
 
     const closePopup = () => {
         setIsPopupOpen(false);
@@ -51,8 +52,8 @@ const Profile: React.FC<sessionProps> = ({ session,userData }) => {
         setIsPopupOpen(true);
     };
 
-    console.log(userData,"==user data");
-    
+    console.log(userData, "==user data");
+
     const { data: response, error, loading, fetchData } = useFetch<any>();
     const { data: deleteUseracc, error: deleteerror, loading: deleteloading, fetchData: deleteuser } = useFetch<any>();
     const { data: updateData, error: updateError, loading: updateLoading, fetchData: updateFetchData } = useFetch<any>();
@@ -153,13 +154,15 @@ const Profile: React.FC<sessionProps> = ({ session,userData }) => {
 
     const deleteUser = async () => {
         try {
-            await deleteuser(`/delete-account/${session?.id}`,{
-                method:"Delete"
+            await deleteuser(`/delete-account`, {
+                method: "delete",
+            }).then(()=>{
+                signOut()
             })
         } catch (error) {
             console.log(deleteerror)
         }
-       
+
     }
 
     useEffect(() => {
@@ -169,8 +172,8 @@ const Profile: React.FC<sessionProps> = ({ session,userData }) => {
     useEffect(() => {
 
         if (response) {
-    //   console.log(response,"==response");
-      
+            //   console.log(response,"==response");
+
             fetchDailyDownloads()
             setProfileImage(response?.user?.profileImageUrl || response?.user?.profileImg || profileimage);
         }
@@ -178,7 +181,7 @@ const Profile: React.FC<sessionProps> = ({ session,userData }) => {
 
 
     // console.log(response,"==response");
-    
+
     return (
         <>
             <section>
@@ -348,10 +351,10 @@ const Profile: React.FC<sessionProps> = ({ session,userData }) => {
                                 <p className='pt-1 md:pt-5 text-sm md:text-base  font-normal leading-5 md:leading-6 text-textparagraph max-w-[1106px]'>Freepik will process your data to send you information about our products and services, promotions, surveys, raffles, based on our legitimate interest, and updates from the creators you follow, if you have consented to this. Your data will not be disclosed to third parties. They will be communicated outside the EU under the terms of the <a href='#' className='text-primary-100'>privacy policy</a> . You can opt out of our notifications with the slider.<a href='#' className='text-primary-100'> More information</a></p>
                             </div>
                         </div>
-                        {/* <div className='max-w-[670px] mt-4 md:mt-[50px]'>
-                            <Button className='py-[13px] text-lg px-[30px]' variant='secondary'>delete account</Button>
+                        <div className='max-w-[670px] mt-4 md:mt-[50px]'>
+                            <Button className='py-[13px] text-lg px-[30px]' variant='secondary' type='button' onClick={() => { setIsDeleteUser(true) }}>delete account</Button>
                             <p className='pt-5 text-textparagraph'><strong>Note:</strong> As you have an active paid plan, you can't delete your account directly. Please contact <a href="#" className='text-primary-100 '>support@freepik.com</a> for assistance </p>
-                        </div> */}
+                        </div>
                     </div>
                 </div>
             </section>

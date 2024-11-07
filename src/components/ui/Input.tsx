@@ -49,6 +49,7 @@ const Input = React.forwardRef<HTMLInputElement, InputFieldProps>(({
                 disabled={disabled ? true : false}
                 onChange={onChange}
                 placeholder={placeholder}
+                autoComplete=''
                 className={`flex text-subparagraph w-full outline-none sm:text-sm placeholder:text-sm placeholder:leading-5 placeholder:text-neutral-400 py-3 md:py-[18px] px-5 bg-divider-100 placeholder:capitalize border border-divider-100 ${error ? 'border-red-500' : ''} ${className}`}
             />}
             {/* Display error message if there is an error */}

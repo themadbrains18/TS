@@ -1,38 +1,32 @@
 // validationSchema.ts
 import { z } from 'zod';
 
-
-
+// Defining the signup schema with validation rules
 export const signupSchema = z.object({
+    // Name validation: ensures the name field is not empty
     name: z.string().min(1, { message: "Name is required" }),
+
+    // Email validation: ensures the email field is not empty and has a valid email format
     email: z.string()
-        .min(1, { message: "Email is required" }) // Ensures the email field is not empty
-        .email({ message: "Please enter a valid email address" }), // Checks for valid email format
+        .min(1, { message: "Email is required" }) 
+        .email({ message: "Please enter a valid email address" }),
+
+    // Password validation: must be at least 8 characters, include at least one lowercase letter, one uppercase letter, one number, and one special character
     password: z.string()
-        .min(8, { message: "Password must be at least 8 characters" })
+        .min(8, { message: "Password must be at least 8 characters" }) 
         .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\W_]).{8,}$/, {
             message: "Password must include at least one lowercase letter, one uppercase letter, one number, and one special character"
         }),
+
+    // Confirm password validation: must be at least 8 characters
     confirmPassword: z.string()
         .min(8, { message: "Confirm password must be at least 8 characters" }),
-}).refine((data) => data.password === data.confirmPassword, {
+})
+// Ensures the password and confirm password match
+.refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
-    path: ["confirmPassword"],
+    path: ["confirmPassword"], 
 });
 
-
-// export const signupSchemaOtp = signupSchema.extend({
-//     otp: z.string()
-//       .length(6, "OTP must be exactly 6 digits")
-//       .regex(/^\d{6}$/, "OTP must be a 6-digit number")
-//       .optional(), // Adjust this if you want the OTP to be required
-//       date_of_birth : z.object({}).default({}),
-//       marital_status : z.number().default(1),
-//       newsletter : z.string().default('0'),
-//       anniversary_date : z.string().default(''),
-//       otp_id: z.string()
-//   })
-
+// Type definition for signup form data using the inferred types from signupSchema
 export type SignupFormData = z.infer<typeof signupSchema>;
-// export type SignupFormOtpData = z.infer<typeof signupSchemaOtp>;
-
