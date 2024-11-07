@@ -491,6 +491,7 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
                                         loadingbtn ? <Icon name="loadingicon" /> : "Resend Code"
                                     )}
                                 </button>
+                                // <Button variant='primary' type='button' onClick={() => !initialSend ? resendCode() : handleEmmailUpdate()} ></Button>
 
                             )}
                             {errors?.email && <p className="text-red-500">{errors?.email?.message}</p>}

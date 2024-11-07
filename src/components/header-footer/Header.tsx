@@ -51,7 +51,7 @@ const Header = () => {
   const [profile, setProfile] = useState<boolean>(false)
   const [profileres, setProfileres] = useState<boolean>(false)
   console.log(profileres, "profileresprofileresprofileresprofileres")
-
+  const profileoutsideclick = useRef<HTMLDivElement>(null);
 
   const openProfile = () => {
     setProfile(!profile)
@@ -112,6 +112,9 @@ const Header = () => {
   const resinputoff = () => {
     setOpensearch(false)
   }
+
+  // handleoutside click 
+  useOnClickOutside(profileoutsideclick, () => setProfile(false));
 
   const isLoggedIn = session && session?.token;
 
@@ -177,7 +180,8 @@ const Header = () => {
               {
                 isLoggedIn &&
                 <div className="relative">
-                  <div onClick={openProfile} className="w-[50px] h-[50px] rounded-full cursor-pointer ">
+                  <div ref={profileoutsideclick} onClick={()=>{openProfile()
+                  }} className="w-[50px] h-[50px] rounded-full cursor-pointer ">
                     <Image
                       width={50}
                       height={50}
@@ -189,7 +193,7 @@ const Header = () => {
                   <div className={`absolute ${profile ? "opacity-100 visible" : "invisible opacity-0"}  transition-all  duration-[0.5s] top-[94%]  max-[1678px]:right-0 right-[-73px] mt-2 w-[216px]  bg-white shadow-lg rounded-lg`}>
                     <div className="pt-[6px] mt-[-6px]" >
                       <div className="py-2.5 ">
-                        <h2 className="leading-6 text-[16px] font-semibold text-textheading py-2 pl-[30px] pr-[27px] mb-2.5">
+                        <h2 className="leading-6 text-[16px] font-semibold text-textheading py-2 pl-[30px] pr-[27px] mb-2.5 max-w-60 truncate">
                           {session?.email}
                         </h2>
                         <div className="px-[30px] mb-2.5 " >
