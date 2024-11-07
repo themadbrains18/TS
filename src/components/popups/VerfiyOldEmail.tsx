@@ -511,7 +511,7 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
                                 Please check your mail for a 6-digit confirmation code to {session?.email}. Enter the confirmation code to verify.
                             </p>
                             <div className="mt-10">
-                                <Button className="w-full py-2 text-lg font-normal" type="submit" variant="primary" disabled={disabled}>Verify Now</Button>
+                                <Button className="w-full py-2 text-lg font-normal" type="submit" variant="primary" disabled={loading ? true : false}>Verify Now</Button>
                             </div>
                         </div>
                     </form>

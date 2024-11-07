@@ -110,12 +110,11 @@ const Form = () => {
                                         </div>
                                         {/* Send OTP  Button */}
                                         <div className='my-[60px]' >
-                                            {
-                                                loading ? <Button disabled type='submit' loadingbtn={true} hideChild='hidden' iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' >
-                                                </Button> : <Button type='submit' variant='primary' className='w-full items-center justify-center' >
-                                                    Send Otp
-                                                </Button>
-                                            }
+                                                <Button disabled={loading ? true : false}  loadingbtn={loading ? true : false} variant='primary' className='w-full items-center justify-center' type='submit' iconClass='w-7 h-7'>
+                                                {
+                                                    loading ? "" : " Send Otp"
+                                                }
+                                            </Button>
                                         </div>
                                     </form>
                                     {/* Social Media Buttons */}

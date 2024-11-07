@@ -1,7 +1,7 @@
 "use client";
 
 import Button from '@/components/ui/Button';
-import CheckBox from '@/components/ui/Checkbox';
+import CheckBox from '@/components/ui/checkbox';
 import Input from '@/components/ui/Input';
 import useFetch from '@/hooks/useFetch';
 import { newChangePassword } from '@/validations/NewPassword';
@@ -132,13 +132,11 @@ const NewPassword = ({ formdata }: any) => {
 
                             {/* Register Button */}
                             <div className='my-[60px]' >
-                                  {
-                                        loading ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' hideChild='hidden'  >
-                                         
-                                        </Button> : <Button type='submit' variant='primary' className='w-full items-center justify-center' >
-                                        Save New Password
-                                        </Button>
-                                    }
+                                               <Button disabled={loading ? true : false} loadingbtn={loading ? true : false} variant='primary' className='w-full items-center justify-center' type='submit' iconClass='w-7 h-7'>
+                                                {
+                                                    loading ? "" : "Save New Password"
+                                                }
+                                            </Button>
                             </div>
                         </div>
                     </form>

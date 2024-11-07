@@ -156,13 +156,11 @@ const Page = () => {
 
                                     {/* Register Button */}
                                     <div className="my-[30px] tab:my-[60px]">
-                                          {
-                                        loading ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='w-full items-center justify-center' hideChild='hidden' >
-                                      
-                                        </Button> : <Button type='submit' variant='primary' className='w-full items-center justify-center' >
-                                        Create Account
-                                        </Button>
-                                    }
+                                         <Button disabled={loading ? true : false} loadingbtn={loading ? true : false} variant='primary' className='w-full items-center justify-center' type='submit' iconClass='w-7 h-7'>
+                                                {
+                                                    loading ? "" : "Create Account"
+                                                }
+                                            </Button>
                                     </div>
                                 </form>
                             </div>
