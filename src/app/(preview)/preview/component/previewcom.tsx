@@ -4,6 +4,7 @@ import React, { FC, Fragment, useState } from 'react'
 import Button from '@/components/ui/Button'
 import Image from 'next/image'
 import { PreviewImage } from '@/types/type'
+import FullScreen from '../../fullscreen/page'
 
 interface previewimagesprops {
     previewImages?: PreviewImage[],
@@ -21,6 +22,10 @@ const Previewcom: FC<previewimagesprops> = ({ previewImages, previewMobileImages
 
     return (
         <>
+        {
+            showFullScreen ?
+            <FullScreen previewImages={previewImages} previewMobileImages={previewImages}/>
+        :
             <section className='pt-10 md:pt-20 bg-bgcolor'>
                 <div className="container">
                     <div className='flex items-center gap-x-5'>
@@ -68,6 +73,7 @@ const Previewcom: FC<previewimagesprops> = ({ previewImages, previewMobileImages
                     </div>
                 </div>
             </section>
+}
         </>
     )
 }

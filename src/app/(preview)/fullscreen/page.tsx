@@ -10,13 +10,16 @@ import Image from 'next/image';
 import Icon from '@/components/Icon';
 import { useRouter } from 'next/navigation';
 import { PreviewImage } from '@/types/type';
+import { Fancybox } from "@fancyapps/ui";
+import "@fancyapps/ui/dist/fancybox/fancybox.css";
 
 interface fullscreen {
     previewMobileImages?: PreviewImage[],
     previewImages?: PreviewImage[]
 }
 
-const Page: FC<fullscreen> = ({
+
+const FullScreen: FC<fullscreen> = ({
     previewImages, previewMobileImages
 }) => {
     const router = useRouter();
@@ -96,4 +99,4 @@ const Page: FC<fullscreen> = ({
     );
 };
 
-export default Page;
+export default FullScreen;
