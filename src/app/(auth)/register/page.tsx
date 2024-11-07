@@ -162,7 +162,7 @@ const Page = () => {
                                             }
                                         </Button>
                                     <div className=" pt-5">
-                                        <p>Already Have Account ?   <Link href={'/login'} className="text-primary-100 text-[16px] font-semibold leading-6">
+                                        <p className='text-[16px] font-normal leading-6 text-textparagraph'>Already Have Account ?   <Link href={'/login'} className="text-textheading font-semibold">
                                             Login
                                         </Link></p>
 

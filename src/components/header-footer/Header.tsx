@@ -134,7 +134,7 @@ const Header = () => {
 
   return (
     <>
-      <header className=" bg-[#ffffff80] backdrop:blur-xl relative border-b-[1px] border-[#11083319] z-10">
+      <header className=" bg-[#ffffff80] backdrop:blur-xl relative border-b-[1px] border-[#11083319] z-20">
         {/* Destop header */}
         <div className="container hidden min-[1028px]:block">
           <div className="py-10 flex items-center justify-between">
