@@ -10,8 +10,7 @@ import Image from 'next/image';
 import Icon from '@/components/Icon';
 import { useRouter } from 'next/navigation';
 import { PreviewImage } from '@/types/type';
-import { Fancybox } from "@fancyapps/ui";
-import "@fancyapps/ui/dist/fancybox/fancybox.css";
+
 
 interface fullscreen {
     previewMobileImages?: PreviewImage[],
