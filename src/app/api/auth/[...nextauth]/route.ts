@@ -10,3 +10,4 @@ export const POST = NextAuth(authOptions);
  * Optionally, you can handle GET if required for session retrieval
  */
 export const GET = NextAuth(authOptions);
+export const revalidate = 0 // revalidate at most every second

@@ -16,7 +16,7 @@ const Page = async () => {
     // Fetch user data from the /get-user API endpoint
     const userResponse = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/get-user`, {
         headers: {
-            Authorization: `Bearer ${session.token}`
+            Authorization: `Bearer ${session?.token}`
         },
         cache: "no-store", // Ensures fresh data is fetched
     });

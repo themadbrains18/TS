@@ -53,8 +53,10 @@ export const DownloadProvider: React.FC<DownloadProviderProps> = ({ children }) 
   };
 
   useEffect(() => {
-    fetchDailyDownloads();
-  }, []);
+    if(session){
+      fetchDailyDownloads();
+    }
+  }, [session]);
 
   return (
     <DownloadContext.Provider value={{ downloads, imageUrl, setDownloads, setImageUrl, fetchDailyDownloads }}>

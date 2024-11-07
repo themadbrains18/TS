@@ -217,7 +217,6 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
 
         if (response) {
             //   console.log(response,"==response");
-            fetchUserData();
             fetchDailyDownloads()
             setProfileImage(response?.user?.profileImageUrl || response?.user?.profileImg || profileimage);
         }

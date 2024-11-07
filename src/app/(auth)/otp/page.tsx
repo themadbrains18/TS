@@ -60,7 +60,7 @@ const Otp = ({ formData, api, setFormData }: any) => {
                     otp: formData.otp,
                     password: formData.password
                 });
-                console.log(result, "==result");
+                // console.log(result, "==result");
 
                 if (result?.ok) {
                     router.push('/');
