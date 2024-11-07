@@ -20,11 +20,11 @@
 import { cn } from '@/libs/utils';
 import { dashinput } from '@/types/type';
 import React from 'react';
-import { UseFormRegisterReturn } from 'react-hook-form'; // Import types from react-hook-form
+import { UseFormRegisterReturn } from 'react-hook-form';
 
 interface DashInputProps extends dashinput {
-  error?: string; // Error message
-  register?: UseFormRegisterReturn; // Add register prop from react-hook-form
+  error?: string; 
+  register?: UseFormRegisterReturn; 
 }
 
 const DashInput: React.FC<DashInputProps> = ({ className, placeholder, type, value, onChange, name, error, register }) => {

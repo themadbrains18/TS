@@ -1,32 +1,34 @@
 import React from 'react';
-
-/**
- * CreditTab component displays the sources of fonts, icons, images, and illustrations used.
- *
- * @component
- * @example
- * return (
- *   <CreditTab credits={creditsData} />
- * )
+/*
+ * Represents a resource with a URL and a name.
+ * This interface is used for various types of resources (e.g., fonts, images, icons) that are referenced in credits.
  */
-
 export interface Resource {
-    url: string;
+    url: string; 
     name: string;
 }
 
+/*
+ * Represents credits information associated with a template.
+ * Each credit entry includes the ID of the credit, the template it belongs to, and arrays of resources (fonts, images, icons, illustrations).
+ */
 interface Credit {
-    id: string;
+    id: string; 
     templateId: string;
     fonts: Resource[];
     images: Resource[];
-    icons: Resource[];
-    illustrations: Resource[];
+    icons: Resource[]; 
+    illustrations: Resource[]; 
 }
 
+/*
+ * Props interface for the Credits component.
+ * Contains an array of Credit objects, each representing credits information for a particular template.
+ */
 interface CreditsProps {
-    credits: Credit[];
+    credits: Credit[]; 
 }
+
 
 const CreditTab: React.FC<CreditsProps> = ({ credits }) => {
     return (
@@ -39,45 +41,45 @@ const CreditTab: React.FC<CreditsProps> = ({ credits }) => {
                             {credit?.fonts[0]?.name !== "" && <div>
                                 <h3 className="text-subparagraph leading-6 mb-5 text-sm tab:text-base">Fonts Used</h3>
                                 <ul className='list-inside list-disc m-0 p-0 '>
-                                {credit?.fonts?.map((font, fontIndex) => (
+                                    {credit?.fonts?.map((font, fontIndex) => (
                                         <li key={fontIndex} className='max-[500px]:max-w-[120px] truncate text-xs tab:text-sm leading-5 text-primarycyan'>
                                             {font?.name}
                                         </li>
-                                ))}
-                                    </ul>
+                                    ))}
+                                </ul>
                             </div>}
                             {credit?.icons[0]?.name !== "" && <div>
                                 <h3 className="text-subparagraph leading-6 mb-5 text-sm tab:text-base">Icons Used</h3>
                                 <ul className='list-inside list-disc m-0 p-0 '>
-                                {credit?.icons.map((icon, iconIndex) => (
+                                    {credit?.icons.map((icon, iconIndex) => (
 
                                         <li key={iconIndex} className='max-[500px]:max-w-[120px] truncate text-xs tab:text-sm leading-5 text-primarycyan'>
                                             {icon?.name}
                                         </li>
-                                ))}
-                                    </ul>
+                                    ))}
+                                </ul>
                             </div>}
                         </div>
                         <div className="grid grid-cols-2">
                             {credit?.images[0]?.name !== "" && <div>
                                 <h3 className="text-subparagraph leading-6 mb-5 text-sm tab:text-base">Images Used</h3>
                                 <ul className='list-inside list-disc m-0 p-0 '>
-                                {credit?.images?.map((image, imageIndex) => (
+                                    {credit?.images?.map((image, imageIndex) => (
 
                                         <li key={imageIndex} className='max-[500px]:max-w-[120px] truncate text-xs tab:text-sm leading-5 text-primarycyan'>
                                             {image?.name}
                                         </li>
-                                ))}
-                                    </ul>
+                                    ))}
+                                </ul>
                             </div>}
                             {credit?.illustrations[0]?.name !== "" && <div>
                                 <h3 className="text-subparagraph leading-6 mb-5 text-sm tab:text-base">Illustrations Used</h3>
                                 <ul className='list-inside list-disc m-0 p-0 '>
-                                {credit?.illustrations?.map((illustration, illustrationIndex) => (
+                                    {credit?.illustrations?.map((illustration, illustrationIndex) => (
                                         <li key={illustrationIndex} className='max-[500px]:max-w-[120px] truncate text-xs tab:text-sm leading-5 text-primarycyan'>
                                             {illustration?.name}
                                         </li>
-                                ))}
+                                    ))}
                                 </ul>
                             </div>}
                         </div>

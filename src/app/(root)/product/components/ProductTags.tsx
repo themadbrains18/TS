@@ -9,11 +9,6 @@ import React, { useEffect, useState } from 'react';
  * ProductTags component displays a list of category tags that users can click to activate.
  * It highlights the active tag and provides a smooth transition effect for the tags.
  *
- * @component
- * @example
- * return (
- *   <ProductTags />
- * )
  */
 
 const ProductTags = () => {
@@ -22,7 +17,9 @@ const ProductTags = () => {
     const searchParams = useSearchParams();
     const router = useRouter();
 
-    // Get template type and subcat from URL
+    /**
+     * Get template type and subcat from URL
+     */
     const templateTypeId = searchParams.get('template-type');
     const subCatId = searchParams.get('subcat');
 
@@ -30,32 +27,35 @@ const ProductTags = () => {
         fetchsubCatData(`/sub-categories`);
     }, []);
 
-    // Filter the subcategories based on template type if applicable
+    /**
+     * Filter the subcategories based on template type if applicable
+     */
     const filteredSubCatData = templateTypeId
         ? (subCatData?.filter(item => item.templateTypeId === templateTypeId) || [])
         : subCatData;
 
-    // Set the active index based on subCatId
+    /**
+     *  Set the active index based on subCatId
+     */
     useEffect(() => {
         if (subCatId) {
             const index = filteredSubCatData?.findIndex(item => item.id === subCatId) || 0;
             if (index !== -1) {
-                setActiveIndex(index + 1); // +1 for the "All" tab
+                setActiveIndex(index + 1); 
             }
         } else {
-            setActiveIndex(0); // Reset to 0 when there's no subCatId
+            setActiveIndex(0);
         }
     }, [subCatId, filteredSubCatData]);
 
     const handleAllClick = () => {
-        setActiveIndex(0); // Reset active index to 0 for "All"
-        // Clear the subcat from the URL
+        setActiveIndex(0); 
         router.push(`/product`);
     };
 
     const handleTabClick = (item: any) => {
-        setActiveIndex(item.id + 1); // Adjust for subCategories
-        router.push(`/product?template-type=${templateTypeId || item?.templateTypeId}&subcat=${item.id}`); // Update URL with selected subcategory ID
+        setActiveIndex(item.id + 1);
+        router.push(`/product?template-type=${templateTypeId || item?.templateTypeId}&subcat=${item.id}`);
     };
 
     return (
@@ -67,7 +67,7 @@ const ProductTags = () => {
                 <div className='flex overflow-x-scroll hiddenscroll'>
                     {/* Add an "All" tab at the beginning */}
                     <div
-                        onClick={handleAllClick} // Set active index to 0 for "All"
+                        onClick={handleAllClick}
                         className={`relative mx-[7px] cursor-pointer text-nowrap group`}
                     >
                         <h2

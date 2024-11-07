@@ -19,7 +19,9 @@ import { toast } from 'react-toastify';
 import Link from 'next/link';
 import Image from 'next/image';
 
-// Define types for data structures
+/**
+ * Define types for data structures
+ */
 export interface TemplateType {
     id: string;
     name: string;
@@ -69,25 +71,33 @@ interface TemplateFormProps {
 
 
 const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) => {
-    // Fetch data hooks for template types, subcategories, and industries
+    /**
+     * Fetch data hooks for template types, subcategories, and industries
+     */
     const { data, fetchData, loading, error } = useFetch<TemplateType[]>();
     const { data: templateData, fetchData: fetchTemplateData, } = useFetch<any>();
     const { data: industryData, fetchData: fetchIndustryData } = useFetch<IndustryType[]>();
 
-    // State for fonts, images, icons, and illustrations
+    /**
+     *  State for fonts, images, icons, and illustrations
+     */
     const [fonts, setFonts] = useState<Font[]>([{ name: '', url: '' }]);
     const [images, setImages] = useState<Font[]>([{ name: '', url: '' }]);
     const [icons, setIcons] = useState<Font[]>([{ name: '', url: '' }]);
     const [illustrations, setIllustrations] = useState<Font[]>([{ name: '', url: '' }]);
     const [loader, setLoader] = useState(false)
-    // Technical details state (4 inputs by default)
+    /**
+     * Technical details state (4 inputs by default)
+     */
     const [technicalDetails, setTechnicalDetails] = useState(
         initialData?.techDetails?.length ? initialData?.techDetails : Array(4).fill("")
     );
 
     const { data: session } = useSession()
 
-    // Dropdown selection states
+    /**
+     * Dropdown selection states
+     */
     const [selectedValue, setSelectedValue] = useState<string | null>(null);
     const [categoryValue, setCategoryValue] = useState<string | null>(null);
     const [staticcheck, setStaticCheck] = useState<boolean>(initialData?.isPaid || false);
@@ -95,20 +105,24 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
 
     const { register, handleSubmit, control, formState: { errors }, setValue, clearErrors, setError, getValues } = useForm<FormData>({
-        defaultValues: { ...initialData }, // FIXME: remove this when we
+        defaultValues: { ...initialData },
         resolver: zodResolver(type == "create" ? uploadTemplateSchema : uploadTemplateUpdateSchema)
     });
 
 
 
-    // Handle template dropdown selection
+    /**
+     * Handle template dropdown selection
+     */
     const handleTemplateSelect = (value: string) => {
         setSelectedValue(value);
         setValue("templateTypeId", value)
         fetchTemplateData(`/sub-categories/${value}`);
     };
 
-    // Handle category dropdown selection
+    /**
+     * Handle category dropdown selection
+     */
     const handleCategorySelect = (value: string) => {
         setCategoryValue(value);
     };
@@ -126,44 +140,53 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             setValue('industry', initialData.industryTypeId)
         }
         if (initialData && initialData?.credits.length > 0) {
-            const creditData = initialData?.credits[0]; // Assuming you want the first entry
+            const creditData = initialData?.credits[0]; 
 
-            setFonts(creditData.fonts || [{ name: '', url: '' }]); // Initialize fonts state
-            setImages(creditData.images || [{ name: '', url: '' }]); // Initialize images state
-            setIcons(creditData.icons || [{ name: '', url: '' }]); // Initialize icons state
-            setIllustrations(creditData.illustrations || [{ name: '', url: '' }]); // Initialize illustrations state
+            setFonts(creditData.fonts || [{ name: '', url: '' }]); 
+            setImages(creditData.images || [{ name: '', url: '' }]);
+            setIcons(creditData.icons || [{ name: '', url: '' }]); 
+            setIllustrations(creditData.illustrations || [{ name: '', url: '' }]);
         }
     }, [initialData])
 
 
-    // Generalized function to add new input fields
+    /**
+     * Generalized function to add new input fields
+     */
     const addInputFields = <T,>(setter: React.Dispatch<React.SetStateAction<T[]>>, values: T[], isObject: boolean) => {
-        const newValue = isObject ? { name: '', url: '' } : ''; // Create an empty object or string based on type
-        setter([...values, newValue as T]); // Add the new value to the state
+        const newValue = isObject ? { name: '', url: '' } : ''; 
+        setter([...values, newValue as T]); 
     };
 
-    // Function to handle input field changes
+    /**
+     * Function to handle input field changes
+     */
     const handleInputChange = <T,>(setter: React.Dispatch<React.SetStateAction<T[]>>, index: number, value: T, values: T[]) => {
         const newValues = [...values];
-        newValues[index] = value; // Update the value at the specified index
+        newValues[index] = value; 
         setter(newValues);
     };
 
-    // Function to remove input fields
+    /**
+     * Function to remove input fields
+     */
     const removeInputField = <T,>(setter: React.Dispatch<React.SetStateAction<T[]>>, index: number, values: T[]) => {
 
-        if (values.length > 1) { // Ensure there are at least 4 fields
+        if (values.length > 1) { 
             const newValues = [...values];
-            newValues.splice(index, 1); // Remove the input at the specified index
+            newValues.splice(index, 1); 
             setter(newValues);
 
             if (setter == setTechnicalDetails) {
-                newValues.forEach((detail: any, i) => setValue(`techDetails.${i}`, detail)); // Update form state
+                newValues.forEach((detail: any, i) => setValue(`techDetails.${i}`, detail)); 
             }
         }
 
     };
 
+    /**
+     * Function to render input fields
+     */
     const renderInputFields = (items: Font[], setter: React.Dispatch<React.SetStateAction<Font[]>>, title: string) => (
         <div className='pb-3'>
             <h4 className='text-lg font-semibold capitalize pb-4'>{title}</h4>
@@ -196,7 +219,9 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             </div>
         </div>
     );
-    // Render technical details fields
+    /**
+     * Render technical details fields
+     */
     const renderTechnicalDetailsFields = () => (
         <div className='pb-3'>
             <div className="p-5 border-b border-neutral-400">

@@ -40,7 +40,7 @@ const ProductMain = () => {
         },
         {
             title: "Best Seller",
-        },
+        }
     ];
     const removeItem = (index: number) => {
         setItems((prevItems) => {
@@ -67,6 +67,18 @@ const ProductMain = () => {
 
     const dropdownRef = useRef<HTMLDivElement>(null);
     useOnClickOutside(dropdownRef, sorthandledropdown);
+
+    /*
+    * Fetches products (templates) from an API with optional filters, sorting, and pagination.
+    *
+    * This function is used to retrieve a list of templates based on the provided filters, sorting options, and pagination information.
+    * It constructs a dynamic API URL based on the parameters, makes a request to the backend, and returns the data in a standardized response format.
+    *
+    * @param page - The current page number for pagination.
+    * @param filters - An array of filters to apply to the API query (optional).
+    * @param sort - A string representing the sorting parameter (optional).
+    *
+    */
 
     const fetchProducts = async (page: number, filters: string[] = [], sort: string): Promise<TemplateResponse> => {
         try {
@@ -139,21 +151,33 @@ const ProductMain = () => {
         }
     };
 
-    // Effect to fetch products based on filters
-
-
+    /**
+     * Effect to fetch products based on filters
+    */
     useEffect(() => {
         const getProducts = async () => {
-            const initialProducts = await fetchProducts(1, debouncedFilters,selectedSort);
+            const initialProducts = await fetchProducts(1, debouncedFilters, selectedSort);
             setProducts(initialProducts);
         };
         getProducts();
-    }, [templateTypeId, subCatId, debouncedFilters,selectedSort]); // Add debouncedFilters as a dependency
+    }, [templateTypeId, subCatId, debouncedFilters, selectedSort]); 
 
 
+    /*
+    * Handles the loading of more products (templates) when the user scrolls to the bottom of the list or clicks a "Load More" button.
+    *
+    * This function checks if the current page is less than the total number of pages, and if so, it fetches the next page of products,
+    * updates the products state with the new data, and maintains the existing data in the list.
+    *
+    * @param currentPage - The current page number of the products being displayed.
+    * @param totalPages - The total number of available pages of products.
+    * @param fetchProducts - A function used to fetch products (templates) from the API.
+    * @param debouncedFilters - The filters to be applied to the products list (debounced to avoid excessive API calls).
+    * @param selectedSort - The current sorting option for the products (e.g., by price, by name).
+    */
     const handleLoadMore = async () => {
         if (currentPage < totalPages) {
-            const newProducts = await fetchProducts(currentPage + 1, debouncedFilters,selectedSort);
+            const newProducts = await fetchProducts(currentPage + 1, debouncedFilters, selectedSort);
             setProducts((prev) => ({
                 ...prev,
                 data: [...(prev?.data || []), ...newProducts.data],
@@ -161,6 +185,7 @@ const ProductMain = () => {
             }));
         }
     };
+    
     return (
         <>
             <ProductBanner />

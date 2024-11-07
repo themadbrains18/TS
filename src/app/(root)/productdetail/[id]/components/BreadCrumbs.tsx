@@ -50,18 +50,6 @@ import Icon from '@/components/Icon'
 import Link from 'next/link'
 import React from 'react'
 
-
-/**
- * BreadCrumbs component displays the breadcrumb navigation and rating.
- *
- * @component
- * @example
- * return (
- *   <BreadCrumbs />
- * )
- */
-
-
 const BreadCrumbs = () => {
   return (
     <>

@@ -22,9 +22,11 @@ interface Params {
 
 
 const Page = async ({ params }: { params: Params }) => {
-  const { id } = params; // Get the template id from the URL parameters
+  const { id } = params; 
 
-  // Fetch the template data from the API
+  /**
+   *  Fetch the template data from the API
+   */
 
   const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/templates-by-id/${id}`, {
     method: 'GET',
@@ -35,11 +37,17 @@ const Page = async ({ params }: { params: Params }) => {
   });
 
 
+  /**
+   * You can also redirect or show a 404 page
+   */
   if (!response.ok) {
-    throw new Error('Template not found'); // You can also redirect or show a 404 page
+    throw new Error('Template not found');
   }
 
-  const template = await response.json(); // Parse the JSON response
+  /**
+   * Parse the JSON response
+   */
+  const template = await response.json();
 
   return (
     <>

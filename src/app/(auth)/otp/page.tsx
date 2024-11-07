@@ -14,7 +14,7 @@ import NewPassword from '../new-password/page';
 import { signIn, useSession } from 'next-auth/react';
 
 interface FormData {
-    otp: string[];  // OTP should be an array of strings if you have multiple inputs
+    otp: string[];
 }
 
 const Otp = ({ formData, api, setFormData }: any) => {
@@ -23,11 +23,10 @@ const Otp = ({ formData, api, setFormData }: any) => {
     const { register, handleSubmit, setValue } = useForm<FormData>();
     const { data: response, error, loading, fetchData } = useFetch<any>();
     const { data: session } = useSession()
-    const [startTimer, setStartTimer] = useState(600); // Timer set to 10 minutes (600 seconds)
+    const [startTimer, setStartTimer] = useState(600);
     const [canResend, setCanResend] = useState(false);
 
     useEffect(() => {
-        // Declare timer variable
         let timer: NodeJS.Timeout | null = null;
 
         if (startTimer > 0) {
@@ -35,18 +34,23 @@ const Otp = ({ formData, api, setFormData }: any) => {
                 setStartTimer((prev) => prev - 1);
             }, 1000);
         } else {
-            setCanResend(true); // Allow resending OTP after 10 minutes
+            setCanResend(true);
         }
         return () => {
             if (timer) {
-                clearInterval(timer); // Clear the timer on unmount
+                clearInterval(timer);
             }
         };
     }, [startTimer]);
 
+
+    /*
+     * Handles form submission logic
+     * 
+    */
     const onSubmit: SubmitHandler<FormData> = async (data) => {
         try {
-            formData.otp = data.otp.join('');  // Join array into a single string
+            formData.otp = data.otp.join('');
             setFormData(formData);
 
             if (api === "login") {
@@ -78,8 +82,11 @@ const Otp = ({ formData, api, setFormData }: any) => {
         }
     };
 
+    /*
+     * Handles the process of resending the OTP to the user.
+    */
     const resendCode = async () => {
-        if (!canResend) return; // Prevent resend if the timer has not completed
+        if (!canResend) return;
 
         try {
             await fetch('/api/resend-otp', {
@@ -91,8 +98,8 @@ const Otp = ({ formData, api, setFormData }: any) => {
                 }
             }).then(res => {
                 if (res.ok) {
-                    setStartTimer(600); // Reset timer to 10 minutes
-                    setCanResend(false); // Reset resend availability
+                    setStartTimer(600);
+                    setCanResend(false);
                     toast.success("OTP resent successfully");
                 } else {
                     toast.error("Failed to resend OTP");
@@ -166,11 +173,11 @@ const Otp = ({ formData, api, setFormData }: any) => {
 
 
                                     <div className='mb-[60px]'>
-                                             <Button disabled={loading ? true : false} loadingbtn={loading ? true : false} variant='primary' className='w-full items-center justify-center' type='submit' iconClass='w-7 h-7'>
-                                                {
-                                                    loading ? "" : "Verify Now"
-                                                }
-                                            </Button>
+                                        <Button disabled={loading ? true : false} loadingbtn={loading ? true : false} variant='primary' className='w-full items-center justify-center' type='submit' iconClass='w-7 h-7'>
+                                            {
+                                                loading ? "" : "Verify Now"
+                                            }
+                                        </Button>
                                     </div>
                                     {startTimer > 0 ? (
                                         <h3 className='text-center text-[14px] leading-5 font-normal text-neutral-600'>

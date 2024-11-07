@@ -96,7 +96,7 @@ interface InputOtpProps {
     setValue: UseFormSetValue<any>;
     className?: string;
     clearErrors?: UseFormClearErrors<any>;
-    reset?: boolean | undefined; // Add reset prop
+    reset?: boolean | undefined;
 }
 
 const InputOtp: React.FC<InputOtpProps> = ({ register, setValue, className, clearErrors, reset }) => {
@@ -108,15 +108,15 @@ const InputOtp: React.FC<InputOtpProps> = ({ register, setValue, className, clea
     }, [activeInput]);
 
     useEffect(() => {
-        // Clear the input values if reset is true
+
         if (reset) {
             inputsRef.current.forEach((input, index) => {
                 if (input) {
-                    input.value = ""; // Clear the input's visible value
-                    setValue(`otp[${index}]`, ""); // Clear the react-hook-form value
+                    input.value = "";
+                    setValue(`otp[${index}]`, "");
                 }
             });
-            setActiveInput(0); // Reset focus to the first input
+            setActiveInput(0);
         }
     }, [reset, setValue]);
 
@@ -136,23 +136,29 @@ const InputOtp: React.FC<InputOtpProps> = ({ register, setValue, className, clea
         }
     };
 
+    /*
+    * Handles the keydown event for the input fields
+    */
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index: number) => {
         if (event.key === "Backspace" && !event.currentTarget.value) {
             setActiveInput(Math.max(activeInput - 1, 0));
         }
     };
 
+   /**
+    * Handles the paste event for the OTP input fields.
+    */
     const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
-        const paste = event.clipboardData.getData("text").slice(0, 6).split(""); // Get only the first 6 characters
+        const paste = event.clipboardData.getData("text").slice(0, 6).split(""); 
         paste.forEach((char, index) => {
-            setValue(`otp[${index}]`, char); // Update the form values using setValue from react-hook-form
+            setValue(`otp[${index}]`, char); 
             if (inputsRef.current[index]) {
-                inputsRef.current[index]!.value = char; // Update the input value directly
+                inputsRef.current[index]!.value = char; 
             }
         });
 
-        setActiveInput(Math.min(paste.length, 5)); // Set focus to the next input after paste
-        event.preventDefault(); // Prevent the default paste behavior
+        setActiveInput(Math.min(paste.length, 5)); 
+        event.preventDefault();
     };
 
     return (
@@ -172,8 +178,8 @@ const InputOtp: React.FC<InputOtpProps> = ({ register, setValue, className, clea
                         ref={(el) => {
                             inputsRef.current[index] = el;
                         }}
-                        onPaste={handlePaste} // Handle the paste event
-                        maxLength={1} // Ensure only 1 character can be typed
+                        onPaste={handlePaste} 
+                        maxLength={1} 
                     />
                 ))}
             </div>

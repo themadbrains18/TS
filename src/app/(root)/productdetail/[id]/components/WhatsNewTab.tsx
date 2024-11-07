@@ -3,21 +3,15 @@ import { formatDate } from '@/libs/utils'
 import { TechTemplate } from '@/types/type'
 import React, { Fragment } from 'react'
 
-
-/**
- * WhatsNewTab component displays the latest updates and version information for a product.
- *
- * @component
- * @returns {JSX.Element} The rendered WhatsNewTab component.
- */
-
 interface whatsNewProps {
     details: TechTemplate
 }
 
 const WhatsNewTab: React.FC<whatsNewProps> = ({ details }) => {
 
-    // Data for the update cards
+    /**
+     * Data for the update cards
+     */
     const carddata = [
         {
             icon: "publish.svg",
