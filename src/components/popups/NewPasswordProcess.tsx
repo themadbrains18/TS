@@ -114,7 +114,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
             }
 
             const payload = {
-                ["currentEmail"]: email||"",
+                ["currentEmail"]: email || "",
             };
 
             setResendData(payload);
@@ -228,7 +228,6 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
             <div className="relative px-4 py-9 sm:py-10 sm:px-10 max-w-[616px] bg-gradient-to-b from-[#E5EFFF] to-[#E5EFFF]">
                 <Icon onClick={() => { closePopup(); setStep(1); }} className="absolute top-5 right-5 fill-[#5D5775] w-5 h-5 cursor-pointer z-50" name="crossicon" />
                 <div className="py-10">
-
                     {step === 1 && (
                         <>
                             <form onSubmit={handleSubmit(onSubmit)}>

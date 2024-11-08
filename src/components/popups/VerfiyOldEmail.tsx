@@ -39,9 +39,10 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
     const [canResend, setCanResend] = useState(false);
     const [resendData, setResendData] = useState<savedData>();
     const [initialSend, setInitialSend] = useState(true);
+    const [clearotptime, setClearotptime] = useState<boolean>()
 
     // console.log(resendData,"=resendData");
-    
+
     /**
      * This function handles the form submission for updating user email and handling OTP validation.
      * 
@@ -53,7 +54,7 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
             if (step === 1) data.currentEmail = session?.email || "";
             else data.newEmail = data?.email || "";
 
-            if (step === 2 &&  !emailRegex.test(data?.email)) {
+            if (step === 2 && !emailRegex.test(data?.email)) {
                 setError("email", { message: "Invalid email format" });
                 return;
             }
@@ -76,6 +77,7 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
                     'Content-Type': 'application/json',
                 },
             });
+            setClearotptime(true)
 
         } catch (error) {
             console.error("Error updating email:", error);
@@ -109,7 +111,7 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
             }
 
             const payload = {
-                [step === 1 ? "currentEmail" : "newEmail"]: email || "" ,
+                [step === 1 ? "currentEmail" : "newEmail"]: email || "",
             };
 
 
@@ -122,6 +124,8 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
                     'Content-Type': 'application/json',
                 },
             });
+
+
 
         } catch (error) {
             console.error("Error updating email:", error);
@@ -186,6 +190,8 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
     /**
      * This effect runs whenever the `startTimer` object changes.
      */
+
+    
     useEffect(() => {
         let timer: NodeJS.Timeout | null = null;
 
@@ -200,7 +206,9 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
         return () => {
             if (timer) clearInterval(timer);
         };
+
     }, [startTimer]);
+
 
     return (
         <Modal isOpen={isPopupOpen} onClose={() => { closePopup(); setStep(1); }}>
@@ -257,7 +265,11 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
                                 Please check your mail for a 6-digit confirmation code to {session?.email}. Enter the confirmation code to verify.
                             </p>
                             <div className="mt-10">
-                                <Button iconClass='w-7 h-7' className="w-full py-2 text-lg font-normal text-center justify-center"  type="submit" variant="primary" disabled={disabled}>Verify Now</Button>
+                                <Button
+                                    iconClass='w-7 h-7' className="w-full py-2 text-lg font-normal text-center justify-center" type="submit" variant="primary"
+                                    disabled={disabled}>
+                                    Verify Now
+                                </Button>
                             </div>
                         </div>
                     </form>
