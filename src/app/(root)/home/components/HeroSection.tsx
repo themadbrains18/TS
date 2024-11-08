@@ -16,9 +16,9 @@ const HeroSection = () => {
      */
     return (
         <>
-            <section>
+            <section className='bg-[url("/images/heropurplebg.png")] bg-no-repeat bg-cover bg-right'>
                 <div className="container">
-                    <div className='grid lg:grid-cols-2 lg:gap-x-5 bg-[url("/images/heropurplebg.png")] bg-no-repeat bg-cover bg-right'>
+                    <div className='grid lg:grid-cols-2 lg:gap-x-5 '>
                         <div className='pt-10 lg:pt-[125px] lg:max-w-[570px] w-full'>
                             <div className='relative'>
                                 <Image width={200} height={40} src={"/images/Vector.png"} alt='vectorsicon' className='absolute top-0 left-0' />
