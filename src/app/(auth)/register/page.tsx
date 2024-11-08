@@ -152,8 +152,6 @@ const Page = () => {
                                         />
                                     </div>
 
-                                    {/* Error Handling */}
-                                    {/* {error && <p className="text-red-500">Failed to register. Please try again.</p>} */}
 
                                     {/* Register Button */}
                                     <div className="my-[30px] tab:my-[60px]">

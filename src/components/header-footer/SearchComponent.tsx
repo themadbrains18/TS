@@ -78,7 +78,6 @@ const SearchComponent: React.FC<navtabprops> = ({ subCat, classname, opensearch,
                     templates?.templates?.map((template) => (
                         <Link href={`/productdetail/${template?.id}`} key={template?.id}>
                             <div
-                                onClick={() => console.log("hell0")}
                                 className="px-4 py-2 hover:bg-gray-100 cursor-pointer border-b w-full last:border-b-0"
                             >
                                 <p className="text-sm text-gray-800 font-medium truncate">

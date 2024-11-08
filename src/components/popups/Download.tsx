@@ -30,7 +30,6 @@ const Download = ({ isPopupOpen, closePopup, opensecoundpopup , tittle, poster  
             icon: "instagram.svg"
         },
     ];
-    console.log(poster)
     return (
         <>
             <Modal className='bg-[#E5EFFF]  py-[30px] relative' isOpen={isPopupOpen} onClose={closePopup} >

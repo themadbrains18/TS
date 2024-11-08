@@ -12,11 +12,6 @@ import { useRouter } from 'next/navigation';
 import { PreviewImage } from '@/types/type';
 
 
-// interface fullscreen {
-//     previewMobileImages?: PreviewImage[],
-//     previewImages?: PreviewImage[]
-// }
-
 
 const FullScreen: FC<any> = ({
     previewImages, previewMobileImages

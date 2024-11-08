@@ -280,7 +280,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                                         Please check your mail for a 6-digit confirmation code to {session?.email}. Enter the confirmation code to verify.
                                     </p>
                                     <div className="mt-10">
-                                        <Button disabled={loadingOtp ? true : false} loadingbtn={loadingOtp ? true : false} iconClass='w-7 h-7' className="w-full py-2 text-lg font-normal text-center justify-center" type="submit" variant="primary" >{loadingOtp ? "" : "Verify Now"}</Button>
+                                        <Button disabled={loadingOtp} loadingbtn={loadingOtp} iconClass='w-7 h-7' className="w-full py-2 text-lg font-normal text-center justify-center" type="submit" variant="primary" >{loadingOtp ? "" : "Verify Now"}</Button>
 
                                     </div>
                                 </div>

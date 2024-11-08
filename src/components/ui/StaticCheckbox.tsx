@@ -15,8 +15,6 @@ const StaticCheckBox: React.FC<StaticCheckBoxProps> = ({
     customClass = '',
     onClick
 }) => {
-    console.log(checked,"==checked");
-    
     return (
         <div onClick={onClick} className={`form-group mb-4 w-max flex items-center cursor-pointer ${customClass}`}>
             {/* Static checkbox box */}

@@ -58,7 +58,6 @@ const Form = () => {
             });
         } catch (error) {
             console.log(error)
-            // toast.error("Submission error"); // Show error if submission fails
         }
     };
 
@@ -129,7 +128,7 @@ const Form = () => {
 
                                         {/* Send OTP Button */}
                                         <div className='my-[60px]'>
-                                            <Button disabled={loading ? true : false} loadingbtn={loading ? true : false} variant='primary' className='w-full items-center justify-center' type='submit' iconClass='w-7 h-7'>
+                                            <Button disabled={loading} loadingbtn={loading} variant='primary' className='w-full items-center justify-center' type='submit' iconClass='w-7 h-7'>
                                                 {loading ? "" : "Send Otp"} {/* Display loading state or button text */}
                                             </Button>
                                         </div>

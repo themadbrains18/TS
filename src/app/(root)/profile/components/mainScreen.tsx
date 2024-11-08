@@ -11,7 +11,6 @@ interface profileProps{
 }
 
 const MainScreen:React.FC<profileProps> = ({userData}) => {
-    // console.log(userData,"==userData");
     
     const [activeTab, setActiveTab] = useState<number>(0)
     const { data: session } = useSession();

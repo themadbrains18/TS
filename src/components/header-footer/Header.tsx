@@ -161,7 +161,6 @@ const Header = () => {
       setLoadingdata(false)
     }
   }, [])
-
   return (
     <>
       <header className=" bg-[#ffffff80] backdrop:blur-xl relative border-b-[1px] border-[#11083319] z-20 ">
@@ -211,7 +210,8 @@ const Header = () => {
               {
                 isLoggedIn &&
                 <div className="relative" >
-                  <div onClick={()=>{openProfile()
+                  <div onClick={() => {
+                    openProfile()
                   }} className="w-[50px] h-[50px] rounded-full cursor-pointer ">
                     <Image
                       width={50}
@@ -221,7 +221,7 @@ const Header = () => {
                       alt="diamond"
                     />
                   </div>
-                  <div  ref={profileRef} className={`absolute ${profile ? "opacity-100 visible" : "invisible opacity-0"}  transition-all  duration-[0.5s] top-[94%]  max-[1678px]:right-0 right-[-73px] mt-2 w-[216px]  bg-white shadow-lg rounded-lg`}>
+                  <div ref={profileRef} className={`absolute ${profile ? "opacity-100 visible" : "invisible opacity-0"}  transition-all  duration-[0.5s] top-[94%]  max-[1678px]:right-0 right-[-73px] mt-2 w-[216px]  bg-white shadow-lg rounded-lg`}>
                     <div className="pt-[6px] mt-[-6px]" >
                       <div className="py-2.5 ">
                         <h2 className="leading-6 text-[16px] font-semibold text-textheading py-2 pl-[30px] pr-[27px] mb-2.5 max-w-60 truncate">
@@ -230,13 +230,18 @@ const Header = () => {
                         <div className="px-[30px] mb-2.5 " >
                           <h2 className="text-[13px] font-medium leading-5 text-textheading" >Daily Download Balance</h2>
                           <div className="py-[3px] px-[3px] h-[12px] border-[#E8CFFB] border-[1px] rounded-[6px] my-[5px] "  >
-                            <span style={{ width: `${(downloads || 3) * 33.33}%` }} className="h-1 block bg-primary-100 rounded-[5px] " ></span>
+                            {/* <span style={{ width: `${(downloads || 3) * 33.33}%` }} className="h-1 block bg-primary-100 rounded-[5px] " ></span> */}
+                            <span
+                              style={{ width: `${downloads ? downloads * 33.33 : 0}%` }}
+                              className="h-1 block bg-primary-100 rounded-[5px]"
+                            ></span>
+
                           </div>
-                          <h3 className="text-[12px] font-normal leading-5 text-textheading" >{downloads} remaining out of 3</h3>
+                          <h3 className="text-[12px] font-normal leading-5 text-textheading" >{downloads === null ? 0 : downloads} remaining out of 3</h3>
                         </div>
                         <div className="flex flex-col">
                           <Link href={"/profile"} >
-                            <button onClick={()=>{setProfile(false)}} className={` w-full text-textheading text-start leading-6 hover:text-subparagraph py-2 px-[30px] capitalize cursor-pointer text-nowrap hover:bg-primary-200 border-l-[2px] border-white hover:border-primary-100`}>
+                            <button onClick={() => { setProfile(false) }} className={` w-full text-textheading text-start leading-6 hover:text-subparagraph py-2 px-[30px] capitalize cursor-pointer text-nowrap hover:bg-primary-200 border-l-[2px] border-white hover:border-primary-100`}>
                               Profile
                             </button>
                           </Link>
@@ -276,7 +281,7 @@ const Header = () => {
                 session?.user
                 &&
                 <div ref={profileresRef}>
-                  <div  onClick={openProfileres} className="w-[30px] h-[30px] cursor-pointer ">
+                  <div onClick={openProfileres} className="w-[30px] h-[30px] cursor-pointer ">
                     <Image
                       width={50}
                       height={50}
@@ -285,7 +290,7 @@ const Header = () => {
                       alt="diamond"
                     />
                   </div>
-                  <div  className={`absolute ${profileres ? "opacity-100 visible" : "invisible opacity-0"}  transition-all 
+                  <div className={`absolute ${profileres ? "opacity-100 visible" : "invisible opacity-0"}  transition-all 
                       duration-[0.5s] top-[90%] right-0 mt-2 max-w-[256px] bg-white shadow-lg rounded-lg`}>
                     <div className="" >
                       <div className="py-2.5 ">

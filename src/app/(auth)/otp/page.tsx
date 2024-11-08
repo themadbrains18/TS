@@ -60,7 +60,6 @@ const Otp = ({ formData, api, setFormData }: any) => {
                     otp: formData.otp,
                     password: formData.password
                 });
-                // console.log(result, "==result");
 
                 if (result?.ok) {
                     router.push('/');
@@ -173,7 +172,7 @@ const Otp = ({ formData, api, setFormData }: any) => {
 
 
                                     <div className='mb-[60px]'>
-                                        <Button disabled={loading ? true : false} loadingbtn={loading ? true : false} variant='primary' className='w-full items-center justify-center' type='submit' iconClass='w-7 h-7'>
+                                        <Button disabled={loading} loadingbtn={loading} variant='primary' className='w-full items-center justify-center' type='submit' iconClass='w-7 h-7'>
                                             {
                                                 loading ? "" : "Verify Now"
                                             }

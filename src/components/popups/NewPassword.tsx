@@ -39,7 +39,6 @@ const NewPassword = ({ formData, otp }: newpasswordpopup) => {
      * @param data - The form data submitted by the user, which includes the new password, confirmation password, email, and OTP.
      */
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
-        console.log(data, "Form submission data");
 
         try {
             setisLoading(true)
@@ -58,7 +57,6 @@ const NewPassword = ({ formData, otp }: newpasswordpopup) => {
 
             if (result.ok) {
                 const res = await result.json();
-                console.log("Password reset successful:", res);
                 signOut()
 
                 // Handle success (e.g., display a success message)
@@ -117,9 +115,9 @@ const NewPassword = ({ formData, otp }: newpasswordpopup) => {
                 <div className='mt-6' >
 
                     <Button
-                        disabled={isLoading ? true : false}
+                        disabled={isLoading}
                         type='submit'
-                        loadingbtn={isLoading ? true : false}
+                        loadingbtn={isLoading}
                         iconClass='w-7 h-7'
                         variant='primary'
                         className='w-full items-center justify-center'

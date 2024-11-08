@@ -36,8 +36,6 @@ const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url , tittle }:
     const { data: response, error, loading, fetchData } = useFetch<any>();
     const { fetchDailyDownloads,downloads } = useDownload()
 
-    // console.log(downloads,"==downloads");
-    
     const socialicons = [
         { icon: "dribbble-logo.svg" },
         { icon: "linkedin.svg" },
@@ -118,7 +116,7 @@ const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url , tittle }:
                         )}
                         {error && <p className='mt-1 text-xs text-red-600'>{error}</p>}
 
-                        <Button loadingbtn={loading ? true : false} disabled={loading ? true : false} type="submit" iconClass='w-7 h-7' variant='primary' className='w-full justify-center mt-4'>{
+                        <Button loadingbtn={loading} disabled={loading} type="submit" iconClass='w-7 h-7' variant='primary' className='w-full justify-center mt-4'>{
                             loading ? "" : "Send Link"
                         }</Button>
                     </form>
