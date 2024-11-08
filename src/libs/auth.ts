@@ -137,6 +137,7 @@ export const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
 };
 
+
 /**
  * Helper function to check if the token is expired
  */
