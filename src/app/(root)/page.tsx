@@ -30,11 +30,11 @@ const Home = () => {
 export async function generateMetadata(): Promise<Metadata> {
   try {
     // Example logic to fetch data or build metadata dynamically
-    const siteData = await fetch('https://api.example.com/home').then((res) => res.json());
+    // const siteData = await fetch('https://api.example.com/home').then((res) => res.json());
 
     return {
-      title: siteData.title || 'Templete studio home page',
-      description: siteData.description || 'Explore our homepage for more details.',
+      title:  'Templete studio home page',
+      description: 'Explore our homepage for more details.',
     };
   } catch (error) {
     console.error('Error fetching metadata:', error);
