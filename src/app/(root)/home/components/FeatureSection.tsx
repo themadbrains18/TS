@@ -53,8 +53,7 @@ const FeatureSection = () => {
 
     return (
         <section className='bg-bgcolor py-10 lg:py-[100px] '>
-            <div className='bg-[url("/images/featurecolor.png")] bg-no-repeat bg-cover bg-right'>
-                <div className="container">
+                <div className="container bg-[url('/images/featurecolor.png')] bg-no-repeat bg-contain bg-right">
                     <h2 className='text-subheading sm:leading-9 font-bold text-[22px] tab:text-[28px]'>Feature Products</h2>
 
                     {loading ? (
@@ -97,7 +96,6 @@ const FeatureSection = () => {
                             View All Products
                         </Button>
                     </div>
-                </div>
             </div>
         </section>
     );

@@ -229,25 +229,26 @@ const VerfiyNewEmail: FC<verifyNewemail> = ({
 
 
   return (
-    <div className="py-10">
+    <div className="py-4 sm:py-[30px]">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <div className='flex justify-between items-end gap-x-5' >
+        <div className="">
+          <div className='flex justify-between items-end gap-x-[10px] sm:gap-x-5' >
             <Input
               register={register}
               label={"New Email"}
               name="newEmail"
               placeholder={`Enter new email`}
               onChange={() => clearErrors("newEmail")}
+                className='!py-[13px] px-4 sm:px-5'
             />
             {startTimer > 0 ? (
-              <Button className='text-nowrap' variant='primary' type='button' disabled={true} >
+              <Button className='bg-primary-100 text-white capitalize  leading-6 transition-all duration-300 hover:bg-[#872fcb] py-[13px] px-[10px] sm:px-[30px] text-nowrap text-sm sm:text-base font-normal' variant='primary' type='button' disabled={true} >
                 Resend OTP in {Math.floor(startTimer / 60)}:{(startTimer % 60).toString().padStart(2, '0')}
               </Button>
             ) : (
 
               <button
-                className="bg-primary-100 text-white capitalize font-semibold leading-6 transition-all duration-300 hover:bg-[#872fcb] py-[16px] px-[30px] text-nowrap"
+                className="bg-primary-100 text-white capitalize font-normal leading-6 transition-all duration-300 hover:bg-[#872fcb] py-[13px] px-[10px] sm:px-[30px] text-nowrap text-sm sm:text-base"
                 type="button"
                 onClick={() => !initialSend ? resendCode() : handleEmmailUpdate()}
               >
@@ -266,7 +267,7 @@ const VerfiyNewEmail: FC<verifyNewemail> = ({
         <div className="mt-10">
           <label className="text-lg font-normal leading-7 text-neutral-900 mb-2">Please enter one time OTP</label>
           <InputOtp
-            className="space-x-5 m-5"
+            className="space-x-5 mt-[10px] mx-4 sm:m-5"
             register={register}
             setValue={setValue}
             clearErrors={clearErrors}
@@ -276,10 +277,10 @@ const VerfiyNewEmail: FC<verifyNewemail> = ({
           <p className="mt-5 text-xs font-normal text-[#4B5563]">
             Please check your mail for a 6-digit confirmation code to {session?.email}. Enter the confirmation code to verify.
           </p>
-          <div className="mt-10">
+          <div className="mt-[30px] sm:mt-10">
             <Button
               loadingbtn={loadingbtnverify}
-              iconClass='w-7 h-7' className="w-full py-2 text-lg font-normal text-center justify-center" type="submit" variant="primary"
+              iconClass='w-7 h-7' className="w-full py-2 sm:py-[13px] text-lg font-normal text-center justify-center" type="submit" variant="primary"
               disabled={loadingbtnverify}>
               {
                 loadingbtnverify ? "" : "Verify Now"

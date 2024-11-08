@@ -3,7 +3,7 @@
 import Button from '@/components/ui/Button'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
-import profileimage from '@/../public/images/profileimage.png'
+import profileimage from '@/../public/images/userdummy.png'
 import Input from '@/components/ui/Input'
 import Toggle from '@/components/ui/ToggleButton'
 import useFetch from '@/hooks/useFetch'
@@ -23,7 +23,6 @@ interface sessionProps {
 }
 
 const Profile: React.FC<sessionProps> = ({ session, userData }) => {
-
     // Separate state for each button
     const [isNameActive, setIsNameActive] = useState<boolean>(false)
     const [isUsernameActive, setIsUsernameActive] = useState<boolean>(false)
@@ -32,7 +31,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
     const [isUserDisabled, setIsUserDisabled] = useState<boolean>(true);
     const [isEmailDisabled, setIsEmailDisabled] = useState<boolean>(true);
     const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
-    const [profileImage, setProfileImage] = useState<string>(userData?.user?.profileImg || "/images/profileimage.png");
+    const [profileImage, setProfileImage] = useState<string>(userData?.user?.profileImg || "/images/userdummy.png");
     const [name, setName] = useState(userData?.user ? userData?.user?.name : '');
     const [isDeletepopup, setisDeletepopup] = useState<boolean>(false);
     const [isDeleteUSer, setIsDeleteUser] = useState<boolean>(false);
@@ -49,8 +48,6 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
     const openPopup = () => {
         setIsPopupOpen(true);
     };
-
-
 
     const { data: response, loading, fetchData } = useFetch<any>();
     // const { data: imagersponse, loading:imageloading, fetchData:fetchimage } = useFetch<any>();

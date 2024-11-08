@@ -80,7 +80,7 @@ const NewPassword = ({ formData, otp }: newpasswordpopup) => {
                             <Input
                                 {...field}
                                 type={isChecked1 ? "text" : "password"}
-                                placeholder="Email or Phone"
+                                placeholder="New Password"
                                 label=" Password"
                                 className=" placeholder:text-neutral-400 py-3 md:py-[18px]  px-5 bg-divider-100"
                                 error={errors.newPassword?.message}
@@ -94,7 +94,7 @@ const NewPassword = ({ formData, otp }: newpasswordpopup) => {
                             <Input
                                 {...field}
                                 type={isChecked1 ? "text" : "password"}
-                                placeholder="Your Password Again"
+                                placeholder="Confirm Password"
                                 label=" Confirm Password"
                                 className=" placeholder:text-neutral-400 py-3 md:py-[18px]  px-5 bg-divider-100 w-full"
                                 error={errors.confirmPassword?.message}
