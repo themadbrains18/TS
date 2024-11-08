@@ -18,7 +18,7 @@ const HeroSection = () => {
         <>
             <section>
                 <div className="container">
-                    <div className='grid lg:grid-cols-2 lg:gap-x-5'>
+                    <div className='grid lg:grid-cols-2 lg:gap-x-5 bg-[url("/images/heropurplebg.png")] bg-no-repeat bg-cover bg-right'>
                         <div className='pt-10 lg:pt-[125px] lg:max-w-[570px] w-full'>
                             <div className='relative'>
                                 <Image width={200} height={40} src={"/images/Vector.png"} alt='vectorsicon' className='absolute top-0 left-0' />
@@ -56,7 +56,7 @@ const HeroSection = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className='relative pl-5 flex lg:max-w-[657px] w-full items-end mt-[30px] lg:mt-0'>
+                        <div className='relative pl-5 flex lg:max-w-[657px] w-full items-end mt-[30px] lg:mt-0 '>
                             <Image className='absolute top-0 left-0 lg:max-w-[230px] w-[50%] h-[100%]' src={'/images/purplebg.png'} width={230} height={587} alt='purplebg' />
                             <div className='lg:max-w-[635px] w-full relative'>
                                 <div className='p-[10px] rounded-2xl  bg-white relative z-[4] inline-block max-w-[262px] tab:max-w-full mt-[50px] lg:mt-0 md:w-[70%] lg:max-w-[490px] lg:w-full  group cursor-pointer'>

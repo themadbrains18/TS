@@ -73,8 +73,7 @@ const PopularSection = () => {
     return (
         <>
             <section className='bg-bgcolor py-10 lg:py-[100px] '>
-                <div className='bg-[url("/images/featurecolor.png")] bg-no-repeat bg-cover bg-right'>
-                    <div className="container">
+                    <div className="container bg-[url('/images/bgfeature2.png')] bg-no-repeat bg-contain bg-left">
                         <div>
                             <h2 className='text-subheading sm:leading-9 font-bold text-[22px] tab:text-[28px]'>Popular Template</h2>
                             {loading ? (
@@ -113,7 +112,6 @@ const PopularSection = () => {
                                 <Button link='/product' linkclass='w-full md:w-auto' className='w-full' variant='secondary' >View All Products</Button>
                             </div>
                         </div>
-                    </div>
                 </div>
             </section>
         </>

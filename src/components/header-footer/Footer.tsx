@@ -57,8 +57,8 @@ const Footer = () => {
 
   return (
     <>
-      <footer className="bg-white pt-10 md:pt-20 pb-10">
-        <div className="container">
+      <footer className=" pt-10 md:pt-20 pb-10 bg-[url('/images/footerpurplebg.jpg')] bg-no-repeat bg-contain bg-left">
+        <div className="container ">
           <div className="flex flex-col gap-5 lg:flex-row items-center justify-between">
             <div className=" lg:max-w-[368px] lg:h-[293px] w-full flex flex-col justify-between items-start">
               <div>
