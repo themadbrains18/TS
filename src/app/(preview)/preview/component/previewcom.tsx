@@ -33,6 +33,7 @@ const Previewcom: FC<PreviewImagesProps> = ({ previewImages = [], previewMobileI
         }
     }, [activeButton, previewImages, previewMobileImages]);
 
+
     return (
         <>
             {showFullScreen ? (
