@@ -23,11 +23,13 @@ const Page = async () => {
 
     // Parse the response as JSON
     const userData = await userResponse.json();
+    console.log(userData, "userDatauserDatauserData")
 
     // Pass userData as props to MainScreen component
     return (
         <>
             <MainScreen userData={userData} />
+
         </>
     );
 }

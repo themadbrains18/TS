@@ -75,7 +75,6 @@ function useFetch<T>(): FetchResult<T> {
           headers,
           signal,
         });
-        // console.log(response,"==response");
 
         if (!response.ok) {
           const errorBody = await response.json();

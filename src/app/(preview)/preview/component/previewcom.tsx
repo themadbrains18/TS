@@ -33,6 +33,7 @@ const Previewcom: FC<PreviewImagesProps> = ({ previewImages = [], previewMobileI
         }
     }, [activeButton, previewImages, previewMobileImages]);
 
+
     return (
         <>
             {showFullScreen ? (
@@ -58,42 +59,74 @@ const Previewcom: FC<PreviewImagesProps> = ({ previewImages = [], previewMobileI
                             ))}
                         </div>
 
-                        <div className="pt-10 grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-x-[30px] md:gap-y-10">
+                        <div className='pt-10'>
                             {activeButton === 0
-                                ? previewImages.map((item, index) => (
-                                    <Fragment key={`desktop-${index}`}>
-                                        {loadingProduct ? (
-                                            <Skeleton />
-                                        ) : (
-                                            <Image
-                                                onClick={() => setShowFullScreen(true)}
-                                                className="cursor-pointer"
-                                                src={item.imageUrl}
-                                                width={358}
-                                                height={1000}
-                                                style={{ width: '100%' }}
-                                                alt="image"
-                                            />
-                                        )}
-                                    </Fragment>
-                                ))
-                                : previewMobileImages.map((item, index) => (
-                                    <Fragment key={`mobile-${index}`}>
-                                        {loadingProduct ? (
-                                            <Skeleton />
-                                        ) : (
-                                            <Image
-                                                onClick={() => setShowFullScreen(true)}
-                                                className="cursor-pointer"
-                                                src={item.imageUrl}
-                                                width={358}
-                                                height={1000}
-                                                style={{ width: '100%' }}
-                                                alt="image"
-                                            />
-                                        )}
-                                    </Fragment>
-                                ))}
+                                ? (<>
+                                    {
+                                        previewImages && previewImages.length > 0 ?
+                                            <div className='grid gap-y-5  tab:grid-cols-2 sm:grid-cols-3 xl:grid-cols-4  gap-x-[30px]'>
+
+                                                {
+                                                    previewImages.map((item, index) => (
+                                                        <Fragment key={`desktop-${index}`}>
+                                                            <Image
+                                                                onClick={() => setShowFullScreen(true)}
+                                                                className="cursor-pointer"
+                                                                src={item.imageUrl}
+                                                                width={358}
+                                                                height={1000}
+                                                                style={{ width: '100%' }}
+                                                                alt="image"
+                                                            />
+                                                        </Fragment>
+                                                    ))
+                                                }
+                                            </div>
+                                            :
+                                            <div className='grid gap-y-5  tab:grid-cols-2 sm:grid-cols-3 xl:grid-cols-4  gap-x-[30px]'>
+                                                <Skeleton />
+                                                <Skeleton />
+                                                <Skeleton />
+                                                <Skeleton />
+                                            </div>
+                                    }
+                                </>)
+
+
+                                :
+                                (<>
+
+                                    {
+                                        previewMobileImages && previewMobileImages.length > 0 ?
+                                            <div className='grid gap-y-5  tab:grid-cols-2 sm:grid-cols-3 xl:grid-cols-4  gap-x-[30px]'>
+                                                {
+                                                    previewMobileImages.map((item, index) => (
+                                                        <Fragment key={`mobile-${index}`}>
+                                                            <Image
+                                                                onClick={() => setShowFullScreen(true)}
+                                                                className="cursor-pointer"
+                                                                src={item.imageUrl}
+                                                                width={358}
+                                                                height={1000}
+                                                                style={{ width: '100%' }}
+                                                                alt="image"
+                                                            />
+                                                        </Fragment>
+                                                    ))
+                                                }
+                                            </div>
+
+                                            : <div className='grid gap-y-5  tab:grid-cols-2 sm:grid-cols-3 xl:grid-cols-4  gap-x-[30px]'>
+                                                <Skeleton />
+                                                <Skeleton />
+                                                <Skeleton />
+                                                <Skeleton />
+                                            </div>
+                                    }
+
+                                </>)
+
+                            }
                         </div>
                     </div>
                 </section>

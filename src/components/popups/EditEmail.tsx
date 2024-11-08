@@ -11,6 +11,7 @@ import useFetch from '@/hooks/useFetch';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import NewPassword from './NewPassword';
+import VerfiyNewEmail from './VerfiyNewEmail';
 
 interface FormData {
     currentEmail: string;
@@ -141,6 +142,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
      * 
      * @returns {void}
      */
+
     const resendCode = async () => {
         if (!canResend) return;
 
@@ -172,7 +174,6 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
 
 
 
-
     /**
      * This hook listens for changes in the `response` object and updates various states accordingly.
      * 
@@ -180,12 +181,15 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
      * - This effect runs every time `response` changes.
     */
 
+
+
     useEffect(() => {
         if (response?.otp === true) {
             setStep(2);
             setValue('otp', ['', '', '', '', '', '']);
             reset();
-            setDisabled(true);
+            setStartTimer(0)
+            setInitialSend(true)
         }
 
         if (response?.sendotp === true) {
@@ -224,10 +228,10 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
     }, [startTimer]);
 
     return (
-        <Modal isOpen={isPopupOpen} className='max-w-[616px] w-full' onClose={() => { closePopup(); setStep(1); }}>
+        <Modal isOpen={isPopupOpen} className='max-w-[616px] w-full' onClose={() => { closePopup(); setStep(1); setStartTimer(0) }}>
             <div className="relative px-4 py-9 sm:py-[30px] sm:px-10 max-w-[616px] bg-gradient-to-b from-[#E5EFFF] to-[#E5EFFF]">
-                <Icon onClick={() => { closePopup(); setStep(1); }} className="absolute top-5 right-5 fill-[#5D5775] w-5 h-5 cursor-pointer z-50" name="crossicon" />
-                <div className="sm:py-[50px]">
+                <Icon onClick={() => { closePopup(); setStep(1); setStartTimer(0) }} className="absolute top-5 right-5 fill-[#5D5775] w-5 h-5 cursor-pointer z-50" name="crossicon" />
+                <div className="py-4 sm:py-[50px]">
                     {step === 1 && (
                         <>
                             <form onSubmit={handleSubmit(onSubmit)}>
@@ -240,19 +244,15 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                                         value={session?.email}
                                         disabled={step === 1}
                                         onChange={() => clearErrors("email")}
-                                      className='!py-[13px] px-4 sm:px-5'
+                                        className='!py-[13px] px-4 sm:px-5'
                                     />
                                     {startTimer > 0 ? (
-                                        <Button className='text-nowrapbg-primary-100 text-white capitalize  leading-6 transition-all duration-300 hover:bg-[#872fcb] py-[13px] px-[10px] sm:px-[30px] text-nowrap text-sm sm:text-base font-normal' variant='primary' type='button' disabled={true} >
+                                        <Button  className='bg-primary-100 text-white capitalize  leading-6 transition-all duration-300 hover:bg-[#872fcb] py-[13px] px-[10px] sm:px-[30px] text-nowrap text-sm sm:text-base font-normal' variant='primary' type='button' disabled={true} >
                                             Resend OTP in {Math.floor(startTimer / 60)}:{(startTimer % 60).toString().padStart(2, '0')}
                                         </Button>
                                     ) : (
-                                        // <button className="text-action-900" type="button" onClick={() => !initialSend ? resendCode() : handleEmmailUpdate()}>
-                                        //     {initialSend ? (`${loadingbtn ? (<Icon name='loadingicon' />) : ("send otp")}`) : (`${loadingbtn ? (<Icon name='loadingicon' />) : ("Resend Code")}`)}
-                                        // </button>
-
                                         <button
-                                            className="bg-primary-100 text-white capitalize font-normal leading-6 transition-all duration-300 hover:bg-[#872fcb] py-[13px] px-[10px] sm:px-[30px] text-nowrap text-sm sm:text-base"
+                                            className="bg-primary-100 text-white capitalize  leading-6 transition-all duration-300 hover:bg-[#872fcb] py-[13px] px-[10px] sm:px-[30px] text-nowrap text-sm sm:text-base font-normal"
                                             type="button"
                                             onClick={() => !initialSend ? resendCode() : handleEmmailUpdate()}
                                         >
@@ -268,8 +268,8 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                                 </div>
                             </form>
                             <form onSubmit={handleSubmit(onSubmit)}>
-                                <div className="mt-[30px] sm:mt-10">
-                                    <label className="text-lg font-normal leading-7 text-neutral-900">Please enter OTP</label>
+                                <div className="mt-10">
+                                    <label className="text-lg font-normal leading-7 text-neutral-900 mb-2 ">Please enter OTP</label>
                                     <InputOtp
                                         className="space-x-5  mt-[10px] mx-4 sm:m-5"
                                         register={register}
@@ -281,18 +281,20 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                                         Please check your mail for a 6-digit confirmation code to {session?.email}. Enter the confirmation code to verify.
                                     </p>
                                     <div className="mt-[30px] sm:mt-10">
-                                        <Button disabled={loadingOtp} loadingbtn={loadingOtp} iconClass='w-7 h-7' className="w-full py-2 sm:py-[13px] text-lg font-normal text-center justify-center" type="submit" variant="primary" >{loadingOtp ? "" : "Verify Now"}</Button>
+                                        <Button disabled={loadingOtp ? true : false} loadingbtn={loadingOtp ? true : false} iconClass='w-7 h-7' className="w-full py-2 sm:py-[13px] text-lg font-normal text-center justify-center" type="submit" variant="primary" >{loadingOtp ? "" : "Verify Now"}</Button>
 
                                     </div>
                                 </div>
                             </form>
                         </>
                     )}
+
                     {
                         step === 2 && (<>
-                            <NewPassword otp={response?.otp} formData={FormData} />
+                            <VerfiyNewEmail formData={FormData} />
                         </>)
                     }
+
                 </div>
             </div>
         </Modal>

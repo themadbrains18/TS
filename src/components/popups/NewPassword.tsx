@@ -39,7 +39,6 @@ const NewPassword = ({ formData, otp }: newpasswordpopup) => {
      * @param data - The form data submitted by the user, which includes the new password, confirmation password, email, and OTP.
      */
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
-        console.log(data, "Form submission data");
 
         try {
             setisLoading(true)
@@ -58,7 +57,6 @@ const NewPassword = ({ formData, otp }: newpasswordpopup) => {
 
             if (result.ok) {
                 const res = await result.json();
-                console.log("Password reset successful:", res);
                 signOut()
 
                 // Handle success (e.g., display a success message)
@@ -82,7 +80,7 @@ const NewPassword = ({ formData, otp }: newpasswordpopup) => {
                             <Input
                                 {...field}
                                 type={isChecked1 ? "text" : "password"}
-                                placeholder="Email or Phone"
+                                placeholder="New Password"
                                 label=" Password"
                                 className=" placeholder:text-neutral-400 py-3 md:py-[18px]  px-5 bg-divider-100"
                                 error={errors.newPassword?.message}
@@ -96,7 +94,7 @@ const NewPassword = ({ formData, otp }: newpasswordpopup) => {
                             <Input
                                 {...field}
                                 type={isChecked1 ? "text" : "password"}
-                                placeholder="Your Password Again"
+                                placeholder="Confirm Password"
                                 label=" Confirm Password"
                                 className=" placeholder:text-neutral-400 py-3 md:py-[18px]  px-5 bg-divider-100 w-full"
                                 error={errors.confirmPassword?.message}
@@ -117,9 +115,9 @@ const NewPassword = ({ formData, otp }: newpasswordpopup) => {
                 <div className='mt-6' >
 
                     <Button
-                        disabled={isLoading ? true : false}
+                        disabled={isLoading}
                         type='submit'
-                        loadingbtn={isLoading ? true : false}
+                        loadingbtn={isLoading}
                         iconClass='w-7 h-7'
                         variant='primary'
                         className='w-full items-center justify-center'

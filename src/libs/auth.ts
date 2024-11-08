@@ -77,8 +77,6 @@ export const authOptions: AuthOptions = {
         });
 
         const user = await res.json();
-        // console.log(user, "==user");
-
         if (res.ok && user) {
           return {
             id: user.results.data.id,
@@ -113,9 +111,9 @@ export const authOptions: AuthOptions = {
 
     async session({ session, token }) {
       if (isTokenExpired(token.token)) {
-        return null  as any;
+        return null as any;
       }
-   
+
 
       return {
         ...session,
@@ -134,7 +132,7 @@ export const authOptions: AuthOptions = {
   },
   session: {
     strategy: "jwt",
-    maxAge: 24*60* 60 // 4 hours
+    maxAge: 24 * 60 * 60 // 4 hours
   },
   secret: process.env.NEXTAUTH_SECRET,
 };

@@ -3,10 +3,9 @@
 import Button from '@/components/ui/Button'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
-import profileimage from '@/../public/images/profileimage.png'
+import profileimage from '@/../public/images/userdummy.png'
 import Input from '@/components/ui/Input'
 import Toggle from '@/components/ui/ToggleButton'
-import VerfiyOldEmail from '@/components/popups/VerfiyOldEmail'
 import useFetch from '@/hooks/useFetch'
 import { Session } from 'next-auth'
 import DeleteUser from '@/components/popups/DeleteUser'
@@ -14,6 +13,8 @@ import { useDownload } from '@/app/contexts/DailyDownloadsContext'
 import { UserDetail } from '@/types/type'
 import NewPasswordProcess from '@/components/popups/NewPasswordProcess'
 import { signOut } from 'next-auth/react'
+import EditEmail from '@/components/popups/EditEmail'
+import Icon from '@/components/Icon'
 
 
 interface sessionProps {
@@ -22,7 +23,6 @@ interface sessionProps {
 }
 
 const Profile: React.FC<sessionProps> = ({ session, userData }) => {
-
     // Separate state for each button
     const [isNameActive, setIsNameActive] = useState<boolean>(false)
     const [isUsernameActive, setIsUsernameActive] = useState<boolean>(false)
@@ -31,7 +31,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
     const [isUserDisabled, setIsUserDisabled] = useState<boolean>(true);
     const [isEmailDisabled, setIsEmailDisabled] = useState<boolean>(true);
     const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
-    const [profileImage, setProfileImage] = useState<string>(userData?.user?.profileImg || "/images/profileimage.png");
+    const [profileImage, setProfileImage] = useState<string>(userData?.user?.profileImg || "/images/userdummy.png");
     const [name, setName] = useState(userData?.user ? userData?.user?.name : '');
     const [isDeletepopup, setisDeletepopup] = useState<boolean>(false);
     const [isDeleteUSer, setIsDeleteUser] = useState<boolean>(false);
@@ -49,8 +49,8 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
         setIsPopupOpen(true);
     };
 
-
-    const { data: response, fetchData } = useFetch<any>();
+    const { data: response, loading, fetchData } = useFetch<any>();
+    // const { data: imagersponse, loading:imageloading, fetchData:fetchimage } = useFetch<any>();
     const { error: deleteerror, loading: deleteloading, fetchData: deleteuser } = useFetch<any>();
     const { loading: updateLoading, fetchData: updateFetchData } = useFetch<any>();
     const { loading: updateloadingNumber, fetchData: updateNumber } = useFetch<any>();
@@ -63,6 +63,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
      * 
      * @param event - The change event triggered by the input field when a user selects a file.
      */
+
     const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
@@ -134,8 +135,6 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
      */
     const handlePhonenumberUpdate = async () => {
         try {
-            console.log(number, "==number", response?.user?.number);
-
             if (number === "" || number === null || number === undefined) {
                 setPhoneNumberError("Please enter contact number")
                 return
@@ -216,7 +215,6 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
     useEffect(() => {
 
         if (response) {
-            //   console.log(response,"==response");
             fetchDailyDownloads()
             setProfileImage(response?.user?.profileImageUrl || response?.user?.profileImg || profileimage);
         }
@@ -237,12 +235,11 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
     }, [phoneNumberError, nameError])
 
 
-    // console.log(response,"==response");
 
     return (
         <>
             <section>
-                <VerfiyOldEmail closePopup={() => closePopup()} isPopupOpen={isPopupOpen} handlepasswordUpdate={handlepasswordUpdate} />
+                <EditEmail closePopup={() => closePopup()} isPopupOpen={isPopupOpen} handlepasswordUpdate={handlepasswordUpdate} />
                 <NewPasswordProcess closePopup={() => closePopup()} isPopupOpen={isDeletepopup} />
                 <DeleteUser loading={deleteloading} isPopupOpen={isDeleteUSer} closePopup={() => { setIsDeleteUser(false) }} deleteAccount={() => { deleteUser() }} />
 
@@ -255,19 +252,12 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                     <div className='relative max-w-[115px] md:max-w-[168px] w-full h-[168px]'>
                                         <Image
                                             className='rounded-full h-[168px]'
-                                            // src={
-                                            //     loading ? '/images/profileimage.png' :
-                                            //         response?.user?.profileImg
-                                            // }
                                             src={profileImage}
                                             height={168}
                                             width={168}
                                             alt='userimage'
                                         />
-
-
-
-                                        <label htmlFor="profilepic" className='py-[5px] px-[14px] text-[11px] md:text-base md:py-2 text-nowrap absolute bottom-0 left-[6px] right-[6px] md:left-2 md:right-2 text-center bg-primary-300 text-[#282827] capitalize cursor-pointer border-b transition-all duration-200 hover:border-primary-100 font-regular leading-6'>change image</label>
+                                        <label htmlFor="profilepic" className='py-[5px] px-[14px] text-[11px] md:text-base md:py-2 text-nowrap absolute bottom-0 left-[6px] right-[6px] md:left-2 md:right-2 text-center bg-primary-300 text-[#282827] capitalize cursor-pointer border-b transition-all duration-200 hover:border-primary-100 font-regular leading-6 flex justify-center'>{loading ? <Icon name='purpleloader' className='w-7 h-7' /> : "change image"} </label>
                                         <input
                                             className='hidden'
                                             id='profilepic'
@@ -275,7 +265,6 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                             onChange={handleImageChange}
                                         />
                                     </div>
-                                    {/* <Button className='py-[6px] px-5 text-sm md:text-base md:px-7 md:py-2' variant='basic'>Remove</Button> */}
                                 </div>
                                 <div className='mt-5 flex flex-col gap-y-4 lg:gap-y-[30px]'>
                                     <div >
