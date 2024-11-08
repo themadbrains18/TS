@@ -44,7 +44,6 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
     const [resendData, setResendData] = useState<FormData>();
     const [initialSend, setInitialSend] = useState(true);
     const [FormData, setFormData] = useState({})
-    console.log(FormData, "check opt filed ")
 
     /**
      * onSubmit function handles the form submission process.

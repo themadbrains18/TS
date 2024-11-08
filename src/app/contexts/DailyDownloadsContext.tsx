@@ -47,15 +47,16 @@ export const DownloadProvider: React.FC<DownloadProviderProps> = ({ children }) 
       },
     });
     const data = await response.json();
-    console.log(data, "===");
 
     setDownloads(data.downloads?.freeDownloads || null);
     setImageUrl(data.downloads?.profileImg || null);
   };
 
   useEffect(() => {
-    fetchDailyDownloads();
-  }, []);
+    if(session){
+      fetchDailyDownloads();
+    }
+  }, [session]);
 
   return (
     <DownloadContext.Provider value={{ downloads, imageUrl, setDownloads, setImageUrl, fetchDailyDownloads }}>

@@ -92,6 +92,7 @@ function useFetch<T>(): FetchResult<T> {
 
         let res: any = result.results ? result?.results : result
         setData(res);
+        
         toaster && toast.success(res?.message);
         setError(null);
       } catch (e: any) {

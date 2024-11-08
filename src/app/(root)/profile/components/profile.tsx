@@ -31,7 +31,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
     const [isUserDisabled, setIsUserDisabled] = useState<boolean>(true);
     const [isEmailDisabled, setIsEmailDisabled] = useState<boolean>(true);
     const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
-    const [profileImage, setProfileImage] = useState<any>(userData?.user?.profileImg || "/images/profileimage.png");
+    const [profileImage, setProfileImage] = useState<string>(userData?.user?.profileImg || "/images/profileimage.png");
     const [name, setName] = useState(userData?.user ? userData?.user?.name : '');
     const [isDeletepopup, setisDeletepopup] = useState<boolean>(false);
     const [isDeleteUSer, setIsDeleteUser] = useState<boolean>(false);
@@ -107,7 +107,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                 setNameeror("User Name Is Empty")
                 return
             }
-            if (name === userData?.user?.name) {
+            if (name === response?.user?.name) {
                 setNameeror("This User Already Exists ")
                 return
             }
@@ -134,13 +134,15 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
      */
     const handlePhonenumberUpdate = async () => {
         try {
-            if (number === "") {
-                setPhoneNumberError("Number Is Empty")
+            console.log(number, "==number", response?.user?.number);
+
+            if (number === "" || number === null || number === undefined) {
+                setPhoneNumberError("Please enter contact number")
                 return
             }
 
-            if (number === userData?.user?.number) {
-                setPhoneNumberError("This Number Is  Already Exists")
+            if (number === response?.user?.number) {
+                setPhoneNumberError("This number is  already exists")
                 return
             }
 
@@ -214,10 +216,29 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
     useEffect(() => {
 
         if (response) {
+            //   console.log(response,"==response");
             fetchDailyDownloads()
             setProfileImage(response?.user?.profileImageUrl || response?.user?.profileImg || profileimage);
         }
     }, [response])
+
+    useEffect(() => {
+        if (nameError) {
+            setTimeout(() => {
+                setNameeror("")
+            }, 1000)
+        }
+        if (phoneNumberError) {
+            setTimeout(() => {
+                setPhoneNumberError("")
+            }, 1000)
+        }
+
+    }, [phoneNumberError, nameError])
+
+
+    // console.log(response,"==response");
+
     return (
         <>
             <section>

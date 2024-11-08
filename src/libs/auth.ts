@@ -1,40 +1,42 @@
-import { AuthOptions, DefaultSession } from "next-auth"; 
-import CredentialsProvider from "next-auth/providers/credentials"; 
-import { jwtDecode } from "jwt-decode"; 
-import GoogleProvider from "next-auth/providers/google"; 
-import GithubProvider from "next-auth/providers/github"; 
+import { AuthOptions, DefaultSession, Session, getServerSession } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { jwtDecode } from "jwt-decode";
+import GoogleProvider from "next-auth/providers/google";
+import GithubProvider from "next-auth/providers/github";
 import FacebookProvider from "next-auth/providers/facebook";
+import { type GetServerSidePropsContext } from "next";
 
 /**
  * Extending NextAuth types to include additional fields
  */
+
 declare module "next-auth" {
   interface Session {
-    id: string; // User ID
-    email: string; // User's email
-    role: string; // User's role (e.g., 'admin' or 'user')
-    token: string; // JWT token for authentication
-    freeDownloads: string; // Number of free downloads remaining
-    image: string; // URL of the user's profile image
+    id: string;
+    email: string;
+    role: string;
+    token: string;
+    freeDownloads: string;
+    image: string;
   }
 
   interface User {
-    id: string; // User ID
-    email: string; // User's email
-    role: string; // User's role
-    token: string; // JWT token for authentication
-    freeDownloads: string; // Number of free downloads remaining
+    id: string;
+    email: string;
+    role: string;
+    token: string;
+    freeDownloads: string;
   }
 }
 
 declare module "next-auth/jwt" {
   interface JWT {
-    id: string; // User ID
-    email: string; // User's email
-    role: string; // User's role
-    token: string; // JWT token for authentication
-    freeDownloads: string; // Number of free downloads remaining
-    image: string; // URL of the user's profile image
+    id: string;
+    email: string;
+    role: string;
+    token: string;
+    freeDownloads: string;
+    image: string;
   }
 }
 
@@ -43,125 +45,125 @@ declare module "next-auth/jwt" {
  */
 export const authOptions: AuthOptions = {
   providers: [
-    // Google authentication provider
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID ?? "", // Google Client ID
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "", // Google Client Secret
+      clientId: process.env.GOOGLE_CLIENT_ID ?? "",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
     }),
-    // Github authentication provider
     GithubProvider({
-      clientId: process.env.GITHUB_CLIENT_ID ?? "", // Github Client ID
-      clientSecret: process.env.GITHUB_CLIENT_SECRET ?? "", // Github Client Secret
+      clientId: process.env.GITHUB_CLIENT_ID ?? "",
+      clientSecret: process.env.GITHUB_CLIENT_SECRET ?? "",
     }),
-    // Facebook authentication provider
     FacebookProvider({
-      clientId: process.env.FACEBOOK_ID ?? "", // Facebook App ID
-      clientSecret: process.env.FACEBOOK_SECRET ?? "", // Facebook App Secret
+      clientId: process.env.FACEBOOK_ID ?? "",
+      clientSecret: process.env.FACEBOOK_SECRET ?? "",
     }),
-    // Credentials provider for custom login
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        email: { label: "Email", type: "text" }, // Email input
-        password: { label: "Password", type: "password" }, // Password input
-        otp: { label: "OTP", type: "text", required: false }, // OTP input (optional)
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" },
+        otp: { label: "OTP", type: "text", required: false },
       },
       async authorize(credentials) {
-        // Ensure credentials are provided
         if (!credentials || !credentials.email || !credentials.password) {
           throw new Error("Email and password are required");
         }
 
         const { email, password, otp } = credentials;
-
-        // Call the login API to authenticate the user
         const res = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/login`, {
           method: "POST",
           body: JSON.stringify({ email, password, otp }),
           headers: { "Content-Type": "application/json" },
         });
 
-        // Parse the response from the API
         const user = await res.json();
-        console.log(user, "==user");
+        // console.log(user, "==user");
 
-        // If login is successful, return user details
         if (res.ok && user) {
           return {
-            id: user.results.data.id, // Adjust according to your API response structure
+            id: user.results.data.id,
             email: user.results.data.email,
             role: user.results.data.role,
-            token: user.results.token, // JWT token returned by the API
+            token: user.results.token,
             name: user.results.data.name,
             image: user.results.data.image,
             freeDownloads: user.results.data.freeDownloads,
           };
         }
 
-        // Return null if login fails
         return null;
       },
     }),
   ],
   callbacks: {
-    // Callback for JWT token
     async jwt({ token, user }) {
-      // If the user is authenticated, add additional information to the token
-      if (user) {
-        token.id = user?.id;
-        token.email = user?.email;
-        token.role = user?.role;
-        token.token = user.token; // Store JWT token from API
-        token.image = user.image || ""; // Store image URL
-        token.freeDownloads = user.freeDownloads; // Store free downloads
+      if (token?.token && isTokenExpired(token?.token)) {
+        return null as any;
       }
-      // // Check if the token has expired
-      // if (token.token && isTokenExpired(token.token)) {
-      //   // Clear sensitive data and set an "expired" flag
-      //   return null;
-      // }
+      if (user) {
+        token.id = user.id;
+        token.email = user.email;
+        token.role = user.role;
+        token.token = user.token;
+        token.image = user.image || "";
+        token.freeDownloads = user.freeDownloads;
+      }
       return token;
     },
 
-    // Callback for session handling
     async session({ session, token }) {
-      // // If the token is expired, return null (user will be logged out)
-      // if (isTokenExpired(token.token)) {
-      //   return null;
-      // }
+      if (isTokenExpired(token.token)) {
+        return null  as any;
+      }
+   
 
-      // Add token data to the session object
-      session.id = token.id;
-      session.email = token.email;
-      session.role = token.role;
-      session.token = token.token; // JWT Token available in the session
-      session.image = token.image; // Profile image available in the session
-      session.freeDownloads = token.freeDownloads; // Free downloads available in the session
-      return session;
+      return {
+        ...session,
+        id: token.id,
+        email: token.email,
+        role: token.role,
+        token: token.token,
+        image: token.image,
+        freeDownloads: token.freeDownloads,
+      } as Session;
     },
   },
   pages: {
-    signIn: "/auth/login", // Custom sign-in page
-    error: "/auth/error", // Error page for authentication errors
+    signIn: "/auth/login",
+    error: "/auth/error",
   },
   session: {
-    strategy: "jwt", // Use JWT for session management
+    strategy: "jwt",
+    maxAge: 1* 60 // 4 hours
   },
-  secret: process.env.NEXTAUTH_SECRET, // Secret for JWT encryption
+  secret: process.env.NEXTAUTH_SECRET,
 };
 
 /**
  * Helper function to check if the token is expired
  */
 const isTokenExpired = (token: string) => {
-  if (!token) return true; // If token is missing, consider it expired
+  if (!token) return true;
   try {
-    const decodedToken = jwtDecode(token); // Decode the JWT token
-    const currentTime = Date.now() / 1000; // Get the current time in seconds
-
-    return decodedToken.exp && decodedToken?.exp < currentTime;
+    const decodedToken = jwtDecode<{ exp: number }>(token);
+    const currentTime = Date.now() / 1000;
+    return decodedToken.exp < currentTime;
   } catch (error) {
-    console.error('Error decoding token:', error);
-    return true; // Consider token expired if decoding fails
+    console.error("Error decoding token:", error);
+    return true;
   }
+};
+
+/**
+ * Wrapper function to get the server-side session for a user. This helps in accessing the session
+ * in server-side rendering scenarios without the need to import `authOptions` repeatedly.
+ *
+ * @param {Object} ctx - The server-side context containing the request and response objects.
+ * @returns {Promise<Session | null>} - The session object if available, otherwise null.
+ */
+export const getServerAuthSession = (ctx: {
+  req: GetServerSidePropsContext["req"];
+  res: GetServerSidePropsContext["res"];
+}) => {
+  return getServerSession(ctx.req, ctx.res, authOptions);
 };
