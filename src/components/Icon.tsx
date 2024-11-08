@@ -44,6 +44,7 @@ import Nextjs from '@/../public/icons/nextjs.svg'
 import Tailwind from '@/../public/icons/tailwind.svg'
 import Productfilterclose from '@/../public/icons/productfilterclose.svg'
 import LoadingIcon from '@/../public/icons/loadingicon.svg'
+import PurpleLoader from '@/../public/icons/purpleloader.svg'
 import { cn } from "@/libs/utils";
 
 // Map icon names to components
@@ -90,7 +91,8 @@ const icons = {
   nextjs: Nextjs,
   tailwind: Tailwind,
   productfilterclose: Productfilterclose,
-  loadingicon:LoadingIcon
+  loadingicon:LoadingIcon,
+  purpleloader:PurpleLoader
 };
 
 export type IconName = keyof typeof icons;

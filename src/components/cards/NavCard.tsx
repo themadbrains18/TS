@@ -51,7 +51,7 @@ const NavCard: React.FC<navcardprops> = ({
             />
           </div>
             <Link
-              href={`productdetail/${id}`}
+              href={`${id}`}
             >
           <div className="bg-subheading opacity-[0] absolute top-0 right-0 left-0 bottom-0 transition-all duration-200 hover:opacity-[0.45] flex justify-center items-center">
             <p  className="text-white leading-5 font-semibold opacity-[1] capitalize relative z-10 "  >

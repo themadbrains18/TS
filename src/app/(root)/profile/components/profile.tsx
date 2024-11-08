@@ -14,6 +14,7 @@ import { UserDetail } from '@/types/type'
 import NewPasswordProcess from '@/components/popups/NewPasswordProcess'
 import { signOut } from 'next-auth/react'
 import EditEmail from '@/components/popups/EditEmail'
+import Icon from '@/components/Icon'
 
 
 interface sessionProps {
@@ -50,7 +51,8 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
     };
 
 
-    const { data: response, fetchData } = useFetch<any>();
+    const { data: response, loading, fetchData } = useFetch<any>();
+    // const { data: imagersponse, loading:imageloading, fetchData:fetchimage } = useFetch<any>();
     const { error: deleteerror, loading: deleteloading, fetchData: deleteuser } = useFetch<any>();
     const { loading: updateLoading, fetchData: updateFetchData } = useFetch<any>();
     const { loading: updateloadingNumber, fetchData: updateNumber } = useFetch<any>();
@@ -264,10 +266,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                             width={168}
                                             alt='userimage'
                                         />
-
-
-
-                                        <label htmlFor="profilepic" className='py-[5px] px-[14px] text-[11px] md:text-base md:py-2 text-nowrap absolute bottom-0 left-[6px] right-[6px] md:left-2 md:right-2 text-center bg-primary-300 text-[#282827] capitalize cursor-pointer border-b transition-all duration-200 hover:border-primary-100 font-regular leading-6'>change image</label>
+                                        <label htmlFor="profilepic" className='py-[5px] px-[14px] text-[11px] md:text-base md:py-2 text-nowrap absolute bottom-0 left-[6px] right-[6px] md:left-2 md:right-2 text-center bg-primary-300 text-[#282827] capitalize cursor-pointer border-b transition-all duration-200 hover:border-primary-100 font-regular leading-6 flex justify-center'>{loading ? <Icon name='purpleloader' className='w-7 h-7'/> : "change image" } </label>
                                         <input
                                             className='hidden'
                                             id='profilepic'
