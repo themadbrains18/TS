@@ -157,7 +157,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                 }
             }).then(res => {
                 if (res.ok) {
-                    setStartTimer(60); // Reset timer to 60 seconds
+                    setStartTimer(600); // Reset timer to 60 seconds
                     setCanResend(false); // Disable resend option temporarily
                     toast.success("OTP resent successfully");
                 } else {
@@ -194,7 +194,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
 
         if (response?.sendotp === true) {
             setInitialSend(false);
-            setStartTimer(60);
+            setStartTimer(600);
             setDisabled(false);
         }
 
@@ -228,9 +228,9 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
     }, [startTimer]);
 
     return (
-        <Modal isOpen={isPopupOpen} className='max-w-[616px] w-full' onClose={() => { closePopup(); setStep(1); setStartTimer(0) }}>
+        <Modal isOpen={isPopupOpen} className='max-w-[616px] w-full' onClose={() => { closePopup(); setStep(1); setStartTimer(0); setInitialSend(true) }}>
             <div className="relative px-4 py-9 sm:py-[30px] sm:px-10 max-w-[616px] bg-gradient-to-b from-[#E5EFFF] to-[#E5EFFF]">
-                <Icon onClick={() => { closePopup(); setStep(1); setStartTimer(0) }} className="absolute top-5 right-5 fill-[#5D5775] w-5 h-5 cursor-pointer z-50" name="crossicon" />
+                <Icon onClick={() => { closePopup(); setStep(1); setStartTimer(0); setInitialSend(true) }} className="absolute top-5 right-5 fill-[#5D5775] w-5 h-5 cursor-pointer z-50" name="crossicon" />
                 <div className="py-4 sm:py-[50px]">
                     {step === 1 && (
                         <>

@@ -30,7 +30,7 @@ const VerfiyNewEmail: FC<verifyNewemail> = ({
 
 }) => {
 
-  const { data: response, fetchData } = useFetch<any>();
+  const { data: response,loading, fetchData } = useFetch<any>();
   const { data: session } = useSession();
   const { register, handleSubmit, setValue, reset, setError, formState: { errors }, clearErrors, getValues } = useForm<FormData>();
   const [disabled, setDisabled] = useState(true);
@@ -154,7 +154,7 @@ const VerfiyNewEmail: FC<verifyNewemail> = ({
         }
       }).then(res => {
         if (res.ok) {
-          setStartTimer(60); // Reset timer to 60 seconds
+          setStartTimer(600); // Reset timer to 60 seconds
           setCanResend(false); // Disable resend option temporarily
           toast.success("OTP resent successfully");
         } else {
@@ -216,11 +216,11 @@ const VerfiyNewEmail: FC<verifyNewemail> = ({
     if (response?.sendotp === true) {
 
       setInitialSend(false);
-      setStartTimer(60);
+      setStartTimer(600);
       setDisabled(false);
     }
 
-    if (response?.redirect) {
+    if (response) {
       signOut();
     }
 
@@ -280,8 +280,8 @@ const VerfiyNewEmail: FC<verifyNewemail> = ({
           <div className="mt-[30px] sm:mt-10">
             <Button
               loadingbtn={loadingbtnverify}
-              iconClass='w-7 h-7' className="w-full py-2 sm:py-[13px] text-lg font-normal text-center justify-center" type="submit" variant="primary"
-              disabled={loadingbtnverify}>
+              iconClass='w-7 h-7' className="w-full py-2 sm:py-[13px] text-lg font-normal text-center justify-center"   type="submit" variant="primary"
+              disabled={disabled}>
               {
                 loadingbtnverify ? "" : "Verify Now"
               }
