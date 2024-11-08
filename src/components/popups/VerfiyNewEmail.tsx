@@ -1,40 +1,75 @@
-import React, { FC, useEffect } from 'react'
-import Modal from '../ui/Modal'
-import { verifyoldemail } from '@/types/type'
-import Input from '../ui/Input'
-import Button from '../ui/Button'
-import InputOtp from '@/app/(auth)/otp/components/Inputotp'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import Icon from '../Icon'
-import { useSession } from 'next-auth/react'
-import useFetch from '@/hooks/useFetch'
-import { useRouter } from 'next/navigation'
+import React, { FC, useEffect, useState } from 'react';
+import Input from '../ui/Input';
+import Button from '../ui/Button';
+import InputOtp from '@/app/(auth)/otp/components/Inputotp';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import Icon from '../Icon';
+import { signOut, useSession } from 'next-auth/react';
+import useFetch from '@/hooks/useFetch';
+import { toast } from 'react-toastify';
 
 interface FormData {
-  newEmail: String
-  otp?: string[]
+  newEmail?: string;
+  otp?: string[];
+}
+interface savedData {
+  currentEmail?: string;
+  newEmail?: string;
+  otp?: string[];
 }
 
-const VerfiyNewEmail: FC<verifyoldemail> = ({
-  closePopup,
-  isPopupOpen,
-  handlepasswordUpdate
+interface verifyNewemail {
+  formData?: {
+    email?: string;
+  }
+}
+
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const VerfiyNewEmail: FC<verifyNewemail> = ({
+
 }) => {
-  const router = useRouter();
-  const { data: response, error, loading, fetchData } = useFetch<any>();
-  const { register, handleSubmit, setValue } = useForm<FormData>();
+
+  const { data: response, fetchData } = useFetch<any>();
+  const { data: session } = useSession();
+  const { register, handleSubmit, setValue, reset, setError, formState: { errors }, clearErrors, getValues } = useForm<FormData>();
+  const [disabled, setDisabled] = useState(true);
+  const [step, setStep] = useState<number>(2);
+  const [loadingbtn, setLoadingbtn] = useState<boolean>(false);
+  const [loadingbtnverify, setLoadingbtnverify] = useState<boolean>(false);
+  const [startTimer, setStartTimer] = useState(0); // Timer in seconds
+  const [canResend, setCanResend] = useState(false);
+  const [resendData, setResendData] = useState<savedData>();
+  const [initialSend, setInitialSend] = useState(true);
+  const [clearotptime, setClearotptime] = useState<boolean>()
+
+
 
   /**
-   * onSubmit: This function handles the form submission for updating user details (likely related to email or password).
+   * This function handles the form submission for updating user email and handling OTP validation.
    * 
    * Error Handling:
-   * - If the request fails, an error is logged to the console.
+   * - If an error occurs during the request, it is caught and logged to the console.
    */
+
+
+
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
-      const joinedOtp = data?.otp && data?.otp.join('') || "";
+      setLoadingbtnverify(true)
+      if (step === 2 && data?.newEmail && !emailRegex.test(data?.newEmail)) {
+        setError("newEmail", { message: "Invalid email format" });
+        return;
+      }
 
-      delete data?.otp
+      const joinedOtp = data?.otp?.join('') || "";
+      if (joinedOtp.length < 6) {
+        setError("otp", { message: "Please enter the complete OTP" });
+        return;
+      }
+
+      delete data.otp;
+
       await fetchData('/update-details', {
         method: 'PUT',
         body: JSON.stringify({
@@ -45,57 +80,217 @@ const VerfiyNewEmail: FC<verifyoldemail> = ({
           'Content-Type': 'application/json',
         },
       });
-      if (response?.success) {
-        router.push('/')
-      }
+      setClearotptime(true)
+
     } catch (error) {
-      console.error("Error updating password:", error);
+      console.error("Error updating email:", error);
+    } finally {
+      setLoadingbtnverify(false)
     }
-  }
+  };
+
 
 
   /**
-   * This hook listens for changes to the `response` object.
+    * handleEmailUpdate: This function handles updating the user's email address based on the current step in the process.
+    * 
+    * Error Handling:
+    * - If an error occurs during the request, it is caught and logged to the console.
+    */
+
+  const handleEmmailUpdate = async () => {
+    try {
+      setLoadingbtn(true);
+      const newEmail = getValues("newEmail");
+      if (newEmail === "" || newEmail === null || newEmail === undefined) {
+        setError("newEmail", { message: "Please fill out this field" });
+        return;
+      }
+
+      if (!emailRegex.test(newEmail)) {
+        setError("newEmail", { message: "Invalid email format" });
+        return;
+      }
+
+      const payload = {
+        newEmail: newEmail,
+      };
+
+      setResendData(payload);
+
+      await fetchData('/update-details', {
+        method: 'PUT',
+        body: JSON.stringify(payload),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+    } catch (error) {
+      console.error("Error updating email:", error);
+    } finally {
+      setLoadingbtn(false);
+    }
+  };
+
+
+  /**
+    * This function handles the process of resending the OTP to the user's email address.
+    */
+
+  const resendCode = async () => {
+    if (!canResend) return;
+
+    try {
+      setLoadingbtn(true)
+      await fetch(`${process.env.NEXT_PUBLIC_APIURL}/resend-otp`, {
+        method: "POST",
+
+        body: JSON.stringify({ email: getValues('newEmail') }),
+
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: session?.token ? `Bearer ${session?.token}` : "",
+        }
+      }).then(res => {
+        if (res.ok) {
+          setStartTimer(60); // Reset timer to 60 seconds
+          setCanResend(false); // Disable resend option temporarily
+          toast.success("OTP resent successfully");
+        } else {
+          toast.error("Failed to resend OTP");
+        }
+      });
+    } catch (error) {
+      console.log("Error resending OTP:", error);
+    } finally {
+      setLoadingbtn(false)
+    }
+  };
+
+
+
+  /**
+  * This effect runs whenever the `startTimer` object changes.
+  */
+
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout | null = null;
+
+    if (startTimer > 0) {
+      timer = setInterval(() => {
+        setStartTimer(prev => prev - 1);
+      }, 1000);
+    } else if (startTimer === 0) {
+      setCanResend(true);
+    }
+
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+
+  }, [startTimer]);
+
+
+
+  /**
+   * This effect runs whenever the `response` object changes.
    */
   useEffect(() => {
     if (response?.otp === true) {
+      // setValue('otp', ['', '', '', '', '', '']);
+      // reset();
+      // setStartTimer(0)
+      // setInitialSend(false)
+      // setDisabled(true);
 
+      setValue('otp', ['', '', '', '', '', '']);
+      reset();
+      setStartTimer(0)
+      setInitialSend(true)
+      setStep(2);
+      setDisabled(true);
     }
 
-  }, [response])
+    if (response?.sendotp === true) {
+
+      setInitialSend(false);
+      setStartTimer(60);
+      setDisabled(false);
+    }
+
+    if (response?.redirect) {
+      signOut();
+    }
+
+  }, [response]);
+
+
 
   return (
-    <>
-    <p>New EMail</p>
-      {/* <Modal isOpen={isPopupOpen} onClose={closePopup}>
-        <div className='relative px-4 py-9 sm:py-[30px] sm:px-10 max-w-[616px] bg-gradient-to-b from-[#E5EFFF] to-[#E5EFFF]'>
-          <Icon onClick={() => closePopup()} className='absolute top-5 right-5 fill-[#5D5775] w-5 h-5 cursor-pointer z-50' name="crossicon" />
-          <div className='py-[50px]'>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div className='flex justify-between items-end gap-x-[10px] sm:gap-x-5 gap-y-6'>
-                <Input
-                  register={register}
-                  label='Enter New Password*'
-                  name='email'
-                  placeholder='Your Password'
-                />
-                <Input
-                  register={register}
-                  label='Confirm Password'
-                  name='email'
-                  placeholder='Your Password Again'
-                />
+    <div className="py-10">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="">
+          <div className='flex justify-between items-end gap-x-5' >
+            <Input
+              register={register}
+              label={"New Email"}
+              name="newEmail"
+              placeholder={`Enter new email`}
+              onChange={() => clearErrors("newEmail")}
+            />
+            {startTimer > 0 ? (
+              <Button className='text-nowrap' variant='primary' type='button' disabled={true} >
+                Resend OTP in {Math.floor(startTimer / 60)}:{(startTimer % 60).toString().padStart(2, '0')}
+              </Button>
+            ) : (
 
-                <Button className='w-full justify-center py-2 sm:py-[13px] text-lg font-normal leading-6' type='submit' variant='primary'>Save</Button>
-              </div>
-
-            </form>
-
+              <button
+                className="bg-primary-100 text-white capitalize font-semibold leading-6 transition-all duration-300 hover:bg-[#872fcb] py-[16px] px-[30px] text-nowrap"
+                type="button"
+                onClick={() => !initialSend ? resendCode() : handleEmmailUpdate()}
+              >
+                {initialSend ? (
+                  loadingbtn ? <Icon name="loadingicon" /> : "send otp"
+                ) : (
+                  loadingbtn ? <Icon name="loadingicon" /> : "Resend Code"
+                )}
+              </button>
+            )}
+          </div>
+          {errors?.newEmail && <p className="text-red-500">{errors?.newEmail?.message}</p>}
+        </div>
+      </form>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="mt-10">
+          <label className="text-lg font-normal leading-7 text-neutral-900">Please enter one time OTP</label>
+          <InputOtp
+            className="space-x-5 m-5"
+            register={register}
+            setValue={setValue}
+            clearErrors={clearErrors}
+            reset={step === 2}
+          />
+          {errors?.otp && <p className="text-red-500">{errors?.otp?.message}</p>}
+          <p className="mt-5 text-xs font-normal text-[#4B5563]">
+            Please check your mail for a 6-digit confirmation code to {session?.email}. Enter the confirmation code to verify.
+          </p>
+          <div className="mt-10">
+            <Button
+              loadingbtn={loadingbtnverify}
+              iconClass='w-7 h-7' className="w-full py-2 text-lg font-normal text-center justify-center" type="submit" variant="primary"
+              disabled={loadingbtnverify}>
+              {
+                loadingbtnverify ? "" : "Verify Now"
+              }
+            </Button>
           </div>
         </div>
-      </Modal> */}
-    </>
-  )
-}
+      </form>
+    </div>
 
-export default VerfiyNewEmail
+  );
+};
+
+export default VerfiyNewEmail;
