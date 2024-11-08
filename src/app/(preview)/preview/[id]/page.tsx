@@ -15,8 +15,6 @@ interface Params {
 const Page = async ({ params }: { params: Params }) => {
     const { id } = params;
 
-    // previewImages, previewMobileImages
-
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/templates-by-id/${id}`, {
         method: 'GET',

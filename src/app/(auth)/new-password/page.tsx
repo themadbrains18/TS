@@ -146,7 +146,7 @@ const NewPassword = ({ formdata }: any) => {
 
                             {/* Submit Button */}
                             <div className='my-[60px]' >
-                                <Button disabled={loading ? true : false} loadingbtn={loading ? true : false} variant='primary' className='w-full items-center justify-center' type='submit' iconClass='w-7 h-7'>
+                                <Button disabled={loading} loadingbtn={loading} variant='primary' className='w-full items-center justify-center' type='submit' iconClass='w-7 h-7'>
                                     {
                                         loading ? "" : "Save New Password" // Button text changes based on loading state
                                     }

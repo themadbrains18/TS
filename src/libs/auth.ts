@@ -77,8 +77,6 @@ export const authOptions: AuthOptions = {
         });
 
         const user = await res.json();
-        // console.log(user, "==user");
-
         if (res.ok && user) {
           return {
             id: user.results.data.id,

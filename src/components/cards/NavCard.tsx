@@ -26,16 +26,16 @@ const NavCard: React.FC<navcardprops> = ({
   icon,
   image,
   title,
-  classname,classnamemain
+  classname, classnamemain
 }) => {
   const [imgSrc, setImgSrc] = useState(image ? image : '/images/featureimg.png');
-
   /**
    * Fallback image with a leading slash
    */
   const handleImageError = () => {
     setImgSrc('/images/featureimg.png');
   };
+
   return (
     <>
       <div className={` ${classnamemain} cursor-pointer border border-divider-100`}>
@@ -50,15 +50,15 @@ const NavCard: React.FC<navcardprops> = ({
               className=" max-h-[106px] w-full object-cover"
             />
           </div>
-            <Link
-              href={`${id}`}
-            >
-          <div className="bg-subheading opacity-[0] absolute top-0 right-0 left-0 bottom-0 transition-all duration-200 hover:opacity-[0.45] flex justify-center items-center">
-            <p  className="text-white leading-5 font-semibold opacity-[1] capitalize relative z-10 "  >
-              view details
-            </p>
-          </div>
-            </Link>
+          <Link
+            href={`/productdetail/${id}`}
+          >
+            <div className="bg-subheading opacity-[0] absolute top-0 right-0 left-0 bottom-0 transition-all duration-200 hover:opacity-[0.45] flex justify-center items-center">
+              <p className="text-white leading-5 font-semibold opacity-[1] capitalize relative z-10 "  >
+                view details
+              </p>
+            </div>
+          </Link>
         </div>
         <div className="flex items-center py-[10px] px-[15px] justify-between " >
           <h4 className="mr-[2px] text-sm text-subheading leading-5 font-semibold text-ellipsis overflow-hidden text-nowrap">

@@ -251,49 +251,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
     const router = useRouter();
 
-    // const onSubmit: SubmitHandler<FormData> = (data) => {
-
-
-
-    //     const formData = new FormData();
-    //     // Append form fields to FormData
-    //     Object.entries(data).forEach(([key, value]) => {
-    //         if (Array.isArray(value)) {
-    //             value.forEach((item) => formData.append(key, item));
-    //         } else {
-    //             formData.append(key, value);
-    //         }
-    //     });
-
-    //     const credits = [
-    //         {
-    //             fonts: fonts.map(font => ({ name: font.name, url: font.url })),
-    //             images: images.map(image => ({ name: image.name, url: image.url })),
-    //             icons: icons.map(icon => ({ name: icon.name, url: icon.url })),
-    //             illustrations: illustrations.map(illustration => ({ name: illustration.name, url: illustration.url })),
-    //         }
-    //     ];
-    //     formData.append("credits", JSON.stringify(credits))
-
-    //     // Logging the FormData for demonstration using forEach
-    //     // formData.forEach((value, key) => {
-    //     // });
-    //     const endpoint = type == 'edit' ? `/templates/${id}` : '/templates';
-    //     const method = type == 'edit' ? 'PUT' : 'POST';
-    //     fetchData(endpoint, { method:method, body: formData })
-
-    //     if(formData){
-    //       router.push("/dashboard")  
-    //     }
-
-    // };
-
-
-
-
     const onSubmit: SubmitHandler<FormData> = async (data) => {
-        console.log(session, "==session  ");
-
         setLoader(true)
         const formData = new FormData();
 
@@ -307,10 +265,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                 formData.append(key, value);
             }
         });
-
-        console.log(formData, "==formdata");
-        console.log(data, "==data");
-        // return
         formData.delete("industry")
         formData.append('industry', data?.industry);
         const credits = [
@@ -343,7 +297,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                 router.push('/dashboard')
             }
 
-            // router.push("/dashboard");
         }).catch(error => {
             console.error("An error occurred during submission:", error);
         });

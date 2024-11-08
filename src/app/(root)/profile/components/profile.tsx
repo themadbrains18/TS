@@ -138,8 +138,6 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
      */
     const handlePhonenumberUpdate = async () => {
         try {
-            console.log(number, "==number", response?.user?.number);
-
             if (number === "" || number === null || number === undefined) {
                 setPhoneNumberError("Please enter contact number")
                 return
@@ -220,7 +218,6 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
     useEffect(() => {
 
         if (response) {
-            //   console.log(response,"==response");
             fetchDailyDownloads()
             setProfileImage(response?.user?.profileImageUrl || response?.user?.profileImg || profileimage);
         }
@@ -241,7 +238,6 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
     }, [phoneNumberError, nameError])
 
 
-    // console.log(response,"==response");
 
     return (
         <>
@@ -259,10 +255,6 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                     <div className='relative max-w-[115px] md:max-w-[168px] w-full h-[168px]'>
                                         <Image
                                             className='rounded-full h-[168px]'
-                                            // src={
-                                            //     loading ? '/images/profileimage.png' :
-                                            //         response?.user?.profileImg
-                                            // }
                                             src={profileImage}
                                             height={168}
                                             width={168}
@@ -276,7 +268,6 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                             onChange={handleImageChange}
                                         />
                                     </div>
-                                    {/* <Button className='py-[6px] px-5 text-sm md:text-base md:px-7 md:py-2' variant='basic'>Remove</Button> */}
                                 </div>
                                 <div className='mt-5 flex flex-col gap-y-4 lg:gap-y-[30px]'>
                                     <div >

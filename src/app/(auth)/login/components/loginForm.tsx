@@ -85,7 +85,7 @@ const LoginForm = () => {
         <>
             {
                 otpPath ? (
-                    <Otp formData={formData} api="login" setFormData={setFormData} />
+                    <Otp prevRouteName={"login"} prevRoute={'/login'} tittle={'Login With OTP'} formData={formData} api="login" setFormData={setFormData} />
                 ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-2">
                         {/* Left Section with Image and Text */}
@@ -162,13 +162,11 @@ const LoginForm = () => {
 
                                         {/* Submit Button */}
                                         <div className="my-[60px]">
-                                            <Button disabled={loading ? true : false} loadingbtn={loading ? true : false} variant='primary' className='w-full items-center justify-center' type='submit' iconClass='w-7 h-7'>
+                                            <Button disabled={loading} loadingbtn={loading} variant='primary' className='w-full items-center justify-center' type='submit' iconClass='w-7 h-7'>
                                                 {
                                                     loading ? "" : "Login"
                                                 }
                                             </Button>
-                                            {/* Error message display (commented out) */}
-                                            {/* {error && <p className="text-red-500 mt-2">Failed to login. Please try again.</p>} */}
 
                                             {/* Forgot Password Link */}
                                             <div className="text-end pt-5">

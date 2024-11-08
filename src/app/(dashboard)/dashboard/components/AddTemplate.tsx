@@ -27,7 +27,7 @@ export interface Template {
 }
 const AddTemplate = () => {
 
-  const { data: response,  fetchData } = useFetch<Template>();
+  const { data: response, loading,  fetchData } = useFetch<Template>();
 
   const fetchTemplates = async () => {
     await fetchData("/all-templates", { method: "GET" });
@@ -109,7 +109,7 @@ const AddTemplate = () => {
           <HideTemplate isPopupOpen={isPopupOpen} setHide={confirmHide} closePopup={closePopup} />
         )}
         {deletePopupIndex !== null && (
-          <DeleteTemplate setDelete={() => handleDelete(response?.templates[deletePopupIndex]?.id || "")} isPopupOpen={deletePopupIndex !== null} closePopup={closePopup} />
+          <DeleteTemplate loading={loading} setDelete={() => handleDelete(response?.templates[deletePopupIndex]?.id || "")} isPopupOpen={deletePopupIndex !== null} closePopup={closePopup} />
         )}
         <div className="container">
 
