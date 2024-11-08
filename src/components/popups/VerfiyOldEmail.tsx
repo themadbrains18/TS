@@ -219,15 +219,15 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
                                 onChange={() => clearErrors("email")}
                             />
                             {startTimer > 0 ? (
-                                <span className="text-[14px] font-normal text-neutral-600">
+                                <Button className='text-nowrap' variant='primary' type='button' disabled={true} >
                                     Resend OTP in {Math.floor(startTimer / 60)}:{(startTimer % 60).toString().padStart(2, '0')}
-                                </span>
+                                </Button>
                             ) : (
                                 // <button className="text-action-900" type="button" onClick={() => !initialSend ? resendCode() : handleEmmailUpdate()}>
                                 //     {initialSend ? (`${loadingbtn ? (<Icon name='loadingicon' />) : ("send otp")}`) : (`${loadingbtn ? (<Icon name='loadingicon' />) : ("Resend Code")}`)}
                                 // </button>
                                 <button
-                                    className="text-action-900"
+                                    className="bg-primary-100 text-white capitalize font-semibold leading-6 transition-all duration-300 hover:bg-[#872fcb] py-[16px] px-[30px] text-nowrap"
                                     type="button"
                                     onClick={() => !initialSend ? resendCode() : handleEmmailUpdate()}
                                 >
@@ -257,7 +257,7 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
                                 Please check your mail for a 6-digit confirmation code to {session?.email}. Enter the confirmation code to verify.
                             </p>
                             <div className="mt-10">
-                                <Button className="w-full py-2 text-lg font-normal" type="submit" variant="primary" disabled={disabled}>Verify Now</Button>
+                                <Button iconClass='w-7 h-7' className="w-full py-2 text-lg font-normal text-center justify-center"  type="submit" variant="primary" disabled={disabled}>Verify Now</Button>
                             </div>
                         </div>
                     </form>
