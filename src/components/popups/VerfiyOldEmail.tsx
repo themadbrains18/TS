@@ -63,6 +63,9 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
                 setError("otp", { message: "Please enter the complete OTP" });
                 return;
             }
+            else{
+                clearErrors("otp")
+            }
 
             delete data.otp;
 
