@@ -6,7 +6,6 @@ import React, { useEffect, useState } from 'react'
 import profileimage from '@/../public/images/profileimage.png'
 import Input from '@/components/ui/Input'
 import Toggle from '@/components/ui/ToggleButton'
-import VerfiyOldEmail from '@/components/popups/VerfiyOldEmail'
 import useFetch from '@/hooks/useFetch'
 import { Session } from 'next-auth'
 import DeleteUser from '@/components/popups/DeleteUser'
@@ -14,6 +13,7 @@ import { useDownload } from '@/app/contexts/DailyDownloadsContext'
 import { UserDetail } from '@/types/type'
 import NewPasswordProcess from '@/components/popups/NewPasswordProcess'
 import { signOut } from 'next-auth/react'
+import EditEmail from '@/components/popups/EditEmail'
 import Icon from '@/components/Icon'
 
 
@@ -240,7 +240,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
     return (
         <>
             <section>
-                <VerfiyOldEmail closePopup={() => closePopup()} isPopupOpen={isPopupOpen} handlepasswordUpdate={handlepasswordUpdate} />
+                <EditEmail closePopup={() => closePopup()} isPopupOpen={isPopupOpen} handlepasswordUpdate={handlepasswordUpdate} />
                 <NewPasswordProcess closePopup={() => closePopup()} isPopupOpen={isDeletepopup} />
                 <DeleteUser loading={deleteloading} isPopupOpen={isDeleteUSer} closePopup={() => { setIsDeleteUser(false) }} deleteAccount={() => { deleteUser() }} />
 

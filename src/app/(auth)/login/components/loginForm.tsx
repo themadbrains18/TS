@@ -10,24 +10,24 @@ import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import CheckBox from '@/components/ui/checkbox';
 import useFetch from '@/hooks/useFetch';
 import Otp from "../../otp/page"
-import {  useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
 
 const LoginForm = () => {
-    const { data: session } = useSession(); 
-    const router = useRouter(); 
+    const { data: session } = useSession();
+    const router = useRouter();
 
-    const [isChecked1, setIsChecked1] = useState(false); 
-    const [otpPath, setOtppath] = useState(false); 
-    const [formData, setFormData] = useState({}); 
+    const [isChecked1, setIsChecked1] = useState(false);
+    const [otpPath, setOtppath] = useState(false);
+    const [formData, setFormData] = useState({});
 
     /**
      * Interface to define structure of form values
      */
     interface FormValues {
-        email: string; 
-        password: string; 
+        email: string;
+        password: string;
     }
 
     /**
@@ -41,20 +41,20 @@ const LoginForm = () => {
      * Interface to define structure of API response
      */
     interface ApiResponse {
-        otp: string; 
-        success: boolean; 
+        otp: string;
+        success: boolean;
     }
 
     /**
      * Fetch hook to handle API requests for login
      */
-    const { data: response,  loading, fetchData } = useFetch<ApiResponse>();
+    const { data: response, loading, fetchData } = useFetch<ApiResponse>();
 
     /**
      * Submit handler for the login form
      */
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
-        setFormData(data); 
+        setFormData(data);
         // Make API request to login
         await fetchData("/login", {
             method: "POST",
@@ -74,10 +74,10 @@ const LoginForm = () => {
      */
     useEffect(() => {
         if (response?.otp) {
-            setOtppath(true); 
+            setOtppath(true);
         }
         if (session) {
-            router.push('/'); 
+            router.push('/');
         }
     }, [response, session, router]);
 
@@ -85,7 +85,7 @@ const LoginForm = () => {
         <>
             {
                 otpPath ? (
-                    <Otp formData={formData} api="login" setFormData={setFormData} /> 
+                    <Otp formData={formData} api="login" setFormData={setFormData} />
                 ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-2">
                         {/* Left Section with Image and Text */}
