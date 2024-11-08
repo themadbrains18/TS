@@ -26,7 +26,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
 
     const [showFullDescription, setShowFullDescription] = useState(false);
     const [showPreviews, setShowPreviews] = useState<boolean>(false)
-    const { data: session, status } = useSession();
+    const { data: session, status } = useSession(); 
 
     const toggleDescription = () => {
         setShowFullDescription(!showFullDescription);
@@ -57,7 +57,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
      * pop up handler
      */
     const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
-    const router = useRouter()
+const router = useRouter()
     const openPopup = async () => {
         if (!session) {
             router.push('/login')
@@ -156,7 +156,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                                         onClick={() => setActiveImageId(id)} // Set active image by ID
                                                         className={`cursor-pointer min-w-[50px] md:max-w-[120px] w-full border-2 overflow-hidden p-[5px] h-[88px] ${activeImageId === id ? 'border-primary-900 border-[0.5px] md:border-[2px]' : 'border-transparent'}`}
                                                     >
-                                                        <Image className="w-full object-cover h-[76px]" src={`${imageUrl}`} height={76} width={120} alt={`Thumbnail ${id}`} />
+                                                        <Image className="w-full object-cover h-[76px]" src={`${imageUrl}`} height={76} width={120} alt={`Thumbnail ${id}`}  />
                                                     </div>
                                                 </SwiperSlide>
                                             ))}

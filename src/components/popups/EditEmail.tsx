@@ -142,6 +142,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
      * 
      * @returns {void}
      */
+
     const resendCode = async () => {
         if (!canResend) return;
 
@@ -173,13 +174,14 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
 
 
 
-
     /**
      * This hook listens for changes in the `response` object and updates various states accordingly.
      * 
      * Dependencies:
      * - This effect runs every time `response` changes.
     */
+
+
 
     useEffect(() => {
         if (response?.otp === true) {

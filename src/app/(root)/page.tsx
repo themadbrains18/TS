@@ -1,10 +1,9 @@
-
 import HeroSection from "./home/components/HeroSection";
 import TrendingTechnology from "./home/components/TrendingTechnology";
 import FeatureSection from "./home/components/FeatureSection";
 import BuissnessProducts from "./home/components/BuissnessProducts";
 import PopularSection from "./home/components/PopularSection";
-
+import type { Metadata } from "next";
 
 /**
  * Home component serves as the main landing page of the application.
@@ -17,6 +16,7 @@ import PopularSection from "./home/components/PopularSection";
 const Home = () => {
   return (
     <>
+      {/* Various sections of the home page */}
       <HeroSection />
       <TrendingTechnology />
       <FeatureSection />
@@ -24,6 +24,29 @@ const Home = () => {
       <PopularSection />
     </>
   );
+};
+
+// Dynamic metadata (for SEO customization)
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    // Example logic to fetch data or build metadata dynamically
+    const siteData = await fetch('https://api.example.com/home').then((res) => res.json());
+
+    return {
+      title: siteData.title || 'Templete studio home page',
+      description: siteData.description || 'Explore our homepage for more details.',
+    };
+  } catch (error) {
+    console.error('Error fetching metadata:', error);
+    return {
+      title: 'Welcome to Mad Brains, where creativity meets innovation. Explore our homepage to discover cutting-edge designs, insights, and tools that empower your projects. Dive into a world where your ideas come to life.',
+      description: 'Welcome to Template Studio, where creativity meets innovation. Explore our homepage to discover cutting-edge designs, insights, and tools that empower your projects. Dive into a world where your ideas come to life',
+      twitter: {
+        title: 'Welcome to Mad Brains, where creativity meets innovation. Explore our homepage to discover cutting-edge designs, insights, and tools that empower your projects. Dive into a world where your ideas come to life.',
+        description: 'Welcome to Template Studio, where creativity meets innovation. Explore our homepage to discover cutting-edge designs, insights, and tools that empower your projects. Dive into a world where your ideas come to life',
+      },
+    };
+  }
 }
 
 export default Home;

@@ -3,6 +3,7 @@ import ProductBanner from './components/ProductBanner';
 import RelatedProducts from './components/RelatedProducts';
 import ProductDescription from './components/ProductDescription';
 import BreadCrumbs from './components/BreadCrumbs';
+import { Metadata } from 'next';
 
 /**
  * Page component renders the product detail page, including the breadcrumbs,
@@ -22,7 +23,7 @@ interface Params {
 
 
 const Page = async ({ params }: { params: Params }) => {
-  const { id } = params; 
+  const { id } = params;
 
   /**
    *  Fetch the template data from the API
@@ -60,5 +61,43 @@ const Page = async ({ params }: { params: Params }) => {
     </>
   );
 };
+
+
+export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
+  const { id } = params;
+
+  try {
+    const siteData = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/templates-by-id/${id}`).then((res) => res.json());
+
+    return {
+      title: siteData.title || 'Template Studio - Product Details',
+      description: siteData.description || 'Discover detailed insights about our templates and products.',
+      openGraph: {
+        title: siteData.title || 'Template Studio - Product Details',
+        description: siteData.description || 'Discover detailed insights about our templates and products.',
+        images: siteData.images || ['/images/default-og-image.jpg'],
+      },
+      twitter: {
+        title: siteData.title || 'Template Studio - Product Details',
+        description: siteData.description || 'Discover detailed insights about our templates and products.',
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching metadata:', error);
+    return {
+      title: 'Template Studio - Discover Our Products',
+      description: 'Explore our collection of creative templates and innovative products.',
+      openGraph: {
+        title: 'Template Studio - Discover Our Products',
+        description: 'Explore our collection of creative templates and innovative products.',
+        images: ['/images/default-og-image.jpg'],
+      },
+      twitter: {
+        title: 'Template Studio - Discover Our Products',
+        description: 'Explore our collection of creative templates and innovative products.',
+      },
+    };
+  }
+}
 
 export default Page;
