@@ -3,7 +3,7 @@
 import Button from '@/components/ui/Button'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
-import profileimage from '@/../public/images/profileimage.png'
+import profileimage from '@/../public/images/userdummy.png'
 import Input from '@/components/ui/Input'
 import Toggle from '@/components/ui/ToggleButton'
 import useFetch from '@/hooks/useFetch'
@@ -23,7 +23,6 @@ interface sessionProps {
 }
 
 const Profile: React.FC<sessionProps> = ({ session, userData }) => {
-
     // Separate state for each button
     const [isNameActive, setIsNameActive] = useState<boolean>(false)
     const [isUsernameActive, setIsUsernameActive] = useState<boolean>(false)
@@ -32,7 +31,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
     const [isUserDisabled, setIsUserDisabled] = useState<boolean>(true);
     const [isEmailDisabled, setIsEmailDisabled] = useState<boolean>(true);
     const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
-    const [profileImage, setProfileImage] = useState<string>(userData?.user?.profileImg || "/images/profileimage.png");
+    const [profileImage, setProfileImage] = useState<string>(userData?.user?.profileImg || "/images/userdummy.png");
     const [name, setName] = useState(userData?.user ? userData?.user?.name : '');
     const [isDeletepopup, setisDeletepopup] = useState<boolean>(false);
     const [isDeleteUSer, setIsDeleteUser] = useState<boolean>(false);
@@ -49,7 +48,6 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
     const openPopup = () => {
         setIsPopupOpen(true);
     };
-
 
     const { data: response, loading, fetchData } = useFetch<any>();
     // const { data: imagersponse, loading:imageloading, fetchData:fetchimage } = useFetch<any>();
@@ -258,7 +256,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                             width={168}
                                             alt='userimage'
                                         />
-                                        <label htmlFor="profilepic" className='py-[5px] px-[14px] text-[11px] md:text-base md:py-2 text-nowrap absolute bottom-0 left-[6px] right-[6px] md:left-2 md:right-2 text-center bg-primary-300 text-[#282827] capitalize cursor-pointer border-b transition-all duration-200 hover:border-primary-100 font-regular leading-6 flex justify-center'>{loading ? <Icon name='purpleloader' className='w-7 h-7'/> : "change image" } </label>
+                                        <label htmlFor="profilepic" className='py-[5px] px-[14px] text-[11px] md:text-base md:py-2 text-nowrap absolute bottom-0 left-[6px] right-[6px] md:left-2 md:right-2 text-center bg-primary-300 text-[#282827] capitalize cursor-pointer border-b transition-all duration-200 hover:border-primary-100 font-regular leading-6 flex justify-center'>{loading ? <Icon name='purpleloader' className='w-7 h-7' /> : "change image"} </label>
                                         <input
                                             className='hidden'
                                             id='profilepic'
