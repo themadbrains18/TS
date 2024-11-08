@@ -231,44 +231,45 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                     {step === 1 && (
                         <>
                             <form onSubmit={handleSubmit(onSubmit)}>
-                                <div className="flex justify-between items-end gap-x-5">
-                                    <Input
-                                        register={register}
-                                        label={"Current Email"}
-                                        name="email"
-                                        placeholder={`Enter email Current Email `}
-                                        value={session?.email}
-                                        disabled={step === 1}
-                                        onChange={() => clearErrors("email")}
-                                    />
-                                    {startTimer > 0 ? (
-                                        <Button className='text-nowrap' variant='primary' type='button' disabled={true} >
-                                            Resend OTP in {Math.floor(startTimer / 60)}:{(startTimer % 60).toString().padStart(2, '0')}
-                                        </Button>
-                                    ) : (
-                                        // <button className="text-action-900" type="button" onClick={() => !initialSend ? resendCode() : handleEmmailUpdate()}>
-                                        //     {initialSend ? (`${loadingbtn ? (<Icon name='loadingicon' />) : ("send otp")}`) : (`${loadingbtn ? (<Icon name='loadingicon' />) : ("Resend Code")}`)}
-                                        // </button>
+                                <div>
+                                    <div className="flex justify-between items-end gap-x-5">
+                                        <Input
+                                            register={register}
+                                            label={"Current Email"}
+                                            name="email"
+                                            placeholder={`Enter email Current Email `}
+                                            value={session?.email}
+                                            disabled={step === 1}
+                                            onChange={() => clearErrors("email")}
+                                        />
+                                        {startTimer > 0 ? (
+                                            <Button className='text-nowrap' variant='primary' type='button' disabled={true} >
+                                                Resend OTP in {Math.floor(startTimer / 60)}:{(startTimer % 60).toString().padStart(2, '0')}
+                                            </Button>
+                                        ) : (
+                                            // <button className="text-action-900" type="button" onClick={() => !initialSend ? resendCode() : handleEmmailUpdate()}>
+                                            //     {initialSend ? (`${loadingbtn ? (<Icon name='loadingicon' />) : ("send otp")}`) : (`${loadingbtn ? (<Icon name='loadingicon' />) : ("Resend Code")}`)}
+                                            // </button>
 
-                                        <button
-                                            className="bg-primary-100 text-white capitalize font-semibold leading-6 transition-all duration-300 hover:bg-[#872fcb] py-[16px] px-[30px] text-nowrap"
-                                            type="button"
-                                            onClick={() => !initialSend ? resendCode() : handleEmmailUpdate()}
-                                        >
-                                            {initialSend ? (
-                                                loadingbtn ? <Icon className='w-7 h-7' name="loadingicon" /> : "send otp"
-                                            ) : (
-                                                loadingbtn ? <Icon className='w-7 h-7' name="loadingicon" /> : "Resend Code"
-                                            )}
-                                        </button>
-
-                                    )}
+                                            <button
+                                                className="bg-primary-100 text-white capitalize font-semibold leading-6 transition-all duration-300 hover:bg-[#872fcb] py-[16px] px-[30px] text-nowrap"
+                                                type="button"
+                                                onClick={() => !initialSend ? resendCode() : handleEmmailUpdate()}
+                                            >
+                                                {initialSend ? (
+                                                    loadingbtn ? <Icon className='w-7 h-7' name="loadingicon" /> : "send otp"
+                                                ) : (
+                                                    loadingbtn ? <Icon className='w-7 h-7' name="loadingicon" /> : "Resend Code"
+                                                )}
+                                            </button>
+                                        )}
+                                    </div>
                                     {errors?.email && <p className="text-red-500">{errors?.email?.message}</p>}
                                 </div>
                             </form>
                             <form onSubmit={handleSubmit(onSubmit)}>
                                 <div className="mt-10">
-                                    <label className="text-lg font-normal leading-7 text-neutral-900">Please enter OTP</label>
+                                    <label className="text-lg font-normal leading-7 text-neutral-900 mb-2">Please enter OTP</label>
                                     <InputOtp
                                         className="space-x-5 m-5"
                                         register={register}

@@ -231,7 +231,7 @@ const VerfiyNewEmail: FC<verifyNewemail> = ({
   return (
     <div className="py-10">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="">
+        <div>
           <div className='flex justify-between items-end gap-x-5' >
             <Input
               register={register}
@@ -264,7 +264,7 @@ const VerfiyNewEmail: FC<verifyNewemail> = ({
       </form>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mt-10">
-          <label className="text-lg font-normal leading-7 text-neutral-900">Please enter one time OTP</label>
+          <label className="text-lg font-normal leading-7 text-neutral-900 mb-2">Please enter one time OTP</label>
           <InputOtp
             className="space-x-5 m-5"
             register={register}

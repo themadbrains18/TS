@@ -266,7 +266,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                             </form>
                             <form onSubmit={handleSubmit(onSubmit)}>
                                 <div className="mt-10">
-                                    <label className="text-lg font-normal leading-7 text-neutral-900">Please enter OTP</label>
+                                    <label className="text-lg font-normal leading-7 text-neutral-900 mb-2 ">Please enter OTP</label>
                                     <InputOtp
                                         className="space-x-5 m-5"
                                         register={register}
