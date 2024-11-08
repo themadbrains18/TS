@@ -225,13 +225,13 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
 
     return (
         <Modal isOpen={isPopupOpen} className='max-w-[616px] w-full' onClose={() => { closePopup(); setStep(1); }}>
-            <div className="relative px-4 py-9 sm:py-10 sm:px-10 max-w-[616px] bg-gradient-to-b from-[#E5EFFF] to-[#E5EFFF]">
+            <div className="relative px-4 py-9 sm:py-[30px] sm:px-10 max-w-[616px] bg-gradient-to-b from-[#E5EFFF] to-[#E5EFFF]">
                 <Icon onClick={() => { closePopup(); setStep(1); }} className="absolute top-5 right-5 fill-[#5D5775] w-5 h-5 cursor-pointer z-50" name="crossicon" />
-                <div className="py-10">
+                <div className="sm:py-[50px]">
                     {step === 1 && (
                         <>
                             <form onSubmit={handleSubmit(onSubmit)}>
-                                <div className="flex justify-between items-end gap-x-5">
+                                <div className="flex justify-between items-end gap-x-[10px] sm:gap-x-5">
                                     <Input
                                         register={register}
                                         label={"Current Email"}
@@ -240,9 +240,10 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                                         value={session?.email}
                                         disabled={step === 1}
                                         onChange={() => clearErrors("email")}
+                                      className='!py-[13px] px-4 sm:px-5'
                                     />
                                     {startTimer > 0 ? (
-                                        <Button className='text-nowrap' variant='primary' type='button' disabled={true} >
+                                        <Button className='text-nowrapbg-primary-100 text-white capitalize  leading-6 transition-all duration-300 hover:bg-[#872fcb] py-[13px] px-[10px] sm:px-[30px] text-nowrap text-sm sm:text-base font-normal' variant='primary' type='button' disabled={true} >
                                             Resend OTP in {Math.floor(startTimer / 60)}:{(startTimer % 60).toString().padStart(2, '0')}
                                         </Button>
                                     ) : (
@@ -251,7 +252,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                                         // </button>
 
                                         <button
-                                            className="bg-primary-100 text-white capitalize font-semibold leading-6 transition-all duration-300 hover:bg-[#872fcb] py-[16px] px-[30px] text-nowrap"
+                                            className="bg-primary-100 text-white capitalize font-normal leading-6 transition-all duration-300 hover:bg-[#872fcb] py-[13px] px-[10px] sm:px-[30px] text-nowrap text-sm sm:text-base"
                                             type="button"
                                             onClick={() => !initialSend ? resendCode() : handleEmmailUpdate()}
                                         >
@@ -267,10 +268,10 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                                 </div>
                             </form>
                             <form onSubmit={handleSubmit(onSubmit)}>
-                                <div className="mt-10">
+                                <div className="mt-[30px] sm:mt-10">
                                     <label className="text-lg font-normal leading-7 text-neutral-900">Please enter OTP</label>
                                     <InputOtp
-                                        className="space-x-5 m-5"
+                                        className="space-x-5  mt-[10px] mx-4 sm:m-5"
                                         register={register}
                                         setValue={setValue}
                                         clearErrors={clearErrors}
@@ -279,8 +280,8 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                                     <p className="mt-5 text-xs font-normal text-[#4B5563]">
                                         Please check your mail for a 6-digit confirmation code to {session?.email}. Enter the confirmation code to verify.
                                     </p>
-                                    <div className="mt-10">
-                                        <Button disabled={loadingOtp} loadingbtn={loadingOtp} iconClass='w-7 h-7' className="w-full py-2 text-lg font-normal text-center justify-center" type="submit" variant="primary" >{loadingOtp ? "" : "Verify Now"}</Button>
+                                    <div className="mt-[30px] sm:mt-10">
+                                        <Button disabled={loadingOtp} loadingbtn={loadingOtp} iconClass='w-7 h-7' className="w-full py-2 sm:py-[13px] text-lg font-normal text-center justify-center" type="submit" variant="primary" >{loadingOtp ? "" : "Verify Now"}</Button>
 
                                     </div>
                                 </div>
