@@ -61,7 +61,7 @@ const Page = () => {
         <>
             {
                 otpPath ? (
-                    <Otp formData={formData} api="register" setFormData={setFormData} />
+                    <Otp prevRouteName={"Register"} prevRoute={'/register'} tittle={'Register With OTP'} formData={formData} api="register" setFormData={setFormData} />
                 ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-2">
                         {/* Left Section */}

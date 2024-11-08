@@ -252,9 +252,9 @@ const VerfiyNewEmail: FC<verifyNewemail> = ({
                 onClick={() => !initialSend ? resendCode() : handleEmmailUpdate()}
               >
                 {initialSend ? (
-                  loadingbtn ? <Icon name="loadingicon" /> : "send otp"
+                  loadingbtn ? <Icon className='w-7 h-7' name="loadingicon" /> : "send otp"
                 ) : (
-                  loadingbtn ? <Icon name="loadingicon" /> : "Resend Code"
+                  loadingbtn ? <Icon className='w-7 h-7' name="loadingicon" /> : "Resend Code"
                 )}
               </button>
             )}
