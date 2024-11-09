@@ -43,13 +43,13 @@ jobs:
         ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ubuntu@13.201.86.238 'echo "SSH connection successful" || exit 1'
         
     # - name: Remove .next cache
-    #   run: ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ubuntu@13.201.86.238 'rm -rf /var/www/html/.next'
+    #   run: ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ubuntu@13.201.86.238 'rm -rf /var/www/html/TS/.next'
   
     # Using rsync for faster and differential file transfer
     - name: Sync files using rsync
       run: |
         echo "Attempting to sync files using rsync"
-        rsync -avz --delete --exclude 'node_modules' --exclude '.git' --exclude '.next' --exclude '.github' -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" ./ ubuntu@13.201.86.238:/var/www/html || exit 1
+        rsync -avz --delete --exclude 'node_modules' --exclude '.git' --exclude '.next' --exclude '.github' -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" ./ ubuntu@13.201.86.238:/var/www/html/TS || exit 1
 
     # Alternative option: Using tarball compression if you want to use this instead of rsync
     # Uncomment the following block if you want to use tarball compression instead of rsync
@@ -57,11 +57,11 @@ jobs:
     #   run: tar -czf deployment.tar.gz .
 
     # - name: Copy tarball to server
-    #   run: scp -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no deployment.tar.gz ubuntu@13.201.86.238:/var/www/html
+    #   run: scp -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no deployment.tar.gz ubuntu@13.201.86.238:/var/www/html/TS
 
     # - name: Extract tarball on server
     #   run: |
-    #     ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ubuntu@13.201.86.238 'cd /var/www/html && tar -xzf deployment.tar.gz && rm deployment.tar.gz'
+    #     ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ubuntu@13.201.86.238 'cd /var/www/html/TS && tar -xzf deployment.tar.gz && rm deployment.tar.gz'
 
 
     # - name: Debug SCP Command
@@ -69,8 +69,8 @@ jobs:
     #     echo "Checking current directory"
     #     ls -la
     #     echo "Attempting to copy files"
-    #     scp -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -r ./* ubuntu@13.201.86.238:/var/www/html || exit 1
-    #     #scp -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -r ./ ubuntu@13.201.86.238:/var/www/html || exit 1
+    #     scp -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -r ./* ubuntu@13.201.86.238:/var/www/html/TS || exit 1
+    #     #scp -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -r ./ ubuntu@13.201.86.238:/var/www/html/TS || exit 1
     # Cache clean step (added)
     
     - name: Clean Nginx Cache
@@ -80,4 +80,4 @@ jobs:
 
     - name: Deploy to AWS
       run: |
-        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ubuntu@13.201.86.238 'cd /var/www/html && bun install && bun run build && pm2 restart all' || exit 1
+        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ubuntu@13.201.86.238 'cd /var/www/html/TS && bun install && bun run build && pm2 restart all' || exit 1
