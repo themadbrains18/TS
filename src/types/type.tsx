@@ -98,6 +98,7 @@ export interface techcardprops {
   className?: string; // CSS class for the card
   container?: string; // Container class for the card
   id?: string; // id for the card
+  templateid?: string; //template id for the card
 }
 
 /**

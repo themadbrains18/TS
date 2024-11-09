@@ -1,7 +1,10 @@
+"use client"
 import Image from "next/image";
 import Link from "next/link";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import Button from "../ui/Button";
+import useFetch from "@/hooks/useFetch";
+import { subCat } from "@/types/type";
 
 
 
@@ -16,6 +19,13 @@ import Button from "../ui/Button";
 
 
 const Footer = () => {
+
+  const { data: response, error, loading, fetchData } = useFetch<subCat[]>();
+
+  useEffect(() => {
+      fetchData("/sub-categories", {next:{revalidate:2000}});
+  }, []);
+
   const socialicons = [
     {
       icon: "dribbble-logo.svg"
@@ -34,11 +44,11 @@ const Footer = () => {
     },
   ];
 
-  const desgintags = [
-    "Website Design Mockups",
-    "Mobile Design Mockups",
-    "figma",
-  ];
+  // const desgintags = [
+  //   "Website Design Mockups",
+  //   "Mobile Design Mockups",
+  //   // "figma",
+  // ];
 
   const codetypes = [
     "HTML",
@@ -87,12 +97,12 @@ const Footer = () => {
                 <h3 className="text-xl font-semibold leading-7 text-subheading">Design </h3>
                 <ul className="flex flex-col gap-y-[10px] md:gap-y-[25px] mt-5 md:mt-10">
                   {
-                    desgintags?.map((item, index) => {
+                    response?.map((item, index) => {
                       return (
                         <Fragment key={index}>
-                          <Link href={'#'}><div className="h-6  overflow-hidden group inline-block"><p className="flex flex-col transition-all duration-500 group-hover:-translate-y-[26px]">
-                            <span className=" text-[14px] md:text-[16px] text-subparagraph leading-6 capitalize ">{item}</span>
-                            <span className=" capitalize transition-all duration-500 text-subheading group-hover:border-b-[1px] group-hover:border-primary-100">{item}</span>
+                          <Link href={`/product?template-type=${item?.templateTypeId}&subcat=${item?.id}`}><div className="h-6  overflow-hidden group inline-block"><p className="flex flex-col transition-all duration-500 group-hover:-translate-y-[26px]">
+                            <span className=" text-[14px] md:text-[16px] text-subparagraph leading-6 capitalize ">{item?.name}</span>
+                            <span className=" capitalize transition-all duration-500 text-subheading group-hover:border-b-[1px] group-hover:border-primary-100">{item?.name}</span>
                           </p></div></Link>
                         </Fragment>
                       )

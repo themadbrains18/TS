@@ -2,6 +2,7 @@
 import { TemplateType } from '@/app/(dashboard)/dashboard/addtemplate/components/templateForm';
 import CategoryCard from '@/components/cards/CategoryCard';
 import useFetch from '@/hooks/useFetch';
+import { subCat } from '@/types/type';
 import React, { Fragment, useEffect } from 'react';
 
 /**
@@ -15,10 +16,10 @@ import React, { Fragment, useEffect } from 'react';
  * )
  */
 const TrendingTechnology = () => {
-    const { data: response, loading, fetchData } = useFetch<TemplateType[]>();
+    const { data: response, loading, fetchData } = useFetch<subCat[]>();
 
     useEffect(() => {
-        fetchData("/template-types");
+        fetchData("/sub-categories");
     }, []);
 
     /**
@@ -29,8 +30,8 @@ const TrendingTechnology = () => {
      * @returns {string} - The corresponding image file name
      */
     const getImageForTemplate = (name: string, type: string): string => {
-        if (name === "CMS Website") return "shopify.png";
-        if (name === "Custom Coded") return "html.png";
+        if (name === "Website Design Mockups") return "shopify.png";
+        if (name === "Mobile Design Mockups") return "html.png";
         if (type === "UI Template") return "web.png";
         return "default.png"; // Fallback image if none of the conditions match
     };
@@ -66,6 +67,7 @@ const TrendingTechnology = () => {
                                     imageclass='w-full' 
                                     title={item?.name} 
                                     id={item?.id}
+                                    templateid={item?.templateTypeId}
                                 />
                             </Fragment>
                         );
