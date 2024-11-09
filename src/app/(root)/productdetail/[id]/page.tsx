@@ -36,19 +36,20 @@ const Page = async ({ params }: { params: Params }) => {
     },
     next: { revalidate: 1800 }
   });
-
-
+  
+  
   /**
    * You can also redirect or show a 404 page
-   */
-  if (!response.ok) {
-    throw new Error('Template not found');
+  */
+ if (!response.ok) {
+   throw new Error('Template not found');
   }
-
+  
   /**
    * Parse the JSON response
-   */
-  const template = await response.json();
+  */
+ const template = await response.json();
+ console.log(template,"==template");
 
   return (
     <>
