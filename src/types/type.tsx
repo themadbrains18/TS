@@ -199,8 +199,8 @@ export interface DownloadTemplatetype {
   setIsFirstPopupOpen: React.Dispatch<React.SetStateAction<boolean>>; // State setter to control popup visibility
   id: string; // Template ID
   url: string; // Template download URL
-  tittle:string,
-  poster:string
+  tittle: string,
+  poster: string
 }
 
 /**
@@ -261,8 +261,8 @@ export interface Downloadpopup {
   isPopupOpen: boolean; // Whether the popup is open
   closePopup: () => void; // Function to close the popup
   opensecoundpopup: () => void; // Function to open second popup
-  tittle:string,
-  poster:string
+  tittle: string,
+  poster: string
 }
 
 /**
@@ -481,4 +481,11 @@ export interface UserDetail {
     updatedAt: string; // Date the user was last updated (ISO string)
   }
 }
-     
+
+
+
+
+
+export interface NotFoundinter {
+  clearall: () => void
+}

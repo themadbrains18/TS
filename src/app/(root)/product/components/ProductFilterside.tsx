@@ -1,22 +1,18 @@
 "use client";
-
 import Icon from '@/components/Icon';
 import Accordion from '@/components/ui/Accordion';
 import { Industry, ProductFiltersidetype, SoftwareType } from '@/types/type';
 import React, { useEffect, useState } from 'react';
 import CheckboxFilter from './ProductFilterchekbox';
 import useFetch from '@/hooks/useFetch';
-
-const ProductFilterside = ({ items, setItems, closefilter }: ProductFiltersidetype) => {
+const ProductFilterside = ({ items, setItems, closefilter, setSelectedFilters }: ProductFiltersidetype) => {
     const [openIndexes, setOpenIndexes] = useState<number[]>([0]);
     const { data: industryData, fetchData: fetchIndustryData } = useFetch<Industry[]>();
     const { data: softwareData, fetchData: fetchSoftwareData } = useFetch<SoftwareType[]>();
-
     useEffect(() => {
         fetchIndustryData('/industry-type');
         fetchSoftwareData('/software-types');
     }, []);
-
     const filterData = [
         {
             title: "Price Range",
@@ -43,7 +39,6 @@ const ProductFilterside = ({ items, setItems, closefilter }: ProductFiltersidety
             items: softwareData,
         },
     ];
-
     const toggleAccordion = (sectionIndex: number) => {
         if (openIndexes.includes(sectionIndex)) {
             setOpenIndexes(openIndexes.filter(index => index !== sectionIndex));
@@ -51,9 +46,6 @@ const ProductFilterside = ({ items, setItems, closefilter }: ProductFiltersidety
             setOpenIndexes([...openIndexes, sectionIndex]);
         }
     };
-
-
-
     return (
         <div className="max-w-full sm:max-w-[357px] w-full py-[30px] px-[20px] bg-white  h-screen">
             <div className="flex justify-between items-center border-b border-divider-100 pl-5 pr-2.5 md:px-0 pb-5 mb-5 ">
@@ -69,7 +61,7 @@ const ProductFilterside = ({ items, setItems, closefilter }: ProductFiltersidety
             <div className='overflow-y-scroll  h-[calc(100%_-_100px)] hiddenscroll   ' >
                 {filterData.map((filterSection, index) => (
                     <Accordion
-                        key={index || Date.now() + "acc"}
+                        key={index}
                         title={filterSection.title}
                         isOpen={openIndexes.includes(index)}
                         onToggle={() => toggleAccordion(index)}
@@ -80,14 +72,13 @@ const ProductFilterside = ({ items, setItems, closefilter }: ProductFiltersidety
                             {filterSection && filterSection?.items?.map((item, itemIndex) => (
                                 <div className='md:pl-5 md:pr-2  py-[5px]' >
                                     <CheckboxFilter
-                                        key={itemIndex || Date.now() + "CheckboxFilter" }
+                                        key={itemIndex}
                                         value={item?.name}
                                         id={`${item.id},${filterSection.title},${item.name}`}
                                         setItems={setItems}
                                         items={items}
                                     />
                                 </div>
-
                             ))}
                         </div>
                     </Accordion>
@@ -96,5 +87,4 @@ const ProductFilterside = ({ items, setItems, closefilter }: ProductFiltersidety
         </div>
     );
 };
-
 export default ProductFilterside;

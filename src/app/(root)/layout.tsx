@@ -23,7 +23,9 @@ export default function customerLayout({
         <>
             <DownloadProvider>
                 <Header />
-                {children}
+                <div className=" lg:pt-[130px] pt-[68px]" >
+                    {children}
+                </div>
                 <Footer />
             </DownloadProvider>
         </>

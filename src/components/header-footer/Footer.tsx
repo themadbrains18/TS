@@ -120,12 +120,12 @@ const Footer = () => {
               <div className="md:max-w-[370px] w-full col-span-2">
                 <h3 className="text-xl font-semibold leading-7 text-subheading">Join Our Newsletter</h3>
                 <p className="text-subparagraph text-sm leading-5 mt-5 md:mt-10">Sign Up Our Newsletter And Get Notified About Exclusive Freebies!</p>
-                <div className="flex items-center border border-primary-100 mt-5">
-                  <input className="placeholder:leading-6 placeholder:text-subparagraph ml-[15px] w-full outline-none" type="text" name="" id="" placeholder="Enter your email" />
+                <form className="flex items-center border border-primary-100 mt-5">
+                  <input className="placeholder:leading-6 placeholder:text-subparagraph ml-[15px] w-full outline-none" type="email" name="" id="" placeholder="Enter your email" />
                   <Button variant="primary" className="py-2 px-4 md:py-3 md:px-9" >
                     Submit
                   </Button>
-                </div>
+                </form>
               </div>
             </div>
           </div>

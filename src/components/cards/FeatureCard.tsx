@@ -76,13 +76,22 @@ const FeatureCard: React.FC<featurecardprops> = ({ id, buttonprops, category, cu
                             </p>
                         </div>
                         <Button variant='primary' className='py-[5px] px-[10px] text-sm leading-5 font-semibold capitalize'>
-                            {isPaid && buttonprops && buttonprops > 0
+                            {/* {isPaid && buttonprops && buttonprops > 0
                                 ? `$${buttonprops}`
 
                                 : "Free"
+                            } */}
+                            {isPaid && buttonprops && buttonprops > 0
+                                ? (<>
+                                    <span className='md:text-[14px] text-[12px] font-semibold leading-5' >{`$${buttonprops}`}</span>
+                                </>)
+                                : (
+                                    <>
+                                        <span className='md:text-[14px] text-[12px] font-semibold leading-5'>{"Free"}</span>
+                                    </>
+                                )
                             }
                         </Button>
-
                     </div>
                 </div>
             </div>
