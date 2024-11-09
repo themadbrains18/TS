@@ -4,7 +4,7 @@ import { z } from 'zod';
  * Constants
  */
 const MAX_FILE_COUNT = 15; // Maximum number of files allowed
-const MAX_FILE_SIZE = 1024 * 1024; // Maximum file size (1MB)
+const MAX_FILE_SIZE = 3*1024 * 1024; // Maximum file size (1MB)
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"]; // Allowed image MIME types
 const ACCEPTED_ZIP_TYPES = ['application/zip', 'application/x-zip-compressed', 'multipart/x-zip']; // Allowed ZIP MIME types
 
@@ -29,11 +29,20 @@ const imageObjectSchema = z.union([
 /**
  *  Adjusted file validation schema to allow custom object types and file size check
  */
-const fileValidationSchema = (min: number, max: number, acceptedSchema: z.ZodTypeAny, fileTypeMessage: string) =>
-  z.array(acceptedSchema)
-    .refine((files) => files.length >= min && files.length <= max, `Minimum ${min} and maximum ${max} files allowed.`)
-    .refine((files) => files.every((file) => fileUrlOrImageUrl(file) ? true : isValidFileType(file)), fileTypeMessage)
-    .refine((files) => files.every((file) => isFileSizeValid(file)), 'File size exceeds the limit of 1MB.')
+const fileValidationSchema = (
+  min: number, 
+  max: number, 
+  acceptedSchema: z.ZodTypeAny, 
+  fileTypeMessage: string
+) => 
+  z.preprocess(
+    (input) => (Array.isArray(input) ? input : []), // Fallback to empty array if not an array
+    z.array(acceptedSchema)
+      .refine(files => files.length >= min && files.length <= max, `Minimum ${min} and maximum ${max} files allowed.`)
+      .refine(files => files.every(file => fileUrlOrImageUrl(file) ? true : isValidFileType(file)), fileTypeMessage)
+      .refine(files => files.every(file => isFileSizeValid(file)), 'File size exceeds the limit of 1MB.')
+  );
+
 
 /**
  * Helper function to check if file has fileUrl or imageUrl
@@ -68,10 +77,10 @@ const uploadTemplateBase = z.object({
   title: z.string().min(1, { message: "Enter template name" }),
   templateTypeId: z.string().max(200, { message: "Enter templateType" }),
   subCategoryId: z.string().max(200, { message: "Select Category" }),
-  softwareTypeId: z.string().min(1, { message: "Select Software Type" }),
+  softwareTypeId: z.string().nullable().optional(),
   industry: z.string().min(1, { message: "Select at least one Industry Type" }),
   version: z.string().min(1, { message: "Enter Your Version" }),
-  description: z.string().min(10, { message: "Enter description" }),
+  description: z.string().min(50, { message: "Enter description" }),
   techDetails: z.array(z.string().min(1, "Detail cannot be empty")).min(4, "At least 4 technical details are required"),
   seoTags: z.string().min(2, { message: "Enter Your Tags" }),
   isPaid: z.boolean().optional().default(false),
@@ -92,7 +101,12 @@ export const uploadTemplateSchema = uploadTemplateBase.extend({
 }, {
   message: "Dollar price is required if it's paid.",
   path: ["price"],
-});
+}) .refine(
+  (data) => data.templateTypeId !== "cm207q5lf00025lycfdqrpzzb" || !data.softwareTypeId,
+  {
+    message: "Please select software type",
+    path: ["softwareTypeId"],
+  });
 
 /**
  * Schema for updating a template
@@ -109,4 +123,9 @@ export const uploadTemplateUpdateSchema = uploadTemplateBase.extend({
     .or(z.null())
     .or(z.array(z.undefined())),
   price: z.coerce.number().optional(),
-}).partial(); 
+}).partial().refine(
+  (data) => data.templateTypeId === "cm207q5lf00025lycfdqrpzzb" || data.softwareTypeId !=="null",
+  {
+    message: "Please select software type",
+    path: ["softwareTypeId"],
+  });; 

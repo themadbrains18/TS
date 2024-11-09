@@ -187,8 +187,8 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                 <div className=' py-5 md:py-10 flex gap-2.5 md:gap-[18px] flex-col' >
                                     {matchedSoftware && (
                                         <ProductDetailcheckbox
-                                            image={matchedSoftware.image}
-                                            label={matchedSoftware.label}
+                                            image={matchedSoftware?.image}
+                                            label={matchedSoftware?.label}
                                             detailText="View Detail"
                                         />
                                     )}

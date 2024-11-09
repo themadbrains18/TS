@@ -88,12 +88,12 @@ const AuthorTab: React.FC<UserDetailProps> = ({ userDetail }) => {
         <div className="max-w-[1560px] overflow-scroll hiddenscroll">
           <div className="flex items-center    gap-x-[10px] md:gap-x-[20px] mt-5">
             {data && data?.data?.length > 0 && data?.data?.map((item) => (
-              <Fragment key={item.id}>
+              <Fragment key={item?.id}>
                 <NavCard
                   icon={`/icons/figma.svg`}
-                  image={item.sliderImages[0]?.imageUrl}
+                  image={item?.sliderImages[0]?.imageUrl}
                   imageclass="max-w-full"
-                  title={item.title}
+                  title={item?.title}
                   classname='w-[218px]'
                 />
               </Fragment>

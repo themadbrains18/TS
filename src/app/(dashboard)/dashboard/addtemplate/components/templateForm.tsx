@@ -101,6 +101,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     const [selectedValue, setSelectedValue] = useState<string | null>(null);
     const [categoryValue, setCategoryValue] = useState<string | null>(null);
     const [staticcheck, setStaticCheck] = useState<boolean>(initialData?.isPaid || false);
+    const [showSoftwareType, setShowSoftwareType] = useState('')
 
 
 
@@ -115,6 +116,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
      * Handle template dropdown selection
      */
     const handleTemplateSelect = (value: string) => {
+        setShowSoftwareType(value);
         setSelectedValue(value);
         setValue("templateTypeId", value)
         fetchTemplateData(`/sub-categories/${value}`);
@@ -140,11 +142,11 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             setValue('industry', initialData.industryTypeId)
         }
         if (initialData && initialData?.credits.length > 0) {
-            const creditData = initialData?.credits[0]; 
+            const creditData = initialData?.credits[0];
 
-            setFonts(creditData.fonts || [{ name: '', url: '' }]); 
+            setFonts(creditData.fonts || [{ name: '', url: '' }]);
             setImages(creditData.images || [{ name: '', url: '' }]);
-            setIcons(creditData.icons || [{ name: '', url: '' }]); 
+            setIcons(creditData.icons || [{ name: '', url: '' }]);
             setIllustrations(creditData.illustrations || [{ name: '', url: '' }]);
         }
     }, [initialData])
@@ -154,8 +156,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
      * Generalized function to add new input fields
      */
     const addInputFields = <T,>(setter: React.Dispatch<React.SetStateAction<T[]>>, values: T[], isObject: boolean) => {
-        const newValue = isObject ? { name: '', url: '' } : ''; 
-        setter([...values, newValue as T]); 
+        const newValue = isObject ? { name: '', url: '' } : '';
+        setter([...values, newValue as T]);
     };
 
     /**
@@ -163,7 +165,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
      */
     const handleInputChange = <T,>(setter: React.Dispatch<React.SetStateAction<T[]>>, index: number, value: T, values: T[]) => {
         const newValues = [...values];
-        newValues[index] = value; 
+        newValues[index] = value;
         setter(newValues);
     };
 
@@ -172,13 +174,13 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
      */
     const removeInputField = <T,>(setter: React.Dispatch<React.SetStateAction<T[]>>, index: number, values: T[]) => {
 
-        if (values.length > 1) { 
+        if (values.length > 1) {
             const newValues = [...values];
-            newValues.splice(index, 1); 
+            newValues.splice(index, 1);
             setter(newValues);
 
             if (setter == setTechnicalDetails) {
-                newValues.forEach((detail: any, i) => setValue(`techDetails.${i}`, detail)); 
+                newValues.forEach((detail: any, i) => setValue(`techDetails.${i}`, detail));
             }
         }
 
@@ -196,7 +198,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                         <DashInput
                             type='text'
                             placeholder='font name'
-                            value={item.name}
+                            value={item?.name}
                             onChange={(e) => handleInputChange(setter, index, { ...item, name: e.target.value }, items)}
                         />
                         <DashInput
@@ -301,6 +303,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             console.error("An error occurred during submission:", error);
         });
     };
+    console.log(errors, "==errors");
 
 
     return (
@@ -327,7 +330,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
                             <div className='w-full'>
                                 <label className='text-xl font-semibold capitalize' htmlFor="templateType">Template Type</label>
-                                {data && data.length > 0 ? (
                                     <Controller
                                         name="templateTypeId"
                                         control={control}
@@ -335,7 +337,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                             <select
                                                 className='custom-dropdown-template'
                                                 id="templateType"
-                                                defaultValue={(initialData && 'templateTypeId' in initialData) ? initialData?.templateTypeId : 'Please select template type'}
+                                                defaultValue=""
                                                 {...field}
                                                 onChange={(e) => {
                                                     field.onChange(e.target.value);
@@ -343,17 +345,16 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                 }}
                                                 disabled={type === "edit"}
                                             >
-                                                {data.map((option) => (
-                                                    <option className='cursor-pointer' key={option.id} value={option.id}>
-                                                        {option.name}
+                                                <option value="" disabled>Select Template Type</option>
+                                                {data && data?.length>0 && data?.map((option) => (
+                                                    <option className='cursor-pointer' key={option.id} value={option.id} >
+                                                        {option?.name}
                                                     </option>
                                                 ))}
                                             </select>
                                         )}
                                     />
-                                ) : (
-                                    <p>Loading options...</p> // Or handle the case where data is null
-                                )}
+                             
 
                                 {errors.templateTypeId && (
                                     <p style={{ color: 'red' }}>{errors.templateTypeId.message}</p>
@@ -362,19 +363,22 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
                             {/* Template SubCategory Dropdown */}
                             <div className='w-full'>
+                                <label className='text-xl font-semibold capitalize' htmlFor="subCategoryId">Template SubCategory</label>
                                 <Controller
                                     name="subCategoryId"
                                     control={control}
                                     // defaultValue={"Please select category"} // Set a valid default or empty string
                                     render={({ field }) => (
                                         <select className='custom-dropdown-template' id="subCategoryId"  {...field}
-                                            defaultValue={(initialData && 'subCategoryId' in initialData) ? initialData?.subCategoryId : 'Please select subcategory'}
+                                            defaultValue=""
                                             onChange={(e) => { field.onChange(e.target.value); handleCategorySelect(e.target.value) }}
                                             disabled={type === "edit"}>
+                                            <option value="" disabled>Select SubCategory</option>
+
                                             {templateData?.subCategories?.map((option: any) => {
                                                 return (
                                                     <option className='cursor-pointer' key={option.id} value={option.id}>
-                                                        {option.name}
+                                                        {option?.name}
                                                     </option>
                                                 )
                                             })}
@@ -385,18 +389,20 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                             </div>
 
                             {/* Software Type Dropdown */}
-                            <div className='w-full'>
+                        {showSoftwareType!== 'cm207q5lf00025lycfdqrpzzb' &&   <div className='w-full'>
+                                <label className='text-xl font-semibold capitalize' htmlFor="softwareTypeId">Software Type</label>
                                 <Controller
                                     name="softwareTypeId"
                                     control={control}
-                                    // defaultValue={"Please select category"} // Set a valid default or empty string
+                                    defaultValue="" // Set a valid default or empty string
                                     render={({ field }) => (
                                         <select className='custom-dropdown-template' id="softwareTypeId" {...field} onChange={(e) => { field.onChange(e.target.value); handleCategorySelect(e.target.value) }}
                                             disabled={type === "edit"}>
+                                            <option value="" disabled>Select Software Type</option>
                                             {templateData?.softwareCategories.map((softwareCategory: any) => {
                                                 return (
                                                     <option className='cursor-pointer' key={softwareCategory.id} value={softwareCategory.id}>
-                                                        {softwareCategory.name}
+                                                        {softwareCategory?.name}
                                                     </option>
                                                 )
                                             })}
@@ -404,7 +410,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                     )}
                                 />
                                 {errors.softwareTypeId && <p style={{ color: 'red' }}>{errors.softwareTypeId.message}</p>}
-                            </div>
+                            </div>}
 
                         </div>
 
@@ -425,10 +431,10 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                     {...field}
                                                     value={item.id}
                                                     defaultChecked={(initialData && 'industryTypeId' in initialData) && initialData?.industryTypeId === item?.id}
-                                                    onChange={() => field.onChange(item.id)}
+                                                    onChange={() => field.onChange(item?.id)}
                                                     className="cursor-pointer"
                                                 />
-                                                <span className="ml-1 text-nowrap">{item.name}</span> {/* Label text next to the radio */}
+                                                <span className="ml-1 text-nowrap">{item?.name}</span> {/* Label text next to the radio */}
                                             </label>
                                         )}
                                     />

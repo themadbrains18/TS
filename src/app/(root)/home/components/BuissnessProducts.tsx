@@ -81,7 +81,7 @@ const BuissnessProducts = () => {
                                         @param {string} item.logo - The path to the product logo.
                                         @param {string} item.title - The title of the business product.
                                     */}
-                                            <BuissnessCard logo='dashboard.svg' title={item.name} id={item?.id} templateType={item?.templateTypeId}/>
+                                            <BuissnessCard logo='dashboard.svg' title={item?.name} id={item?.id} templateType={item?.templateTypeId}/>
                                         </Fragment>
                                     )
                                 })
