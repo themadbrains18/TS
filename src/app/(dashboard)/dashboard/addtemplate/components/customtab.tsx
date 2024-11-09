@@ -111,8 +111,8 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
       * @param option - The selected option object, which includes details like the option's `name` and `id`.
     */
     const handleOptionClick = (option: Option) => {
-        setSelected(option.name);
-        onSelect(option.id);
+        setSelected(option?.name);
+        onSelect(option?.id);
         // setIsOpen(false);
     };
 

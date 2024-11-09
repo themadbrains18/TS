@@ -40,7 +40,7 @@ const ProductFilterside = ({ items, setItems, closefilter, setSelectedFilters }:
         },
     ];
     const toggleAccordion = (sectionIndex: number) => {
-        if (openIndexes.includes(sectionIndex)) {
+        if (openIndexes?.includes(sectionIndex)) {
             setOpenIndexes(openIndexes.filter(index => index !== sectionIndex));
         } else {
             setOpenIndexes([...openIndexes, sectionIndex]);
@@ -62,7 +62,7 @@ const ProductFilterside = ({ items, setItems, closefilter, setSelectedFilters }:
                 {filterData.map((filterSection, index) => (
                     <Accordion
                         key={index}
-                        title={filterSection.title}
+                        title={filterSection?.title}
                         isOpen={openIndexes.includes(index)}
                         onToggle={() => toggleAccordion(index)}
                         titleclass='md:text-[18px] text-[16px] font-semibold leading-7'
@@ -74,7 +74,7 @@ const ProductFilterside = ({ items, setItems, closefilter, setSelectedFilters }:
                                     <CheckboxFilter
                                         key={itemIndex}
                                         value={item?.name}
-                                        id={`${item.id},${filterSection.title},${item.name}`}
+                                        id={`${item?.id},${filterSection?.title},${item?.name}`}
                                         setItems={setItems}
                                         items={items}
                                     />

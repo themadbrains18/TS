@@ -23,21 +23,21 @@ const RelatedProducts = () => {
                             <h2 className='text-subheading leading-9 font-bold text-[28px]'>Related Products</h2>
                             <div className='mt-5 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 md:gap-[30px] '>
                                 {
-                                    data && data.data && data.data.length > 0 &&
-                                    data.data.slice(0, 4).map((item, index) => (
+                                    data && data?.data && data?.data?.length > 0 &&
+                                    data?.data?.slice(0, 4).map((item, index) => (
                                         <Fragment key={index}>
                                             <FeatureCard
                                             id={item?.id}
-                                                buttonprops={item.price}
-                                                category={item.subCategory.name}
-                                                poster={item.sliderImages[0]?.imageUrl}
-                                                themeicon={item.softwareType.name}
-                                                title={item.title}
+                                                buttonprops={item?.price}
+                                                category={item?.subCategory?.name}
+                                                poster={item?.sliderImages[0]?.imageUrl}
+                                                themeicon={item?.softwareType?.name}
+                                                title={item?.title}
                                                 uploadericon={item?.user?.profileImg}
                                                 uploadername={item?.user?.name}
                                                 currentimage={1}
                                                 totalimages={item?.sliderImages?.length}
-                                                isPaid={item.isPaid}
+                                                isPaid={item?.isPaid}
                                             />
                                         </Fragment>
                                     ))

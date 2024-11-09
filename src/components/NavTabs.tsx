@@ -49,7 +49,7 @@ const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
       {/* Tabs Section */}
       <div className="bg-white lg:shadow-lg overflow-scroll hiddenscroll  w-full">
         <div className=" lg:px-10 lg:pt-10 lg:pb-[30px] flex gap-x-[5px] lg:gap-x-5 items-center overflow-scroll hiddenscroll">
-          {subCat && subCat.map((item, index) => (
+          {subCat &&subCat?.length>0 && subCat?.map((item, index) => (
             <Fragment key={index}>
               {/* <Link href={`/product?template-type=${item?.templateTypeId}&&subcat=${item?.id}`}> */}
               <Button
@@ -60,7 +60,7 @@ const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
                 onClick={() => handleActive(item, index)}
                 variant="liquid"
               >
-                {item.name}
+                {item?.name}
               </Button>
               {/* </Link> */}
             </Fragment>
@@ -73,7 +73,7 @@ const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
             <h4 className="border-l-[1px] pl-[6px] border-subparagraph text-subheading text-lg font-bold leading-7 bg-gradient-to-r from-primary-300 to-primary-200 cursor-pointer">
               Feature Product
             </h4>
-            {data && data.data?.length > 0 ? (
+            {data && data?.data?.length > 0 ? (
               <Button
                 variant="solidicon"
                 icon={true}
@@ -101,9 +101,9 @@ const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
               data.data.map((item: TechTemplate, idx: number) => (
                 <Fragment key={idx}>
                   <NavCard
-                    id={item.id}
-                    image={item.sliderImages[0]?.imageUrl}
-                    title={item.title}
+                    id={item?.id}
+                    image={item?.sliderImages[0]?.imageUrl}
+                    title={item?.title}
                     icon="/icons/figma.svg"
                     classnamemain="md:w-[248px] w-[148px] "
                   />

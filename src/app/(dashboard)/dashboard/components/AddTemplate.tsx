@@ -155,16 +155,16 @@ const AddTemplate = () => {
                       {response?.templates.map((template: any, index: number) => (
                         <tr key={index} className="hover:bg-gray-50">
                           <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize max-w-[200px] truncate md:max-w-full font-semibold">
-                            {template.title}
+                            {template?.title}
                           </td>
                           <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">
-                            {template.templateType?.name}
+                            {template?.templateType?.name}
                           </td>
                           <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">
-                            {template.version}
+                            {template?.version}
                           </td>
                           <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">
-                            {template.price}
+                            {template?.price}
                           </td>
                           <td className="px-6 py-5 text-sm md:text-base text-subparagraph flex gap-x-2 flex-nowrap">
                             {hideIconStates[index] ? (

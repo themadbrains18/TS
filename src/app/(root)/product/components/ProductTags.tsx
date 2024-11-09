@@ -99,7 +99,7 @@ const ProductTags = () => {
                                         ${isActive ? 'text-primary-100' : 'text-subparagraph'}
                                     `}
                                 >
-                                    {item.name}
+                                    {item?.name}
                                 </h2>
 
                                 {/* Bottom border effect */}
