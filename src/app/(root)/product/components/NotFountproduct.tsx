@@ -1,4 +1,5 @@
 import Button from '@/components/ui/Button'
+import { NotFoundinter } from '@/types/type'
 import Image from 'next/image'
 import React from 'react'
 
@@ -9,7 +10,8 @@ import React from 'react'
  * 
  * @returns {JSX.Element} The rendered NotFoundProduct component.
  */
-const NotFoundProduct = (): JSX.Element => {
+
+const NotFoundProduct = ({ clearall }: NotFoundinter): JSX.Element => {
     return (
         <div className='p-5 flex md:p-10 flex-col gap-[80px] text-center items-center bg-white w-full '>
             {/* Message to the user */}
@@ -23,11 +25,11 @@ const NotFoundProduct = (): JSX.Element => {
             <div className='flex justify-between w-full lg:flex-row flex-col gap-5 items-center '>
                 {/* Suggest clearing filters */}
                 <h3 className='text-[16px] font-normal leading-6 text-subparagraph'>
-                    Try <span className='text-primary-100'>clearing some filters</span> and try again.
+                    Try <span onClick={clearall} className='text-primary-100 cursor-pointer '>clearing some filters</span> and try again.
                 </h3>
 
                 {/* Button to find more products */}
-                <Button variant="primary" className="py-2 px-4 md:py-3 md:px-9 justify-center">
+                <Button variant="primary" onClick={clearall} className="py-2 px-4 md:py-3 md:px-9 justify-center">
                     Find more products
                 </Button>
             </div>

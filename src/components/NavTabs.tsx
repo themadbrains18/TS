@@ -73,14 +73,25 @@ const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
             <h4 className="border-l-[1px] pl-[6px] border-subparagraph text-subheading text-lg font-bold leading-7 bg-gradient-to-r from-primary-300 to-primary-200 cursor-pointer">
               Feature Product
             </h4>
-            <Button
-              variant="solidicon"
-              icon={true}
-              iconClass="w-5 h-5 py-1 fill-primary-100"
-              link={`/product?template-type=${subCategory?.templateTypeId}&&subcat=${subCategory?.id}`}
-            >
-              view all products
-            </Button>
+            {data && data.data?.length > 0 ? (
+              <Button
+                variant="solidicon"
+                icon={true}
+                iconClass="w-5 h-5 py-1 fill-primary-100"
+                link={`/product?template-type=${subCategory?.templateTypeId}&&subcat=${subCategory?.id}`}
+              >
+                view all products
+              </Button>
+            ) : (
+              <Button
+                variant="solidicon"
+                icon={true}
+                iconClass="w-5 h-5 py-1 fill-primary-100"
+                link={`/product`}
+              >
+                view all products
+              </Button>
+            )}
           </div>
 
           {/* NavCards Section */}

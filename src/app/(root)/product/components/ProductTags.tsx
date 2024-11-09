@@ -41,7 +41,7 @@ const ProductTags = () => {
         if (subCatId) {
             const index = filteredSubCatData?.findIndex(item => item.id === subCatId) || 0;
             if (index !== -1) {
-                setActiveIndex(index + 1); 
+                setActiveIndex(index + 1);
             }
         } else {
             setActiveIndex(0);
@@ -49,7 +49,7 @@ const ProductTags = () => {
     }, [subCatId, filteredSubCatData]);
 
     const handleAllClick = () => {
-        setActiveIndex(0); 
+        setActiveIndex(0);
         router.push(`/product`);
     };
 
@@ -64,7 +64,7 @@ const ProductTags = () => {
                 <div className='max-w-[357px] w-full '>
                     <h2 className='text-[22px] md:text-[20px] font-semibold left-7 text-[#110833] md:border-r'>Category Tags</h2>
                 </div>
-                <div className='flex overflow-x-scroll hiddenscroll'>
+                <div className='flex overflow-x-scroll custom-scrollbar '>
                     {/* Add an "All" tab at the beginning */}
                     <div
                         onClick={handleAllClick}
