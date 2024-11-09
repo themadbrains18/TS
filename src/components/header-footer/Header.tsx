@@ -177,7 +177,7 @@ const Header = () => {
                     alt="Logo"
                   />
                 </Link>
-                <div className="flex xl:gap-5 items-center xl:max-w-[550px] max-w-[500px] w-full justify-between xl:pl-[60px] pl-5 ">
+                <div className="flex xl:gap-5 items-center xl:max-w-[550px] max-w-[500px] w-full justify-center xl:pl-[60px] pl-5 ">
                   {loadingdata ?
                     <>
                       <div className="flex items-center animate-pulse w-full">
@@ -258,8 +258,12 @@ const Header = () => {
 
                 {!isLoggedIn && (
                   <>
+                    <Link href='/login'>
+                    <button className="text-textheading text-start capitalize border-b-2 border-transparent hover:border-primary-100 ">
+                    Log In
+                    </button>
+                    </Link>
                     <Button link="/register">Sign Up</Button>
-                    <Button link="/login">Log In</Button>
                   </>
                 )}
               </div>
