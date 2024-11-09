@@ -22,7 +22,7 @@ const DescriptionTab: React.FC<DescriptionTabProps> = ({ description }) => {
     return (
         <div className='mt-10 lg:mt-20'>
             <h3 className='text-xl font-bold leading-7'>Overview</h3>
-            <div className='flex flex-col items-center gap-y-5 pt-[15px] md:pt-5'>
+            <div className='flex flex-col items-start gap-y-5 pt-[15px] md:pt-5'>
                 <div
                     dangerouslySetInnerHTML={{
                         __html: showFullDescription || !isLongDescription

@@ -51,7 +51,7 @@ const RichTextEditor: React.FC<EditerProps> = ({setValue,clearErrors, setError,i
     toolbar: [
       [{ header: [1, 2, false] }],
       ['bold', 'italic', 'underline'],
-      ['link', 'image', 'video'],
+      ['link',],
       ['clean'], 
     ],
   };

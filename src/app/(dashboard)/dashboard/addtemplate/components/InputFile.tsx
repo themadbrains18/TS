@@ -11,6 +11,7 @@ interface FileUploadProps {
   name: string;
   error?: FieldError;
   initialUrls?: string[]; // New prop for initial images
+  fileNameUrl?: string[]; // New prop for initial images
 }
 
 const FilePreview = ({
@@ -57,6 +58,11 @@ const FileNameDisplay = ({
   );
 };
 
+const extractFileName = (url: string) => {
+  const decodedURL = decodeURIComponent(url);
+  return decodedURL.split('/').pop()?.split('?')[0] || '';
+};
+
 const FileUpload: React.FC<FileUploadProps> = ({
   onFileSelect,
   supportedfiles,
@@ -66,11 +72,13 @@ const FileUpload: React.FC<FileUploadProps> = ({
   register,
   error,
   initialUrls = [], // default to an empty array
+  fileNameUrl=[]
 }) => {
   const [files, setFiles] = useState<File[]>([]);
   const [previewUrls, setPreviewUrls] = useState<string[]>(initialUrls || []);
-  const [fileNames, setFileNames] = useState<string[]>([]);
   const [fileError, setFileError] = useState<string | null>(null);
+  const [fileNames, setFileNames] = useState<string[]>(fileNameUrl.map(url => extractFileName(url)));
+
 
   const supportedFileTypes = supportedfiles.split(',');
 

@@ -163,6 +163,13 @@ const Header = () => {
   }, [])
   return (
     <>
+    {session && session.user && ["ADMIN"].includes((session?.role).toString()) && <>
+        <div className="">
+          <Link href="/dashboard" className="fixed top-[15%] right-0 z-50 bg-primary-700 h-11 flex items-center pl-4 pr-2 rounded-s-3xl text-white gap-1.5">
+            <span className="tetx-sm">Go to Dashboard</span>
+          </Link>
+        </div>
+      </>}
       <header className="  bg-white fixed top-0 left-0 right-0  border-b-[1px] border-[#11083319] z-20   ">
         <div className="relative" >
           {/* Destop header */}

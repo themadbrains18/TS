@@ -305,6 +305,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     };
     console.log(errors, "==errors");
 
+console.log(initialData?.sourceFiles,"==source files");
 
     return (
 
@@ -531,7 +532,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                     multiple={false}
                                                     id="1"
                                                     register={register}
-
+                                                    fileNameUrl={initialData?.sourceFiles ? initialData?.sourceFiles.map((img: any) => img.fileUrl) : []} 
                                                 />
                                             )}
                                         />

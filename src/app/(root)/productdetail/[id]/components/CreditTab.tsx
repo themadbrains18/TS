@@ -45,7 +45,7 @@ const CreditTab: React.FC<CreditsProps> = ({ credits }) => {
                                     <h3 className="text-subparagraph leading-6 mb-5 text-sm tab:text-base">Fonts Used</h3>
                                     <ul className='list-inside list-disc m-0 p-0 '>
                                         {credit?.fonts?.map((font, fontIndex) => (
-                                            <li key={fontIndex} className='max-[500px]:max-w-[120px] truncate text-xs tab:text-sm leading-5 text-primarycyan'>
+                                            <li key={fontIndex} className='max-[500px]:max-w-[120px] truncate text-xs tab:text-sm leading-5 '>
                                                 {font?.name}
                                             </li>
                                         ))}
@@ -56,7 +56,7 @@ const CreditTab: React.FC<CreditsProps> = ({ credits }) => {
                                     <ul className='list-inside list-disc m-0 p-0 '>
                                         {credit?.icons.map((icon, iconIndex) => (
 
-                                            <li key={iconIndex} className='max-[500px]:max-w-[120px] truncate text-xs tab:text-sm leading-5 text-primarycyan'>
+                                            <li key={iconIndex} className='max-[500px]:max-w-[120px] truncate text-xs tab:text-sm leading-5 '>
                                                 {icon?.name}
                                             </li>
                                         ))}
@@ -69,7 +69,7 @@ const CreditTab: React.FC<CreditsProps> = ({ credits }) => {
                                     <ul className='list-inside list-disc m-0 p-0 '>
                                         {credit?.images?.map((image, imageIndex) => (
 
-                                            <li key={imageIndex} className='max-[500px]:max-w-[120px] truncate text-xs tab:text-sm leading-5 text-primarycyan'>
+                                            <li key={imageIndex} className='max-[500px]:max-w-[120px] truncate text-xs tab:text-sm leading-5 '>
                                                 {image?.name}
                                             </li>
                                         ))}
@@ -79,7 +79,7 @@ const CreditTab: React.FC<CreditsProps> = ({ credits }) => {
                                     <h3 className="text-subparagraph leading-6 mb-5 text-sm tab:text-base">Illustrations Used</h3>
                                     <ul className='list-inside list-disc m-0 p-0 '>
                                         {credit?.illustrations?.map((illustration, illustrationIndex) => (
-                                            <li key={illustrationIndex} className='max-[500px]:max-w-[120px] truncate text-xs tab:text-sm leading-5 text-primarycyan'>
+                                            <li key={illustrationIndex} className='max-[500px]:max-w-[120px] truncate text-xs tab:text-sm leading-5 '>
                                                 {illustration?.name}
                                             </li>
                                         ))}

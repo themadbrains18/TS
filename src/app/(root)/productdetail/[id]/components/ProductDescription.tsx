@@ -32,11 +32,11 @@ const ProductDescription: React.FC<ProductDetailProps> = ({ template }) => {
      * Button data for the tab titles and icons
      */
     const btndata = [
-        { title: "Description" },
-        { title: "Technical Details" },
-        { title: "Credits" },
-        { title: "What's New", icon: "whatsnew" },
-        { title: "About Author" }
+        { title: "Description", show:true},
+        { title: "Technical Details", show:true },
+        { title: "Credits", show:template?.credits?.length>0 },
+        { title: "What's New", icon: "whatsnew", show:false },
+        { title: "About Author", show:true }
     ]
 
 
@@ -68,14 +68,15 @@ const ProductDescription: React.FC<ProductDetailProps> = ({ template }) => {
             <section className='py-10 lg:py-20 relative z-10'>
                 <div className='container'>
                     <div className='flex items-center md:justify-center gap-4 md:gap-x-[30px] max-w-[1560px] overflow-scroll hiddenscroll'>
-                        {btndata.map((item, index) => (
+                        {btndata?.map((item, index) => (
                             <Fragment key={index}>
-                                <button
+                               {item?.show && <button
                                     onClick={() => setActivetab(index)}
                                     className={`text-nowrap flex items-center gap-x-[6px] py-[6px] px-5 leading-l font-semibold text-subparagraph capitalize bg-divider-100 border-b transition-all duration-200 hover:border-primary-100 ${activetab === index ? ' border-primary-100' : ' border-transparent'}`}>
                                     {item.title}
-                                    {item.icon && <Icon name={'whatsnew'} />}
-                                </button>
+                                    {item.icon && <Icon name={'whatsnew'} />
+                                    }
+                                </button>}
                             </Fragment>
                         ))}
                     </div>
