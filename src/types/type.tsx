@@ -124,6 +124,8 @@ export interface featurecardprops {
 export interface buissnesscardprops {
   title?: string; // Title for the business card
   logo?: string; // Logo image URL for the business
+  id?: string; // id for the business
+  templateType?: string; //template type id for the business
 }
 
 /**
@@ -390,6 +392,7 @@ export interface Industry {
 interface User {
   name: string; // User's name
   id?: string; // User's ID
+  profileImg?:string
 }
 
 /**

@@ -70,9 +70,9 @@ const FeatureCard: React.FC<featurecardprops> = ({ id, buttonprops, category, cu
                     </div>
                     <div className='flex items-center justify-between bg-white p-[10px] md:px-5 md:py-3'>
                         <div className='flex items-center gap-x-2'>
-                            <Image src={`/icons/${uploadericon}`} width={20} height={20} alt='uploadericon' />
-                            <p className='text-subparagraph text-sx leading-5 capitalize text-nowrap text-ellipsis overflow-hidden'>
-                                by <span className='text-xs text-subheading font-semibold leading-5 capitalize'>{uploadername}</span> <span className='text-xs text-subheading font-semibold leading-5 capitalize'>{category}</span>
+                            <Image src={`${uploadericon?uploadericon:'/icons/mdb.svg'}`} width={20} height={20} alt='uploadericon' />
+                            <p className='text-subparagraph text-xs leading-5 capitalize text-nowrap text-ellipsis overflow-hidden'>
+                                by <span className='text-xs text-subheading font-semibold leading-5 capitalize'>{uploadername?uploadername:"The Mad Brains"}</span> <span className='text-xs text-subheading font-semibold leading-5 capitalize'>{category}</span>
                             </p>
                         </div>
                         <Button variant='primary' className='py-[5px] px-[10px] text-sm leading-5 font-semibold capitalize'>
