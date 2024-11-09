@@ -24,7 +24,7 @@ const SearchDropdown: React.FC<navtabprops> = ({ subCat, onSelect }) => {
           className="flex items-center justify-between bg-primary-300 cursor-pointer py-[5px] md:px-[15px] px-[7px] min-w-[125px] w-full"
           onClick={() => setOpen(!open)}
         >
-          <h4 className="capitalize text-subparagraph inline-block max-w-[80px]  leading-5 text-sm text-nowrap overflow-hidden text-ellipsis ">
+          <h4 className="capitalize text-subparagraph inline-block max-w-[80px] leading-5 text-sm text-nowrap overflow-hidden text-ellipsis">
             {prodcuts}
           </h4>
           <Icon

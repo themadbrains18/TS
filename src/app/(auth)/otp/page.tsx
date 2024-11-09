@@ -17,7 +17,7 @@ interface FormData {
     otp: string[];
 }
 
-const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute }: any) => {
+const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute, backstate }: any) => {
     const [path, setPath] = useState(false);
     const router = useRouter();
     const { register, handleSubmit, setValue } = useForm<FormData>();
@@ -158,7 +158,7 @@ const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute }: a
                                 <h2 className="text-[22px] tab:text-[36px] font-bold leading-[44px] pb-[30px] md:pb-[60px]">{tittle}</h2>
                                 <Link className='flex gap-[7px] items-center pb-[30px] md:pb-[60px]' href={prevRoute && prevRoute}>
                                     <Icon name='iconleft' />
-                                    <h2 className="text-[18px] font-bold leading-7 text-primary-900">Back To {prevRouteName}</h2>
+                                    <h2 onClick={backstate} className="text-[18px] font-bold leading-7 text-primary-900">Back To {prevRouteName}</h2>
                                 </Link>
 
                                 <div className="flex flex-col justify-center h-[500px] md:h-[653px]">

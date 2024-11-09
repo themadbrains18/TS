@@ -75,7 +75,7 @@ const Form = () => {
             {/* Conditionally render OTP page if OTP is sent, otherwise show the Forgot Password form */}
             {
                 otpPath ? (
-                    <Otp prevRouteName={"login"} prevRoute={'/login'} tittle={'Forgot Password'} formData={formData} api="reset-password" setFormData={setFormData} />
+                    <Otp  prevRouteName={"login"} prevRoute={'/login'} tittle={'Forgot Password'} formData={formData} api="reset-password" setFormData={setFormData} />
                 ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-2">
                         {/* Left Section with Image and Text */}
