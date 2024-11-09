@@ -209,7 +209,7 @@ const ProductMain = () => {
                                                         poster={item?.sliderImages[0]?.imageUrl}
                                                         themeicon={item?.softwareType?.name}
                                                         title={item?.title}
-                                                        uploadericon='mdb.svg'
+                                                        uploadericon={item?.user?.profileImg}
                                                         uploadername={item?.user?.name}
                                                         currentimage={1}
                                                         totalimages={item?.sliderImages?.length}

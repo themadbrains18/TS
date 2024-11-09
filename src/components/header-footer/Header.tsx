@@ -272,7 +272,7 @@ const Header = () => {
             <div className="flex items-center justify-between py-4 relative">
               <div onClick={() => setSidebar(!sidebar)}> <Icon name="menuicon" className="w-8 h-8" /></div>
               <Link href={'/'}>
-                <Image className="cursor-pointer h-9 w-[170px]" width={193} height={38} src={'/icons/logo.svg'} alt="logo" />
+                <Image className="cursor-pointer h-9 w-[170px]" width={193} height={38} src={'/icons/Logo.svg'} alt="logo" />
               </Link>
               <div className="flex flex-row gap-1 items-center" >
                 <div onClick={() => setsearchbar(true)} >
@@ -374,7 +374,7 @@ const Header = () => {
                     </Button>
                   </>
                 ) : (<>
-                  <Button variant="primary" className=" py-2 px-[18px] w-full max-w-[50%] flex justify-center">
+                  <Button variant="primary" onClick={signOut} className=" py-2 px-[18px] w-full max-w-[50%] flex justify-center">
                     Log out
                   </Button>
                 </>)}

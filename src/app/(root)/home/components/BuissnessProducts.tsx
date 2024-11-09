@@ -1,5 +1,8 @@
+"use client"
 import BuissnessCard from '@/components/cards/BuissnessCard'
-import React, { Fragment } from 'react'
+import useFetch from '@/hooks/useFetch';
+import { subCat } from '@/types/type';
+import React, { Fragment, useEffect } from 'react'
 
 /**
  * Component for rendering business products.
@@ -20,6 +23,14 @@ const BuissnessProducts = () => {
    * @type {Array<{title: string, logo: string}>}
    */
 
+    const { data: response, error, loading, fetchData } = useFetch<subCat[]>();
+
+    useEffect(() => {
+        fetchData("/sub-categories", {next:{revalidate:2000}});
+    }, []);
+
+    console.log(response,"==response");
+    
     const data = [
         {
             title: "Website Design",
@@ -62,7 +73,7 @@ const BuissnessProducts = () => {
                         <h2 className='text-subheading sm:leading-9 font-bold text-[22px] tab:text-[28px]'>Products For Your Business Free of Cost</h2>
                         <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-5 gap-y-5 gap-x-[15px] md:gap-[30px]'>
                             {
-                                data?.map((item, index) => {
+                              response && response?.length>0 &&    response?.map((item, index) => {
                                     return (
                                         <Fragment key={index}>
                                             {/* 
@@ -70,7 +81,7 @@ const BuissnessProducts = () => {
                                         @param {string} item.logo - The path to the product logo.
                                         @param {string} item.title - The title of the business product.
                                     */}
-                                            <BuissnessCard logo={item.logo} title={item.title} />
+                                            <BuissnessCard logo='dashboard.svg' title={item.name} id={item?.id} templateType={item?.templateTypeId}/>
                                         </Fragment>
                                     )
                                 })

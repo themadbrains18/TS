@@ -27,6 +27,11 @@ type Template = {
     softwareType: SoftwareType;
     templateType: TemplateType;
     sliderImages: SliderImage[]; 
+    user:{
+        name:string,
+        id:string,
+        profileImg:string
+    }
 };
 
 type ApiResponse = {
@@ -50,6 +55,7 @@ const FeatureSection = () => {
         }
     }, [response]);
 
+console.log(response,"==response");
 
     return (
         <section className='bg-bgcolor py-10 lg:py-[100px] '>
@@ -77,7 +83,8 @@ const FeatureSection = () => {
                                                 category={item?.templateType?.name}
                                                 themeicon={item?.softwareType?.name}
                                                 title={item?.title}
-                                                uploadericon='mdb.svg'
+                                                uploadericon={item?.user?.profileImg}
+                                                uploadername={item?.user?.name}
                                                 currentimage={1}
                                                 poster={item?.sliderImages[0]?.imageUrl}
                                                 totalimages={item?.sliderImages?.length}
