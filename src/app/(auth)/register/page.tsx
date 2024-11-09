@@ -31,11 +31,11 @@ const Page = () => {
     const [otpPath, setOtppath] = useState(false);
     const [formData, setFormData] = useState({})
 
-    const { control,  handleSubmit, formState: { errors } } = useForm<FormData>({
+    const { control, handleSubmit, formState: { errors } } = useForm<FormData>({
         resolver: zodResolver(signupSchema)
     });
 
-    const { data: response,  loading, fetchData } = useFetch<ApiResponse>();
+    const { data: response, loading, fetchData } = useFetch<ApiResponse>();
 
     /*
      * Handles form submission for user registration.
@@ -51,6 +51,11 @@ const Page = () => {
         });
     };
 
+
+    const backstate = () => {
+        setOtppath(false)
+    }
+
     useEffect(() => {
         if (response?.otp) {
             setOtppath(true)
@@ -61,7 +66,15 @@ const Page = () => {
         <>
             {
                 otpPath ? (
-                    <Otp prevRouteName={"Register"} prevRoute={'/register'} tittle={'Register With OTP'} formData={formData} api="register" setFormData={setFormData} />
+                    <Otp
+                        backstate={backstate}
+                        prevRouteName={"Register"}
+                        prevRoute={'/register'}
+                        tittle={'Register With OTP'}
+                        formData={formData}
+                        api="register"
+                        setFormData={setFormData}
+                    />
                 ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-2">
                         {/* Left Section */}
@@ -161,16 +174,16 @@ const Page = () => {
                                             }
                                         </Button>
                                         <div className="text-end pt-5">
-                                                <Link href={'/forgot-password'} className="text-[16px] font-semibold leading-6 text-subparagraph">
-                                                    Forgot Password?
-                                                </Link>
-                                            </div>
-                                    <div className=" mt-[60px] py-[6px]">
-                                        <p className='text-[16px] font-normal leading-6 text-textparagraph'>Already Have Account ?   <Link href={'/login'} className="text-textheading font-semibold">
-                                            Login
-                                        </Link></p>
+                                            <Link href={'/forgot-password'} className="text-[16px] font-semibold leading-6 text-subparagraph">
+                                                Forgot Password?
+                                            </Link>
+                                        </div>
+                                        <div className=" mt-[60px] py-[6px]">
+                                            <p className='text-[16px] font-normal leading-6 text-textparagraph'>Already Have Account ?   <Link href={'/login'} className="text-textheading font-semibold">
+                                                Login
+                                            </Link></p>
 
-                                    </div>
+                                        </div>
                                     </div>
                                 </form>
                             </div>

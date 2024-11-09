@@ -107,6 +107,7 @@ import Link from 'next/link';
 import { Template } from '@/app/(dashboard)/dashboard/components/AddTemplate';
 
 const SearchComponent: React.FC<navtabprops> = ({ subCat, classname, opensearch, openinput, mainclass, searchresults, resinputoff }) => {
+    console.log(subCat, "subCatsubCatsubCat")
     const [selectedCategory, setSelectedCategory] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
     const { data: templates, error, loading, fetchData } = useFetch<Template>();
@@ -155,19 +156,19 @@ const SearchComponent: React.FC<navtabprops> = ({ subCat, classname, opensearch,
                 />
             </div>
             {/* Render search results */}
-            {opensearch && <div className={cn`${searchresults} search-results absolute top-[104%] mt-2 w-full min-w-[180px] bg-white shadow-lg rounded-md overflow-y-auto z-[99]`}>
+            {opensearch && <div className={cn`${searchresults} search-results absolute top-[104%] mt-2 w-full min-w-[180px] bg-white shadow-lg rounded-md overflow-y-auto z-[99] custom-scrollbar-horizon  `}>
                 {loading && <p className="p-4 text-gray-500 text-center">Loading...</p>}
-                
+
                 {/* Display results or no results found */}
                 {!loading && templates?.templates?.length === 0 && searchQuery !== '' && (
                     <p className="p-4 text-gray-500 text-center">No results found</p>
                 )}
-                
+
                 {/* Display the templates */}
                 {templates?.templates?.map((template) => (
                     <Link href={`/productdetail/${template?.id}`} key={template?.id}>
-                        <div className="px-4 py-2 hover:bg-gray-100 cursor-pointer border-b w-full last:border-b-0">
-                            <p className="text-sm text-gray-800 font-medium truncate">
+                        <div className=" cursor-pointer border-b w-full last:border-b-0">
+                            <p className="text-subparagraph text-start leading-6 py-2 px-[30px] capitalize cursor-pointer text-nowrap hover:bg-primary-200 border-l-[2px] hover:border-primary-100 text-sm font-medium truncate ">
                                 {template?.title}
                             </p>
                         </div>

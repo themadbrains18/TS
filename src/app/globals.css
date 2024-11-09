@@ -101,6 +101,15 @@
     /* Customize scrollbar thumb color */
   }
 
+  .custom-scrollbar-horizon::-webkit-scrollbar {
+    @apply h-full mt-2 w-2;
+  }
+
+  .custom-scrollbar-horizon::-webkit-scrollbar-thumb {
+    @apply bg-[#F5EAFD] rounded-[10px] cursor-pointer;
+    /* Customize scrollbar thumb color */
+  }
+
   .custom-scrollbar::-webkit-scrollbar-track {
     /* Customize scrollbar track color */
   }
