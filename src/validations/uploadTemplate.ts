@@ -4,7 +4,7 @@ import { z } from 'zod';
  * Constants
  */
 const MAX_FILE_COUNT = 15; // Maximum number of files allowed
-const MAX_FILE_SIZE = 3*1024 * 1024; // Maximum file size (1MB)
+const MAX_FILE_SIZE = 10*1024 * 1024; // Maximum file size (1MB)
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"]; // Allowed image MIME types
 const ACCEPTED_ZIP_TYPES = ['application/zip', 'application/x-zip-compressed', 'multipart/x-zip']; // Allowed ZIP MIME types
 
@@ -92,7 +92,7 @@ const uploadTemplateBase = z.object({
  */
 export const uploadTemplateSchema = uploadTemplateBase.extend({
   // Validates the uploaded files
-  sourceFiles: fileValidationSchema(1, 2, fileObjectSchema, 'Only zip files are allowed.'),
+  sourceFiles: fileValidationSchema(1, 1, fileObjectSchema, 'Only zip files are allowed.'),
   sliderImages: fileValidationSchema(3, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
   previewMobileImages: fileValidationSchema(1, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
   previewImages: fileValidationSchema(1, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),

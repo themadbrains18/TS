@@ -33,7 +33,7 @@ export async function generateMetadata(): Promise<Metadata> {
     // const siteData = await fetch('https://api.example.com/home').then((res) => res.json());
 
     return {
-      title:  'Templete studio home page',
+      title:  'Template Studio - High Quality Web & Mobile UI/UX Templates',
       description: 'Explore our homepage for more details.',
     };
   } catch (error) {
