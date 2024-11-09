@@ -35,8 +35,8 @@ const Footer = () => {
   ];
 
   const desgintags = [
-    "sketch",
-    "adobe Xd",
+    "Website Design Mockups",
+    "Mobile Design Mockups",
     "figma",
   ];
 
@@ -100,7 +100,7 @@ const Footer = () => {
                   }
                 </ul>
               </div>
-              <div>
+              {/* <div>
                 <h3 className="text-xl font-semibold leading-7 text-subheading">Coded  </h3>
                 <ul className="flex flex-col gap-y-[10px] md:gap-y-[25px] mt-5 md:mt-10">
                   {
@@ -116,7 +116,7 @@ const Footer = () => {
                     })
                   }
                 </ul>
-              </div>
+              </div> */}
               <div className="md:max-w-[370px] w-full col-span-2">
                 <h3 className="text-xl font-semibold leading-7 text-subheading">Join Our Newsletter</h3>
                 <p className="text-subparagraph text-sm leading-5 mt-5 md:mt-10">Sign Up Our Newsletter And Get Notified About Exclusive Freebies!</p>

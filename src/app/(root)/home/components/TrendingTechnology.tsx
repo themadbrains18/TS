@@ -41,7 +41,22 @@ const TrendingTechnology = () => {
     return (
         <section className='bg-white py-10 lg:py-[100px]'>
             <div className='container'>
-                <div className='grid grid-cols-2 lg:grid-cols-4 gap-[15px] md:gap-[30px]'>
+                {/* <div className='grid grid-cols-2 lg:grid-cols-4 gap-[15px] md:gap-[30px]'>
+                    {response && response.length > 0 && response.map((item, index) => {
+                        const imageSrc = getImageForTemplate(item?.name, item?.name);
+                        return (
+                            <Fragment key={index}>
+                                <CategoryCard 
+                                    image={imageSrc} 
+                                    imageclass='w-full' 
+                                    title={item?.name} 
+                                    id={item?.id}
+                                />
+                            </Fragment>
+                        );
+                    })}
+                </div> */}
+                <div className='flex justify-center items-center gap-[15px] md:gap-[30px]'>
                     {response && response.length > 0 && response.map((item, index) => {
                         const imageSrc = getImageForTemplate(item?.name, item?.name);
                         return (

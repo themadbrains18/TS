@@ -28,7 +28,7 @@ const CategoryCard: React.FC<techcardprops> = ({ className, image, imageclass, t
 
     return (
         <>
-            <Link href={`/product?template-type=${id}`} className={cn`p-[10px] md:p-5 bg-[#FFF6FF] w-full cursor-pointer group ${className}`}>
+            <Link href={`/product?template-type=${id}`} className={cn`p-[10px] md:p-5 bg-[#FFF6FF] w-full cursor-pointer group max-w-[370px] ${className}`}>
                 <div className={cn` p-[5px] ${container}`}>
                     <Image src={`/images/${image}`} className={cn`rounded-md transition-all duration-500 group-hover:scale-[0.95] ${imageclass}`} width={220} height={148} alt='image' />
                 </div>
