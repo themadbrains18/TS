@@ -1,6 +1,8 @@
-import CategoryCard from '@/components/cards/CategoryCard'
-import React, { Fragment } from 'react'
-
+"use client"
+import { TemplateType } from '@/app/(dashboard)/dashboard/addtemplate/components/templateForm';
+import CategoryCard from '@/components/cards/CategoryCard';
+import useFetch from '@/hooks/useFetch';
+import React, { Fragment, useEffect } from 'react';
 
 /**
  * TrendingTechnology component to display a grid of trending technology categories.
@@ -12,56 +14,51 @@ import React, { Fragment } from 'react'
  *   <TrendingTechnology />
  * )
  */
-
-
 const TrendingTechnology = () => {
+    const { data: response, loading, fetchData } = useFetch<TemplateType[]>();
 
+    useEffect(() => {
+        fetchData("/template-types");
+    }, []);
 
     /**
-    * Array of technology category data.
-    * Each object includes the title and image of the technology.
-    * 
-    * @type {Array<{tittle: string, image: string}>}
-    */
+     * Function to determine the image URL based on template name or type.
+     * 
+     * @param {string} name - The name of the template
+     * @param {string} type - The type of the template
+     * @returns {string} - The corresponding image file name
+     */
+    const getImageForTemplate = (name: string, type: string): string => {
+        if (name === "CMS Website") return "shopify.png";
+        if (name === "Custom Coded") return "html.png";
+        if (type === "UI Template") return "web.png";
+        return "default.png"; // Fallback image if none of the conditions match
+    };
 
+    console.log(response,"==response");
+    
 
-    const data = [
-        {
-            tittle: "Web & Landing Template",
-            image: "web.png"
-        },
-        {
-            tittle: "Mobile Apps",
-            image: "mobile.png"
-        },
-        {
-            tittle: "Shopify Themes",
-            image: "shopify.png"
-        },
-        {
-            tittle: "HTML Development",
-            image: "html.png"
-        },
-    ]
     return (
-        <>
-            <section className='bg-white py-10 lg:py-[100px]'>
-                <div className='container'>
-                    <div className='grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-[30px]'>
-                        {
-                            data?.map((item, index) => {
-                                return (
-                                    <Fragment key={index}>
-                                        <CategoryCard image={`${item.image}`} imageclass='w-full' tittle={`${item.tittle}`} />
-                                    </Fragment>
-                                )
-                            })
-                        }
-                    </div>
+        <section className='bg-white py-10 lg:py-[100px]'>
+            <div className='container'>
+                <div className='grid grid-cols-2 lg:grid-cols-4 gap-[15px] md:gap-[30px]'>
+                    {response && response.length > 0 && response.map((item, index) => {
+                        const imageSrc = getImageForTemplate(item?.name, item?.name);
+                        return (
+                            <Fragment key={index}>
+                                <CategoryCard 
+                                    image={imageSrc} 
+                                    imageclass='w-full' 
+                                    title={item?.name} 
+                                    id={item?.id}
+                                />
+                            </Fragment>
+                        );
+                    })}
                 </div>
-            </section>
-        </>
-    )
+            </div>
+        </section>
+    );
 }
 
-export default TrendingTechnology
+export default TrendingTechnology;

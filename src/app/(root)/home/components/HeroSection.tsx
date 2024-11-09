@@ -1,3 +1,4 @@
+"use client"
 import Icon from '@/components/Icon'
 import Image from 'next/image'
 import React from 'react'
@@ -5,29 +6,29 @@ import React from 'react'
 const HeroSection = () => {
 
     /**
- * Hero section component that highlights the main features, design resources, and animations.
- * 
- * @component
- * @example
- * return (
- *   <HeroSection />
- * )
- */
+     * Hero section component that highlights the main features, design resources, and animations.
+     * 
+     * @component
+     * @example
+     * return (
+     *   <HeroSection />
+     * )
+     */
     return (
         <>
-            <section>
+            <section className='bg-[url("/images/heropurplebg.png")] bg-no-repeat bg-cover bg-right'>
                 <div className="container">
-                    <div className='grid lg:grid-cols-2 lg:gap-x-5'>
+                    <div className='grid lg:grid-cols-2 lg:gap-x-5 '>
                         <div className='pt-10 lg:pt-[125px] lg:max-w-[570px] w-full'>
                             <div className='relative'>
                                 <Image width={200} height={40} src={"/images/Vector.png"} alt='vectorsicon' className='absolute top-0 left-0' />
-                                <h3 className='text-lg text-subheading leading-7 font-semibold capitalize '>Trading of the Day</h3>
+                                <h3 className='text-sm tab:text-lg text-subheading leading-7 font-semibold capitalize '>Trading of the Day</h3>
                             </div>
-                            <div className='lg:max-w-[570px] w-full mt-2'>
-                                <h1 className='text-[#1f124d] text-4xl leading-10 md:text-[55px] md:leading-[70px] font-extrabold' >Free High-quality UI kits and design resources</h1>
+                            <div className='lg:max-w-[570px] w-full mt-[10px] tab:mt-5'>
+                                <h1 className='text-[#1f124d] text-4xl leading-[43px] md:text-[55px] md:leading-[70px] font-extrabold' >Free High-quality UI kits and design resources</h1>
                             </div>
-                            <div className='lg:max-w-[517px] w-full border-l md:border-l-[4px] border-[#CCE0A5] pl-1 md:pl-4 my-5 md:my-8'>
-                                <p className='text-subheading text-sm md:text-xl md:leading-7'>
+                            <div className='lg:max-w-[517px] w-full border-l md:border-l-[4px] border-[#CCE0A5] pl-1 md:pl-4 my-5 md:my-[30px]'>
+                                <p className='text-subheading text-sm md:text-xl font-normal md:leading-7'>
                                     Template Studio is the place to find high-quality design resources for designers, creative agencies and developers
                                 </p>
                             </div>
@@ -55,7 +56,7 @@ const HeroSection = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className='relative pl-5 flex lg:max-w-[657px] w-full items-end mt-8 lg:mt-0'>
+                        <div className='relative pl-5 flex lg:max-w-[657px] w-full items-end mt-[30px] lg:mt-0 '>
                             <Image className='absolute top-0 left-0 lg:max-w-[230px] w-[50%] h-[100%]' src={'/images/purplebg.png'} width={230} height={587} alt='purplebg' />
                             <div className='lg:max-w-[635px] w-full relative'>
                                 <div className='p-[10px] rounded-2xl  bg-white relative z-[4] inline-block max-w-[262px] tab:max-w-full mt-[50px] lg:mt-0 md:w-[70%] lg:max-w-[490px] lg:w-full  group cursor-pointer'>
