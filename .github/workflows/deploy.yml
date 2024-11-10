@@ -59,7 +59,7 @@ jobs:
     # - name: Copy tarball to server
     #   run: scp -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no deployment.tar.gz ubuntu@13.201.86.238:/var/www/html/TS
 
-    # - name: Extract tarball on server
+    # - name: Extract tarball on server test
     #   run: |
     #     ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ubuntu@13.201.86.238 'cd /var/www/html/TS && tar -xzf deployment.tar.gz && rm deployment.tar.gz'
 
