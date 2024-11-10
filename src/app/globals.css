@@ -44,6 +44,8 @@
     @apply bg-divider-200 w-1 rounded-[6px];
   }
 
+
+ 
   .navsearch::-webkit-scrollbar-thumb {
 
     @apply bg-primary-800 rounded-[6px] w-[4px];
