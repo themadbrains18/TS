@@ -44,7 +44,11 @@ jobs:
         
     # - name: Remove .next cache
     #   run: ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ubuntu@13.201.86.238 'rm -rf /var/www/html/TS/.next'
-  
+    - name: Set Ownership on Target Directory
+      run: |
+        echo "Setting ownership for /var/www/html/TS on the server"
+        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ubuntu@13.201.86.238 'sudo chown -R ubuntu:ubuntu /var/www/html/TS'
+
     # Using rsync for faster and differential file transfer
     - name: Sync files using rsync
       run: |
