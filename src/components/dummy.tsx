@@ -10,8 +10,6 @@ import { AccordionData } from '@/types/type';
  * 
  * @type {string[]}
  */
-
-
 const accordionData = [
   "Ui Templates",
   "HTML Templates",
@@ -26,8 +24,6 @@ const accordionData = [
  * @component
  * @returns {JSX.Element} The rendered Appdata component.
  */
-
-
 const Appdata: React.FC<AccordionData> = () => {
   return (
     <>

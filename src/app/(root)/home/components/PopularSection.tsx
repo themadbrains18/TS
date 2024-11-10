@@ -1,6 +1,12 @@
+"use client"
+
 import FeatureCard from '@/components/cards/FeatureCard'
+import FeatureSkeleton from '@/components/skeletons/FeatureSkeleton'
 import Button from '@/components/ui/Button'
-import React, { Fragment } from 'react'
+import useFetch from '@/hooks/useFetch'
+import { SoftwareType } from '@/types/type'
+import { it } from 'node:test'
+import React, { Fragment, useEffect, useState } from 'react'
 /**
  * Popular section component to display a grid of popular templates with related information.
  * 
@@ -10,109 +16,106 @@ import React, { Fragment } from 'react'
  *   <PopularSection />
  * )
  */
+
+
+type SliderImage = {
+    id: string;
+    imageUrl: string;
+    templateId: string;
+};
+
+type TemplateType = {
+    id: string;
+    name: string;
+};
+
+type Template = {
+    id: string;
+    title: string;
+    version: string;
+    price: number;
+    softwareType: SoftwareType;
+    templateType: TemplateType;
+    sliderImages: SliderImage[];
+    user: {
+        name: string,
+        id: string,
+        profileImg: string
+    }
+};
+
+type ApiResponse = {
+    templates: Template[];
+    message: string;
+};
+
+
+
+
 const PopularSection = () => {
     /**
    * Array of popular templates data.
    * Each object includes information about the poster, title, theme icon, uploader, and other details.
    * 
-   * @type {Array<{poster: string, tittle: string, themeicon: string, uploadericon: string, uploadername: string, category: string, buttonprops: string, currentimage: number, totalimage: number}>}
+   * @type {Array<{poster: string, title: string, themeicon: string, uploadericon: string, uploadername: string, category: string, buttonprops: string, currentimage: number, totalimage: number}>}
    */
-    const data = [
-        {
-            poster: "popularbg.png",
-            tittle: "Room Sharing - UI Kit Template...",
-            themeicon: "figma.svg",
-            uploadericon: "mdb.svg",
-            uploadername: "themadbrains",
-            category: "UI templates",
-            buttonprops: "free",
-            currentimage: 1,
-            totalimage: 20
 
-        },
-        {
-            poster: "featureimg.png",
-            tittle: "Room Sharing - UI Kit Template...",
-            themeicon: "figma.svg",
-            uploadericon: "mdb.svg",
-            uploadername: "themadbrains",
-            category: "UI templates",
-            buttonprops: "free",
-            currentimage: 1,
-            totalimage: 20
 
-        },
-        {
-            poster: "popularbg.png",
-            tittle: "Room Sharing - UI Kit Template...",
-            themeicon: "figma.svg",
-            uploadericon: "mdb.svg",
-            uploadername: "themadbrains",
-            category: "UI templates",
-            buttonprops: "free",
-            currentimage: 1,
-            totalimage: 20
+    const [items, setItems] = useState<Template[]>([]);
+    const { data: response, loading, fetchData } = useFetch<ApiResponse>();
 
-        },
-        {
-            poster: "featureimg.png",
-            tittle: "Room Sharing - UI Kit Template...",
-            themeicon: "figma.svg",
-            uploadericon: "mdb.svg",
-            uploadername: "themadbrains",
-            category: "UI templates",
-            buttonprops: "free",
-            currentimage: 1,
-            totalimage: 20
+    useEffect(() => {
+        fetchData("/feature-templates");
+    }, []);
 
-        },
-        {
-            poster: "popularbg.png",
-            tittle: "Room Sharing - UI Kit Template...",
-            themeicon: "figma.svg",
-            uploadericon: "mdb.svg",
-            uploadername: "themadbrains",
-            category: "UI templates",
-            buttonprops: "free",
-            currentimage: 1,
-            totalimage: 20
+    useEffect(() => {
+        if (response) {
+            setItems(response?.templates);
+        }
+    }, [response]);
 
-        },
-        {
-            poster: "featureimg.png",
-            tittle: "Room Sharing - UI Kit Template...",
-            themeicon: "figma.svg",
-            uploadericon: "mdb.svg",
-            uploadername: "themadbrains",
-            category: "UI templates",
-            buttonprops: "free",
-            currentimage: 1,
-            totalimage: 20
 
-        },
-    ]
     return (
         <>
             <section className='bg-bgcolor py-10 lg:py-[100px] '>
-                <div className='bg-[url("/images/featurecolor.png")] bg-no-repeat bg-cover bg-right'>
-
-                    <div className="container">
-                        <div>
-                            <h2 className='text-subheading leading-9 font-bold text-[28px]'>Popular Template</h2>
-                            <div className='mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-[30px] '>
+                <div className="container bg-[url('/images/bgfeature2.png')] bg-no-repeat bg-contain bg-left">
+                    <div>
+                        <h2 className='text-subheading sm:leading-9 font-bold text-[22px] tab:text-[28px]'>Popular Template</h2>
+                        {loading ? (
+                            <div className='transition-all duration-300 w-full grid gap-5 lg:grid-cols-2 xl:grid-cols-3 xl:gap-[30px]'>
+                                <FeatureSkeleton />
+                                <FeatureSkeleton />
+                                <FeatureSkeleton />
+                                <FeatureSkeleton />
+                                <FeatureSkeleton />
+                                <FeatureSkeleton />
+                            </div>
+                        ) : (
+                            <div className='mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-[30px]'>
                                 {
-                                    data.map((item, index) => {
-                                        return (
-                                            <Fragment key={index}>
-                                                <FeatureCard buttonprops={item.buttonprops} category={item.category} poster={item.poster} themeicon={item.themeicon} tittle={item.tittle} uploadericon={item.uploadericon} uploadername={item.uploadername} currentimage={item.currentimage} totalimages={item.totalimage} />
-                                            </Fragment>
-                                        )
-                                    })
+                                    items?.map((item, index) => (
+                                        <Fragment key={index}>
+                                            <FeatureCard
+                                                poster={item?.sliderImages[0]?.imageUrl}
+                                                id={item?.id}
+                                                buttonprops={item?.price}
+                                                category={item?.templateType?.name}
+                                                themeicon={item?.softwareType?.name}
+                                                title={item?.title}
+                                                uploadericon={item?.user?.profileImg}
+                                                uploadername={item?.user?.name}
+                                                currentimage={1}
+                                                totalimages={item.sliderImages?.length}
+                                                isPaid={true}
+                                            />
+                                        </Fragment>
+                                    ))
                                 }
                             </div>
-                            <div className='mt-10 flex w-full items-center justify-center'>
-                                <Button link='/productdetail' className='text-primary-100 py-3 px-[30px] bg-white shadow-sm hover:text-white'>View All Products</Button>
-                            </div>
+
+                        )}
+                        <div className='mt-10 flex w-full items-center justify-center'>
+                            <Button link='/product' linkclass='w-full md:w-auto' className='w-full' variant='secondary' >View All Products</Button>
                         </div>
                     </div>
                 </div>

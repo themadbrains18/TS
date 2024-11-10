@@ -1,6 +1,7 @@
 import { cn } from '@/libs/utils'
 import { techcardprops } from '@/types/type'
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 
 
@@ -14,25 +15,25 @@ import React from 'react'
  * @param {string} props.className - Additional CSS classes for the card.
  * @param {string} props.image - The image file name to be displayed.
  * @param {string} props.imageclass - Additional CSS classes for the image.
- * @param {string} props.tittle - The title of the category.
- * @param {string} props.tittleclass - Additional CSS classes for the title.
+ * @param {string} props.title - The title of the category.
+ * @param {string} props.titleclass - Additional CSS classes for the title.
  * @param {string} props.container - Additional CSS classes for the container.
  * @returns {JSX.Element} The rendered CategoryCard component.
  */
 
 
 
-const CategoryCard: React.FC<techcardprops> = ({ className, image, imageclass, tittle, tittleclass, container }) => {
+const CategoryCard: React.FC<techcardprops> = ({ className, image, imageclass, title, titleclass, container,id,templateid }) => {
 
 
     return (
         <>
-            <div className={cn`p-[10px] md:p-5 bg-[#FFF6FF] w-full cursor-pointer group ${className}`}>
+            <Link href={`/product?template-type=${templateid}&subcat=${id}`} className={cn`p-[10px] md:p-5 bg-[#FFF6FF] w-full cursor-pointer group max-w-[370px] ${className}`}>
                 <div className={cn` p-[5px] ${container}`}>
                     <Image src={`/images/${image}`} className={cn`rounded-md transition-all duration-500 group-hover:scale-[0.95] ${imageclass}`} width={220} height={148} alt='image' />
                 </div>
-                <h3 className={cn` text-xs md:text-base text-center text-subparagraph md:leading-6 font-semibold capitalize mt-1 ${tittleclass}`}>{`${tittle}`}</h3>
-            </div>
+                <h3 className={cn` text-xs md:text-base text-center text-subparagraph md:leading-6 font-semibold capitalize mt-[10px] ${titleclass}`}>{`${title}`}</h3>
+            </Link>
         </>)
 }
 
