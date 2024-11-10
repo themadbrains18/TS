@@ -4,7 +4,7 @@
  * 
  * This configuration file is used to customize the behavior of the Next.js application.
  * The configuration includes settings for image domains and webpack, specifically for handling SVG files.
- */
+ test*/
 
 const nextConfig = {
   images: {
