@@ -26,6 +26,9 @@ const NewPassword = ({ formData, otp }: newpasswordpopup) => {
     const [isChecked1, setIsChecked1] = useState(false);
     const [isLoading , setisLoading] = useState(false);
 
+console.log("");
+
+
     const { data: response, error, loading, fetchData } = useFetch<FormValues>();
 
     const { handleSubmit, control, formState: { errors } } = useForm<FormValues>({
