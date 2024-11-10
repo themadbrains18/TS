@@ -138,7 +138,7 @@ const ProductMain = () => {
                 <div className='pt-[50px] pb-10 lg:pb-20 bg-bgcolor'>
                     <div className='container'>
                         <div className='flex gap-[30px] flex-col md:flex-row justify-between'>
-                            <div className={`md:sticky md:top-10 fixed top-0 h-screen duration-[1s] z-50 transition-all ${filter ? "left-0" : "left-[-100%]"} max-w-full sm:max-w-[357px] w-full`}>
+                            <div className={`md:sticky md:top-10 fixed top-0 h-screen duration-[1s] z-50 xl:z-0 transition-all ${filter ? "left-0" : "left-[-100%]"} max-w-full sm:max-w-[357px] w-full`}>
                                 <ProductFilterside closefilter={closefilter} items={items} setItems={setItems} setSelectedFilters={setSelectedFilters} /> {/* Pass setSelectedFilters */}
                             </div>
                             <div className='w-full'>
@@ -201,6 +201,8 @@ const ProductMain = () => {
                                         // Show products when data is loaded and length is greater than 0
                                         <div className='grid gap-5  w-full lg:grid-cols-2 xl:grid-cols-3 xl:gap-[30px]'>
                                             {products && products?.data?.length > 0 && products?.data?.map((item: TechTemplate, index: number) => (
+                                                <>
+                                     
                                                 <Fragment key={index}>
                                                     <FeatureCard
                                                         id={item?.id}
@@ -214,8 +216,9 @@ const ProductMain = () => {
                                                         currentimage={1}
                                                         totalimages={item?.sliderImages?.length}
                                                         isPaid={true}
-                                                    />
+                                                        />
                                                 </Fragment>
+                                                        </>
                                             ))}
                                         </div>
                                     ) : (

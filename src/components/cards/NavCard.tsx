@@ -26,6 +26,7 @@ const NavCard: React.FC<navcardprops> = ({
   icon,
   image,
   title,
+  data,
   classname, classnamemain
 }) => {
   const [imgSrc, setImgSrc] = useState(image ? image : '/images/featureimg.png');
@@ -42,7 +43,7 @@ const NavCard: React.FC<navcardprops> = ({
         <div className={`relative ${classname} `}>
           <div className=" h-[106px]  object-cover" >
             <Image
-              src={imgSrc}
+              src={data?.sliderImages[0]?.imageUrl}
               width={218}
               height={106}
               alt="cardimage"

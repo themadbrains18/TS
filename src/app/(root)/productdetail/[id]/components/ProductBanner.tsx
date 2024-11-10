@@ -62,7 +62,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
         if (!session) {
             router.push('/login')
         }
-        else if (template?.isPaid == false || template?.price<=0) {
+        else if (template?.isPaid == false || template?.price <= 0) {
             setIsPopupOpen(true);
             setIsFirstPopupOpen(true)
         }
@@ -120,7 +120,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
 
                                     <div className="flex items-center gap-2 lg:gap-7 md:p-5 md:border pt-2.5  border-divider-100">
                                         {/* Custom Previous Button */}
-                                        {images?.length > 0 && (
+                                        {images?.length > 5 && (
                                             <div className='rotate-[180deg] cursor-pointer' onClick={() => swiperRef.current?.slidePrev()}>
                                                 <Icon name='rightarrow' />
                                             </div>
@@ -159,9 +159,11 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                             ))}
                                         </Swiper>
                                         {/* Custom Next Button */}
-                                        <div className='cursor-pointer' onClick={() => swiperRef.current?.slideNext()}>
-                                            <Icon name='rightarrow' />
-                                        </div>
+                                        {images?.length > 5 && (
+                                            <div className='cursor-pointer' onClick={() => swiperRef.current?.slideNext()}>
+                                                <Icon name='rightarrow' />
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -194,7 +196,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                     <Button className='py-[5px] px-2.5' variant='primary' >{template?.isPaid && template?.price > 0 ? `$${template?.price}` : 'FREE'}</Button>
                                     <div className='flex gap-5 items-center' >
                                         <h3 className='text-[14px] font-normal leading-5 text-subparagraph' >Total Price</h3>
-                                        <span className='text-[20px] leading-7 text-subparagraph font-bold' >{(template?.isPaid && template?.price>0 )? '$' + template?.price : "$0.00"}</span>
+                                        <span className='text-[20px] leading-7 text-subparagraph font-bold' >{(template?.isPaid && template?.price > 0) ? '$' + template?.price : "$0.00"}</span>
                                     </div>
                                 </div>
                                 <Button onClick={openPopup} className='w-full mb-2.5 mt-5  md:mt-[30px] md:mb-5 justify-center py-2 md:py-[13px]' variant='primary' > Download </Button>
