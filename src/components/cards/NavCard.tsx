@@ -43,7 +43,7 @@ const NavCard: React.FC<navcardprops> = ({
         <div className={`relative ${classname} `}>
           <div className=" h-[106px]  object-cover" >
             <Image
-              src={data?.sliderImages[0]?.imageUrl}
+              src={data?.sliderImages[0]?.imageUrl || "/images/product1.png"}
               width={218}
               height={106}
               alt="cardimage"

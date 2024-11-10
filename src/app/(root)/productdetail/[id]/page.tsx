@@ -4,6 +4,7 @@ import RelatedProducts from './components/RelatedProducts';
 import ProductDescription from './components/ProductDescription';
 import BreadCrumbs from './components/BreadCrumbs';
 import { Metadata } from 'next';
+import NotFound from '@/app/not-found';
 
 /**
  * Page component renders the product detail page, including the breadcrumbs,
@@ -42,7 +43,8 @@ const Page = async ({ params }: { params: Params }) => {
    * You can also redirect or show a 404 page
   */
  if (!response.ok) {
-   throw new Error('Template not found');
+  <NotFound />
+  //  throw new Error('Template not found');
   }
   
   /**
