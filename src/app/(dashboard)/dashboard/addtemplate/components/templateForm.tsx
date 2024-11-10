@@ -278,6 +278,28 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             }
         ];
         formData.append("credits", JSON.stringify(credits));
+        // Append slider images, merging previous URLs with new files
+        if (initialData?.sliderImages) {
+            initialData.sliderImages.forEach((imgUrl: string) => formData.append("sliderImages", imgUrl));
+        }
+        if (data?.sliderImages) {
+            Array.from(data.sliderImages).forEach((file) => formData.append("sliderImages", file));
+        }
+    
+        // Append preview mobile images, merging previous URLs with new files
+        if (initialData?.previewMobileImages) {
+            initialData.previewMobileImages.forEach((imgUrl: string) => formData.append("previewMobileImages", imgUrl));
+        }
+        if (data?.previewMobileImages) {
+            Array.from(data.previewMobileImages).forEach((file) => formData.append("previewMobileImages", file));
+        }
+        // Append preview mobile images, merging previous URLs with new files
+        if (initialData?.previewImages) {
+            initialData.previewImages.forEach((imgUrl: string) => formData.append("previewImages", imgUrl));
+        }
+        if (data?.previewImages) {
+            Array.from(data.previewImages).forEach((file) => formData.append("previewImages", file));
+        }
 
         const endpoint = type === 'edit' ? `${process.env.NEXT_PUBLIC_APIURL}/templates/${id}` : `${process.env.NEXT_PUBLIC_APIURL}/templates`;
         const method = type === 'edit' ? 'PUT' : 'POST';
