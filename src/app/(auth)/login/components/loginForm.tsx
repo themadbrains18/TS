@@ -85,7 +85,7 @@ const LoginForm = () => {
         <>
             {
                 otpPath ? (
-                    <Otp prevRouteName={"login"} prevRoute={'/login'} tittle={'Login With OTP'} formData={formData} api="login" setFormData={setFormData} />
+                    <Otp prevRouteName={"login"} prevRoute={'/login'} tittle={'Login With OTP'} formData={formData} setOtppath={setOtppath} api="login" setFormData={setFormData} />
                 ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-2">
                         {/* Left Section with Image and Text */}

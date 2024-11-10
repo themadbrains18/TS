@@ -26,6 +26,7 @@ const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
    * useEffect Hook: This effect runs when either `searchParams` or `subCat` changes.
    */
   useEffect(() => {
+  
     const subCatId = searchParams.get('subcat');
 
     const index = subCat?.findIndex(item => item.id === subCatId) || 0;
@@ -37,12 +38,18 @@ const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
   /**
    * Handle the activation of a sub-category tab and fetch the corresponding templates.
    */
-  const handleActive = (item: subCat, index: number) => {
+  const handleActive = (item: subCat | any, index: number) => {
     setActivetab(index)
     setSubCategory(item)
-    fetchData(`/templates?templateTypeId=${item?.templateTypeId}&subCatId=${item?.id}&page=1&limit=4`, { next: { revalidate: 60 * 2 } })
+    fetchData(`/templates?templateTypeId=${item?.templateTypeId}&subCatId=${item?.id}&page=1&limit=4`, { next: { revalidate: 0 } })
   }
 
+  useEffect(()=>{
+    console.log("this");
+    
+    fetchData(`/templates?templateTypeId=${subCat?.[0]?.templateTypeId}&subCatId=${subCat?.[0]?.id}&page=1&limit=4`, { next: { revalidate: 0 } })
+
+  },[])
 
   return (
     <>
@@ -99,15 +106,20 @@ const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
           <div className="flex my-5 w-full gap-x-[10px] lg:gap-x-5 overflow-scroll hiddenscroll ">
             {data && data.data?.length > 0 ? (
               data.data.map((item: TechTemplate, idx: number) => (
+                <>
+                  {        console.log(item,"===item")
+                  }           
                 <Fragment key={idx}>
                   <NavCard
                     id={item?.id}
                     image={item?.sliderImages[0]?.imageUrl}
                     title={item?.title}
+                    data={item}
                     icon="/icons/figma.svg"
                     classnamemain="md:w-[248px] w-[148px] "
                   />
                 </Fragment>
+                </>
               ))
             ) : (
               <div className="w-full text-center lg:py-5 py-2 h-[152px] flex justify-center items-center">

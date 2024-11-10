@@ -154,7 +154,7 @@ const VerfiyNewEmail: FC<verifyNewemail> = ({
         }
       }).then(res => {
         if (res.ok) {
-          setStartTimer(600); // Reset timer to 60 seconds
+          setStartTimer(180); // Reset timer to 60 seconds
           setCanResend(false); // Disable resend option temporarily
           toast.success("OTP resent successfully");
         } else {
@@ -216,7 +216,7 @@ const VerfiyNewEmail: FC<verifyNewemail> = ({
     if (response?.sendotp === true) {
 
       setInitialSend(false);
-      setStartTimer(600);
+      setStartTimer(180);
       setDisabled(false);
     }
 

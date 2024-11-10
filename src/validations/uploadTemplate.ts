@@ -113,7 +113,7 @@ export const uploadTemplateSchema = uploadTemplateBase.extend({
  */
 export const uploadTemplateUpdateSchema = uploadTemplateBase.extend({
   sourceFiles: fileValidationSchema(1, 2, fileObjectSchema, 'Only zip files are allowed.').nullable(),
-  sliderImages: fileValidationSchema(3, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.')
+  sliderImages: fileValidationSchema(1, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.')
     .or(z.null())
     .or(z.array(z.undefined())),
   previewMobileImages: fileValidationSchema(1, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.')
