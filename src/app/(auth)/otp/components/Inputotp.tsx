@@ -65,7 +65,7 @@ const InputOtp: React.FC<InputOtpProps> = ({ register, setValue, className, clea
     /**
      * Handles the paste event for the OTP input fields.
      */
-    
+
     const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
         const paste = event.clipboardData.getData("text").slice(0, 6).split("");
         paste.forEach((char, index) => {
