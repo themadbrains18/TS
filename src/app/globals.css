@@ -11,6 +11,19 @@
     @apply overflow-x-hidden font-open;
   }
 
+  /* For Chrome, Safari, Edge, and Opera */
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* For Firefox */
+  /* input[type="number"] {
+    -moz-appearance: textfield;
+} */
+
+
   .container {
     @apply max-w-[1560px] w-full py-0 px-5 my-0 mx-auto;
   }
@@ -65,9 +78,41 @@
   }
 
   /* swiper button */
-  .swiper-button-next::after{
+  .swiper-button-next::after {
     position: absolute !important;
     right: 0 !important;
     top: 0 !important;
+  }
+
+  /* dashboard table heading */
+
+  .dashheading {
+    @apply capitalize text-textheading
+  }
+
+  .custom-dropdown-template {
+    @apply block w-full px-4 py-2 border border-gray-300 rounded-lg transition-all duration-300 outline-none cursor-pointer focus:border-primary-300 hover:border-primary-300
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    @apply h-2 mt-2;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-[#F5EAFD] rounded-[10px] cursor-pointer;
+    /* Customize scrollbar thumb color */
+  }
+
+  .custom-scrollbar-horizon::-webkit-scrollbar {
+    @apply h-full mt-2 w-2;
+  }
+
+  .custom-scrollbar-horizon::-webkit-scrollbar-thumb {
+    @apply bg-[#F5EAFD] rounded-[10px] cursor-pointer;
+    /* Customize scrollbar thumb color */
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    /* Customize scrollbar track color */
   }
 }

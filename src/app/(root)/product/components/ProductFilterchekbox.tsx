@@ -12,13 +12,13 @@ import React from "react";
  * @param {string} id - The unique identifier for the checkbox.
  * @param {Function} setItems - Function to update the selected items in the parent component.
  * @param {string[]} items - Array of currently selected items.
- * @param {string} [className] - Optional class name for the checkbox.
+ * @param {string} [classname] - Optional class name for the checkbox.
  * @param {string} [labelClass] - Optional class name for the label.
  */
 
 const CheckboxFilter = ({
     labelClass,
-    className,
+    classname,
     value,
     id,
     setItems,
@@ -29,7 +29,7 @@ const CheckboxFilter = ({
        * 
        * @type {boolean}
        */
-    const isChecked = items.includes(value);
+    const isChecked = items.includes(id);
 
     /**
      * Handles the checkbox state change. If the checkbox is checked, it removes the item from the `items` array,
@@ -38,10 +38,10 @@ const CheckboxFilter = ({
     const handleCheckboxChange = () => {
         if (isChecked) {
             // Remove item from filter if already checked
-            setItems(items.filter((item) => item !== value));
+            setItems(items.filter((item) => item !== id));
         } else {
             // Add item to filter if not checked
-            setItems([...items, value]);
+            setItems([...items, id]);
         }
     };
 
@@ -56,7 +56,7 @@ const CheckboxFilter = ({
                     {value}
                 </h2>
                 <div
-                    className={`relative ${isChecked ? "checked" : ""}
+                    className={`relative flex justify-center items-center ${isChecked ? "checked" : ""}
                          w-[20px] h-[20px] border-solid border
                           ${isChecked ? "border-[#AD54F2]" : "border-gray-300"}
                           rounded-[3px] transition-all`}
@@ -65,12 +65,12 @@ const CheckboxFilter = ({
                     <input
                         id={id}
                         type="checkbox"
-                        className={`hidden ${className}`}
+                        className={`hidden ${classname}`}
                         checked={isChecked}
                         onChange={handleCheckboxChange}
                     />
                     {isChecked && (
-                        <div className="bg-[#AD54F2] absolute rounded-[2px] top-[4px] right-[4px] h-[10px] w-[10px]"></div>
+                        <div className="bg-[#AD54F2] absolute rounded-[2px] h-[10px] w-[10px]"></div>
                     )}
                 </div>
             </label>

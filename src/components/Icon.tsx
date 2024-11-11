@@ -28,7 +28,25 @@ import Iconleft from "/public/icons/Iconleft.svg";
 import Rating from "/public/icons/Rating.svg";
 import Ratingbottom from "/public/icons/ratingbottom.svg";
 import Swipericon from "/public/icons/swipericon.svg";
+import Showicon from '@/../public/icons/showicon.svg'
+import Hideicon from '@/../public/icons/hiddenicon.svg'
+import Deleteicon from '@/../public/icons/deleteicon.svg'
+import Editicon from '@/../public/icons/editicon.svg'
+import Sketch from '@/../public/icons/sketch.svg'
+import Photoshop from '@/../public/icons/photoshop.svg'
+import Adobexd from '@/../public/icons/adobexd.svg'
+import Saveicon from '@/../public/icons/saveicon.svg'
+import Setting from '@/../public/icons/setting.svg'
+import DownloadIcon from '@/../public/icons/downloadicon.svg'
+import Premium from '@/../public/icons/premium.svg'
+import Reactjs from '@/../public/icons/reactjs.svg'
+import Nextjs from '@/../public/icons/nextjs.svg'
+import Tailwind from '@/../public/icons/tailwind.svg'
+import Productfilterclose from '@/../public/icons/productfilterclose.svg'
+import LoadingIcon from '@/../public/icons/loadingicon.svg'
+import PurpleLoader from '@/../public/icons/purpleloader.svg'
 import { cn } from "@/libs/utils";
+
 // Map icon names to components
 const icons = {
   search: Search,
@@ -57,7 +75,24 @@ const icons = {
   iconleft: Iconleft,
   rating: Rating,
   ratingbottom: Ratingbottom,
-  swipericon:Swipericon
+  swipericon: Swipericon,
+  showicon: Showicon,
+  deleteicon: Deleteicon,
+  editicon: Editicon,
+  hideicon: Hideicon,
+  sketch: Sketch,
+  photoshop: Photoshop,
+  adobexd: Adobexd,
+  saveicon: Saveicon,
+  setting: Setting,
+  downloadIcon: DownloadIcon,
+  premium: Premium,
+  reactjs: Reactjs,
+  nextjs: Nextjs,
+  tailwind: Tailwind,
+  productfilterclose: Productfilterclose,
+  loadingicon:LoadingIcon,
+  purpleloader:PurpleLoader
 };
 
 export type IconName = keyof typeof icons;
