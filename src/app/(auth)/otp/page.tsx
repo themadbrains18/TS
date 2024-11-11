@@ -173,7 +173,7 @@ const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute, bac
 
                                 <div className="flex flex-col justify-center h-[500px] md:h-[653px]">
                                     <div>
-                                        <h2 className='text-[18px] font-normal leading-7 text-neutral-900 pb-[30px]'>Please enter one-time OTP 33</h2>
+                                        <h2 className='text-[18px] font-normal leading-7 text-neutral-900 pb-[30px]'>Please enter one-time OTP </h2>
                                         <InputOtp setValue={setValue} register={register} reset={canResend} clearErrors={clearErrors}/>
                                     </div>
 
