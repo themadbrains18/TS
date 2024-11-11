@@ -92,14 +92,14 @@ function useFetch<T>(): FetchResult<T> {
         let res: any = result.results ? result?.results : result
         setData(res);
         
-        toaster && toast.success(res?.message);
+        toaster && toast.success(res?.message,{ autoClose: 1500 });
         setError(null);
       } catch (e: any) {
         if (!signal.aborted) {
           console.error("Fetch error:", e);
           setError(e.message || "An unexpected error occurred");
           setData(null);
-          toaster && toast.error(`${e.message}`);
+          toaster && toast.error(`${e.message}`,{ autoClose: 1500 });
         }
       } finally {
         setLoading(false);

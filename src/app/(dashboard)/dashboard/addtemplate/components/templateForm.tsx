@@ -429,9 +429,9 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                 <Controller
                                     name="softwareTypeId"
                                     control={control}
-                                    defaultValue="" // Set a valid default or empty string
+                                    // defaultValue="" // Set a valid default or empty string
                                     render={({ field }) => (
-                                        <select className='custom-dropdown-template' id="softwareTypeId" {...field} onChange={(e) => { field.onChange(e.target.value); handleCategorySelect(e.target.value) }}
+                                        <select defaultValue="" className='custom-dropdown-template' id="softwareTypeId" {...field} onChange={(e) => { field.onChange(e.target.value); handleCategorySelect(e.target.value) }}
                                             disabled={type === "edit"}>
                                             <option value="" disabled>Select Software Type</option>
                                             {templateData?.softwareCategories.map((softwareCategory: any) => {
@@ -601,7 +601,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
                                 {/* Deskto preview images */}
                                 <div className='pt-5'>
-                                    <h3 className='text-xl font-semibold capitalize pb-4'>Preview Images</h3>
+                                    <h3 className='text-xl font-semibold capitalize pb-4'>Desktop Preview Images</h3>
                                     <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
                                         <Controller
                                             name="previewImages"
@@ -627,7 +627,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
                                 {/* movilePreview Iamges */}
                                 <div className='pt-5'>
-                                    <h3 className='text-xl font-semibold capitalize pb-4'>Mobile Images</h3>
+                                    <h3 className='text-xl font-semibold capitalize pb-4'>Mobile Preview Images</h3>
                                     <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
                                         <Controller
                                             name="previewMobileImages"

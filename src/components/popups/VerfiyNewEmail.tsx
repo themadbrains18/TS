@@ -198,6 +198,8 @@ const VerfiyNewEmail: FC<verifyNewemail> = ({
    * This effect runs whenever the `response` object changes.
    */
   useEffect(() => {
+    console.log(response,"===response");
+    
     if (response?.otp === true) {
       // setValue('otp', ['', '', '', '', '', '']);
       // reset();
@@ -220,7 +222,7 @@ const VerfiyNewEmail: FC<verifyNewemail> = ({
       setDisabled(false);
     }
 
-    if (response) {
+    if (response?.redirect) {
       signOut();
     }
 
