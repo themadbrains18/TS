@@ -37,6 +37,9 @@ const InputOtp: React.FC<InputOtpProps> = ({ register, setValue, className, clea
         const value = element.value.replace(/[^0-9]/g, ""); // Remove non-numeric characters
         if (value.length > 1) return; // Prevent input of more than 1 character
 
+
+        console.log("sdsdsdsd")
+
         element.value = value; // Update input value directly
         clearErrors && clearErrors("otp");
         setValue(`otp[${index}]`, value); // Update form value with react-hook-form's setValue
@@ -52,26 +55,27 @@ const InputOtp: React.FC<InputOtpProps> = ({ register, setValue, className, clea
     /*
     * Handles the keydown event for the input fields
     */
-   
+
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index: number) => {
         if (event.key === "Backspace" && !event.currentTarget.value) {
             setActiveInput(Math.max(activeInput - 1, 0));
         }
     };
 
-   /**
-    * Handles the paste event for the OTP input fields.
-    */
+    /**
+     * Handles the paste event for the OTP input fields.
+     */
+    
     const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
-        const paste = event.clipboardData.getData("text").slice(0, 6).split(""); 
+        const paste = event.clipboardData.getData("text").slice(0, 6).split("");
         paste.forEach((char, index) => {
-            setValue(`otp[${index}]`, char); 
+            setValue(`otp[${index}]`, char);
             if (inputsRef.current[index]) {
-                inputsRef.current[index]!.value = char; 
+                inputsRef.current[index]!.value = char;
             }
         });
 
-        setActiveInput(Math.min(paste.length, 5)); 
+        setActiveInput(Math.min(paste.length, 5));
         event.preventDefault();
     };
 
@@ -85,15 +89,17 @@ const InputOtp: React.FC<InputOtpProps> = ({ register, setValue, className, clea
                         className="max-w-[60px] w-full h-[30px] md:h-[50px] text-center border placeholder:text-[#110833] shadow-[0px_1px_2px_0px_rgba(10,57,79,0.05)] rounded bg-divider-100 border-none outline-none"
                         {...register(`otp[${index}]`, {
                             maxLength: 1,
+                            required: true
                         })}
+
                         onChange={(e) => handleChange(e.target, index)}
                         onKeyDown={(e) => handleKeyDown(e, index)}
                         onFocus={() => setActiveInput(index)}
                         ref={(el) => {
                             inputsRef.current[index] = el;
                         }}
-                        onPaste={handlePaste} 
-                        maxLength={1} 
+                        onPaste={handlePaste}
+                        maxLength={1}
                     />
                 ))}
             </div>

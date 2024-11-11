@@ -45,6 +45,7 @@ const Form = () => {
     /**
      * Handle form submission
      */
+
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
         try {
             setFormData(data); // Save form data for OTP
@@ -75,7 +76,15 @@ const Form = () => {
             {/* Conditionally render OTP page if OTP is sent, otherwise show the Forgot Password form */}
             {
                 otpPath ? (
-                    <Otp  prevRouteName={"login"} prevRoute={'/login'} tittle={'Forgot Password'} formData={formData} api="reset-password" setFormData={setFormData} setOtppath={setOtppath}/>
+                    <Otp
+                        prevRouteName={"login"}
+                        prevRoute={'/login'}
+                        tittle={'Forgot Password'}
+                        formData={formData}
+                        api="reset-password"
+                        setFormData={setFormData}
+                        setOtppath={setOtppath}
+                    />
                 ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-2">
                         {/* Left Section with Image and Text */}
@@ -90,7 +99,7 @@ const Form = () => {
                                         height={40}
                                     />
                                 </Link>
-                                <h2 className="text-[32px] md:text-[50px] xl:text-[62px] text-center lg:text-start font-normal pt-[30px] lg:pt-0 text-white lg:max-w-[700px] lg:m-auto">
+                                <h2 className="text-[32px] md:text-[50px] xl:text-[62px] text-center lg:text-start font-normal pt-[30px] lg:pt-0 text-white lg:max-w-[700px]  lg:m-auto">
                                     Free High-quality UI kits and design resources
                                 </h2>
                                 <p className=" hidden lg:block ml-[70px] text-[14px] font-medium leading-5 text-white">

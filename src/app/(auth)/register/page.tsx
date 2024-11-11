@@ -52,6 +52,7 @@ const Page = () => {
     };
 
 
+
     const backstate = () => {
         setOtppath(false)
     }
@@ -62,10 +63,12 @@ const Page = () => {
         }
     }, [response]);
 
+
     return (
         <>
             {
                 otpPath ? (
+
                     <Otp
                         backstate={backstate}
                         prevRouteName={"Register"}
@@ -76,6 +79,7 @@ const Page = () => {
                         setFormData={setFormData}
                         setOtppath={setOtppath}
                     />
+
                 ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-2">
                         {/* Left Section */}
@@ -90,7 +94,7 @@ const Page = () => {
                                         height={40}
                                     />
                                 </Link>
-                                <h2 className="text-[32px] md:text-[50px] xl:text-[62px] text-center lg:text-start font-normal pt-[30px] lg:pt-0 text-white lg:max-w-[700px] lg:m-auto">
+                                <h2 className="text-[32px] md:text-[50px] xl:text-[62px] text-center lg:text-start font-normal pt-[30px] lg:pt-0 text-white lg:px-[70px] lg:max-w-[700px] lg:m-auto">
                                     Free High-quality UI kits and design resources
                                 </h2>
                                 <p className="hidden lg:block ml-[70px] text-[14px] font-medium leading-5 text-white">
