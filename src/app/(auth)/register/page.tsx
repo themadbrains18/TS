@@ -98,7 +98,7 @@ const Page = () => {
                                     Free High-quality UI kits and design resources
                                 </h2>
                                 <p className="hidden lg:block ml-[70px] text-[14px] font-medium leading-5 text-white">
-                                    By Madbrains Technologies LLP.
+                                    Template Studio
                                 </p>
                             </div>
                         </div>
@@ -178,16 +178,18 @@ const Page = () => {
                                                 loading ? "" : "Create Account"
                                             }
                                         </Button>
-                                        <div className="text-end pt-5">
+
+                                        {/* <div className="text-end pt-5">
                                             <Link href={'/forgot-password'} className="text-[16px] font-semibold leading-6 text-subparagraph">
                                                 Forgot Password?
                                             </Link>
-                                        </div>
+                                        </div> */}
+
                                         <div className=" mt-[60px] py-[6px]">
                                             <p className='text-[16px] font-normal leading-6 text-textparagraph'>Already Have Account ?   <Link href={'/login'} className="text-textheading font-semibold">
                                                 Login
-                                            </Link></p>
-
+                                            </Link>
+                                            </p>
                                         </div>
                                     </div>
                                 </form>

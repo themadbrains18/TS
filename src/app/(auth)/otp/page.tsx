@@ -152,11 +152,11 @@ const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute, bac
                                     height={40}
                                 />
                             </Link>
-                            <h2 className="text-[32px] md:text-[50px] xl:text-[62px] text-center lg:text-start font-normal pt-[30px] lg:pt-0 text-white lg:max-w-[700px]lg:px-[70px] lg:m-auto">
+                            <h2 className="text-[32px] md:text-[50px] xl:text-[62px] text-center lg:text-start font-normal pt-[30px] lg:pt-0 text-white lg:max-w-[700px] lg:px-[70px] lg:m-auto">
                                 Free High-quality UI kits and design resources
                             </h2>
                             <p className="hidden lg:block ml-[70px] text-[14px] font-medium leading-5 text-white">
-                                By Madbrains Technologies LLP.
+                                Template Studio
                             </p>
                         </div>
                     </div>
@@ -174,12 +174,12 @@ const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute, bac
                                 <div className="flex flex-col justify-center h-[500px] md:h-[653px]">
                                     <div>
                                         <h2 className='text-[18px] font-normal leading-7 text-neutral-900 pb-[30px]'>Please enter one-time OTP </h2>
-                                        <InputOtp setValue={setValue} register={register} reset={canResend} clearErrors={clearErrors}/>
+                                        <InputOtp setValue={setValue} register={register} reset={canResend} clearErrors={clearErrors} />
                                     </div>
 
                                     {errors?.otp &&
                                         <p className='text-red-500' >
-                                          {errors?.otp?.length && errors?.otp?.length>0 && "Please enter OTP"}
+                                            {errors?.otp?.length && errors?.otp?.length > 0 && "Please enter OTP"}
                                         </p>
                                     }
 
@@ -209,7 +209,8 @@ const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute, bac
                                         </h3>
                                     ) : (
                                         <h3 className='text-center text-[14px] leading-5 font-normal text-neutral-600'>
-                                            <button className={` ${resendOtploading ? 'cursor-not-allowed opacity-80' : "cursor-pointer opacity-100"} text-action-900`} onClick={resendCode}>Resend Code</button>
+                                            <button type='button' className={` ${resendOtploading ? 'cursor-not-allowed opacity-80' : "cursor-pointer opacity-100"} text-action-900`}
+                                                onClick={resendCode}>Resend Code</button>
                                         </h3>
                                     )}
 

@@ -27,12 +27,15 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
     const [isNameActive, setIsNameActive] = useState<boolean>(false)
     const [isUsernameActive, setIsUsernameActive] = useState<boolean>(false)
     const [isEmailActive, setIsEmailActive] = useState<boolean>(false);
-    const [isNameDisabled, setIsNameDisabled] = useState<boolean>(true);
+    const [isNameDisabled, setIsNameDisabled] = useState<boolean>(false);
     const [isUserDisabled, setIsUserDisabled] = useState<boolean>(true);
     const [isEmailDisabled, setIsEmailDisabled] = useState<boolean>(true);
     const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
     const [profileImage, setProfileImage] = useState<string>(userData?.user?.profileImg || "/images/userdummy.png");
     const [name, setName] = useState(userData?.user ? userData?.user?.name : '');
+
+
+
     const [isDeletepopup, setisDeletepopup] = useState<boolean>(false);
     const [isDeleteUSer, setIsDeleteUser] = useState<boolean>(false);
     const [nameError, setNameeror] = useState<string>();
@@ -44,6 +47,14 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
         setIsPopupOpen(false);
         setisDeletepopup(false);
     }
+
+    // const namedit = () => {
+    //     if (!isNameDisabled)
+    //         setName(userData?.user ? userData?.user?.name : '')
+    //     else {
+    //         setName('')
+    //     }
+    // }
 
     const openPopup = () => {
         setIsPopupOpen(true);
@@ -104,14 +115,19 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
       */
     const handleNameUpdate = async () => {
         try {
+
+
+
             if (name === "") {
                 setNameeror("User Name Is Empty")
                 return
             }
+
             if (name === response?.user?.name) {
                 setNameeror("This User Already Exists ")
                 return
             }
+
             await updateFetchData('/update-details', {
                 method: 'PUT',
                 body: JSON.stringify({ name, id: userData?.user?.id }),
@@ -119,9 +135,11 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                     'Content-Type': 'application/json',
                 },
             });
+
             setNameeror("")
             setIsNameActive(false);
             setIsNameDisabled(true);
+
         } catch (error) {
             console.error("Error updating name:", error);
         }
@@ -234,7 +252,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
 
     }, [phoneNumberError, nameError])
 
-
+    console.log(response?.user, "sdd")
 
     return (
         <>
@@ -251,7 +269,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                 <div className=' flex items-end justify-between'>
                                     <div className='relative max-w-[115px] md:max-w-[168px] w-full h-[168px]'>
                                         <Image
-                                            className='rounded-full h-[168px]'
+                                            className='rounded-full h-[168px] '
                                             src={profileImage}
                                             height={168}
                                             width={168}
@@ -266,8 +284,10 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                         />
                                     </div>
                                 </div>
+
                                 <div className='mt-5 flex flex-col gap-y-4 lg:gap-y-[30px]'>
-                                    <div >
+
+                                    <div>
                                         <div className='flex items-end gap-x-[10px]'>
                                             <Input
                                                 disabled={isNameDisabled}
@@ -278,8 +298,8 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                                 type='text'
                                                 value={response?.user ? response?.user?.name : name}
                                                 onChange={(e) => setName(e?.target?.value)}
-                                            />
 
+                                            />
                                             {
                                                 isNameActive ?
                                                     <Button
@@ -310,7 +330,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                     </div>
 
                                     <div>
-                                        <div className='flex items-end gap-x-[10px]' >
+                                        <div className='flex items-end gap-x-[10px]'>
                                             <Input
                                                 disabled={isUserDisabled}
                                                 className='px-4 py-[13px] md:py-[13px]'
@@ -366,6 +386,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                             </Button>
                                         }
                                     </div>
+
                                     <div className='py-[18px] px-5 border border-divider-100 flex items-center justify-between'>
                                         <h3 className='text-neutral-900 font-semibold capitalize leading-6'>Daily Download Balance :</h3>
                                         <p className='text-neutral-900 font-semibold capitalize leading-6'>{userData?.user?.freeDownloads || 0}</p>

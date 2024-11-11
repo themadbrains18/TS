@@ -89,9 +89,9 @@ const NewPassword = ({ formdata }: any) => {
                         Free High-quality UI kits and design resources
                     </h2>
                     <p className=" hidden lg:block ml-[70px] text-[14px] font-medium leading-5 text-white">
-                        By Madbrains Technologies LLP.
+                        Template Studio
                     </p>
-                    
+
                 </div>
             </div>
 

@@ -103,7 +103,7 @@ const Form = () => {
                                     Free High-quality UI kits and design resources
                                 </h2>
                                 <p className=" hidden lg:block ml-[70px] text-[14px] font-medium leading-5 text-white">
-                                    By Madbrains Technologies LLP.
+                                    Template Studio
                                 </p>
                             </div>
                         </div>
@@ -126,7 +126,7 @@ const Form = () => {
                                                 render={({ field }) => (
                                                     <Input
                                                         {...field}
-                                                        placeholder="Email or Phone"
+                                                        placeholder="Enter Your Email Address"
                                                         label=" Your Details"
                                                         className=" placeholder:text-neutral-400 py-3 md:py-[18px] px-5 bg-divider-100"
                                                         error={errors.email?.message} // Display error message for invalid input

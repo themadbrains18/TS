@@ -39,6 +39,7 @@ const Header = () => {
   const { downloads, imageUrl } = useDownload();
 
   const [sidebar, setSidebar] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [loadingdata, setLoadingdata] = useState(true);
   const { data, fetchData, loading } = useFetch<TemplateType[]>();
   const [searchbar, setsearchbar] = useState<boolean>()
@@ -161,9 +162,20 @@ const Header = () => {
       setLoadingdata(false)
     }
   }, [])
+
+
+
+  const handleSignOut = async () => {
+    setIsLoading(true);
+    await signOut();
+    setIsLoading(false);
+  };
+
+
+
   return (
     <>
-    {session && session.user && ["ADMIN"].includes((session?.role).toString()) && <>
+      {session && session.user && ["ADMIN"].includes((session?.role).toString()) && <>
         <div className="">
           <Link href="/dashboard" className="fixed top-[15%] right-0 z-50 bg-primary-700 h-11 flex items-center pl-4 pr-2 rounded-s-3xl text-white gap-1.5">
             <span className="tetx-sm">Go to Dashboard</span>
@@ -243,7 +255,6 @@ const Header = () => {
                                 style={{ width: `${downloads ? downloads * 33.33 : 0}%` }}
                                 className="h-1 block bg-primary-100 rounded-[5px]"
                               ></span>
-
                             </div>
                             <h3 className="text-[12px] font-normal leading-5 text-textheading" >{downloads === null ? 0 : downloads} remaining out of 3</h3>
                           </div>
@@ -266,9 +277,9 @@ const Header = () => {
                 {!isLoggedIn && (
                   <>
                     <Link href='/login'>
-                    <button className="text-textheading text-start capitalize border-b-2 border-transparent hover:border-primary-100 ">
-                    Log In
-                    </button>
+                      <button className="text-textheading text-start capitalize border-b-2 border-transparent hover:border-primary-100 ">
+                        Log In
+                      </button>
                     </Link>
                     <Button link="/register">Sign Up</Button>
                   </>
@@ -322,8 +333,15 @@ const Header = () => {
                                 Profile
                               </button>
                             </Link>
-                            <button onClick={() => signOut()} className={`text-textheading text-start hover:text-subparagraph leading-6 py-2 px-[30px] capitalize cursor-pointer text-nowrap hover:bg-primary-200 border-white border-l-[2px] hover:border-primary-100`}>
+                            {/* <button onClick={() => signOut()} className={`text-textheading text-start hover:text-subparagraph leading-6 py-2 px-[30px] capitalize cursor-pointer text-nowrap hover:bg-primary-200 border-white border-l-[2px] hover:border-primary-100`}>
                               Log out
+                            </button> */}
+                            <button
+                              onClick={handleSignOut}
+                              className={`text-textheading text-start hover:text-subparagraph leading-6 py-2 px-[30px] capitalize cursor-pointer text-nowrap hover:bg-primary-200 border-white border-l-[2px] hover:border-primary-100`}
+                              disabled={isLoading}
+                            >
+                              {isLoading ? (<Icon name="loadingicon" />) : 'Log out'}
                             </button>
                           </div>
                         </div>
