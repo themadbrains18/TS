@@ -174,14 +174,14 @@ const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute, bac
                                 <div className="flex flex-col justify-center h-[500px] md:h-[653px]">
                                     <div>
                                         <h2 className='text-[18px] font-normal leading-7 text-neutral-900 pb-[30px]'>Please enter one-time OTP 33</h2>
-                                        <InputOtp setValue={setValue} register={register} reset={canResend} />
+                                        <InputOtp setValue={setValue} register={register} reset={canResend} clearErrors={clearErrors}/>
                                     </div>
 
-                                    {/* {errors &&
+                                    {errors?.otp &&
                                         <p className='text-red-500' >
-                                          
+                                          {errors?.otp?.length && errors?.otp?.length>0 && "Please enter OTP"}
                                         </p>
-                                    } */}
+                                    }
 
                                     <div className='my-10 md:my-[60px]'>
                                         <p className='text-sm leading-5 text-neutral-600'>Please check your email, 6-digit confirmation code sent to {formData.email}, please enter the confirmation code to verify it's you.</p>

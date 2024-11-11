@@ -37,9 +37,6 @@ const InputOtp: React.FC<InputOtpProps> = ({ register, setValue, className, clea
         const value = element.value.replace(/[^0-9]/g, ""); // Remove non-numeric characters
         if (value.length > 1) return; // Prevent input of more than 1 character
 
-
-        console.log("sdsdsdsd")
-
         element.value = value; // Update input value directly
         clearErrors && clearErrors("otp");
         setValue(`otp[${index}]`, value); // Update form value with react-hook-form's setValue
