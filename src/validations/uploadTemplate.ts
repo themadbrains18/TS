@@ -74,10 +74,10 @@ const isFileSizeValid = (file: any) => {
  * Base template schema (fields shared by both create and update)
  */
 const uploadTemplateBase = z.object({
-  title: z.string().min(1, { message: "Enter template name" }),
-  templateTypeId: z.string().max(200, { message: "Enter templateType" }),
+  title: z.string().min(1, { message: "Enter template name" }).max(500),
+  templateTypeId: z.string().max(200, { message: "Select Template Type" }),
   subCategoryId: z.string().max(200, { message: "Select Category" }),
-  softwareTypeId: z.string().nullable().optional(),
+  softwareTypeId: z.string().min(1, { message: "Select Software Type" }),
   industry: z.string().min(1, { message: "Select at least one Industry Type" }),
   version: z.string().min(1, { message: "Enter Your Version" }),
   description: z.string().min(50, { message: "Enter description" }),
@@ -101,12 +101,7 @@ export const uploadTemplateSchema = uploadTemplateBase.extend({
 }, {
   message: "Dollar price is required if it's paid.",
   path: ["price"],
-}) .refine(
-  (data) => data.templateTypeId !== "cm207q5lf00025lycfdqrpzzb" || !data.softwareTypeId,
-  {
-    message: "Please select software type",
-    path: ["softwareTypeId"],
-  });
+})
 
 /**
  * Schema for updating a template
@@ -123,9 +118,4 @@ export const uploadTemplateUpdateSchema = uploadTemplateBase.extend({
     .or(z.null())
     .or(z.array(z.undefined())),
   price: z.coerce.number().optional(),
-}).partial().refine(
-  (data) => data.templateTypeId === "cm207q5lf00025lycfdqrpzzb" || data.softwareTypeId !=="null",
-  {
-    message: "Please select software type",
-    path: ["softwareTypeId"],
-  });; 
+})

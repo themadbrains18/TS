@@ -157,7 +157,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                 }
             }).then(res => {
                 if (res.ok) {
-                    setStartTimer(600); // Reset timer to 60 seconds
+                    setStartTimer(180); // Reset timer to 60 seconds
                     setCanResend(false); // Disable resend option temporarily
                     toast.success("OTP resent successfully");
                 } else {
@@ -194,7 +194,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
 
         if (response?.sendotp === true) {
             setInitialSend(false);
-            setStartTimer(600);
+            setStartTimer(180);
             setDisabled(false);
         }
 
@@ -227,10 +227,13 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
         };
     }, [startTimer]);
 
+    console.log("errors", errors);
+    
+
     return (
-        <Modal isOpen={isPopupOpen} className='max-w-[616px] w-full' onClose={() => { closePopup(); setStep(1); setStartTimer(0); setInitialSend(true); setDisabled(true) }}>
+        <Modal isOpen={isPopupOpen} className='max-w-[616px] w-full' onClose={() => { closePopup(); setStep(1); setStartTimer(0); setInitialSend(true); setDisabled(true); reset() }}>
             <div className="relative px-4 py-9 sm:py-[30px] sm:px-10 max-w-[616px] bg-gradient-to-b from-[#E5EFFF] to-[#E5EFFF]">
-                <Icon onClick={() => { closePopup(); setStep(1); setStartTimer(0); setInitialSend(true); setDisabled(true) }} className="absolute top-5 right-5 fill-[#5D5775] w-5 h-5 cursor-pointer z-50" name="crossicon" />
+                <Icon onClick={() => { closePopup(); setStep(1); setStartTimer(0); setInitialSend(true); setDisabled(true); reset() }} className="absolute top-5 right-5 fill-[#5D5775] w-5 h-5 cursor-pointer z-50" name="crossicon" />
                 <div className="py-4 sm:py-[50px]">
                     {step === 1 && (
                         <>
@@ -277,7 +280,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                                         setValue={setValue}
                                         clearErrors={clearErrors}
                                     />
-                                    {errors?.otp && <p className="text-red-500">{errors?.otp?.message}</p>}
+                                    {errors?.otp && <p className="text-red-500">{errors?.otp?.length && errors?.otp?.length>0 && `Please enter otp`}</p>}
                                     <p className="mt-5 text-xs font-normal text-[#4B5563]">
                                         Please check your mail for a 6-digit confirmation code to {session?.email}. Enter the confirmation code to verify.
                                     </p>
