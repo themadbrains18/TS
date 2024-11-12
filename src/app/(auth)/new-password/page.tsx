@@ -111,7 +111,7 @@ const NewPassword = ({ formdata }: any) => {
                                         <Input
                                             {...field}
                                             type={isChecked1 ? "text" : "password"} // Toggle between password visibility
-                                            placeholder="Email or Phone"
+                                            placeholder="Enter your password"
                                             label="Password"
                                             className=" placeholder:text-neutral-400 py-3 md:py-[18px]  px-5 bg-divider-100"
                                             error={errors.newPassword?.message} // Display validation error

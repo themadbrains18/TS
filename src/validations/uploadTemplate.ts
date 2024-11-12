@@ -74,7 +74,7 @@ const isFileSizeValid = (file: any) => {
  * Base template schema (fields shared by both create and update)
  */
 const uploadTemplateBase = z.object({
-  title: z.string().min(1, { message: "Enter template name" }).max(500),
+  title: z.string().min(1, { message: "Enter template name" }).max(100),
   templateTypeId: z.string().max(200, { message: "Select Template Type" }),
   subCategoryId: z.string().max(200, { message: "Select Category" }),
   softwareTypeId: z.string().min(1, { message: "Select Software Type" }),

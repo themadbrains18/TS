@@ -17,10 +17,10 @@ const forgotPassword = z.object({
     // Validates the email or phone field
     email: z
     .string() // The field should be a string
-    .min(1, {message:"Email or phone number is required"}) // The email or phone is required (min length 1)
+    .min(1, {message:"Email is required"}) // The email or phone is required (min length 1)
     .refine(
       (value) => emailRegex.test(value) || phoneRegex.test(value), // Refining the validation to check if the value matches either the email or phone regex
-      "Invalid email or phone number" // Custom error message when neither email nor phone number format is matched
+      "Invalid email " // Custom error message when neither email nor phone number format is matched
     ),
 });
 
