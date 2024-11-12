@@ -13,7 +13,7 @@ import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import Image from 'next/image';
 
- interface Template {
+interface Template {
   data:
   {
     id: string; // Add ID to template
@@ -27,7 +27,7 @@ import Image from 'next/image';
 }
 const AddTemplate = () => {
   const { data: session } = useSession()
-  const { data: response, loading,  fetchData } = useFetch<Template>();
+  const { data: response, loading, fetchData } = useFetch<Template>();
 
   const fetchTemplates = async () => {
     await fetchData(`/templates-by-userid/${session?.id}`, { method: "GET" });
