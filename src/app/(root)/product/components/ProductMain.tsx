@@ -138,8 +138,8 @@ const ProductMain = () => {
                 <div className='pt-[50px] pb-10 lg:pb-20 bg-bgcolor'>
                     <div className='container'>
                         <div className='flex gap-[30px] flex-col md:flex-row justify-between'>
-                            <div className={`md:sticky md:top-10 fixed top-0 h-screen duration-[1s] z-50 xl:z-0 transition-all ${filter ? "left-0" : "left-[-100%]"} max-w-full sm:max-w-[357px] w-full`}>
-                                <ProductFilterside closefilter={closefilter} items={items} setItems={setItems} setSelectedFilters={setSelectedFilters} /> {/* Pass setSelectedFilters */}
+                            <div className={`md:sticky  md:top-[100px]  lg:top-[168px] fixed top-0 h-screen duration-[1s] z-50 md:z-0 transition-all ${filter ? "left-0" : "left-[-100%]"} max-w-full sm:max-w-[357px] w-full`}>
+                                <ProductFilterside closefilter={closefilter} items={items} setItems={setItems} setSelectedFilters={setSelectedFilters} />
                             </div>
                             <div className='w-full'>
                                 <div className="flex max-[768px]:flex-col-reverse md:flex justify-between pb-5 md:border-b md:mb-[30px] items-center">
@@ -202,23 +202,23 @@ const ProductMain = () => {
                                         <div className='grid gap-5  w-full lg:grid-cols-2 xl:grid-cols-3 xl:gap-[30px]'>
                                             {products && products?.data?.length > 0 && products?.data?.map((item: TechTemplate, index: number) => (
                                                 <>
-                                     
-                                                <Fragment key={index}>
-                                                    <FeatureCard
-                                                        id={item?.id}
-                                                        buttonprops={item?.price}
-                                                        category={item?.templateType?.name}
-                                                        poster={item?.sliderImages[0]?.imageUrl}
-                                                        themeicon={item?.softwareType?.name}
-                                                        title={item?.title}
-                                                        uploadericon={item?.user?.profileImg}
-                                                        uploadername={item?.user?.name}
-                                                        currentimage={1}
-                                                        totalimages={item?.sliderImages?.length}
-                                                        isPaid={true}
+
+                                                    <Fragment key={index}>
+                                                        <FeatureCard
+                                                            id={item?.id}
+                                                            buttonprops={item?.price}
+                                                            category={item?.templateType?.name}
+                                                            poster={item?.sliderImages[0]?.imageUrl}
+                                                            themeicon={item?.softwareType?.name}
+                                                            title={item?.title}
+                                                            uploadericon={item?.user?.profileImg}
+                                                            uploadername={item?.user?.name}
+                                                            currentimage={1}
+                                                            totalimages={item?.sliderImages?.length}
+                                                            isPaid={true}
                                                         />
-                                                </Fragment>
-                                                        </>
+                                                    </Fragment>
+                                                </>
                                             ))}
                                         </div>
                                     ) : (

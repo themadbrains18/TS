@@ -51,18 +51,10 @@ const Page = async ({ params }: { params: Params }) => {
   }
 
 
-
-
   /**
    * Parse the JSON response
   */
   const template = await response.json();
-
-
-  console.log(template, "template")
-
-
-
 
   return (
     <>

@@ -112,7 +112,4 @@
     /* Customize scrollbar thumb color */
   }
 
-  .custom-scrollbar::-webkit-scrollbar-track {
-    /* Customize scrollbar track color */
-  }
 }

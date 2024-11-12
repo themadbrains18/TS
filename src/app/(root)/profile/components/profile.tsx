@@ -153,9 +153,19 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
      */
     const handlePhonenumberUpdate = async () => {
         try {
+
+
+
+
             if (number === "" || number === null || number === undefined) {
                 setPhoneNumberError("Please enter contact number")
                 return
+            }
+
+            const phoneRegex = /^\d{10}$/; // Adjust this pattern as needed for other formats
+            if (!phoneRegex.test(number)) {
+                setPhoneNumberError("Please enter a valid contact number");
+                return;
             }
 
             if (number === response?.user?.number) {
@@ -252,7 +262,6 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
 
     }, [phoneNumberError, nameError])
 
-    console.log(response?.user, "sdd")
 
     return (
         <>

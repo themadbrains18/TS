@@ -55,7 +55,6 @@ const FeatureSection = () => {
         }
     }, [response]);
 
-console.log(response,"==response");
 
     return (
         <section className='bg-bgcolor py-10 lg:py-[100px]'>

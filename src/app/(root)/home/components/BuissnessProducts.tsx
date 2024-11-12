@@ -29,7 +29,6 @@ const BuissnessProducts = () => {
         fetchData("/sub-categories", {next:{revalidate:2000}});
     }, []);
 
-    console.log(response,"==response");
     
     const data = [
         {
