@@ -13,7 +13,7 @@ import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 
- interface Template {
+interface Template {
   data:
   {
     id: string; // Add ID to template
@@ -83,11 +83,13 @@ const AddTemplate = () => {
   /**
    * Function to handle the DELETE request
    */
+
   const handleDelete = async (id: string) => {
     try {
       await fetchData(`/templates/${id}`, { method: 'DELETE' });
       // Optionally refetch templates after deletion
-      await fetchData(`/templates-by-userid/${session?.id}`, { method: "GET" });    } catch (error) {
+      await fetchData(`/templates-by-userid/${session?.id}`, { method: "GET" });
+    } catch (error) {
       console.log('Error deleting template:', error);
     }
   };

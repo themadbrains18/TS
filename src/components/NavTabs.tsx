@@ -16,10 +16,13 @@ import useFetch from "@/hooks/useFetch";
  * @returns {JSX.Element} The rendered NavTabs component.
  */
 
+
+
+
 const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
   const [activetab, setActivetab] = useState(0);
   const searchParams = useSearchParams();
-  const [subCategory, setSubCategory] = useState<subCat>(subCat && subCat[0])
+  const [subCategory, setSubCategory] = useState<subCat>(subCat && subCat?.[0])
   const { data, loading, error, fetchData } = useFetch<TemplateResponse>()
 
   /**
