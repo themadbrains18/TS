@@ -50,7 +50,7 @@ const AddTemplate = () => {
   const [hideIconStates, setHideIconStates] = useState<boolean[]>(Array(response?.data?.length).fill(false));
   const [deletePopupIndex, setDeletePopupIndex] = useState<number | null>(null);
 
-  const router = useRouter(); 
+  const router = useRouter();
 
   const openPopup = (index: number) => {
     setCurrentTemplateIndex(index);
@@ -60,7 +60,7 @@ const AddTemplate = () => {
   const closePopup = () => {
     setIsPopupOpen(false);
     setCurrentTemplateIndex(null);
-    setDeletePopupIndex(null); 
+    setDeletePopupIndex(null);
   };
 
   const confirmHide = () => {
@@ -71,7 +71,7 @@ const AddTemplate = () => {
         return newStates;
       });
     }
-    closePopup(); 
+    closePopup();
   };
 
   /**
@@ -81,12 +81,13 @@ const AddTemplate = () => {
     try {
       await fetchData(`/templates/${id}`, { method: 'DELETE' });
       // Optionally refetch templates after deletion
-      await fetchData(`/templates-by-userid/${session?.id}`, { method: "GET" });    } catch (error) {
+      await fetchData(`/templates-by-userid/${session?.id}`, { method: "GET" });
+    } catch (error) {
       console.log('Error deleting template:', error);
     }
   };
 
-  
+
   useEffect(() => {
     if (response) {
       closePopup()
@@ -100,6 +101,8 @@ const AddTemplate = () => {
     }
     await fetchData(`/templates/search?query=${value}`)
   }
+
+
 
   return (
     <>
@@ -130,7 +133,7 @@ const AddTemplate = () => {
               </div>
               <div className="flex flex-col min-[600px]:flex-row gap-x-5 gap-y-5 min-[600px]:gap-y-0  justify-between items-center">
                 <DashInput className="max-w-lg w-full hover:border-primary-100 focus:border-primary-100" placeholder="Search" type="text" onChange={(e) => { handleSearch(e.target.value) }} />
-                  <Button link="/dashboard/addtemplate" className="py-2 min-[600px]:py-3 text-nowrap"  >add template</Button>
+                <Button link="/dashboard/addtemplate" className="py-2 min-[600px]:py-3 text-nowrap"  >add template</Button>
               </div>
             </div>
           </div>
@@ -153,52 +156,78 @@ const AddTemplate = () => {
                     <>
                       {response?.data.map((template: any, index: number) => (
                         <tr key={index} className="hover:bg-gray-50">
-                          <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize max-w-[200px] truncate md:max-w-full font-semibold">
-                            {template?.title}
+                          <td className="   px-6 py-5 text-sm  md:text-base text-subparagraph capitalize  md:max-w-full font-semibold">
+                            <h2 className='max-w-[300px] truncate'>
+                              {template.title}
+                            </h2>
                           </td>
                           <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">
-                            {template?.templateType?.name}
+                            {template.templateType?.name}
                           </td>
                           <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">
-                            {template?.version}
+                            {template.version}
                           </td>
                           <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">
-                            {template?.price}
+                            {template.price}
                           </td>
                           <td className="px-6 py-5 text-sm md:text-base text-subparagraph flex gap-x-2 flex-nowrap">
                             {hideIconStates[index] ? (
-                              <Icon onClick={() => openPopup(index)} className="w-6 h-6 fill-subheading cursor-pointer" name="hideicon" />
+                              <Icon
+                                onClick={() => openPopup(index)}
+                                className="w-6 h-6 fill-subheading cursor-pointer"
+                                name="hideicon"
+                              />
                             ) : (
-                              <Icon onClick={() => openPopup(index)} className="w-6 h-6 fill-subheading cursor-pointer" name="showicon" />
+                              <Icon
+                                onClick={() => openPopup(index)}
+                                className="w-6 h-6 fill-subheading cursor-pointer"
+                                name="showicon"
+                              />
                             )}
-                            <Icon onClick={() => setDeletePopupIndex(index)} className="w-6 h-6 fill-subheading cursor-pointer" name="deleteicon" />
-                            <Icon onClick={() => router.push(`/dashboard/edit/${template?.id}`)} className="w-5 h-6 fill-subheading cursor-pointer" name="editicon" />
+                            <Icon
+                              onClick={() => setDeletePopupIndex(index)}
+                              className="w-6 h-6 fill-subheading cursor-pointer"
+                              name="deleteicon"
+                            />
+                            <Icon
+                              onClick={() => router.push(`/dashboard/edit/${template.id}`)}
+                              className="w-5 h-6 fill-subheading cursor-pointer"
+                              name="editicon"
+                            />
                           </td>
                         </tr>
                       ))}
                     </>
-                  ) : (
-                    <tr className="hover:bg-gray-50 animate-pulse">
-                      <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize max-w-[200px] truncate md:max-w-full font-semibold">
-                        <div className="h-4 bg-gray-200 rounded w-full"></div>
-                      </td>
-                      <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">
-                        <div className="h-4 bg-gray-200 rounded w-full"></div>
-                      </td>
-                      <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">
-                        <div className="h-4 bg-gray-200 rounded w-full"></div>
-                      </td>
-                      <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">
-                        <div className="h-4 bg-gray-200 rounded w-full"></div>
-                      </td>
-                      <td className="px-6 py-5 text-sm md:text-base text-subparagraph flex gap-x-2 flex-nowrap">
-                        <div className="w-6 h-6 bg-gray-200 rounded mr-2"></div>
-                        <div className="w-6 h-6 bg-gray-200 rounded mr-2"></div>
-                        <div className="w-6 h-6 bg-gray-200 rounded mr-2"></div>
+                  ) : response?.data && response?.data.length === 0 ? (
+                    <tr>
+                      <td colSpan={5} className="px-6 py-5 text-center text-sm md:text-base text-gray-500">
+                        No Templates Found.
                       </td>
                     </tr>
+                  ) : (
+                    <></>
+                    // <tr className="hover:bg-gray-50 animate-pulse">
+                    //   <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize max-w-[200px] truncate md:max-w-full font-semibold">
+                    //     <div className="h-4 bg-gray-200 rounded w-full"></div>
+                    //   </td>
+                    //   <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">
+                    //     <div className="h-4 bg-gray-200 rounded w-full"></div>
+                    //   </td>
+                    //   <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">
+                    //     <div className="h-4 bg-gray-200 rounded w-full"></div>
+                    //   </td>
+                    //   <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">
+                    //     <div className="h-4 bg-gray-200 rounded w-full"></div>
+                    //   </td>
+                    //   <td className="px-6 py-5 text-sm md:text-base text-subparagraph flex gap-x-2 flex-nowrap">
+                    //     <div className="w-6 h-6 bg-gray-200 rounded mr-2"></div>
+                    //     <div className="w-6 h-6 bg-gray-200 rounded mr-2"></div>
+                    //     <div className="w-6 h-6 bg-gray-200 rounded mr-2"></div>
+                    //   </td>
+                    // </tr>
                   )}
                 </tbody>
+
               </table>
             </div>
           </div>

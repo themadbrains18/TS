@@ -104,7 +104,8 @@ import SearchDropdown from '../SearchDropdown';
 import { navtabprops } from '@/types/type';
 import { cn } from '@/libs/utils';
 import Link from 'next/link';
-interface Template {
+
+ interface Template {
     templates:
     {
       id: string; // Add ID to template
@@ -135,6 +136,11 @@ const SearchComponent: React.FC<navtabprops> = ({ subCat, classname, opensearch,
         handleSearch(searchQuery, selectedCategory);
     }, [searchQuery, selectedCategory]);
 
+console.log(templates,"==templates");
+
+ 
+    
+    
     return (
         <div className={` ${mainclass} flex items-center relative justify-end`}>
             <div className="p-[10px]">

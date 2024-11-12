@@ -5,7 +5,7 @@ import { TechTemplate } from '@/types/type';
 import { getServerSession, Session } from 'next-auth';
 import { authOptions } from '@/libs/auth';
 
-const page = async({ params }: { params: { id: string } }) => {
+const page = async ({ params }: { params: { id: string } }) => {
 
     const template = async (): Promise<TechTemplate | any | number> => {
         let session: Session | null = await getServerSession(authOptions)
@@ -14,9 +14,9 @@ const page = async({ params }: { params: { id: string } }) => {
         const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/templates-by-id/${params.id}`, {
             method: 'GET',
             headers: {
-              'Content-Type': 'application/json',
+                'Content-Type': 'application/json',
             },
-          });
+        });
         if (!response) return null
 
         return await response.json();
@@ -31,7 +31,7 @@ const page = async({ params }: { params: { id: string } }) => {
 
     return (
         <>
-           <Suspense
+            <Suspense
                 fallback={`<>
                     <div className="hover:bg-gray-50 animate-pulse">
                       <div className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize max-w-[200px] truncate md:max-w-full font-semibold">

@@ -404,7 +404,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                             </div>
                             <Button onClick={() => setisDeletepopup(true)} className='py-[13px] text-lg mt-5 md:mt-0 text-nowrap' variant='secondary'>Set new password</Button>
                         </div>
-                        <div className='py-4 md:py-[50px] border-b border-[#D9D9D9] flex items-end justify-between'>
+                        {/* <div className='py-4 md:py-[50px] border-b border-[#D9D9D9] flex items-end justify-between'>
                             <div>
                                 <div className='flex justify-between items-center'>
                                     <h3 className='text-subheading text-[22px] md:text-[28px] font-bold leading-none md:leading-9'>Notifications</h3>
@@ -413,10 +413,10 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                 <p className='mt-[10px] md:mt-5 text-sm md:text-lg font-semibold leading-5 md:leading-7 text-textparagraph'>Receive newsletters, promotions and news from Freepik Company</p>
                                 <p className='pt-1 md:pt-5 text-sm md:text-base  font-normal leading-5 md:leading-6 text-textparagraph max-w-[1106px]'>Freepik will process your data to send you information about our products and services, promotions, surveys, raffles, based on our legitimate interest, and updates from the creators you follow, if you have consented to this. Your data will not be disclosed to third parties. They will be communicated outside the EU under the terms of the <a href='#' className='text-primary-100'>privacy policy</a> . You can opt out of our notifications with the slider.<a href='#' className='text-primary-100'> More information</a></p>
                             </div>
-                        </div>
+                        </div> */}
                         <div className='max-w-[670px] mt-4 md:mt-[50px]'>
                             <Button className='py-[13px] text-lg px-[30px]' variant='secondary' type='button' onClick={() => { setIsDeleteUser(true) }}>delete account</Button>
-                            <p className='pt-5 text-textparagraph'><strong>Note:</strong> As you have an active paid plan, you can't delete your account directly. Please contact <a href="#" className='text-primary-100 '>support@freepik.com</a> for assistance </p>
+                            <p className='pt-5 text-textparagraph'><strong>Note:</strong> As you have an active paid plan, you can't delete your account directly. Please contact <a href="#" className='text-primary-100 '>templatestudio.ai</a> for assistance </p>
                         </div>
                     </div>
                 </div>
