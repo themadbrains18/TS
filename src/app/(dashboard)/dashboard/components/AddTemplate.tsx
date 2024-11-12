@@ -27,7 +27,10 @@ export interface Template {
 }
 const AddTemplate = () => {
 
-  const { data: response, loading,  fetchData } = useFetch<Template>();
+
+  
+
+  const { data: response, loading, fetchData } = useFetch<Template>();
 
   const fetchTemplates = async () => {
     await fetchData("/all-templates", { method: "GET" });
@@ -37,7 +40,9 @@ const AddTemplate = () => {
     fetchTemplates();
   }, [fetchData]);
 
+
   const templateheading = [
+    { heading: "No." },
     { heading: "template name" },
     { heading: "template type" },
     { heading: "version" },
@@ -45,12 +50,13 @@ const AddTemplate = () => {
     { heading: "action" },
   ];
 
+
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
   const [currentTemplateIndex, setCurrentTemplateIndex] = useState<number | null>(null);
   const [hideIconStates, setHideIconStates] = useState<boolean[]>(Array(response?.templates?.length).fill(false));
   const [deletePopupIndex, setDeletePopupIndex] = useState<number | null>(null);
 
-  const router = useRouter(); 
+  const router = useRouter();
 
   const openPopup = (index: number) => {
     setCurrentTemplateIndex(index);
@@ -60,7 +66,7 @@ const AddTemplate = () => {
   const closePopup = () => {
     setIsPopupOpen(false);
     setCurrentTemplateIndex(null);
-    setDeletePopupIndex(null); 
+    setDeletePopupIndex(null);
   };
 
   const confirmHide = () => {
@@ -71,7 +77,7 @@ const AddTemplate = () => {
         return newStates;
       });
     }
-    closePopup(); 
+    closePopup();
   };
 
   /**
@@ -87,7 +93,7 @@ const AddTemplate = () => {
     }
   };
 
-  
+
   useEffect(() => {
     if (response) {
       closePopup()
@@ -131,7 +137,7 @@ const AddTemplate = () => {
               </div>
               <div className="flex flex-col min-[600px]:flex-row gap-x-5 gap-y-5 min-[600px]:gap-y-0  justify-between items-center">
                 <DashInput className="max-w-lg w-full hover:border-primary-100 focus:border-primary-100" placeholder="Search" type="text" onChange={(e) => { handleSearch(e.target.value) }} />
-                  <Button link="/dashboard/addtemplate" className="py-2 min-[600px]:py-3 text-nowrap"  >add template</Button>
+                <Button link="/dashboard/addtemplate" className="py-2 min-[600px]:py-3 text-nowrap"  >add template</Button>
               </div>
             </div>
           </div>
@@ -154,6 +160,7 @@ const AddTemplate = () => {
                     <>
                       {response?.templates.map((template: any, index: number) => (
                         <tr key={index} className="hover:bg-gray-50">
+                          <td className='pl-6' >{index + 1}</td>
                           <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize max-w-[200px] truncate md:max-w-full font-semibold">
                             {template?.title}
                           </td>

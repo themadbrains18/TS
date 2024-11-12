@@ -58,9 +58,9 @@ const Download = () => {
   };
 
 
- /**
-   * - This function resets the pagination (sets page to 1), clears the existing downloads, 
-  */
+  /**
+    * - This function resets the pagination (sets page to 1), clears the existing downloads, 
+   */
   const resetDownloads = () => {
     setPage(1);
     setDownloads([]);
@@ -99,7 +99,7 @@ const Download = () => {
               onMouseEnter={() => setCategory(true)}
               onMouseLeave={() => setCategory(false)}
             >
-              <div
+              {/* <div
                 onClick={() => setCategory(!category)}
                 className={`w-full border duration-[0.5s] flex gap-x-[5px] bg-white ${category ? "border-primary-100" : "border-divider-100"
                   } group py-2 px-[10px] sm:px-5 items-center`}
@@ -115,7 +115,7 @@ const Download = () => {
                 >
                   {selectedCategory}
                 </h2>
-              </div>
+              </div> */}
               {/* Category Dropdown Items */}
               <div
                 className={`absolute right-0 max-[640px]:left-0 ${category ? "opacity-1 visible" : "opacity-0 invisible"

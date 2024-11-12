@@ -25,7 +25,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
 
 
     const [showFullDescription, setShowFullDescription] = useState(false);
-    const [showPreviews, setShowPreviews] = useState<boolean>(false)
+    // const [showPreviews, setShowPreviews] = useState<boolean>(false)
     const { data: session, status } = useSession();
 
     const toggleDescription = () => {
@@ -39,14 +39,14 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
     /**
      * swiper images
      */
-    const images = template.sliderImages
+    const images = template?.sliderImages
 
 
     /**
      * State to manage the currently active image ID
      */
-    const [activeImageId, setActiveImageId] = useState(images[0]?.id);
-    const activeImage = images.find(image => image?.id === activeImageId)?.imageUrl;
+    const [activeImageId, setActiveImageId] = useState(images?.[0]?.id);
+    const activeImage = images?.find(image => image?.id === activeImageId)?.imageUrl;
 
     /**
      * Reference to Swiper instance for custom navigation
@@ -56,6 +56,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
     /**
      * pop up handler
      */
+
     const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
     const router = useRouter()
     const openPopup = async () => {
@@ -67,6 +68,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
             setIsFirstPopupOpen(true)
         }
     }
+
     const [isFirstPopupOpen, setIsFirstPopupOpen] = useState<boolean>(true);
 
     type SoftwareType = {

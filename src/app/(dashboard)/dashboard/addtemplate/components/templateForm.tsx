@@ -285,7 +285,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         if (data?.sliderImages) {
             Array.from(data.sliderImages).forEach((file) => formData.append("sliderImages", file));
         }
-    
+
         // Append preview mobile images, merging previous URLs with new files
         if (initialData?.previewMobileImages) {
             initialData.previewMobileImages.forEach((imgUrl: string) => formData.append("previewMobileImages", imgUrl));
@@ -325,9 +325,10 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             console.error("An error occurred during submission:", error);
         });
     };
-    console.log(errors, "==errors");
 
-console.log(initialData,"==source files");
+    const goback = () => {
+        router
+    }   
 
     return (
 
@@ -335,14 +336,19 @@ console.log(initialData,"==source files");
             <section className='pb-10 md:pb-20'>
                 <div className='py-10 border-b border-divider-200 bg-[#ffffff80]'>
                     <div className="container">
-                        <Link className="w-[276px]" href={'/'}>
-                            <Image
-                                src={"/icons/Logo.svg"}
-                                width={276}
-                                height={40}
-                                alt="Logo"
-                            />
-                        </Link>
+                        <div className='flex justify-between items-center' >
+                            <Link className="w-[276px]" href={'/'}>
+                                <Image
+                                    src={"/icons/Logo.svg"}
+                                    width={276}
+                                    height={40}
+                                    alt="Logo"
+                                />
+                            </Link>
+                            <div onClick={goback} >
+                                <Icon className="fill-primary-100" name="crossicon" />
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="max-w-[802px] w-full py-0 px-4 my-0 mx-auto pt-10">
@@ -353,31 +359,31 @@ console.log(initialData,"==source files");
 
                             <div className='w-full'>
                                 <label className='text-xl font-semibold capitalize' htmlFor="templateType">Template Type</label>
-                                    <Controller
-                                        name="templateTypeId"
-                                        control={control}
-                                        render={({ field }) => (
-                                            <select
-                                                className='custom-dropdown-template'
-                                                id="templateType"
-                                                defaultValue=""
-                                                {...field}
-                                                onChange={(e) => {
-                                                    field.onChange(e.target.value);
-                                                    handleTemplateSelect(e.target.value);
-                                                }}
-                                                disabled={type === "edit"}
-                                            >
-                                                <option value="" disabled>Select Template Type</option>
-                                                {data && data?.length>0 && data?.map((option) => (
-                                                    <option className='cursor-pointer' key={option.id} value={option.id} >
-                                                        {option?.name}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                        )}
-                                    />
-                             
+                                <Controller
+                                    name="templateTypeId"
+                                    control={control}
+                                    render={({ field }) => (
+                                        <select
+                                            className='custom-dropdown-template'
+                                            id="templateType"
+                                            defaultValue=""
+                                            {...field}
+                                            onChange={(e) => {
+                                                field.onChange(e.target.value);
+                                                handleTemplateSelect(e.target.value);
+                                            }}
+                                            disabled={type === "edit"}
+                                        >
+                                            <option value="" disabled>Select Template Type</option>
+                                            {data && data?.length > 0 && data?.map((option) => (
+                                                <option className='cursor-pointer' key={option.id} value={option.id} >
+                                                    {option?.name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    )}
+                                />
+
 
                                 {errors.templateTypeId && (
                                     <p style={{ color: 'red' }}>{errors.templateTypeId.message}</p>
@@ -412,7 +418,7 @@ console.log(initialData,"==source files");
                             </div>
 
                             {/* Software Type Dropdown */}
-                        {showSoftwareType!== 'cm207q5lf00025lycfdqrpzzb' &&   <div className='w-full'>
+                            {showSoftwareType !== 'cm207q5lf00025lycfdqrpzzb' && <div className='w-full'>
                                 <label className='text-xl font-semibold capitalize' htmlFor="softwareTypeId">Software Type</label>
                                 <Controller
                                     name="softwareTypeId"
@@ -554,7 +560,7 @@ console.log(initialData,"==source files");
                                                     multiple={false}
                                                     id="1"
                                                     register={register}
-                                                    fileNameUrl={initialData?.sourceFiles ? initialData?.sourceFiles.map((img: any) => img.fileUrl) : []} 
+                                                    fileNameUrl={initialData?.sourceFiles ? initialData?.sourceFiles.map((img: any) => img.fileUrl) : []}
                                                 />
                                             )}
                                         />

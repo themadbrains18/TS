@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ProductBanner from './components/ProductBanner';
 import RelatedProducts from './components/RelatedProducts';
 import ProductDescription from './components/ProductDescription';
@@ -24,6 +24,8 @@ interface Params {
 
 
 const Page = async ({ params }: { params: Params }) => {
+
+
   const { id } = params;
 
   /**
@@ -37,33 +39,48 @@ const Page = async ({ params }: { params: Params }) => {
     },
     next: { revalidate: 0 }
   });
-  
-  
+
+
   /**
    * You can also redirect or show a 404 page
   */
- if (!response.ok) {
-  <NotFound />
-  //  throw new Error('Template not found');
+  if (!response.ok) {
+    // console.log("first")
+    return < NotFound />
+    //  throw new Error('Template not found');
   }
-  
+
+
+
+
   /**
    * Parse the JSON response
   */
- const template = await response.json();
- console.log(template,"==template");
+  const template = await response.json();
+
+
+  console.log(template, "template")
+
+
+
 
   return (
     <>
-      <div className=' relative xl:after:h-full xl:after:w-full xl:after:absolute xl:after:top-0 xl:after:left-0 xl:after:bg-[url(/images/bgeffect.png)] after:z-[-1] ' >
-        <BreadCrumbs />
-        <ProductBanner template={template} />
-        <ProductDescription template={template} />
-      </div>
-      <RelatedProducts />
+      <Suspense fallback={`<><div>Loading...</div></>`}>
+        <div>
+          <div className=' relative xl:after:h-full xl:after:w-full xl:after:absolute xl:after:top-0 xl:after:left-0 xl:after:bg-[url(/images/bgeffect.png)] after:z-[-1] ' >
+            <BreadCrumbs />
+            <ProductBanner template={template} />
+            <ProductDescription template={template} />
+          </div>
+          <RelatedProducts />
+        </div>
+      </Suspense>
+
     </>
   );
 };
+
 
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
