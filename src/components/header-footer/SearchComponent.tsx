@@ -107,7 +107,6 @@ import Link from 'next/link';
 import { Template } from '@/app/(dashboard)/dashboard/components/AddTemplate';
 
 const SearchComponent: React.FC<navtabprops> = ({ subCat, classname, opensearch, openinput, mainclass, searchresults, resinputoff }) => {
-    console.log(subCat, "subCatsubCatsubCat")
     const [selectedCategory, setSelectedCategory] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
     const { data: templates, error, loading, fetchData } = useFetch<Template>();
@@ -166,7 +165,7 @@ const SearchComponent: React.FC<navtabprops> = ({ subCat, classname, opensearch,
 
                 {/* Display the templates */}
                 {templates?.templates?.map((template) => (
-                    <Link href={`/productdetail/${template?.id}`} key={template?.id}>
+                    <Link href={`/productdetail/${template?.id}`} key={Date.now() + template?.id}>
                         <div className=" cursor-pointer border-b w-full last:border-b-0">
                             <p className="text-subparagraph text-start leading-6 py-2 px-[30px] capitalize cursor-pointer text-nowrap hover:bg-primary-200 border-l-[2px] hover:border-primary-100 text-sm font-medium truncate ">
                                 {template?.title}

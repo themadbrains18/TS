@@ -36,7 +36,6 @@ const TrendingTechnology = () => {
         return "default.png"; // Fallback image if none of the conditions match
     };
 
-    console.log(response,"==response");
     
 
     return (

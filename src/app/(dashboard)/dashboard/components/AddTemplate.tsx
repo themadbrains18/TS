@@ -28,7 +28,7 @@ export interface Template {
 const AddTemplate = () => {
 
 
-  
+
 
   const { data: response, loading, fetchData } = useFetch<Template>();
 
@@ -161,7 +161,7 @@ const AddTemplate = () => {
                       {response?.templates.map((template: any, index: number) => (
                         <tr key={index} className="hover:bg-gray-50">
                           <td className='pl-6' >{index + 1}</td>
-                          <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize max-w-[200px] truncate md:max-w-full font-semibold">
+                          <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize max-w-[200px] truncate  font-semibold">
                             {template?.title}
                           </td>
                           <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">

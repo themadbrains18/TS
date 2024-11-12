@@ -12,7 +12,9 @@ const ProductFilterside = ({ items, setItems, closefilter, setSelectedFilters }:
     useEffect(() => {
         fetchIndustryData('/industry-type');
         fetchSoftwareData('/software-types');
+
     }, []);
+    console.log(softwareData, "softwareData")
     const filterData = [
         {
             title: "Price Range",
@@ -20,16 +22,17 @@ const ProductFilterside = ({ items, setItems, closefilter, setSelectedFilters }:
                 { name: "0$ - 50$", id: "0-50" },
                 { name: "50$ - 100$", id: "50-100" },
                 { name: "100$ - 200$", id: "100-200" },
+                { name: "200$ - more..", id: "100-200" },
             ],
         },
-        {
-            title: "Template Studio Special",
-            items: [
-                { name: "Feature Products", id: "Feature Products" },
-                { name: "Popular Template", id: "Popular Template" },
-                { name: "Browse Trending Categories", id: "Browse Trending Categories" },
-            ],
-        },
+        // {
+        //     title: "Template Studio Special",
+        //     items: [
+        //         { name: "Feature Products", id: "Feature Products" },
+        //         { name: "Popular Template", id: "Popular Template" },
+        //         { name: "Browse Trending Categories", id: "Browse Trending Categories" },
+        //     ],
+        // },
         {
             title: "Industries",
             items: industryData,
@@ -58,7 +61,7 @@ const ProductFilterside = ({ items, setItems, closefilter, setSelectedFilters }:
                     <Icon name="productfilterclose" />
                 </button>
             </div>
-            <div className='overflow-y-scroll  h-[calc(100%_-_100px)] hiddenscroll   ' >
+            <div className='overflow-y-scroll  h-[calc(100%_-_100px)] custom-scrollbar-horizon   ' >
                 {filterData.map((filterSection, index) => (
                     <Accordion
                         key={index}

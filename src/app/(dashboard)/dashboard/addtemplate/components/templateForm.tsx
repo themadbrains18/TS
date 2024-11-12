@@ -278,28 +278,18 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             }
         ];
         formData.append("credits", JSON.stringify(credits));
-        // Append slider images, merging previous URLs with new files
-        if (initialData?.sliderImages) {
-            initialData.sliderImages.forEach((imgUrl: string) => formData.append("sliderImages", imgUrl));
-        }
-        if (data?.sliderImages) {
-            Array.from(data.sliderImages).forEach((file) => formData.append("sliderImages", file));
-        }
 
-        // Append preview mobile images, merging previous URLs with new files
-        if (initialData?.previewMobileImages) {
-            initialData.previewMobileImages.forEach((imgUrl: string) => formData.append("previewMobileImages", imgUrl));
-        }
-        if (data?.previewMobileImages) {
-            Array.from(data.previewMobileImages).forEach((file) => formData.append("previewMobileImages", file));
-        }
-        // Append preview mobile images, merging previous URLs with new files
-        if (initialData?.previewImages) {
-            initialData.previewImages.forEach((imgUrl: string) => formData.append("previewImages", imgUrl));
-        }
-        if (data?.previewImages) {
-            Array.from(data.previewImages).forEach((file) => formData.append("previewImages", file));
-        }
+        // if (data?.sliderImages) {
+        //     Array.from(data.sliderImages).forEach((file) => formData.append("sliderImages", file));
+        // }
+
+        // if (data?.previewMobileImages) {
+        //     Array.from(data.previewMobileImages).forEach((file) => formData.append("previewMobileImages", file));
+        // }
+
+        // if (data?.previewImages) {
+        //     Array.from(data.previewImages).forEach((file) => formData.append("previewImages", file));
+        // }
 
         const endpoint = type === 'edit' ? `${process.env.NEXT_PUBLIC_APIURL}/templates/${id}` : `${process.env.NEXT_PUBLIC_APIURL}/templates`;
         const method = type === 'edit' ? 'PUT' : 'POST';
@@ -328,7 +318,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
     const goback = () => {
         router
-    }   
+    }
 
     return (
 
@@ -561,6 +551,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                     id="1"
                                                     register={register}
                                                     fileNameUrl={initialData?.sourceFiles ? initialData?.sourceFiles.map((img: any) => img.fileUrl) : []}
+                                                    title='Upload Source File Here only 1'
                                                 />
                                             )}
                                         />
@@ -585,7 +576,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                     id="2"
                                                     register={register}
                                                     initialUrls={initialData?.sliderImages ? initialData?.sliderImages.map((img: any) => img.imageUrl) : []} // Pass URLs here
-
+                                                    title='Upload Slider Images Here only 10'
                                                 />
                                             )}
                                         />
@@ -611,6 +602,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                     multiple={true}
                                                     id="3"
                                                     initialUrls={initialData?.previewImages ? initialData?.previewImages.map((img: any) => img.imageUrl) : []} // Pass URLs here
+                                                    title='Upload Desktop Preview Images Here only 10'
                                                 />
                                             )}
                                         />
@@ -636,6 +628,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                     multiple={true}
                                                     id="4"
                                                     initialUrls={initialData?.previewMobileImages ? initialData?.previewMobileImages.map((img: any) => img.imageUrl) : []} // Pass URLs here
+                                                    title='Upload Mobile Preview Images Here only 10'
                                                 />
                                             )}
                                         />

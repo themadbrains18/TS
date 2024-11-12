@@ -198,7 +198,6 @@ const VerfiyNewEmail: FC<verifyNewemail> = ({
    * This effect runs whenever the `response` object changes.
    */
   useEffect(() => {
-    console.log(response,"===response");
     
     if (response?.otp === true) {
       // setValue('otp', ['', '', '', '', '', '']);

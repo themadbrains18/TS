@@ -304,7 +304,8 @@ const Header = () => {
                   session?.user
                   &&
                   <div ref={profileresRef}>
-                    <div onClick={openProfileres} className="w-[30px] h-[30px] cursor-pointer ">
+                    <div onClick={openProfileres} className="w-[30px] h-[30px] cursor-pointer object-center overflow-hidden">
+
                       <Image
                         width={50}
                         height={50}
@@ -355,7 +356,7 @@ const Header = () => {
               <div className={`w-[100%] duration-[0.5s] fixed top-0 bg-white h-full  px-2 ${searchbar ? "right-0 " : "right-[-100%]"}`} >
                 <div className="flex flex-row justify-between items-center py-4 " >
                   <Link href={'/'}>
-                    <Image className="cursor-pointer h-9" width={193} height={38} src={'/icons/logo.svg'} alt="logo" />
+                    <Image className="cursor-pointer h-9" width={193} height={38} src={'/icons/Logo.svg'} alt="logo" />
                   </Link>
                   <div onClick={() => setsearchbar(false)} >
                     <Icon className="w-8 h-5 fill-primary-100" name="crossicon" />
@@ -368,7 +369,7 @@ const Header = () => {
             <div className={cn`flex z-[2] flex-col fixed bg-white w-full transition-all duration-[1s] h-screen  top-0 ${sidebar ? "left-0" : "left-[-100%]"}`}>
               <div className="flex items-center justify-between p-[15px]">
                 <Link href={'/'}>
-                  <Image className="cursor-pointer h-9" width={193} height={38} src={'/icons/logo.svg'} alt="logo" />
+                  <Image className="cursor-pointer h-9" width={193} height={38} src={'/icons/Logo.svg'} alt="logo" />
                 </Link>
                 <div onClick={() => { setSidebar(!sidebar) }}>
                   <Icon className="fill-primary-100" name="crossicon" />
