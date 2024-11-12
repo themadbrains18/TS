@@ -22,7 +22,7 @@ import useFetch from "@/hooks/useFetch";
 const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
   const [activetab, setActivetab] = useState(0);
   const searchParams = useSearchParams();
-  const [subCategory, setSubCategory] = useState<any>(subCat && subCat?.[0])
+  const [subCategory, setSubCategory] = useState<any>(subCat && subCat?.length>0 ? subCat?.[0]:{})
   const { data, loading, error, fetchData } = useFetch<TemplateResponse>()
 
   /**
