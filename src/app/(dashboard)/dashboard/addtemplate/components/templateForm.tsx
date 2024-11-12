@@ -327,22 +327,28 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     };
     console.log(errors, "==errors");
 
-console.log(initialData,"==source files");
-
+    const goback = () => {
+        router?.back()
+    }   
     return (
 
         <>
             <section className='pb-10 md:pb-20'>
-                <div className='py-10 border-b border-divider-200 bg-[#ffffff80]'>
+            <div className='py-10 border-b border-divider-200 bg-[#ffffff80]'>
                     <div className="container">
-                        <Link className="w-[276px]" href={'/'}>
-                            <Image
-                                src={"/icons/Logo.svg"}
-                                width={276}
-                                height={40}
-                                alt="Logo"
-                            />
-                        </Link>
+                        <div className='flex justify-between items-center' >
+                            <Link className="w-[276px]" href={'/'}>
+                                <Image
+                                    src={"/icons/Logo.svg"}
+                                    width={276}
+                                    height={40}
+                                    alt="Logo"
+                                />
+                            </Link>
+                            <div onClick={goback} >
+                                <Icon className="fill-primary-100" name="crossicon" />
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="max-w-[802px] w-full py-0 px-4 my-0 mx-auto pt-10">

@@ -104,7 +104,18 @@ import SearchDropdown from '../SearchDropdown';
 import { navtabprops } from '@/types/type';
 import { cn } from '@/libs/utils';
 import Link from 'next/link';
-import { Template } from '@/app/(dashboard)/dashboard/components/AddTemplate';
+interface Template {
+    templates:
+    {
+      id: string; // Add ID to template
+      title: string;
+      templateType: string;
+      version: string;
+      price: number;
+      deleted: boolean
+    }[]
+  
+  }
 
 const SearchComponent: React.FC<navtabprops> = ({ subCat, classname, opensearch, openinput, mainclass, searchresults, resinputoff }) => {
     console.log(subCat, "subCatsubCatsubCat")
