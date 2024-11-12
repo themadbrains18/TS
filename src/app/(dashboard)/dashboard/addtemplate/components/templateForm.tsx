@@ -317,8 +317,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     };
 
     const goback = () => {
-        router
-    }
+        router?.back()
+    }   
 
     return (
 

@@ -9,12 +9,12 @@ import HideTemplate from '@/components/popups/HideTemplate';
 import DeleteTemplate from '@/components/popups/DeleteTemplate';
 import DashInput from '../addtemplate/components/DashInput';
 import useFetch from '@/hooks/useFetch';
-import { signOut } from 'next-auth/react';
-import Link from 'next/link';
+import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
+import Link from 'next/link';
 
-export interface Template {
-  templates:
+ interface Template {
+  data:
   {
     id: string; // Add ID to template
     title: string;
@@ -28,12 +28,12 @@ export interface Template {
 const AddTemplate = () => {
 
 
-
+  const { data: session } = useSession()
 
   const { data: response, loading, fetchData } = useFetch<Template>();
 
   const fetchTemplates = async () => {
-    await fetchData("/all-templates", { method: "GET" });
+    await fetchData(`/templates-by-userid/${session?.id}`, { method: "GET" });
   };
   useEffect(() => {
 
@@ -53,7 +53,7 @@ const AddTemplate = () => {
 
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
   const [currentTemplateIndex, setCurrentTemplateIndex] = useState<number | null>(null);
-  const [hideIconStates, setHideIconStates] = useState<boolean[]>(Array(response?.templates?.length).fill(false));
+  const [hideIconStates, setHideIconStates] = useState<boolean[]>(Array(response?.data?.length).fill(false));
   const [deletePopupIndex, setDeletePopupIndex] = useState<number | null>(null);
 
   const router = useRouter();
@@ -87,8 +87,7 @@ const AddTemplate = () => {
     try {
       await fetchData(`/templates/${id}`, { method: 'DELETE' });
       // Optionally refetch templates after deletion
-      await fetchData("/all-templates", { method: "GET" });
-    } catch (error) {
+      await fetchData(`/templates-by-userid/${session?.id}`, { method: "GET" });    } catch (error) {
       console.log('Error deleting template:', error);
     }
   };
@@ -115,7 +114,7 @@ const AddTemplate = () => {
           <HideTemplate isPopupOpen={isPopupOpen} setHide={confirmHide} closePopup={closePopup} />
         )}
         {deletePopupIndex !== null && (
-          <DeleteTemplate loading={loading} setDelete={() => handleDelete(response?.templates[deletePopupIndex]?.id || "")} isPopupOpen={deletePopupIndex !== null} closePopup={closePopup} />
+          <DeleteTemplate loading={loading} setDelete={() => handleDelete(response?.data[deletePopupIndex]?.id || "")} isPopupOpen={deletePopupIndex !== null} closePopup={closePopup} />
         )}
         <div className="container">
 
@@ -156,9 +155,9 @@ const AddTemplate = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                  {response?.templates && response?.templates.length > 0 ? (
+                  {response?.data && response?.data?.length > 0 ? (
                     <>
-                      {response?.templates.map((template: any, index: number) => (
+                      {response?.data?.map((template: any, index: number) => (
                         <tr key={index} className="hover:bg-gray-50">
                           <td className='pl-6' >{index + 1}</td>
                           <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize max-w-[200px] truncate  font-semibold">
