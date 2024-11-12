@@ -16,17 +16,20 @@ import useFetch from "@/hooks/useFetch";
  * @returns {JSX.Element} The rendered NavTabs component.
  */
 
+
+
+
 const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
   const [activetab, setActivetab] = useState(0);
   const searchParams = useSearchParams();
-  const [subCategory, setSubCategory] = useState<subCat>()
+  const [subCategory, setSubCategory] = useState<any>(subCat && subCat?.[0])
   const { data, loading, error, fetchData } = useFetch<TemplateResponse>()
 
   /**
    * useEffect Hook: This effect runs when either `searchParams` or `subCat` changes.
    */
   useEffect(() => {
-  
+
     const subCatId = searchParams.get('subcat');
 
     const index = subCat?.findIndex(item => item.id === subCatId) || 0;
@@ -44,20 +47,17 @@ const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
     fetchData(`/templates?templateTypeId=${item?.templateTypeId}&subCatId=${item?.id}&page=1&limit=4`, { next: { revalidate: 0 } })
   }
 
-  useEffect(()=>{
-    console.log("this");
-    
+  useEffect(() => {
     fetchData(`/templates?templateTypeId=${subCat?.[0]?.templateTypeId}&subCatId=${subCat?.[0]?.id}&page=1&limit=4`, { next: { revalidate: 0 } })
-
-  },[])
+  }, [])
 
   return (
     <>
       {/* Tabs Section */}
       <div className="bg-white lg:shadow-lg overflow-scroll hiddenscroll  w-full">
         <div className=" lg:px-10 lg:pt-10 lg:pb-[30px] flex gap-x-[5px] lg:gap-x-5 items-center overflow-scroll hiddenscroll">
-          {subCat &&subCat?.length>0 && subCat?.map((item, index) => (
-            <Fragment key={index}>
+          {subCat && subCat?.length > 0 && subCat?.map((item, index) => (
+            <Fragment key={Date.now() + index + "subCatitem"}>
               {/* <Link href={`/product?template-type=${item?.templateTypeId}&&subcat=${item?.id}`}> */}
               <Button
                 className={cn`py-[6px] px-[10px] lg:py-2 lg:px-5 text-sm lg:text-base text-nowrap ${index === activetab
@@ -102,32 +102,28 @@ const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
           </div>
 
           {/* NavCards Section */}
-
-          <div className="flex my-5 w-full gap-x-[10px] lg:gap-x-5 overflow-scroll hiddenscroll ">
-            {data && data.data?.length > 0 ? (
-              data.data.map((item: TechTemplate, idx: number) => (
-                <>
-                  {        console.log(item,"===item")
-                  }           
-                <Fragment key={idx}>
-                  <NavCard
-                    id={item?.id}
-                    image={item?.sliderImages[0]?.imageUrl}
-                    title={item?.title}
-                    data={item}
-                    icon="/icons/figma.svg"
-                    classnamemain="md:w-[248px] w-[148px] "
-                  />
-                </Fragment>
-                </>
-              ))
-            ) : (
-              <div className="w-full text-center lg:py-5 py-2 h-[152px] flex justify-center items-center">
-                <p className="text-subparagraph" >No Template Found.</p>
-              </div>
-            )}
+          <div className="" >
+            <div className="flex my-5   gap-x-[10px] lg:gap-x-5 overflow-scroll hiddenscroll">
+              {data && data.data?.length > 0 ? (
+                data?.data?.map((item: TechTemplate, idx: number) => (
+                  <Fragment key={Date.now() + idx + "idx"}>
+                    <NavCard
+                      id={item?.id}
+                      image={item?.sliderImages[0]?.imageUrl}
+                      title={item?.title}
+                      data={item}
+                      icon="/icons/figma.svg"
+                      classnamemain="md:min-w-[248px] w-[148px] "
+                    />
+                  </Fragment>
+                ))
+              ) : (
+                <div className="w-full text-center lg:py-5 py-2 h-[152px] flex justify-center items-center">
+                  <p className="text-subparagraph" >No Template Found.</p>
+                </div>
+              )}
+            </div>
           </div>
-
         </div>
       </div>
     </>
