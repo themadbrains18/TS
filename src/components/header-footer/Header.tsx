@@ -177,7 +177,7 @@ const Header = () => {
     <>
       {session && session.user && ["ADMIN"].includes((session?.role).toString()) && <>
         <div className="">
-          <Link href="/dashboard" className="fixed top-[15%] right-0 z-50 bg-primary-700 h-11 flex items-center pl-4 pr-2 rounded-s-3xl text-white gap-1.5">
+          <Link href="/dashboard" className="fixed  top-[68px] lg:top-[130px] right-0 z-30 bg-primary-700 h-11 flex items-center pl-4 pr-2 rounded-s-3xl text-white gap-1.5">
             <span className="tetx-sm">Go to Dashboard</span>
           </Link>
         </div>
@@ -241,8 +241,8 @@ const Header = () => {
                         alt="diamond"
                       />
                     </div>
-                    <div ref={profileRef} className={`absolute ${profile ? "opacity-100 visible" : "invisible opacity-0"}  transition-all  duration-[0.5s] top-[94%]  max-[1678px]:right-0 right-[-73px] mt-2 w-[216px]  bg-white shadow-lg rounded-lg`}>
-                      <div className="pt-[6px] mt-[-6px]" >
+                    <div ref={profileRef} className={`absolute ${profile ? "opacity-100 visible" : "invisible opacity-0"}  transition-all  duration-[0.5s] top-[94%]  max-[1678px]:right-0 right-[-73px] mt-2 w-[216px] z-60 bg-white shadow-lg rounded-lg`}>
+                      <div className="pt-[6px] mt-[-6px]">
                         <div className="py-2.5 ">
                           <h2 className="leading-6 text-[16px] font-semibold text-textheading py-2 pl-[30px] pr-[27px] mb-2.5 max-w-60 truncate">
                             {session?.email}
