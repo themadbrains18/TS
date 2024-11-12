@@ -135,6 +135,11 @@ const SearchComponent: React.FC<navtabprops> = ({ subCat, classname, opensearch,
         handleSearch(searchQuery, selectedCategory);
     }, [searchQuery, selectedCategory]);
 
+console.log(templates,"==templates");
+
+ 
+    
+    
     return (
         <div className={` ${mainclass} flex items-center relative justify-end`}>
             <div className="p-[10px]">

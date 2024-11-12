@@ -334,7 +334,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
         <>
             <section className='pb-10 md:pb-20'>
-                <div className='py-10 border-b border-divider-200 bg-[#ffffff80]'>
+                <div className='py-10 border-b border-divider-200 bg-[#ffffff80]' >
                     <div className="container">
                         <div className='flex justify-between items-center' >
                             <Link className="w-[276px]" href={'/'}>
