@@ -329,10 +329,12 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
     console.log(initialData?.sourceFiles, "==source files");
 
-
     const goback = () => {
         router?.back()
     }
+
+
+
 
 
     return (
@@ -560,13 +562,18 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                             rules={{ required: false }}
                                             render={({ field: { onChange } }) => (
                                                 <FileUpload
+                                                    type={type}
                                                     name='sourceFiles'
                                                     onFileSelect={(file) => { onChange(file) }}
                                                     supportedfiles="zip"
                                                     multiple={false}
                                                     id="1"
                                                     register={register}
-                                                    fileNameUrl={initialData?.sourceFiles ? initialData?.sourceFiles.map((img: any) => img.fileUrl) : []}
+                                                    fileNameUrl={initialData?.sourceFiles ? initialData?.sourceFiles.map((img: any) => ({
+                                                        url: img.fileUrl,
+                                                        id: img.id,
+                                                    }))
+                                                        : []}
                                                 />
                                             )}
                                         />

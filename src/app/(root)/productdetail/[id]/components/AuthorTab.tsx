@@ -58,15 +58,15 @@ const AuthorTab: React.FC<UserDetailProps> = ({ userDetail }) => {
             <p className="pt-[6px] text-sm md:text-base pb-[14px] text-subparagraph font-normal leading-6">
               Id gravida magna sed ultrices facilisi nullam cursus pretium et.
             </p>
-            <div className="pr-[10px] border-r border-divider-100 inline-block">
+            {/* <div className="pr-[10px] border-r border-divider-100 inline-block">
               <p className="font-semibold leading-6 inline-block">4.9</p>
               <Icon className="w-6 h-6 inline-block" name="star" />
-            </div>
+            </div> */}
           </div>
         </div>
-        <Button variant="primary" className="py-2 px-[18px] md:py-3 md:px-[30px] mt-[10px] md:mt-0">
+        {/* <Button variant="primary" className="py-2 px-[18px] md:py-3 md:px-[30px] mt-[10px] md:mt-0">
           view profile
-        </Button>
+        </Button> */}
       </div>
 
       <div className="md:border-y md:border-divider-100 my-5 md:py-10 md:my-10">

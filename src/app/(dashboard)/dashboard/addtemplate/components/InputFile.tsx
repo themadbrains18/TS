@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { UseFormRegister, FieldError } from 'react-hook-form';
 
 interface FileUploadProps {
+  type?: string
   onFileSelect: (files: File[]) => void;
   supportedfiles: string;
   multiple?: boolean;
@@ -15,11 +16,15 @@ interface FileUploadProps {
 }
 
 const FilePreview = ({
+  id,
   previewUrl,
   onRemove,
+  deleteSliderImage
 }: {
+  id: string
   previewUrl: string;
   onRemove: () => void;
+  deleteSliderImage?: any
 }) => {
   return (
     <div className="relative border p-2 mb-2 z-50">
@@ -34,6 +39,7 @@ const FilePreview = ({
         onClick={(e) => {
           e.stopPropagation();
           onRemove();
+          deleteSliderImage(id)
         }}
         className="absolute top-0 right-0 bg-red-500 text-white px-2 py-1"
       >
@@ -64,6 +70,7 @@ const extractFileName = (url: string) => {
 };
 
 const FileUpload: React.FC<FileUploadProps> = ({
+  type,
   onFileSelect,
   supportedfiles,
   multiple = true,
@@ -72,7 +79,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
   register,
   error,
   initialUrls = [], // default to an empty array
-  fileNameUrl=[]
+  fileNameUrl = []
 }) => {
   const [files, setFiles] = useState<File[]>([]);
   const [previewUrls, setPreviewUrls] = useState<string[]>(initialUrls || []);
@@ -156,12 +163,36 @@ const FileUpload: React.FC<FileUploadProps> = ({
     setPreviewUrls(updatedPreviews);
     setFileNames(updatedFileNames);
     onFileSelect(updatedFiles);
+    // if (type === "edit") {
+    //   deleteSliderImage()
+    // }
   };
+
+  const deleteSliderImage = async (id: string) => {
+    try {
+      const response = await fetch(`/api/sliderImage/${id}`, {
+        method: 'DELETE',
+      });
+      if (response.status === 204) {
+        console.log("Image deleted successfully");
+      } else {
+        const errorData = await response.json();
+        console.error("Failed to delete image:", errorData.message);
+      }
+
+    } catch (error) {
+      console.error("An error occurred while deleting the image:", error);
+    }
+
+  }
+
+  console.log(initialUrls, "==initialUrls");
 
   return (
     <div className="flex flex-col items-center">
       <h3 className="text-base text-center capitalize">Upload Source File Here</h3>
       <p className="py-3 text-neutral-500 text-xs">File Supported: {supportedfiles}</p>
+
       <label
         htmlFor={`file-upload${id}`}
         className="bg-primary-100 text-white capitalize font-semibold leading-6 transition-all duration-300 hover:bg-[#872fcb] py-2 px-[30px] cursor-pointer mb-3"
@@ -189,6 +220,8 @@ const FileUpload: React.FC<FileUploadProps> = ({
         <div className="grid grid-cols-3 gap-2 mt-3">
           {previewUrls.map((url, index) => (
             <FilePreview
+              id={`file-upload${id}`}
+              deleteSliderImage={deleteSliderImage}
               key={url}
               previewUrl={url}
               onRemove={() => handleRemove(index)}
@@ -204,10 +237,12 @@ const FileUpload: React.FC<FileUploadProps> = ({
               key={fileName}
               fileName={fileName}
               onRemove={() => handleRemove(index)}
+
             />
           ))}
         </div>
       )}
+
     </div>
   );
 };

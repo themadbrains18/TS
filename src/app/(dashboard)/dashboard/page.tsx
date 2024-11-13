@@ -5,7 +5,7 @@ import AddTemplate from './components/AddTemplate'
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/libs/auth';
 import { redirect } from 'next/navigation';
-const page = async() => {
+const page = async () => {
     const session = await getServerSession(authOptions);
 
     /**
@@ -14,7 +14,7 @@ const page = async() => {
     if (!session) {
         redirect('/login');
     }
-    if(session?.role!=="ADMIN"){
+    if (session?.role !== "ADMIN") {
         redirect('/')
     }
 
@@ -31,7 +31,7 @@ const page = async() => {
                     </Button>
                 </div>
             </div> */}
-            <AddTemplate/>
+            <AddTemplate />
         </>
     )
 }

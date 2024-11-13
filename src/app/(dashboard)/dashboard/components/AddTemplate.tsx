@@ -114,11 +114,9 @@ const AddTemplate = () => {
           <DeleteTemplate loading={loading} setDelete={() => handleDelete(response?.data[deletePopupIndex]?.id || "")} isPopupOpen={deletePopupIndex !== null} closePopup={closePopup} />
         )}
         <div className="container">
-
           <div>
             <div>
               <div className='flex justify-between gap-x-2 items-center pt-5 py-10'>
-
                 <div className=''>  <Link className="w-[276px]" href={'/'}>
                   <Image
                     src={"/icons/Logo.svg"}
@@ -227,7 +225,6 @@ const AddTemplate = () => {
                     // </tr>
                   )}
                 </tbody>
-
               </table>
             </div>
           </div>

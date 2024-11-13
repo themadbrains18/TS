@@ -392,10 +392,10 @@ const Header = () => {
                   }
                 </div>
               </div>
-              <div className="flex justify-center items-center mt-8 gap-2">
+              <div className="flex justify-center items-center mt-8 gap-2 px-5">
                 {!isLoggedIn ? (
                   <>
-                    <Button linkclass="w-full" link="/resister" variant="primary" className=" py-2 px-[18px] w-full flex justify-center">
+                    <Button linkclass="w-full" link="/register" variant="primary" className=" py-2 px-[18px] w-full flex justify-center">
                       sign up
                     </Button>
                     <Button linkclass="w-full" link="/login" variant="primary" className=" py-2 px-[18px] w-full  flex justify-center">
