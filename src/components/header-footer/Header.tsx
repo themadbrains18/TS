@@ -359,7 +359,6 @@ const Header = () => {
                   </div>
                 </div>
                 <SearchComponent
-
                   resinputoff={resinputoff}
                   searchresults="h-screen"
                   mainclass="pt-[30px]"
