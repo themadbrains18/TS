@@ -4,9 +4,7 @@ import React, { Fragment, useRef, useEffect, useState } from "react";
 import NavDropdown from "../NavDropdown";
 import Icon from "../Icon";
 import Button from "../ui/Button";
-import SearchDropdown from "../SearchDropdown";
 import { cn } from "@/libs/utils";
-import Input from "../ui/Input";
 import NavTabs from "../NavTabs";
 import Accordion from "../ui/Accordion";
 import Link from "next/link";
@@ -367,10 +365,10 @@ const Header = () => {
 
             <div className={cn`flex z-[2] flex-col fixed bg-white w-full transition-all duration-[1s] h-screen  top-0 ${sidebar ? "left-0" : "left-[-100%]"}`}>
               <div className="flex items-center justify-between p-[15px]">
-                <Link href={'/'}>
+                <Link onClick={() => { setSidebar(!sidebar) }} href={'/'}>
                   <Image className="cursor-pointer h-9" width={193} height={38} src={'/icons/logo.svg'} alt="logo" />
                 </Link>
-                <div onClick={() => { setSidebar(!sidebar) }}>
+                <div onClick={() => { setSidebar(!sidebar) }} >
                   <Icon className="fill-primary-100" name="crossicon" />
                 </div>
               </div>
@@ -385,7 +383,7 @@ const Header = () => {
                           title={`${item?.name}`}
                           titleboxclass="border-b"
                         >
-                          <NavTabs subCat={item?.subCategories} />
+                          <NavTabs setSidebar={() => setSidebar(!sidebar)} subCat={item?.subCategories} />
                         </Accordion>
                       </Fragment>)
                     })
@@ -395,15 +393,15 @@ const Header = () => {
               <div className="flex justify-center items-center mt-8 gap-2 px-5">
                 {!isLoggedIn ? (
                   <>
-                    <Button linkclass="w-full" link="/register" variant="primary" className=" py-2 px-[18px] w-full flex justify-center">
+                    <Button onClick={() => { setSidebar(!sidebar) }} linkclass="w-full" link="/register" variant="primary" className=" py-2 px-[18px] w-full flex justify-center">
                       sign up
                     </Button>
-                    <Button linkclass="w-full" link="/login" variant="primary" className=" py-2 px-[18px] w-full  flex justify-center">
+                    <Button onClick={() => { setSidebar(!sidebar) }} linkclass="w-full" link="/login" variant="primary" className=" py-2 px-[18px] w-full  flex justify-center">
                       log in
                     </Button>
                   </>
                 ) : (<>
-                  <Button variant="primary" onClick={signOut} className=" py-2 px-[18px] w-full max-w-[50%] flex justify-center">
+                  <Button   variant="primary" onClick={signOut} className=" py-2 px-[18px] w-full tab:max-w-[50%] max-w-full  flex justify-center">
                     Log out
                   </Button>
                 </>)}

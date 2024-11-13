@@ -32,11 +32,11 @@ const ProductDescription: React.FC<ProductDetailProps> = ({ template }) => {
      * Button data for the tab titles and icons
      */
     const btndata = [
-        { title: "Description", show:true},
-        { title: "Technical Details", show:true },
-        { title: "Credits", show:template?.credits?.length>0 },
-        { title: "What's New", icon: "whatsnew", show:false },
-        { title: "About Author", show:true }
+        { title: "Description", show: true },
+        { title: "Technical Details", show: true },
+        { title: "Credits", show: template?.credits?.length > 0 },
+        { title: "What's New", icon: "whatsnew", show: false },
+        { title: "About Author", show: true }
     ]
 
 
@@ -65,12 +65,12 @@ const ProductDescription: React.FC<ProductDetailProps> = ({ template }) => {
 
     return (
         <>
-            <section className='py-10 lg:py-20 relative z-10'>
+            <section id="description" className='py-10 lg:py-20 relative z-10' >
                 <div className='container'>
                     <div className='flex items-center md:justify-center gap-4 md:gap-x-[30px] max-w-[1560px] overflow-scroll hiddenscroll'>
                         {btndata?.map((item, index) => (
                             <Fragment key={index}>
-                               {item?.show && <button
+                                {item?.show && <button
                                     onClick={() => setActivetab(index)}
                                     className={`text-nowrap flex items-center gap-x-[6px] py-[6px] px-5 leading-l font-semibold text-subparagraph capitalize bg-divider-100 border-b transition-all duration-200 hover:border-primary-100 ${activetab === index ? ' border-primary-100' : ' border-transparent'}`}>
                                     {item.title}

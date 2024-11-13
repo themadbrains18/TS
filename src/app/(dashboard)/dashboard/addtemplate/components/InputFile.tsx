@@ -25,7 +25,9 @@ const FilePreview = ({
   previewUrl: string;
   onRemove: () => void;
   deleteSliderImage?: any
+
 }) => {
+
   return (
     <div className="relative border p-2 mb-2 z-50">
       <Image
@@ -39,12 +41,13 @@ const FilePreview = ({
         onClick={(e) => {
           e.stopPropagation();
           onRemove();
-          deleteSliderImage(id)
+          // deleteSliderImage(id)
         }}
         className="absolute top-0 right-0 bg-red-500 text-white px-2 py-1"
       >
         Remove
       </button>
+
     </div>
   );
 };
@@ -59,7 +62,6 @@ const FileNameDisplay = ({
   return (
     <div className="relative border p-2 mb-2 z-50 mx-auto w-full">
       <p className='text-center'>{fileName}</p>
-
     </div>
   );
 };
@@ -81,14 +83,18 @@ const FileUpload: React.FC<FileUploadProps> = ({
   initialUrls = [], // default to an empty array
   fileNameUrl = []
 }) => {
+
+
+
   const [files, setFiles] = useState<File[]>([]);
-  const [previewUrls, setPreviewUrls] = useState<string[]>(initialUrls || []);
+  const [previewUrls, setPreviewUrls] = useState<string[]>(initialUrls || [{}]);
+
+
+  console.log(previewUrls, "previewUrlspreviewUrls")
   const [fileError, setFileError] = useState<string | null>(null);
   const [fileNames, setFileNames] = useState<string[]>(fileNameUrl.map(url => extractFileName(url)));
 
-
   const supportedFileTypes = supportedfiles.split(',');
-
 
   /*
    * Handles file input changes, including file validation, preview generation, and managing multiple file uploads.
@@ -186,7 +192,6 @@ const FileUpload: React.FC<FileUploadProps> = ({
 
   }
 
-  console.log(initialUrls, "==initialUrls");
 
   return (
     <div className="flex flex-col items-center">
@@ -218,10 +223,12 @@ const FileUpload: React.FC<FileUploadProps> = ({
 
       {previewUrls.length > 0 && (
         <div className="grid grid-cols-3 gap-2 mt-3">
-          {previewUrls.map((url, index) => (
+          {previewUrls?.map((url, index) => (
+
+
             <FilePreview
               id={`file-upload${id}`}
-              deleteSliderImage={deleteSliderImage}
+              deleteSliderImage={deleteSliderImage(id)}
               key={url}
               previewUrl={url}
               onRemove={() => handleRemove(index)}
@@ -232,12 +239,11 @@ const FileUpload: React.FC<FileUploadProps> = ({
 
       {fileNames.length > 0 && (
         <div className="grid grid-cols-3 gap-2 mt-3">
-          {fileNames.map((fileName, index) => (
+          {fileNames?.map((fileName, index) => (
             <FileNameDisplay
               key={fileName}
               fileName={fileName}
               onRemove={() => handleRemove(index)}
-
             />
           ))}
         </div>

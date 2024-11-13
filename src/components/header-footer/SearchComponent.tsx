@@ -136,7 +136,6 @@ const SearchComponent: React.FC<navtabprops> = ({ subCat, classname, opensearch,
         handleSearch(searchQuery, selectedCategory);
     }, [searchQuery, selectedCategory]);
 
-console.log(templates,"==templates");
 
  
     

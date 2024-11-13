@@ -25,10 +25,10 @@ const ProductDetailcheckbox: React.FC<CheckBoxComponentProps> = ({ label, detail
                 </span>
             </div>
             {/* Right side text and icon */}
-            <div className="flex items-center space-x-2 justify-between border-l pl-2">
-                <span className="text-subparagraph font-semibold  text-xs sm:text-[14px] leading-5 text-center max-w-[217px] w-full">
+            <div className="flex items-center space-x-2 justify-end border-l pl-2">
+                {/* <span className="text-subparagraph font-semibold  text-xs sm:text-[14px] leading-5 text-center max-w-[217px] w-full">
                     {detailText}
-                </span>
+                </span> */}
                 <div className='bg-bgcolor flex justify-center w-[30px] h-[30px] '>
                     <Image className={`w-6 h-6 ${isChecked ? 'opacity-1  ' : 'opacity-[0.5]'} duration-[0.5s] object-contain `} src={`${image}`} height={22} width={15} alt={image}
                     />

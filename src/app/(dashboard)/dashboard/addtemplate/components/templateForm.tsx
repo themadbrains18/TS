@@ -569,11 +569,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                     multiple={false}
                                                     id="1"
                                                     register={register}
-                                                    fileNameUrl={initialData?.sourceFiles ? initialData?.sourceFiles.map((img: any) => ({
-                                                        url: img.fileUrl,
-                                                        id: img.id,
-                                                    }))
-                                                        : []}
+                                                    fileNameUrl={initialData?.sourceFiles ? initialData?.sourceFiles.map((img: any) => img.fileUrl) : []}
                                                 />
                                             )}
                                         />
@@ -597,7 +593,11 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                     multiple={true}
                                                     id="2"
                                                     register={register}
-                                                    initialUrls={initialData?.sliderImages ? initialData?.sliderImages.map((img: any) => img.imageUrl) : []} // Pass URLs here
+                                                    initialUrls={initialData?.sliderImages ? initialData?.sliderImages.map((img: any) => ({
+                                                        url: img.fileUrl,
+                                                        id: img.id,
+                                                    }))
+                                                        : []} // Pass URLs here
 
                                                 />
                                             )}

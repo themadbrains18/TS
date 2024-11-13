@@ -66,6 +66,7 @@ export interface navtabprops {
   mainclass?: string; // Main CSS class
   searchresults?: string; // Search result content
   resinputoff?: () => void; // Function to disable input
+  setSidebar?:() => void;
 }
 
 /**
