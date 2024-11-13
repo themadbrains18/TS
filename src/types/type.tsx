@@ -16,7 +16,9 @@ export interface navcardprops {
   imageclass?: string; // Additional CSS classes for the image
   classname?: string; // CSS class for the card container
   classnamemain?: string; // Main CSS class for the card container
-  data?:TechTemplate
+  data?:TechTemplate;
+  themeicon?: string; // Icon for the theme
+
 }
 
 /**

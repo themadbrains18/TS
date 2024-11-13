@@ -347,7 +347,6 @@ const Header = () => {
                     </div>
                   </div>
                 }
-
               </div>
 
               <div className={`w-[100%] duration-[0.5s] fixed top-0 bg-white h-full  px-2 ${searchbar ? "right-0 " : "right-[-100%]"}`} >
@@ -359,7 +358,15 @@ const Header = () => {
                     <Icon className="w-8 h-5 fill-primary-100" name="crossicon" />
                   </div>
                 </div>
-                <SearchComponent resinputoff={resinputoff} searchresults="h-screen" mainclass="pt-[30px]" opensearch={true} classname="w-full max-w-[100%]" subCat={subCatData || undefined} />
+                <SearchComponent
+
+                  resinputoff={resinputoff}
+                  searchresults="h-screen"
+                  mainclass="pt-[30px]"
+                  opensearch={true}
+                  classname="w-full max-w-[100%]"
+                  subCat={subCatData || undefined}
+                />
               </div>
             </div>
 
@@ -401,7 +408,7 @@ const Header = () => {
                     </Button>
                   </>
                 ) : (<>
-                  <Button   variant="primary" onClick={signOut} className=" py-2 px-[18px] w-full tab:max-w-[50%] max-w-full  flex justify-center">
+                  <Button variant="primary" onClick={signOut} className=" py-2 px-[18px] w-full tab:max-w-[50%] max-w-full  flex justify-center">
                     Log out
                   </Button>
                 </>)}

@@ -114,6 +114,7 @@ const NavTabs: React.FC<navtabprops> = ({ subCat, setSidebar }) => {
                       title={item?.title}
                       data={item}
                       icon="/icons/figma.svg"
+                      themeicon={item?.softwareType?.name}
                       classnamemain="md:min-w-[248px] w-[148px] "
                     />
                   </Fragment>

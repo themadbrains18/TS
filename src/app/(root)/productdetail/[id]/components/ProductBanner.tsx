@@ -166,8 +166,9 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                 </div>
                             </div>
                             <div>
-                                <h2 className='pb-2.5 md:pb-5 text-[18px] md:text-[28px] leading-8 font-bold text-[#110833] max-w-[616px] truncate capitalize'>{template?.title} </h2>
-
+                                <h2 className='pb-2.5 md:pb-5 text-[18px] md:text-[28px] leading-8 font-bold text-[#110833] max-w-[616px] line-clamp-2  capitalize'>
+                                    {template?.title}
+                                </h2>
                                 <div
                                     dangerouslySetInnerHTML={{
                                         __html: showFullDescription || !isLongDescription ? template?.description.slice(0, maxLength) : ""

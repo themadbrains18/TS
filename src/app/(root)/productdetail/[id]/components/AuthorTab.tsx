@@ -40,6 +40,7 @@ const AuthorTab: React.FC<UserDetailProps> = ({ userDetail }) => {
   }, []);
 
 
+
   return (
     <div className="mt-10 lg:mt-20">
       <div className="flex justify-between flex-col md:flex-row items-center md:items-end">
@@ -90,6 +91,7 @@ const AuthorTab: React.FC<UserDetailProps> = ({ userDetail }) => {
             {data && data?.data?.length > 0 && data?.data?.map((item) => (
               <Fragment key={item?.id}>
                 <NavCard
+                  themeicon={item?.softwareType?.name}
                   icon={`/icons/figma.svg`}
                   image={item?.sliderImages[0]?.imageUrl}
                   imageclass="max-w-full"

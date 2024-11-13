@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { navcardprops } from "@/types/type";
 import Link from "next/link";
+import Icon from "../Icon";
 
 
 
@@ -27,7 +28,7 @@ const NavCard: React.FC<navcardprops> = ({
   image,
   title,
   data,
-  classname, classnamemain
+  classname, classnamemain, themeicon
 }) => {
   const [imgSrc, setImgSrc] = useState(image ? image : '/images/featureimg.png');
   /**
@@ -66,12 +67,26 @@ const NavCard: React.FC<navcardprops> = ({
             {title}
           </h4>
           <div className="px-1 py-[3.2px] w-6 h-6">
-            <Image
-              width={20}
-              height={20}
-              src={`/icons/figma.svg`}
-              alt="icon"
-            />
+            {
+              themeicon === "Figma" ? <Icon className='max-w-6 w-full h-6' name='figma' /> : ""}
+            {
+              themeicon === "Adobe XD" ? <Icon className='max-w-6 w-full h-6' name='adobexd' /> : ""
+            }
+            {
+              themeicon === "Sketch" ? <Icon className='max-w-6 w-full h-6' name='sketch' /> : ""
+            }
+            {
+              themeicon === "PhotoShop" ? <Icon className='max-w-6 w-full h-6' name='photoshop' /> : ""
+            }
+            {
+              themeicon === "ReactJs" ? <Icon className='max-w-6 w-full h-6' name='reactjs' /> : ""
+            }
+            {
+              themeicon === "Tailwind Css" ? <Icon className='max-w-6 w-full h-6' name='tailwind' /> : ""
+            }
+            {
+              themeicon === "NextJs" ? <Icon className='max-w-6 w-full h-6  fill-black' name="nextjs" /> : ""
+            }
           </div>
         </div>
       </div>
