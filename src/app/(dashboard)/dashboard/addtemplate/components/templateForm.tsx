@@ -278,29 +278,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             }
         ];
         formData.append("credits", JSON.stringify(credits));
-        // Append slider images, merging previous URLs with new files
-        if (initialData?.sliderImages) {
-            initialData.sliderImages.forEach((imgUrl: string) => formData.append("sliderImages", imgUrl));
-        }
-        if (data?.sliderImages) {
-            Array.from(data.sliderImages).forEach((file) => formData.append("sliderImages", file));
-        }
-
-        // Append preview mobile images, merging previous URLs with new files
-        if (initialData?.previewMobileImages) {
-            initialData.previewMobileImages.forEach((imgUrl: string) => formData.append("previewMobileImages", imgUrl));
-        }
-        if (data?.previewMobileImages) {
-            Array.from(data.previewMobileImages).forEach((file) => formData.append("previewMobileImages", file));
-        }
-        // Append preview mobile images, merging previous URLs with new files
-        if (initialData?.previewImages) {
-            initialData.previewImages.forEach((imgUrl: string) => formData.append("previewImages", imgUrl));
-        }
-        if (data?.previewImages) {
-            Array.from(data.previewImages).forEach((file) => formData.append("previewImages", file));
-        }
-
+ 
+    
         const endpoint = type === 'edit' ? `${process.env.NEXT_PUBLIC_APIURL}/templates/${id}` : `${process.env.NEXT_PUBLIC_APIURL}/templates`;
         const method = type === 'edit' ? 'PUT' : 'POST';
 
@@ -325,9 +304,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             console.error("An error occurred during submission:", error);
         });
     };
-    console.log(errors, "==errors");
 
-    console.log(initialData?.sourceFiles, "==source files");
 
     const goback = () => {
         router?.back()
@@ -562,7 +539,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                             rules={{ required: false }}
                                             render={({ field: { onChange } }) => (
                                                 <FileUpload
-                                                    type={type}
+
                                                     name='sourceFiles'
                                                     onFileSelect={(file) => { onChange(file) }}
                                                     supportedfiles="zip"
@@ -587,6 +564,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                             rules={{ required: false }}
                                             render={({ field: { onChange } }) => (
                                                 <FileUpload
+                                                    type={type}
                                                     name='sliderImages'
                                                     onFileSelect={(file) => { onChange(file) }}
                                                     supportedfiles="jpg,png,jpeg"
@@ -594,7 +572,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                     id="2"
                                                     register={register}
                                                     initialUrls={initialData?.sliderImages ? initialData?.sliderImages.map((img: any) => ({
-                                                        url: img.fileUrl,
+                                                        url: img.imageUrl,
                                                         id: img.id,
                                                     }))
                                                         : []} // Pass URLs here
@@ -619,11 +597,14 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                     name='previewImages'
                                                     onFileSelect={(file) => { onChange(file) }}
                                                     register={register}
-
+                                                    type={type}
                                                     supportedfiles="jpg,png,jpeg"
                                                     multiple={true}
                                                     id="3"
-                                                    initialUrls={initialData?.previewImages ? initialData?.previewImages.map((img: any) => img.imageUrl) : []} // Pass URLs here
+                                                    initialUrls={initialData?.previewImages ? initialData?.previewImages.map((img: any) => ({
+                                                        url: img.imageUrl,
+                                                        id: img.id,
+                                                    })) : []} // Pass URLs here
                                                 />
                                             )}
                                         />
@@ -642,13 +623,17 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                             rules={{ required: false }}
                                             render={({ field: { onChange } }) => (
                                                 <FileUpload
+                                                    type={type}
                                                     register={register}
                                                     name='previewMobileImages'
                                                     onFileSelect={(file) => { onChange(file) }}
                                                     supportedfiles="jpg,png,jpeg"
                                                     multiple={true}
                                                     id="4"
-                                                    initialUrls={initialData?.previewMobileImages ? initialData?.previewMobileImages.map((img: any) => img.imageUrl) : []} // Pass URLs here
+                                                    initialUrls={initialData?.previewMobileImages ? initialData?.previewMobileImages.map((img: any) => ({
+                                                        url: img.imageUrl,
+                                                        id: img.id,
+                                                    })) : []} // Pass URLs here
                                                 />
                                             )}
                                         />
