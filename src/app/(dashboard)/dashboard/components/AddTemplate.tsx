@@ -14,7 +14,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 interface Template {
-  data:
+  templates:
   {
     id: string; // Add ID to template
     title: string;
@@ -30,7 +30,7 @@ const AddTemplate = () => {
   const { data: response, loading, fetchData } = useFetch<Template>();
 
   const fetchTemplates = async () => {
-    await fetchData(`/templates-by-userid/${session?.id}`, { method: "GET" });
+    await fetchData(`/all-templates`, { method: "GET" });
   };
   useEffect(() => {
 
@@ -47,7 +47,7 @@ const AddTemplate = () => {
 
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
   const [currentTemplateIndex, setCurrentTemplateIndex] = useState<number | null>(null);
-  const [hideIconStates, setHideIconStates] = useState<boolean[]>(Array(response?.data?.length).fill(false));
+  const [hideIconStates, setHideIconStates] = useState<boolean[]>(Array(response?.templates?.length).fill(false));
   const [deletePopupIndex, setDeletePopupIndex] = useState<number | null>(null);
 
   const router = useRouter();
@@ -81,7 +81,7 @@ const AddTemplate = () => {
     try {
       await fetchData(`/templates/${id}`, { method: 'DELETE' });
       // Optionally refetch templates after deletion
-      await fetchData(`/templates-by-userid/${session?.id}`, { method: "GET" });
+      await fetchData(`/all-templates`, { method: "GET" });
     } catch (error) {
       console.log('Error deleting template:', error);
     }
@@ -111,7 +111,7 @@ const AddTemplate = () => {
           <HideTemplate isPopupOpen={isPopupOpen} setHide={confirmHide} closePopup={closePopup} />
         )}
         {deletePopupIndex !== null && (
-          <DeleteTemplate loading={loading} setDelete={() => handleDelete(response?.data[deletePopupIndex]?.id || "")} isPopupOpen={deletePopupIndex !== null} closePopup={closePopup} />
+          <DeleteTemplate loading={loading} setDelete={() => handleDelete(response?.templates[deletePopupIndex]?.id || "")} isPopupOpen={deletePopupIndex !== null} closePopup={closePopup} />
         )}
         <div className="container">
           <div>
@@ -150,9 +150,9 @@ const AddTemplate = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                  {response?.data && response?.data.length > 0 ? (
+                  {response?.templates && response?.templates.length > 0 ? (
                     <>
-                      {response?.data.map((template: any, index: number) => (
+                      {response?.templates.map((template: any, index: number) => (
                         <tr key={index} className="hover:bg-gray-50">
                           <td className="   px-6 py-5 text-sm  md:text-base text-subparagraph capitalize  md:max-w-full font-semibold">
                             <h2 className='max-w-[300px] truncate'>
@@ -196,7 +196,7 @@ const AddTemplate = () => {
                         </tr>
                       ))}
                     </>
-                  ) : response?.data && response?.data.length === 0 ? (
+                  ) : response?.templates && response?.templates.length === 0 ? (
                     <tr>
                       <td colSpan={5} className="px-6 py-5 text-center text-sm md:text-base text-gray-500">
                         No Templates Found.
