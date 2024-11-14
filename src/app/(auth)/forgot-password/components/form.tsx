@@ -116,7 +116,7 @@ const Form = () => {
                                     <Icon name='iconleft' />
                                     <h2 className="text-[18px] font-bold leading-7 text-primary-900">Back To Log In</h2>
                                 </Link>
-                                <div className="flex flex-col justify-center h-[653px]">
+                                <div className="flex flex-col justify-center">
                                     <form onSubmit={handleSubmit(onSubmit)}>
                                         <div className='md:space-y-[30px] space-y-[15px]'>
                                             {/* Input for Email or Phone */}

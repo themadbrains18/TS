@@ -14,15 +14,12 @@ import { PreviewImage } from '@/types/type';
 
 
 const FullScreen: FC<any> = ({
-    previewImages, previewMobileImages
+    previewImages, previewMobileImages, handleGoBack
 }) => {
     const router = useRouter();
     const swiperRef = useRef<SwiperType | null>(null);
     const [activeIndex, setActiveIndex] = useState(0); // Track the current active slide
 
-    const handleGoBack = () => {
-        router.back();
-    };
 
     return (
         <section className="pt-10 relative h-fit">
@@ -39,7 +36,7 @@ const FullScreen: FC<any> = ({
                     </div>
                 </div>
             </div>
-            <div className="container h-fit">
+            <div className="container h-fit pb-[228px] md:pb-[100px] ">
                 <Swiper
                     modules={[Navigation]}
                     className="mySwiper"
@@ -47,15 +44,15 @@ const FullScreen: FC<any> = ({
                     onBeforeInit={(swiper) => (swiperRef.current = swiper)}
                     autoHeight={true} // Automatically adjusts height based on slide content
                 >
-                    
-                    {previewImages && previewImages?.map((image:PreviewImage, index:number) => (
+
+                    {previewImages && previewImages?.map((image: PreviewImage, index: number) => (
                         <SwiperSlide key={index}>
-                            <div className="flex justify-center">
+                            <div className="flex justify-center h-auto">
                                 <Image
-                                    className="select-none w-full h-auto" // Ensure the image adjusts its height automatically
+                                    className="select-none" // Ensure the image adjusts its height automatically
                                     src={image.imageUrl}
-                                    width={1500}
-                                    height={1111}
+                                    width={1000}
+                                    height={1000}
                                     alt={`Slide image ${index + 1}`}
                                     priority={index === 0} // Optimizes loading for the first image
                                 />
@@ -63,14 +60,14 @@ const FullScreen: FC<any> = ({
                         </SwiperSlide>
                     ))}
 
-                    {previewMobileImages && previewMobileImages?.map((image:PreviewImage, index:number) => (
+                    {previewMobileImages && previewMobileImages?.map((image: PreviewImage, index: number) => (
                         <SwiperSlide key={index}>
-                            <div className="flex justify-center">
+                            <div className="flex justify-center h-auto">
                                 <Image
-                                    className="select-none w-full h-auto" // Ensure the image adjusts its height automatically
+                                    className="select-none" // Ensure the image adjusts its height automatically
                                     src={image.imageUrl}
-                                    width={1500}
-                                    height={1111}
+                                    width={1000}
+                                    height={1000}
                                     alt={`Slide image ${index + 1}`}
                                     priority={index === 0} // Optimizes loading for the first image
                                 />

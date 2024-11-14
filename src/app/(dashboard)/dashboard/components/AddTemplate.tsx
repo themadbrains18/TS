@@ -13,7 +13,7 @@ import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 
- interface Template {
+interface Template {
   data:
   {
     id: string; // Add ID to template
@@ -27,7 +27,7 @@ import Link from 'next/link';
 }
 const AddTemplate = () => {
   const { data: session } = useSession()
-  const { data: response, loading,  fetchData } = useFetch<Template>();
+  const { data: response, loading, fetchData } = useFetch<Template>();
 
   const fetchTemplates = async () => {
     await fetchData(`/templates-by-userid/${session?.id}`, { method: "GET" });
@@ -117,11 +117,9 @@ const AddTemplate = () => {
           <DeleteTemplate loading={loading} setDelete={() => handleDelete(response?.data[deletePopupIndex]?.id || "")} isPopupOpen={deletePopupIndex !== null} closePopup={closePopup} />
         )}
         <div className="container">
-
           <div>
             <div>
               <div className='flex justify-between gap-x-2 items-center pt-5 py-10'>
-
                 <div className=''>  <Link className="w-[276px]" href={'/'}>
                   <Image
                     src={"/icons/Logo.svg"}
@@ -230,7 +228,6 @@ const AddTemplate = () => {
                     // </tr>
                   )}
                 </tbody>
-
               </table>
             </div>
           </div>

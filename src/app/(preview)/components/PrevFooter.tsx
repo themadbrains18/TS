@@ -10,7 +10,7 @@ const PrevFooter = () => {
     const date = new Date()
     return (
         <>
-            <footer className='bg-bgcolor'>
+            <footer className='bg-bgcolor fixed bottom-0 left-0 right-0 z-20 '>
                 <div className='container'>
                     <div className='flex flex-col md:flex-row items-center justify-center md:justify-between item-center py-5 gap-y-5 md:gap-0 md:pt-[30px] md:pb-10'>
                         <div>

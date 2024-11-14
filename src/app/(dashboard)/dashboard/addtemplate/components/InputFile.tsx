@@ -1,8 +1,10 @@
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { UseFormRegister, FieldError } from 'react-hook-form';
 
 interface FileUploadProps {
+  type?: string;
   onFileSelect: (files: File[]) => void;
   supportedfiles: string;
   multiple?: boolean;
@@ -10,9 +12,9 @@ interface FileUploadProps {
   register: UseFormRegister<any>;
   name: string;
   error?: FieldError;
-  initialUrls?: string[]; // New prop for initial images
-  fileNameUrl?: string[]; // New prop for initial images
-  title?: string
+  initialUrls?: { url: string; id: string }[]; // Initial images as URLs
+  fileNameUrl?: string[]; // Initial filenames
+title?: string
 }
 
 const FilePreview = ({
@@ -54,8 +56,16 @@ const FileNameDisplay = ({
 }) => {
   return (
     <div className="relative border p-2 mb-2 z-50 mx-auto w-full">
-      <p className='text-center'>{fileName}</p>
-
+      <p className="text-center">{fileName}</p>
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          onRemove();
+        }}
+        className="absolute top-0 right-0 bg-red-500 text-white px-2 py-1"
+      >
+        Remove
+      </button>
     </div>
   );
 };
@@ -66,6 +76,7 @@ const extractFileName = (url: string) => {
 };
 
 const FileUpload: React.FC<FileUploadProps> = ({
+  type,
   onFileSelect,
   supportedfiles,
   multiple = true,
@@ -73,65 +84,54 @@ const FileUpload: React.FC<FileUploadProps> = ({
   name,
   register,
   error,
-  initialUrls = [], // default to an empty array
+  initialUrls = [],
   fileNameUrl = [],
   title
 }) => {
+  const {data:session} = useSession()
   const [files, setFiles] = useState<File[]>([]);
-  const [previewUrls, setPreviewUrls] = useState<string[]>(initialUrls || []);
+  const [previewUrls, setPreviewUrls] = useState<{ url: string; id: string }[]>(
+    initialUrls
+  );
   const [fileError, setFileError] = useState<string | null>(null);
-  const [fileNames, setFileNames] = useState<string[]>(fileNameUrl.map(url => extractFileName(url)));
-
+  const [fileNames, setFileNames] = useState<string[]>(
+    fileNameUrl.map((url) => extractFileName(url))
+  );
 
   const supportedFileTypes = supportedfiles.split(',');
 
-
-  /*
-   * Handles file input changes, including file validation, preview generation, and managing multiple file uploads.
-   * 
-   * This function is triggered when the user selects files through an input element and performs the following actions:
-   * 
-   * @param event - The change event that contains the selected files in `event.target.files`.
-   * 
-  */
-
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newFiles = event.target.files ? Array.from(event.target.files) : null;
+    const newFiles = event.target.files ? Array.from(event.target.files) : [];
 
-    if (newFiles && newFiles.length > 0) {
+    if (newFiles.length > 0) {
       const validFiles: File[] = [];
-      const previewList: string[] = [];
-      const fileNameList: string[] = [];
+      const newPreviewUrls: { url: string; id: string }[] = [];
+      const newFileNames: string[] = [];
 
       for (const file of newFiles) {
         const fileExtension = file.name.split('.').pop()?.toLowerCase();
-
         if (fileExtension && supportedFileTypes.includes(fileExtension)) {
           validFiles.push(file);
-
-          // If the file is a zip file, store the file name only
           if (fileExtension === 'zip') {
-            fileNameList.push(file.name);
+            newFileNames.push(file.name);
           } else {
             const preview = URL.createObjectURL(file);
-            previewList.push(preview);
+            newPreviewUrls.push({ url: preview, id: '' });
           }
         } else {
-          setFileError(
-            `Unsupported file type. Please upload one of the following: ${supportedfiles}`
-          );
+          setFileError(`Unsupported file type. Supported types: ${supportedfiles}`);
           return;
         }
       }
 
       if (multiple) {
         setFiles((prev) => [...prev, ...validFiles]);
-        setPreviewUrls((prev) => [...prev, ...previewList]);
-        setFileNames((prev) => [...prev, ...fileNameList]);
+        setPreviewUrls((prev) => [...prev, ...newPreviewUrls]);
+        setFileNames((prev) => [...prev, ...newFileNames]);
       } else {
         setFiles(validFiles);
-        setPreviewUrls(previewList);
-        setFileNames(fileNameList);
+        setPreviewUrls(newPreviewUrls);
+        setFileNames(newFileNames);
       }
 
       setFileError(null);
@@ -139,18 +139,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
     }
   };
 
-
-
-  /*
-   * Handles the removal of a file from the list of selected files.
-   *
-   * This function is triggered when a user removes a file from the list. It performs the following actions:
-   *
-   * @param index - The index of the file to be removed from the lists of files, previews, and file names.
-   *
-   */
-
-  const handleRemove = (index: number) => {
+  const handleRemove = (index: number, id?: string,name?:string) => {
     const updatedFiles = files.filter((_, i) => i !== index);
     const updatedPreviews = previewUrls.filter((_, i) => i !== index);
     const updatedFileNames = fileNames.filter((_, i) => i !== index);
@@ -159,12 +148,39 @@ const FileUpload: React.FC<FileUploadProps> = ({
     setPreviewUrls(updatedPreviews);
     setFileNames(updatedFileNames);
     onFileSelect(updatedFiles);
+
+    console.log("hereere", type,id,name);
+    
+    if (type === 'edit' && id && name) {
+      deleteSliderImage(id, name);
+    }
+  };
+
+  const deleteSliderImage = async (id: string,name:string) => {
+    try {
+      console.log(name,"==name");
+      
+      const response = await fetch(`${process?.env?.NEXT_PUBLIC_APIURL}/${name}/${id}`, {
+        method: 'DELETE',
+        headers:{
+        'Authorization': `Bearer ${session?.token}`,
+        }
+      });
+      if (response.ok) {
+        console.log('Image deleted successfully');
+      } else {
+        console.error('Failed to delete image');
+      }
+    } catch (error) {
+      console.error('Error deleting image:', error);
+    }
   };
 
   return (
     <div className="flex flex-col items-center">
       <h3 className="text-base text-center capitalize">{title}</h3>
       <p className="py-3 text-neutral-500 text-xs">File Supported: {supportedfiles}</p>
+
       <label
         htmlFor={`file-upload${id}`}
         className="bg-primary-100 text-white capitalize font-semibold leading-6 transition-all duration-300 hover:bg-[#872fcb] py-2 px-[30px] cursor-pointer mb-3"
@@ -183,18 +199,16 @@ const FileUpload: React.FC<FileUploadProps> = ({
       />
 
       {(fileError || error) && (
-        <p className="text-red-500 text-xs mt-2">
-          {fileError || error?.message || 'File is required'}
-        </p>
+        <p className="text-red-500 text-xs mt-2">{fileError || error?.message || 'File is required'}</p>
       )}
 
       {previewUrls.length > 0 && (
         <div className="grid grid-cols-3 gap-2 mt-3">
-          {previewUrls.map((url, index) => (
+          {previewUrls.map((item, index) => (
             <FilePreview
-              key={url}
-              previewUrl={url}
-              onRemove={() => handleRemove(index)}
+              key={item?.id || index}
+              previewUrl={item.url}
+              onRemove={() => handleRemove(index, item.id,name)}
             />
           ))}
         </div>

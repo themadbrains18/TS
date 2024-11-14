@@ -91,8 +91,8 @@ const icons = {
   nextjs: Nextjs,
   tailwind: Tailwind,
   productfilterclose: Productfilterclose,
-  loadingicon:LoadingIcon,
-  purpleloader:PurpleLoader
+  loadingicon: LoadingIcon,
+  purpleloader: PurpleLoader
 };
 
 export type IconName = keyof typeof icons;

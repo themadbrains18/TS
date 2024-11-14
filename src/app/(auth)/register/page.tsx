@@ -106,8 +106,8 @@ const Page = () => {
                         {/* Right Section with Form */}
                         <div className="md:pt-20 pt-10 pb-10 px-4 w-full bg-[#FDFCFF]">
                             <div className="max-w-[599px] m-auto">
-                                <h2 className="text-[22px] tab:text-[36px] font-bold leading-[44px] tab:pb-[30px] md:pb-[60px]">Register Here!</h2>
-                                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-center h-[759px]">
+                                <h2 className="text-[22px] tab:text-[36px] font-bold leading-[44px] tab:pb-[30px] pb-[30px] md:pb-[60px] ">Register Here!</h2>
+                                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-start md:justify-center">
                                     {/* Name Input */}
                                     <div className="md:space-y-[30px] space-y-[15px]">
                                         <Controller

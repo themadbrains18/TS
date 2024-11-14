@@ -14,8 +14,8 @@ const BreadCrumbs = () => {
             <Link href="/productdetail"> Product Details</Link>
           </h2>
           <div className='relative group flex gap-[6px] items-center cursor-pointer'>
-            <p className='text-sm   :text-subparagraph leading-5'>4.9</p>
-            <Icon className='inline-block w-6 h-6' name='star' />
+            {/* <p className='text-sm   :text-subparagraph leading-5'>4.9</p> */}
+            {/* <Icon className='inline-block w-6 h-6' name='star' /> */}
 
             {/* The button and ratingbottom icon */}
             <div className='absolute z-[30] duration-500 transition-all opacity-0 invisible group-hover:visible group-hover:opacity-100 max-[1700px]:right-0 min-[1700px]:left-[-46px]  group-hover:translate-y-[-40px] translate-y-[20px]'>
