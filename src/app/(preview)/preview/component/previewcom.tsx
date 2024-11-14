@@ -34,15 +34,19 @@ const Previewcom: FC<PreviewImagesProps> = ({ previewImages = [], previewMobileI
     }, [activeButton, previewImages, previewMobileImages]);
 
 
+    const handleGoBack = () => {
+        setShowFullScreen(false)
+    }
+
     return (
         <>
             {showFullScreen ? (
-                <FullScreen previewImages={previewImages} previewMobileImages={previewMobileImages} />
+                <FullScreen handleGoBack={handleGoBack} previewImages={previewImages} previewMobileImages={previewMobileImages} />
             ) : (
-                <section className="pt-10 md:pt-20 bg-bgcolor h-screen">
+                <section className="pt-10 md:pt-20 bg-bgcolor">
                     <div className="container">
                         <div className="flex items-center gap-x-5">
-                            {views.map((item, index) => (
+                            {views?.map((item, index) => (
                                 <Fragment key={index}>
                                     <Button
                                         onClick={() => {

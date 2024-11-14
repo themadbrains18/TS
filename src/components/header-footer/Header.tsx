@@ -4,9 +4,7 @@ import React, { Fragment, useRef, useEffect, useState } from "react";
 import NavDropdown from "../NavDropdown";
 import Icon from "../Icon";
 import Button from "../ui/Button";
-import SearchDropdown from "../SearchDropdown";
 import { cn } from "@/libs/utils";
-import Input from "../ui/Input";
 import NavTabs from "../NavTabs";
 import Accordion from "../ui/Accordion";
 import Link from "next/link";
@@ -177,7 +175,7 @@ const Header = () => {
     <>
       {session && session.user && ["ADMIN"].includes((session?.role).toString()) && <>
         <div className="">
-          <Link href="/dashboard" className="fixed top-[15%] right-0 z-50 bg-primary-700 h-11 flex items-center pl-4 pr-2 rounded-s-3xl text-white gap-1.5">
+          <Link href="/dashboard" className="fixed  top-[68px] lg:top-[130px] right-0 z-30 bg-primary-700 h-11 flex items-center pl-4 pr-2 rounded-s-3xl text-white gap-1.5">
             <span className="tetx-sm">Go to Dashboard</span>
           </Link>
         </div>
@@ -241,8 +239,8 @@ const Header = () => {
                         alt="diamond"
                       />
                     </div>
-                    <div ref={profileRef} className={`absolute ${profile ? "opacity-100 visible" : "invisible opacity-0"}  transition-all  duration-[0.5s] top-[94%]  max-[1678px]:right-0 right-[-73px] mt-2 w-[216px]  bg-white shadow-lg rounded-lg`}>
-                      <div className="pt-[6px] mt-[-6px]" >
+                    <div ref={profileRef} className={`absolute ${profile ? "opacity-100 visible" : "invisible opacity-0"}  transition-all  duration-[0.5s] top-[94%]  max-[1678px]:right-0 right-[-73px] mt-2 w-[216px] z-60 bg-white shadow-lg rounded-lg`}>
+                      <div className="pt-[6px] mt-[-6px]">
                         <div className="py-2.5 ">
                           <h2 className="leading-6 text-[16px] font-semibold text-textheading py-2 pl-[30px] pr-[27px] mb-2.5 max-w-60 truncate">
                             {session?.email}
@@ -350,7 +348,6 @@ const Header = () => {
                     </div>
                   </div>
                 }
-
               </div>
 
               <div className={`w-[100%] duration-[0.5s] fixed top-0 bg-white h-full  px-2 ${searchbar ? "right-0 " : "right-[-100%]"}`} >
@@ -362,16 +359,23 @@ const Header = () => {
                     <Icon className="w-8 h-5 fill-primary-100" name="crossicon" />
                   </div>
                 </div>
-                <SearchComponent resinputoff={resinputoff} searchresults="h-screen" mainclass="pt-[30px]" opensearch={true} classname="w-full max-w-[100%]" subCat={subCatData || undefined} />
+                <SearchComponent
+                  resinputoff={resinputoff}
+                  searchresults="h-screen"
+                  mainclass="pt-[30px]"
+                  opensearch={true}
+                  classname="w-full max-w-[100%]"
+                  subCat={subCatData || undefined}
+                />
               </div>
             </div>
 
             <div className={cn`flex z-[2] flex-col fixed bg-white w-full transition-all duration-[1s] h-screen  top-0 ${sidebar ? "left-0" : "left-[-100%]"}`}>
               <div className="flex items-center justify-between p-[15px]">
-                <Link href={'/'}>
-                  <Image className="cursor-pointer h-9" width={193} height={38} src={'/icons/Logo.svg'} alt="logo" />
+                <Link onClick={() => { setSidebar(!sidebar) }} href={'/'}>
+                  <Image className="cursor-pointer h-9" width={193} height={38} src={'/icons/logo.svg'} alt="logo" />
                 </Link>
-                <div onClick={() => { setSidebar(!sidebar) }}>
+                <div onClick={() => { setSidebar(!sidebar) }} >
                   <Icon className="fill-primary-100" name="crossicon" />
                 </div>
               </div>
@@ -386,25 +390,25 @@ const Header = () => {
                           title={`${item?.name}`}
                           titleboxclass="border-b"
                         >
-                          <NavTabs subCat={item?.subCategories} />
+                          <NavTabs setSidebar={() => setSidebar(!sidebar)} subCat={item?.subCategories} />
                         </Accordion>
                       </Fragment>)
                     })
                   }
                 </div>
               </div>
-              <div className="flex justify-center items-center mt-8 gap-2">
+              <div className="flex justify-center items-center mt-8 gap-2 px-5">
                 {!isLoggedIn ? (
                   <>
-                    <Button linkclass="w-full" link="/resister" variant="primary" className=" py-2 px-[18px] w-full flex justify-center">
+                    <Button onClick={() => { setSidebar(!sidebar) }} linkclass="w-full" link="/register" variant="primary" className=" py-2 px-[18px] w-full flex justify-center">
                       sign up
                     </Button>
-                    <Button linkclass="w-full" link="/login" variant="primary" className=" py-2 px-[18px] w-full  flex justify-center">
+                    <Button onClick={() => { setSidebar(!sidebar) }} linkclass="w-full" link="/login" variant="primary" className=" py-2 px-[18px] w-full  flex justify-center">
                       log in
                     </Button>
                   </>
                 ) : (<>
-                  <Button variant="primary" onClick={signOut} className=" py-2 px-[18px] w-full max-w-[50%] flex justify-center">
+                  <Button variant="primary" onClick={signOut} className=" py-2 px-[18px] w-full tab:max-w-[50%] max-w-full  flex justify-center">
                     Log out
                   </Button>
                 </>)}

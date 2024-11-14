@@ -113,7 +113,7 @@ const LoginForm = () => {
                         <div className="md:pt-20 pt-10 pb-10 px-4 w-full bg-[#FDFCFF]">
                             <div className="max-w-[599px] m-auto flex flex-col">
                                 <h2 className="text-[22px] tab:text-[36px] font-bold leading-[44px] pb-[30px] md:pb-[60px]">Hi, Welcome Back!</h2>
-                                <div className="flex flex-col justify-center h-[759px]">
+                                <div className="flex flex-col justify-start md:justify-center ">
                                     {/* Login Form */}
                                     <form onSubmit={handleSubmit(onSubmit)}>
                                         <div className="md:space-y-[30px] space-y-[15px]">

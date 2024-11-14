@@ -107,15 +107,15 @@ import Link from 'next/link';
 interface Template {
     templates:
     {
-      id: string; // Add ID to template
-      title: string;
-      templateType: string;
-      version: string;
-      price: number;
-      deleted: boolean
+        id: string; // Add ID to template
+        title: string;
+        templateType: string;
+        version: string;
+        price: number;
+        deleted: boolean
     }[]
-  
-  }
+
+}
 
 const SearchComponent: React.FC<navtabprops> = ({ subCat, classname, opensearch, openinput, mainclass, searchresults, resinputoff }) => {
     const [selectedCategory, setSelectedCategory] = useState('');
@@ -134,6 +134,10 @@ const SearchComponent: React.FC<navtabprops> = ({ subCat, classname, opensearch,
         handleSearch(searchQuery, selectedCategory);
     }, [searchQuery, selectedCategory]);
 
+
+
+
+
     return (
         <div className={` ${mainclass} flex items-center relative justify-end`}>
             <div className="p-[10px]">
@@ -150,7 +154,6 @@ const SearchComponent: React.FC<navtabprops> = ({ subCat, classname, opensearch,
                         onSelect={(id) => setSelectedCategory(id)}
                     />
                 </div>
-
                 <input
                     type="text"
                     value={searchQuery}
@@ -176,9 +179,9 @@ const SearchComponent: React.FC<navtabprops> = ({ subCat, classname, opensearch,
 
                 {/* Display the templates */}
                 {templates?.templates?.map((template) => (
-                    <Link href={`/productdetail/${template?.id}`} key={Date.now() + template?.id}>
-                        <div className=" cursor-pointer border-b w-full last:border-b-0">
-                            <p className="text-subparagraph text-start leading-6 py-2 px-[30px] capitalize cursor-pointer text-nowrap hover:bg-primary-200 border-l-[2px] hover:border-primary-100 text-sm font-medium truncate ">
+                    <Link href={`/productdetail/${template?.id}`} key={template?.id}>
+                        <div onClick={resinputoff} className=" cursor-pointer border-b w-full last:border-b-0">
+                            <p className="text-subparagraph text-start leading-6 py-2 px-[30px] capitalize cursor-pointer line-clamp-1 text-nowrap hover:bg-primary-200 border-l-[2px] hover:border-primary-100 text-sm font-medium truncate ">
                                 {template?.title}
                             </p>
                         </div>

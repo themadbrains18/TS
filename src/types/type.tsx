@@ -16,7 +16,9 @@ export interface navcardprops {
   imageclass?: string; // Additional CSS classes for the image
   classname?: string; // CSS class for the card container
   classnamemain?: string; // Main CSS class for the card container
-  data?:TechTemplate
+  data?:TechTemplate;
+  themeicon?: string; // Icon for the theme
+
 }
 
 /**
@@ -66,6 +68,7 @@ export interface navtabprops {
   mainclass?: string; // Main CSS class
   searchresults?: string; // Search result content
   resinputoff?: () => void; // Function to disable input
+  setSidebar?:() => void;
 }
 
 /**

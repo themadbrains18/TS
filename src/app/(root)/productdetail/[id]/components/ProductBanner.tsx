@@ -24,13 +24,11 @@ import { useRouter } from 'next/navigation';
 const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
 
 
-    const [showFullDescription, setShowFullDescription] = useState(false);
-    // const [showPreviews, setShowPreviews] = useState<boolean>(false)
+    const [showFullDescription, setShowFullDescription] = useState(true);
+    const [showPreviews, setShowPreviews] = useState<boolean>(false)
     const { data: session, status } = useSession();
 
-    const toggleDescription = () => {
-        setShowFullDescription(!showFullDescription);
-    };
+
 
     const maxLength = 300;
     const description = template?.description || '';
@@ -170,21 +168,18 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                 </div>
                             </div>
                             <div>
-                                <h2 className='pb-2.5 md:pb-5 text-[18px] md:text-[28px] leading-8 font-bold text-[#110833] max-w-[616px] truncate capitalize'>{template?.title} </h2>
+                                <h2 className='pb-2.5 md:pb-5 text-[18px] md:text-[28px] leading-8 font-bold text-[#110833] max-w-[616px] line-clamp-2  capitalize'>
+                                    {template?.title}
+                                </h2>
                                 <div
                                     dangerouslySetInnerHTML={{
-                                        __html: showFullDescription || !isLongDescription
-                                            ? template?.description
-                                            : template?.description.slice(0, maxLength)
+                                        __html: showFullDescription || !isLongDescription ? template?.description.slice(0, maxLength) : ""
                                     }}
                                     className=' text-[14px] md:text-[16px] font-normal leading-6 text-subparagraph'
                                 />
-                                {isLongDescription && (
-                                    <button onClick={toggleDescription} className=" text-[14px] font-normal leading-5 text-primary-100">
-                                        {showFullDescription ? 'Read Less' : 'Read More'}
-                                    </button>
-                                )}
-
+                                <Link href="#description" className=" text-[14px] font-normal leading-5 text-primary-100">
+                                    Read More
+                                </Link>
                                 <div className=' py-5 md:py-10 flex gap-2.5 md:gap-[18px] flex-col' >
                                     {matchedSoftware && (
                                         <ProductDetailcheckbox

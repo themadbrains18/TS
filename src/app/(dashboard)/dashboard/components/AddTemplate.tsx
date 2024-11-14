@@ -26,10 +26,7 @@ interface Template {
 
 }
 const AddTemplate = () => {
-
-
   const { data: session } = useSession()
-
   const { data: response, loading, fetchData } = useFetch<Template>();
 
   const fetchTemplates = async () => {
@@ -109,6 +106,8 @@ const AddTemplate = () => {
     await fetchData(`/templates/search?query=${value}`)
   }
 
+
+
   return (
     <>
       <section className="py-5">
@@ -119,11 +118,9 @@ const AddTemplate = () => {
           <DeleteTemplate loading={loading} setDelete={() => handleDelete(response?.data[deletePopupIndex]?.id || "")} isPopupOpen={deletePopupIndex !== null} closePopup={closePopup} />
         )}
         <div className="container">
-
           <div>
             <div>
               <div className='flex justify-between gap-x-2 items-center pt-5 py-10'>
-
                 <div className=''>  <Link className="w-[276px]" href={'/'}>
                   <Image
                     src={"/icons/Logo.svg"}
@@ -157,55 +154,79 @@ const AddTemplate = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                  {response?.data && response?.data?.length > 0 ? (
+                  {response?.data && response?.data.length > 0 ? (
                     <>
-                      {response?.data?.map((template: any, index: number) => (
+                      {response?.data.map((template: any, index: number) => (
                         <tr key={index} className="hover:bg-gray-50">
-                          <td className='pl-6' >{index + 1}</td>
-                          <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize max-w-[200px] truncate  font-semibold">
-                            {template?.title}
+                          <td className="   px-6 py-5 text-sm  md:text-base text-subparagraph capitalize  md:max-w-full font-semibold">
+                            <h2 className='max-w-[300px] truncate'>
+                              {template.title}
+                            </h2>
                           </td>
                           <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">
-                            {template?.templateType?.name}
+                            {template.templateType?.name}
                           </td>
                           <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">
-                            {template?.version}
+                            {template.version}
                           </td>
                           <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">
-                            {template?.price}
+                            {template.price}
                           </td>
                           <td className="px-6 py-5 text-sm md:text-base text-subparagraph flex gap-x-2 flex-nowrap">
                             {hideIconStates[index] ? (
-                              <Icon onClick={() => openPopup(index)} className="w-6 h-6 fill-subheading cursor-pointer" name="hideicon" />
+                              <Icon
+                                onClick={() => openPopup(index)}
+                                className="w-6 h-6 fill-subheading cursor-pointer"
+                                name="hideicon"
+                              />
                             ) : (
-                              <Icon onClick={() => openPopup(index)} className="w-6 h-6 fill-subheading cursor-pointer" name="showicon" />
+                              <Icon
+                                onClick={() => openPopup(index)}
+                                className="w-6 h-6 fill-subheading cursor-pointer"
+                                name="showicon"
+                              />
                             )}
-                            <Icon onClick={() => setDeletePopupIndex(index)} className="w-6 h-6 fill-subheading cursor-pointer" name="deleteicon" />
-                            <Icon onClick={() => router.push(`/dashboard/edit/${template?.id}`)} className="w-5 h-6 fill-subheading cursor-pointer" name="editicon" />
+                            <Icon
+                              onClick={() => setDeletePopupIndex(index)}
+                              className="w-6 h-6 fill-subheading cursor-pointer"
+                              name="deleteicon"
+                            />
+                            <Icon
+                              onClick={() => router.push(`/dashboard/edit/${template.id}`)}
+                              className="w-5 h-6 fill-subheading cursor-pointer"
+                              name="editicon"
+                            />
                           </td>
                         </tr>
                       ))}
                     </>
-                  ) : (
-                    <tr className="hover:bg-gray-50 animate-pulse">
-                      <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize max-w-[200px] truncate md:max-w-full font-semibold">
-                        <div className="h-4 bg-gray-200 rounded w-full"></div>
-                      </td>
-                      <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">
-                        <div className="h-4 bg-gray-200 rounded w-full"></div>
-                      </td>
-                      <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">
-                        <div className="h-4 bg-gray-200 rounded w-full"></div>
-                      </td>
-                      <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">
-                        <div className="h-4 bg-gray-200 rounded w-full"></div>
-                      </td>
-                      <td className="px-6 py-5 text-sm md:text-base text-subparagraph flex gap-x-2 flex-nowrap">
-                        <div className="w-6 h-6 bg-gray-200 rounded mr-2"></div>
-                        <div className="w-6 h-6 bg-gray-200 rounded mr-2"></div>
-                        <div className="w-6 h-6 bg-gray-200 rounded mr-2"></div>
+                  ) : response?.data && response?.data.length === 0 ? (
+                    <tr>
+                      <td colSpan={5} className="px-6 py-5 text-center text-sm md:text-base text-gray-500">
+                        No Templates Found.
                       </td>
                     </tr>
+                  ) : (
+                    <></>
+                    // <tr className="hover:bg-gray-50 animate-pulse">
+                    //   <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize max-w-[200px] truncate md:max-w-full font-semibold">
+                    //     <div className="h-4 bg-gray-200 rounded w-full"></div>
+                    //   </td>
+                    //   <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">
+                    //     <div className="h-4 bg-gray-200 rounded w-full"></div>
+                    //   </td>
+                    //   <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">
+                    //     <div className="h-4 bg-gray-200 rounded w-full"></div>
+                    //   </td>
+                    //   <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">
+                    //     <div className="h-4 bg-gray-200 rounded w-full"></div>
+                    //   </td>
+                    //   <td className="px-6 py-5 text-sm md:text-base text-subparagraph flex gap-x-2 flex-nowrap">
+                    //     <div className="w-6 h-6 bg-gray-200 rounded mr-2"></div>
+                    //     <div className="w-6 h-6 bg-gray-200 rounded mr-2"></div>
+                    //     <div className="w-6 h-6 bg-gray-200 rounded mr-2"></div>
+                    //   </td>
+                    // </tr>
                   )}
                 </tbody>
               </table>

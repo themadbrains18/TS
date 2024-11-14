@@ -19,10 +19,10 @@ import useFetch from "@/hooks/useFetch";
 
 
 
-const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
+const NavTabs: React.FC<navtabprops> = ({ subCat, setSidebar }) => {
   const [activetab, setActivetab] = useState(0);
   const searchParams = useSearchParams();
-  const [subCategory, setSubCategory] = useState<subCat>(subCat && subCat?.[0])
+  const [subCategory, setSubCategory] = useState<any>(subCat && subCat?.length > 0 ? subCat?.[0] : {})
   const { data, loading, error, fetchData } = useFetch<TemplateResponse>()
 
   /**
@@ -82,6 +82,7 @@ const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
             </h4>
             {data && data?.data?.length > 0 ? (
               <Button
+                onClick={setSidebar}
                 variant="solidicon"
                 icon={true}
                 iconClass="w-5 h-5 py-1 fill-primary-100"
@@ -103,7 +104,7 @@ const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
 
           {/* NavCards Section */}
           <div className="" >
-            <div className="flex my-5   gap-x-[10px] lg:gap-x-5 overflow-scroll hiddenscroll">
+            <div onClick={setSidebar} className="flex my-5   gap-x-[10px] lg:gap-x-5 overflow-scroll hiddenscroll">
               {data && data.data?.length > 0 ? (
                 data?.data?.map((item: TechTemplate, idx: number) => (
                   <Fragment key={Date.now() + idx + "idx"}>
@@ -113,6 +114,7 @@ const NavTabs: React.FC<navtabprops> = ({ subCat }) => {
                       title={item?.title}
                       data={item}
                       icon="/icons/figma.svg"
+                      themeicon={item?.softwareType?.name}
                       classnamemain="md:min-w-[248px] w-[148px] "
                     />
                   </Fragment>
