@@ -24,6 +24,7 @@ const AuthorTab: React.FC<UserDetailProps> = ({ userDetail }) => {
   /**
    * Fetches the templates associated with a specific user by their user ID.
    */
+
   const getUserTemplates = async () => {
     try {
       await fetchData(`/templates-by-userid/${userDetail?.id}`);
@@ -40,6 +41,7 @@ const AuthorTab: React.FC<UserDetailProps> = ({ userDetail }) => {
   }, []);
 
 
+  console.log(data, "dataa")
 
   return (
     <div className="mt-10 lg:mt-20">
@@ -91,11 +93,12 @@ const AuthorTab: React.FC<UserDetailProps> = ({ userDetail }) => {
             {data && data?.data?.length > 0 && data?.data?.map((item) => (
               <Fragment key={item?.id}>
                 <NavCard
-                  themeicon={item?.softwareType?.name}
-                  icon={`/icons/figma.svg`}
-                  image={item?.sliderImages[0]?.imageUrl}
-                  imageclass="max-w-full"
+                  id={item?.id}
+                  image={item?.sliderImages?.[0]?.imageUrl}
                   title={item?.title}
+                  data={item}
+                  icon="/icons/figma.svg"
+                  themeicon={item?.softwareType?.name}
                   classname='w-[218px]'
                 />
               </Fragment>

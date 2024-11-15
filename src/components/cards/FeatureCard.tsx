@@ -19,13 +19,12 @@ const FeatureCard: React.FC<featurecardprops> = ({ id, buttonprops, category, cu
     };
     return (
         <>
-            <div className='group border border-divider-100'>
-
-                <div className='relative h-[278px]'>
+            <div className='group  border border-divider-100  ' >
+                <div className='relative h-auto'>
                     <Image
                         src={imgSrc}
                         onError={handleImageError}
-                        className='w-full h-[278px] object-cover  '
+                        className='w-full h-auto object-cover  '
                         width={370}
                         height={278}
                         alt='productimg'
@@ -71,15 +70,16 @@ const FeatureCard: React.FC<featurecardprops> = ({ id, buttonprops, category, cu
                     <div className='flex items-center justify-between bg-white p-[10px] md:px-5 md:py-3'>
                         <div className='flex items-center gap-x-2'>
                             <Image src={`${uploadericon ? uploadericon : '/icons/mdb.svg'}`} width={20} height={20} alt='uploadericon' />
-                            <p className='text-subparagraph text-xs leading-5 capitalize text-nowrap text-ellipsis overflow-hidden'>
-                                by <span className='text-xs text-subheading font-semibold leading-5 capitalize'>{uploadername ? uploadername : "The Mad Brains"}</span> <span className='text-xs text-subheading font-semibold leading-5 capitalize'>{category}</span>
+                            <p className='text-subparagraph text-xs leading-5 capitalize text-nowrap text-ellipsis overflow-hidden flex'>
+                                by
+                                <span className='text-xs text-subheading font-semibold leading-5 capitalize pr-[6px]'>{uploadername ? uploadername : "The Mad Brains"}</span>
+                                <Icon className="w-[1px] h-4 " name='linevertical' />
+                                <span className='text-xs text-subheading font-semibold leading-5 capitalize pl-[6px]'>{category}</span>
                             </p>
                         </div>
                         <Button variant='primary' className='py-[5px] px-[10px] text-sm leading-5 font-semibold capitalize'>
                             {/* {isPaid && buttonprops && buttonprops > 0
-                                ? `$${buttonprops}`
-
-                                : "Free"
+                                ? `$${buttonprops}` : "Free"
                             } */}
                             {isPaid && buttonprops && buttonprops > 0
                                 ? (<>

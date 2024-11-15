@@ -21,6 +21,7 @@ const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute, bac
 
 
     const [path, setPath] = useState(false);
+    const [loader, setloader] = useState(false)
     const router = useRouter();
     const { register, handleSubmit, setValue, setError, clearErrors, formState: { errors } } = useForm<FormData>();
     const { data: response, error, loading, fetchData } = useFetch<any>();
@@ -57,6 +58,7 @@ const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute, bac
             formData.otp = data?.otp.join('');
             setFormData(formData);
             if (api === "login") {
+                setloader(true)
                 const result = await signIn('credentials', {
                     redirect: false,
                     email: formData.email,
@@ -65,9 +67,11 @@ const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute, bac
                 });
                 if (result?.ok) {
                     router.push('/');
+                    setloader(false)
                 }
                 else {
                     toast.error("Invalid or expire otp")
+                    setloader(false)
                 }
             } else {
                 await fetchData(`/${api}`, {
@@ -130,10 +134,6 @@ const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute, bac
         }
     }, [response, error]);
 
-
-
-    console.log(errors)
-
     return (
         <>
             {path ? (
@@ -172,6 +172,7 @@ const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute, bac
                                 </button>
 
                                 <div className="flex flex-col justify-center h-[500px] md:h-[653px]">
+
                                     <div>
                                         <h2 className='text-[18px] font-normal leading-7 text-neutral-900 pb-[30px]'>Please enter one-time OTP </h2>
                                         <InputOtp setValue={setValue} register={register} reset={canResend} clearErrors={clearErrors} />
@@ -187,19 +188,40 @@ const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute, bac
                                         <p className='text-sm leading-5 text-neutral-600'>Please check your email, 6-digit confirmation code sent to {formData.email}, please enter the confirmation code to verify it's you.</p>
                                     </div>
 
+
+
+
+
                                     <div className='mb-[60px]'>
 
-                                        <Button
-                                            disabled={loading}
-                                            loadingbtn={loading}
-                                            variant='primary'
-                                            className='w-full items-center justify-center'
-                                            type='submit'
-                                            iconClass='w-7 h-7'>
-                                            {
-                                                loading ? "" : "Verify Now"
-                                            }
-                                        </Button>
+                                        {
+                                            api === "login" ? (
+                                                <Button
+                                                    disabled={loader}
+                                                    loadingbtn={loader}
+                                                    variant='primary'
+                                                    className='w-full items-center justify-center'
+                                                    type='submit'
+                                                    iconClass='w-7 h-7'>
+                                                    {
+                                                        loader ? "" : "Verify Now"
+                                                    }
+                                                </Button>
+                                            ) : (
+                                                <Button
+                                                    disabled={loading}
+                                                    loadingbtn={loading}
+                                                    variant='primary'
+                                                    className='w-full items-center justify-center'
+                                                    type='submit'
+                                                    iconClass='w-7 h-7'>
+                                                    {
+                                                        loading ? "" : "Verify Now"
+                                                    }
+
+                                                </Button>
+                                            )
+                                        }
 
                                     </div>
 

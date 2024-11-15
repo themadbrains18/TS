@@ -80,6 +80,7 @@ const NavTabs: React.FC<navtabprops> = ({ subCat, setSidebar }) => {
             <h4 className="border-l-[1px] pl-[6px] border-subparagraph text-subheading text-lg font-bold leading-7 bg-gradient-to-r from-primary-300 to-primary-200 cursor-pointer">
               Feature Product
             </h4>
+
             {data && data?.data?.length > 0 ? (
               <Button
                 onClick={setSidebar}
@@ -100,17 +101,18 @@ const NavTabs: React.FC<navtabprops> = ({ subCat, setSidebar }) => {
                 view all products
               </Button>
             )}
+            
           </div>
 
           {/* NavCards Section */}
-          <div className="" >
-            <div onClick={setSidebar} className="flex my-5   gap-x-[10px] lg:gap-x-5 overflow-scroll hiddenscroll">
+          <div>
+            <div onClick={setSidebar} className="flex my-5 gap-x-[10px] lg:gap-x-5 overflow-scroll hiddenscroll">
               {data && data.data?.length > 0 ? (
                 data?.data?.map((item: TechTemplate, idx: number) => (
                   <Fragment key={Date.now() + idx + "idx"}>
                     <NavCard
                       id={item?.id}
-                      image={item?.sliderImages[0]?.imageUrl}
+                      image={item?.sliderImages?.[0]?.imageUrl}
                       title={item?.title}
                       data={item}
                       icon="/icons/figma.svg"

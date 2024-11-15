@@ -22,7 +22,7 @@ const ProductFilterside = ({ items, setItems, closefilter, setSelectedFilters }:
                 { name: "0$ - 50$", id: "0-50" },
                 { name: "50$ - 100$", id: "50-100" },
                 { name: "100$ - 200$", id: "100-200" },
-                { name: "200$ - more..", id: "100-200" },
+                { name: "200$ - more..", id: "200-more" },
             ],
         },
         // {

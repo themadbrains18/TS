@@ -276,9 +276,9 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                             <h2 className='lg:py-1 text-subheading text-[28px] font-bold leading-9 capitalize mb-5'>Profile details</h2>
                             <div className='pt-10 '>
                                 <div className=' flex items-end justify-between'>
-                                    <div className='relative max-w-[115px] md:max-w-[168px] w-full h-[168px]'>
+                                    <div className='relative max-w-[115px] md:max-w-[168px] w-full h-[116px] md:h-[168px] '>
                                         <Image
-                                            className='rounded-full h-[168px] '
+                                            className='rounded-full h-[116px] md:h-[168px] '
                                             src={profileImage}
                                             height={168}
                                             width={168}

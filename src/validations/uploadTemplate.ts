@@ -4,7 +4,7 @@ import { z } from 'zod';
  * Constants
  */
 const MAX_FILE_COUNT = 15; // Maximum number of files allowed
-const MAX_FILE_SIZE = 10*1024 * 1024; // Maximum file size (1MB)
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // Maximum file size (1MB)
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"]; // Allowed image MIME types
 const ACCEPTED_ZIP_TYPES = ['application/zip', 'application/x-zip-compressed', 'multipart/x-zip']; // Allowed ZIP MIME types
 
@@ -30,11 +30,11 @@ const imageObjectSchema = z.union([
  *  Adjusted file validation schema to allow custom object types and file size check
  */
 const fileValidationSchema = (
-  min: number, 
-  max: number, 
-  acceptedSchema: z.ZodTypeAny, 
+  min: number,
+  max: number,
+  acceptedSchema: z.ZodTypeAny,
   fileTypeMessage: string
-) => 
+) =>
   z.preprocess(
     (input) => (Array.isArray(input) ? input : []), // Fallback to empty array if not an array
     z.array(acceptedSchema)
@@ -106,16 +106,17 @@ export const uploadTemplateSchema = uploadTemplateBase.extend({
 /**
  * Schema for updating a template
  */
+
 export const uploadTemplateUpdateSchema = uploadTemplateBase.extend({
-  sourceFiles: fileValidationSchema(1, 2, fileObjectSchema, 'Only zip files are allowed.').nullable(),
-  sliderImages: fileValidationSchema(1, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.')
-    .or(z.null())
-    .or(z.array(z.undefined())),
-  previewMobileImages: fileValidationSchema(1, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.')
-    .or(z.null())
-    .or(z.array(z.undefined())),
-  previewImages: fileValidationSchema(1, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.')
-    .or(z.null())
-    .or(z.array(z.undefined())),
+  sourceFiles: fileValidationSchema(1, 1, fileObjectSchema, 'Only zip files are allowed.').nullable(),
+  sliderImages: fileValidationSchema(3, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
+  // .or(z.null())
+  // .or(z.array(z.undefined())),
+  previewMobileImages: fileValidationSchema(1, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
+    // .or(z.null())
+    // .or(z.array(z.undefined())),
+  previewImages: fileValidationSchema(1, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
+    // .or(z.null())
+    // .or(z.array(z.undefined())),
   price: z.coerce.number().optional(),
 })
