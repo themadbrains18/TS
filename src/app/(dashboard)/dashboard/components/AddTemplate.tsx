@@ -158,6 +158,9 @@ const AddTemplate = () => {
                       {response?.data.map((template: any, index: number) => (
                         <tr key={index} className="hover:bg-gray-50">
                           <td className="   px-6 py-5 text-sm  md:text-base text-subparagraph capitalize  md:max-w-full font-semibold">
+                      {index+1}
+                          </td>
+                          <td className="   px-6 py-5 text-sm  md:text-base text-subparagraph capitalize  md:max-w-full font-semibold">
                             <h2 className='max-w-[300px] truncate'>
                               {template.title}
                             </h2>
