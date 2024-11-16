@@ -8,6 +8,7 @@ import FileUpload from './InputFile';
 import useFetch from '@/hooks/useFetch';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+
 import { subCat } from '@/types/type';
 import StaticCheckBox from '@/components/ui/StaticCheckbox';
 import { uploadTemplateSchema, uploadTemplateUpdateSchema } from '@/validations/uploadTemplate';
@@ -42,7 +43,6 @@ interface FormData {
     seoTags: string;
     price: number;
     templateTypeId: string;
-    subCategory: string;
     subCategoryId: string;
     softwareTypeId: string;
     sourceFiles: FileList;
@@ -309,7 +309,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         router?.back()
     }
 
-console.log(errors,"==errors");
 
 
 
@@ -383,8 +382,7 @@ console.log(errors,"==errors");
                                     render={({ field }) => (
                                         <select className='custom-dropdown-template' id="subCategoryId"  {...field}
                                             defaultValue=""
-                                            onChange={(e) => {console.log(e.target.options[e.target.selectedIndex].text,"==e.target.options[e.target.selectedIndex].text");
-                                             setValue('subCategory',e.target.options[e.target.selectedIndex].text) ; field.onChange(e.target.value); handleCategorySelect(e.target.value) }}
+                                            onChange={(e) => { field.onChange(e.target.value); handleCategorySelect(e.target.value) }}
                                             disabled={type === "edit"}>
                                             <option value="" disabled>Select SubCategory</option>
 
