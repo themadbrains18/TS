@@ -29,6 +29,11 @@ const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute, bac
     const [canResend, setCanResend] = useState(false);
     const [resendOtploading, setResendOtploading] = useState(false)
 
+
+    console.log(response, error, "responseresponse")
+
+
+
     useEffect(() => {
         let timer: NodeJS.Timeout | null = null;
 
@@ -115,6 +120,7 @@ const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute, bac
         }
     };
 
+
     useEffect(() => {
         if (response && api === "login") {
             signIn('credentials', response?.results?.data);
@@ -131,8 +137,6 @@ const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute, bac
     }, [response, error]);
 
 
-
-    console.log(errors)
 
     return (
         <>
@@ -176,19 +180,16 @@ const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute, bac
                                         <h2 className='text-[18px] font-normal leading-7 text-neutral-900 pb-[30px]'>Please enter one-time OTP </h2>
                                         <InputOtp setValue={setValue} register={register} reset={canResend} clearErrors={clearErrors} />
                                     </div>
-
                                     {errors?.otp &&
                                         <p className='text-red-500' >
                                             {errors?.otp?.length && errors?.otp?.length > 0 && "Please enter OTP"}
                                         </p>
                                     }
-
                                     <div className='my-10 md:my-[60px]'>
                                         <p className='text-sm leading-5 text-neutral-600'>Please check your email, 6-digit confirmation code sent to {formData.email}, please enter the confirmation code to verify it's you.</p>
                                     </div>
 
                                     <div className='mb-[60px]'>
-
                                         <Button
                                             disabled={loading}
                                             loadingbtn={loading}
@@ -200,9 +201,7 @@ const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute, bac
                                                 loading ? "" : "Verify Now"
                                             }
                                         </Button>
-
                                     </div>
-
                                     {startTimer > 0 ? (
                                         <h3 className='text-center text-[14px] leading-5 font-normal text-neutral-600'>
                                             Resend OTP in {Math.floor(startTimer / 60)}:{(startTimer % 60).toString().padStart(2, '0')}
@@ -213,7 +212,6 @@ const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute, bac
                                                 onClick={resendCode}>Resend Code</button>
                                         </h3>
                                     )}
-
                                 </div>
 
                                 <h3 className="text-[16px] font-normal leading-6 text-textparagraph pt-[30px] md:pt-[60px]">

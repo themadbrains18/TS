@@ -278,8 +278,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             }
         ];
         formData.append("credits", JSON.stringify(credits));
- 
-    
+
+
         const endpoint = type === 'edit' ? `${process.env.NEXT_PUBLIC_APIURL}/templates/${id}` : `${process.env.NEXT_PUBLIC_APIURL}/templates`;
         const method = type === 'edit' ? 'PUT' : 'POST';
 
@@ -585,6 +585,11 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                 </div>
 
                                 {/* Deskto preview images */}
+
+                                {
+                                    
+                                }
+
                                 <div className='pt-5'>
                                     <h3 className='text-xl font-semibold capitalize pb-4'>Desktop Preview Images</h3>
                                     <div className='p-5 border border-neutral-400 border-dashed rounded-md'>

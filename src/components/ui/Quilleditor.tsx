@@ -2,22 +2,22 @@
 import React, { useEffect, useState } from 'react';
 import { UseFormClearErrors, UseFormSetError, UseFormSetValue } from 'react-hook-form';
 
-import 'react-quill/dist/quill.snow.css'; 
+import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
-import 'react-quill/dist/quill.snow.css'; 
+import 'react-quill/dist/quill.snow.css';
 
 /**
  * Dynamically import ReactQuill to avoid SSR issues
  */
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
-interface EditerProps{
+interface EditerProps {
   setValue: UseFormSetValue<any>
-  clearErrors:UseFormClearErrors<any>
-  setError:UseFormSetError<any>
-  initialValue?: string; 
+  clearErrors: UseFormClearErrors<any>
+  setError: UseFormSetError<any>
+  initialValue?: string;
 }
 
-const RichTextEditor: React.FC<EditerProps> = ({setValue,clearErrors, setError,initialValue}) => {
+const RichTextEditor: React.FC<EditerProps> = ({ setValue, clearErrors, setError, initialValue }) => {
   const [text, setText] = useState<string>('');
 
   /**
@@ -26,10 +26,10 @@ const RichTextEditor: React.FC<EditerProps> = ({setValue,clearErrors, setError,i
   const handleChange = (value: string) => {
     if (value === '<p><br></p>') {
       setText('');
-      setValue('description', ''); 
+      setValue('description', '');
     } else {
       setText(value);
-      setValue('description', value); 
+      setValue('description', value);
       clearErrors('description')
     }
 
@@ -42,7 +42,7 @@ const RichTextEditor: React.FC<EditerProps> = ({setValue,clearErrors, setError,i
   useEffect(() => {
     if (initialValue) {
       setText(initialValue);
-      setValue('description', initialValue); 
+      setValue('description', initialValue);
       clearErrors('description');
     }
   }, [initialValue, setValue]);
@@ -52,7 +52,7 @@ const RichTextEditor: React.FC<EditerProps> = ({setValue,clearErrors, setError,i
       [{ header: [1, 2, false] }],
       ['bold', 'italic', 'underline'],
       ['link',],
-      ['clean'], 
+      ['clean'],
     ],
   };
 
@@ -64,7 +64,7 @@ const RichTextEditor: React.FC<EditerProps> = ({setValue,clearErrors, setError,i
         modules={modules}
         theme="snow"
         className='h-24'
-      /> 
+      />
     </div>
   );
 };
