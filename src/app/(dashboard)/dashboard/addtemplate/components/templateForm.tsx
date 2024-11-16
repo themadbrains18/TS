@@ -43,6 +43,7 @@ interface FormData {
     seoTags: string;
     price: number;
     templateTypeId: string;
+    subCategory: string;
     subCategoryId: string;
     softwareTypeId: string;
     sourceFiles: FileList;
@@ -135,16 +136,16 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
 
     // State to check if "Mobile" is selected
-    // const [isMobileSelected, setIsMobileSelected] = useState(false);
+    const [isMobileSelected, setIsMobileSelected] = useState(false);
 
-    // const handleSelectChange = (value: any) => {
-    //     // Call the provided category select handler
-    //     handleCategorySelect(value);
+    const handleSelectChange = (value: any) => {
+        // Call the provided category select handler
+        handleCategorySelect(value);
 
-    //     // Update state based on the selected value
-    //     const isMobile = templateData?.subCategories?.find((option: any) => option.id === value)?.name === 'Mobile Design Mockups';
-    //     setIsMobileSelected(isMobile);
-    // };
+        // Update state based on the selected value
+        const isMobile = templateData?.subCategories?.find((option: any) => option.id === value)?.name === 'Mobile Design Mockups';
+        setIsMobileSelected(isMobile);
+    };
 
 
 
@@ -278,6 +279,21 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         setLoader(true)
         const formData = new FormData();
 
+        console.log(data,"====",isMobileSelected);
+        console.log(data?.previewImages,"data?.previewImages");
+        
+
+        if(!isMobileSelected){
+            console.log("herer",data?.previewImages?.length);
+            
+            if(data?.previewImages?.length<=0){
+                console.log("in this");
+                
+                setError('previewImages',{message:"Minimum 1 file is required"})
+                setLoader(false)
+                return;
+            }
+        }
 
 
         // Append form fields to FormData
@@ -332,6 +348,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
 
 
+console.log(errors,"==errors");
 
 
 
@@ -405,7 +422,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                     render={({ field }) => (
                                         <select className='custom-dropdown-template' id="subCategoryId"  {...field}
                                             defaultValue=""
-                                            onChange={(e) => { field.onChange(e.target.value); handleCategorySelect(e.target.value) }}
+                                            onChange={(e) => { setValue('subCategory', e.target.options[e.target.selectedIndex].text); handleSelectChange(e.target.value); field.onChange(e.target.value); handleCategorySelect(e.target.value) }}
                                             // onChange={(e) => { field.onChange(e.target.value); handleSelectChange(e.target.value); handleCategorySelect(e.target.value) }}
                                             disabled={type === "edit"}>
                                             <option value="" disabled>Select SubCategory</option>
@@ -605,36 +622,36 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
                                 {/* Deskto preview images */}
 
-                                {/* {
-                                    !isMobileSelected && */}
-                                <div className='pt-5'>
-                                    <h3 className='text-xl font-semibold capitalize pb-4'>Desktop Preview Images</h3>
-                                    <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
-                                        <Controller
-                                            name="previewImages"
-                                            control={control}
-                                            rules={{ required: false }}
-                                            render={({ field: { onChange } }) => (
-                                                <FileUpload
-                                                    name='previewImages'
-                                                    onFileSelect={(file) => { onChange(file) }}
-                                                    register={register}
-                                                    type={type}
-                                                    supportedfiles="jpg,png,jpeg"
-                                                    multiple={true}
-                                                    id="3"
-                                                    initialUrls={initialData?.previewImages ? initialData?.previewImages.map((img: any) => ({
-                                                        url: img.imageUrl,
-                                                        id: img.id,
-                                                    })) : []} // Pass URLs here
-                                                    title='Upload Desktop Preview Images Here only 10'
-                                                />
-                                            )}
-                                        />
+                                {
+                                    !isMobileSelected &&
+                                    <div className='pt-5'>
+                                        <h3 className='text-xl font-semibold capitalize pb-4'>Desktop Preview Images</h3>
+                                        <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
+                                            <Controller
+                                                name="previewImages"
+                                                control={control}
+                                                rules={{ required: false }}
+                                                render={({ field: { onChange } }) => (
+                                                    <FileUpload
+                                                        name='previewImages'
+                                                        onFileSelect={(file) => { onChange(file) }}
+                                                        register={register}
+                                                        type={type}
+                                                        supportedfiles="jpg,png,jpeg"
+                                                        multiple={true}
+                                                        id="3"
+                                                        initialUrls={initialData?.previewImages ? initialData?.previewImages.map((img: any) => ({
+                                                            url: img.imageUrl,
+                                                            id: img.id,
+                                                        })) : []} // Pass URLs here
+                                                        title='Upload Desktop Preview Images Here only 10'
+                                                    />
+                                                )}
+                                            />
+                                        </div>
+                                        {errors.previewImages && <p style={{ color: 'red' }}>{errors.previewImages.message}</p>}
                                     </div>
-                                    {errors.previewImages && <p style={{ color: 'red' }}>{errors.previewImages.message}</p>}
-                                </div>
-                                {/* } */}
+                                }
 
 
                                 {/* movilePreview Iamges */}

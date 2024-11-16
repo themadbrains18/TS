@@ -76,6 +76,7 @@ const isFileSizeValid = (file: any) => {
 const uploadTemplateBase = z.object({
   title: z.string().min(1, { message: "Enter template name" }).max(100),
   templateTypeId: z.string().max(200, { message: "Select Template Type" }),
+  subCategory: z.string().nullable().optional(),
   subCategoryId: z.string().max(200, { message: "Select Category" }),
   softwareTypeId: z.string().min(1, { message: "Select Software Type" }),
   industry: z.string().min(1, { message: "Select at least one Industry Type" }),
@@ -93,19 +94,54 @@ const uploadTemplateBase = z.object({
  */
 
 
+// export const uploadTemplateSchema = uploadTemplateBase.extend({
+//   // Validates the uploaded files
+//   sourceFiles: fileValidationSchema(1, 1, fileObjectSchema, 'Only zip files are allowed.'),
+//   sliderImages: fileValidationSchema(3, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
+//   previewMobileImages: fileValidationSchema(1, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
+//   previewImages: fileValidationSchema(1, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
+// }).refine((data) => {
+//   return !data.isPaid || !!data.price;
+// }, {
+//   message: "Dollar price is required if it's paid.",
+//   path: ["price"],
+// })
+
+
+/**
+ * Schema for creating a template
+ */
 export const uploadTemplateSchema = uploadTemplateBase.extend({
   // Validates the uploaded files
   sourceFiles: fileValidationSchema(1, 1, fileObjectSchema, 'Only zip files are allowed.'),
   sliderImages: fileValidationSchema(3, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
   previewMobileImages: fileValidationSchema(1, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
-  previewImages: fileValidationSchema(1, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
+  previewImages: fileValidationSchema(0, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.')
+  .or(z.null())
+  .or(z.array(z.undefined())),
+
 }).refine((data) => {
   return !data.isPaid || !!data.price;
 }, {
   message: "Dollar price is required if it's paid.",
   path: ["price"],
-})
+}).superRefine((data, ctx) => {
+  console.log(data, ctx);
 
+  const { subCategory } = data; // Correctly access parent data via ctx.data
+
+  // If subCategory includes 'mobile', we allow previewImages to be undefined
+  if (subCategory?.includes('Mobile')) {
+    return; // No validation needed if subCategory is 'mobile'
+  }
+  if (data?.previewImages && data?.previewImages.length<=0) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "At least 1 preview image is required.",
+      path: ['previewImages'],
+    });
+  }
+})
 /**
  * Schema for updating a template
  */
