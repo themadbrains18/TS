@@ -37,14 +37,14 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
     /**
      * swiper images
      */
-    const images = template.sliderImages
+    const images = template?.sliderImages
 
 
     /**
      * State to manage the currently active image ID
      */
-    const [activeImageId, setActiveImageId] = useState(images[0]?.id);
-    const activeImage = images.find(image => image?.id === activeImageId)?.imageUrl;
+    const [activeImageId, setActiveImageId] = useState(images?.[0]?.id);
+    const activeImage = images?.find(image => image?.id === activeImageId)?.imageUrl;
 
     /**
      * Reference to Swiper instance for custom navigation
@@ -54,6 +54,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
     /**
      * pop up handler
      */
+
     const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
     const router = useRouter()
     const openPopup = async () => {
@@ -65,6 +66,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
             setIsFirstPopupOpen(true)
         }
     }
+
     const [isFirstPopupOpen, setIsFirstPopupOpen] = useState<boolean>(true);
 
     type SoftwareType = {
@@ -98,9 +100,9 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                         <div className="grid grid-cols-1 gap-5 lg:grid-cols-[57.5%,40.5%] lg:gap-x-[30px] ">
                             <div>
                                 <div className="lg:max-w-[874px] w-full relative z-10 bg-[#FFFFFF] select-none">
-                                    {/* Large Image */}
-                                    <div className="p-[10px]  md:p-5 h-[250px]  md:h-[540px] group overflow-hidden border border-divider-100">
-                                        <div className="overflow-hidden relative   h-[225px]  md:h-[500px] ">
+
+                                    <div className="p-[10px]  md:p-5 h-full group overflow-hidden border border-divider-100">
+                                        <div className="overflow-hidden relative h-full">
                                             <div className='absolute z-[1] top-0 left-0 right-0 bottom-0 group-hover:bg-[#28204699]  duration-[0.5s] cursor-pointer'>
                                                 <div className='w-full h-full flex justify-center items-center overflow-hidden  '>
                                                     <Link href={`/preview/${template?.id}`} className='text-white text-[18px] font-bold leading-7 opacity-0 group-hover:opacity-100'>Preview</Link>
@@ -111,13 +113,12 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                                 width={850}
                                                 height={500}
                                                 alt="Selected"
-                                                className="overflow-hidden group-hover:scale-[1.1] duration-[0.5s] lg:max-w-[874px] w-full h-full lg:object-cover rounded-lg shadow-md"
+                                                className="overflow-hidden group-hover:scale-[1.1] duration-[0.5s]  w-full h-full lg:object-cover rounded-lg shadow-md"
                                             />
                                         </div>
                                     </div>
 
                                     <div className="flex items-center gap-2 lg:gap-7 md:p-5 md:border pt-2.5  border-divider-100">
-                                        {/* Custom Previous Button */}
                                         {images?.length > 5 && (
                                             <div className='rotate-[180deg] cursor-pointer' onClick={() => swiperRef.current?.slidePrev()}>
                                                 <Icon name='rightarrow' />
@@ -149,9 +150,9 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                                 <SwiperSlide className='w-full' key={id}>
                                                     <div
                                                         onClick={() => setActiveImageId(id)} // Set active image by ID
-                                                        className={`cursor-pointer min-w-[50px] md:max-w-[120px] w-full border-2 overflow-hidden p-[5px] h-[88px] ${activeImageId === id ? 'border-primary-900 border-[0.5px] md:border-[2px]' : 'border-transparent'}`}
+                                                        className={`cursor-pointer min-w-[50px] w-full border-2 overflow-hidden p-[5px] h-[88px] ${activeImageId === id ? 'border-primary-900 border-[0.5px] md:border-[2px]' : 'border-transparent'}`}
                                                     >
-                                                        <Image className="w-full object-cover h-[76px]" src={`${imageUrl}`} height={76} width={120} alt={`Thumbnail ${id}`} />
+                                                        <Image className="w-full object-contain h-[76px]" src={`${imageUrl}`} height={76} width={120} alt={`Thumbnail ${id}`} />
                                                     </div>
                                                 </SwiperSlide>
                                             ))}
@@ -163,6 +164,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                             </div>
                                         )}
                                     </div>
+
                                 </div>
                             </div>
                             <div>

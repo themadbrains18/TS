@@ -40,16 +40,16 @@ const NavCard: React.FC<navcardprops> = ({
 
   return (
     <>
-      <div className={` ${classnamemain} cursor-pointer border border-divider-100`}>
-        <div className={`relative ${classname} `}>
-          <div className=" h-[106px]  object-cover" >
+      <div className={` ${classnamemain} cursor-pointer border border-divider-100 `}>
+        <div className={`relative ${classname}  `}>
+          <div className=" h-auto  object-cover" >
             <Image
               src={data?.sliderImages[0]?.imageUrl || "/images/product1.png"}
               width={218}
               height={106}
               alt="cardimage"
               onError={handleImageError}
-              className=" max-h-[106px] w-full object-cover"
+              className="  w-full h-auto object-cover"
             />
           </div>
           <Link

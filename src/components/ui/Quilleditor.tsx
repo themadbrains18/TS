@@ -56,14 +56,21 @@ const RichTextEditor: React.FC<EditerProps> = ({ setValue, clearErrors, setError
     ],
   };
 
+  // useEffect(() => {
+  //   const editor = document.querySelector('.ql-editor');
+  //   if (editor) {
+  //     // editor.resize = 'vertical'; // Correct way to set the CSS property
+  //   }
+  // }, []);
+
   return (
-    <div className='h-32'>
+    <div className='resize-y'>
       <ReactQuill
         value={text}
         onChange={handleChange}
         modules={modules}
         theme="snow"
-        className='h-24'
+        className='resize-y h-full'
       />
     </div>
   );

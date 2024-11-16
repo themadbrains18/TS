@@ -22,13 +22,17 @@
     margin: 0;
   }
 
-
-  .check {
-    overflow-y: scroll !important;
-    resize: vertical !important;
+  .ql-editor{
+    resize: vertical !important ;
+   min-height: 200px !important;
   }
 
-
+  
+  
+  .auto-fill-color:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset !important; /* Replace 'white' with your desired color */
+    -webkit-text-fill-color: #000 !important; /* Set text color */
+}
   /* For Firefox */
   /* input[type="number"] {
     -moz-appearance: textfield;
@@ -123,7 +127,8 @@
     /* Customize scrollbar thumb color */
   }
 
-  .custom-scrollbar::-webkit-scrollbar-track {
-    /* Customize scrollbar track color */
-  }
+
+  
+
+
 }

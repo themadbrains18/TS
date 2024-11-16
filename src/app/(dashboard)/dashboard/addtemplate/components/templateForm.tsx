@@ -130,6 +130,27 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     };
 
 
+
+
+
+
+    // State to check if "Mobile" is selected
+    // const [isMobileSelected, setIsMobileSelected] = useState(false);
+
+    // const handleSelectChange = (value: any) => {
+    //     // Call the provided category select handler
+    //     handleCategorySelect(value);
+
+    //     // Update state based on the selected value
+    //     const isMobile = templateData?.subCategories?.find((option: any) => option.id === value)?.name === 'Mobile Design Mockups';
+    //     setIsMobileSelected(isMobile);
+    // };
+
+
+
+
+
+
     useEffect(() => {
         fetchData(`/template-types`);
         fetchIndustryData(`/industry-type`);
@@ -305,10 +326,11 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         });
     };
 
-
     const goback = () => {
         router?.back()
     }
+
+
 
 
 
@@ -320,7 +342,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             <section className='pb-10 md:pb-20'>
                 <div className='py-10 border-b border-divider-200 bg-[#ffffff80]' >
                     <div className="container">
-                        <div className='flex justify-between items-center'>
+                        <div className='flex justify-between items-center' >
                             <Link className="w-[276px]" href={'/'}>
                                 <Image
                                     src={"/icons/Logo.svg"}
@@ -329,11 +351,10 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                     alt="Logo"
                                 />
                             </Link>
-                            <div onClick={goback} className='cursor-pointer' >
+                            <div onClick={goback} >
                                 <Icon className="fill-primary-100" name="crossicon" />
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <div className="max-w-[802px] w-full py-0 px-4 my-0 mx-auto pt-10">
@@ -341,7 +362,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="flex flex-col gap-y-5 justify-center items-center w-full">
                             {/* Template Type Dropdown */}
-
                             <div className='w-full'>
                                 <label className='text-xl font-semibold capitalize' htmlFor="templateType">Template Type</label>
                                 <Controller
@@ -386,6 +406,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                         <select className='custom-dropdown-template' id="subCategoryId"  {...field}
                                             defaultValue=""
                                             onChange={(e) => { field.onChange(e.target.value); handleCategorySelect(e.target.value) }}
+                                            // onChange={(e) => { field.onChange(e.target.value); handleSelectChange(e.target.value); handleCategorySelect(e.target.value) }}
                                             disabled={type === "edit"}>
                                             <option value="" disabled>Select SubCategory</option>
 
@@ -427,10 +448,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                             </div>}
 
                         </div>
-
                         <div className='mt-5'>
                             <h3 className='text-xl font-semibold capitalize '>Industry</h3>
-
                             <div className='flex justify-between gap-x-3  mb-3 max-w-full overflow-scroll hiddenscroll py-2'>
                                 {industryData?.map((item) => (
                                     <Controller
@@ -539,7 +558,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                             rules={{ required: false }}
                                             render={({ field: { onChange } }) => (
                                                 <FileUpload
-
                                                     name='sourceFiles'
                                                     onFileSelect={(file) => { onChange(file) }}
                                                     supportedfiles="zip"
@@ -547,6 +565,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                     id="1"
                                                     register={register}
                                                     fileNameUrl={initialData?.sourceFiles ? initialData?.sourceFiles.map((img: any) => img.fileUrl) : []}
+                                                    title='Upload Source File Here only 1'
                                                 />
                                             )}
                                         />
@@ -576,7 +595,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                         id: img.id,
                                                     }))
                                                         : []} // Pass URLs here
-
+                                                    title='Upload Slider Images Here only 10'
                                                 />
                                             )}
                                         />
@@ -586,10 +605,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
                                 {/* Deskto preview images */}
 
-                                {
-                                    
-                                }
-
+                                {/* {
+                                    !isMobileSelected && */}
                                 <div className='pt-5'>
                                     <h3 className='text-xl font-semibold capitalize pb-4'>Desktop Preview Images</h3>
                                     <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
@@ -610,13 +627,15 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                         url: img.imageUrl,
                                                         id: img.id,
                                                     })) : []} // Pass URLs here
+                                                    title='Upload Desktop Preview Images Here only 10'
                                                 />
                                             )}
                                         />
                                     </div>
                                     {errors.previewImages && <p style={{ color: 'red' }}>{errors.previewImages.message}</p>}
-
                                 </div>
+                                {/* } */}
+
 
                                 {/* movilePreview Iamges */}
                                 <div className='pt-5'>
@@ -639,6 +658,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                         url: img.imageUrl,
                                                         id: img.id,
                                                     })) : []} // Pass URLs here
+                                                    title='Upload Mobile Preview Images Here only 10'
                                                 />
                                             )}
                                         />

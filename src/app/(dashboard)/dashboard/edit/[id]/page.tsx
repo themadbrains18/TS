@@ -31,7 +31,7 @@ const page = async ({ params }: { params: { id: string } }) => {
 
     return (
         <>
-            <Suspense
+          <Suspense
                 fallback={`<>
                     <div className="hover:bg-gray-50 animate-pulse">
                       <div className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize max-w-[200px] truncate md:max-w-full font-semibold">

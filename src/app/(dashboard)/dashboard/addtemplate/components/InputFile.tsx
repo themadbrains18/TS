@@ -14,11 +14,13 @@ interface FileUploadProps {
   error?: FieldError;
   initialUrls?: { url: string; id: string }[]; // Initial images as URLs
   fileNameUrl?: string[]; // Initial filenames
+title?: string
 }
 
 const FilePreview = ({
   previewUrl,
   onRemove,
+
 }: {
   previewUrl: string;
   onRemove: () => void;
@@ -84,6 +86,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
   error,
   initialUrls = [],
   fileNameUrl = [],
+  title
 }) => {
   const {data:session} = useSession()
   const [files, setFiles] = useState<File[]>([]);
@@ -175,7 +178,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
 
   return (
     <div className="flex flex-col items-center">
-      <h3 className="text-base text-center capitalize">Upload Source File Here</h3>
+      <h3 className="text-base text-center capitalize">{title}</h3>
       <p className="py-3 text-neutral-500 text-xs">File Supported: {supportedfiles}</p>
 
       <label

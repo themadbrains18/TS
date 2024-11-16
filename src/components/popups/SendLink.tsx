@@ -27,14 +27,14 @@ interface Downloadpopup {
     openthirdpopup: () => void;
     id: string;
     url: string;
-    tittle:string
+    tittle: string
 }
 
 
-const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url , tittle }: Downloadpopup) => {
+const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url, tittle }: Downloadpopup) => {
     const { data: session } = useSession();
     const { data: response, error, loading, fetchData } = useFetch<any>();
-    const { fetchDailyDownloads,downloads } = useDownload()
+    const { fetchDailyDownloads, downloads } = useDownload()
 
     const socialicons = [
         { icon: "dribbble-logo.svg" },
@@ -47,7 +47,7 @@ const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url , tittle }:
     /**
      * Set up React Hook Form
      */
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({
         resolver: zodResolver(emailSchema),
     });
 
@@ -58,7 +58,7 @@ const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url , tittle }:
     const onSubmit = async (data: any) => {
         try {
             data.url = url || "";
-            data.userId = session?.id; 
+            data.userId = session?.id;
             await fetchData(`/templates/${id}/download`, {
                 method: 'POST',
                 headers: {
@@ -80,7 +80,7 @@ const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url , tittle }:
      * - This effect runs every time the `response` object changes (i.e., when `response` is updated with new data).
      */
     useEffect(() => {
-        
+
         if (response) {
             fetchDailyDownloads()
             openthirdpopup();
@@ -88,8 +88,14 @@ const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url , tittle }:
     }, [response]);
 
     return (
-        <Modal className='bg-[#E5EFFF] py-5 md:py-[30px] relative' isOpen={isPopupOpen} onClose={closePopup}>
-                        <Icon onClick={closePopup} name='closeicon' className='cursor-pointer w-6 h-6 absolute top-5 right-5' />
+        <Modal className='bg-[#E5EFFF] py-5 md:py-[30px] relative' isOpen={isPopupOpen} onClose={() => {
+            closePopup();
+            reset();
+        }}>
+
+            <div onClick={() => { closePopup(); reset(); }}>
+                <Icon name="closeicon" className="cursor-pointer w-6 h-6 absolute top-5 right-5" />
+            </div>
 
             <div className="max-w-[500px] w-full">
                 <div className='flex pb-5 border-b border-[#878787] items-center px-5 md:px-[30px]'>
@@ -107,11 +113,11 @@ const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url , tittle }:
                             type="text"
                             placeholder='Enter your email'
                             {...register('email')}
-                            className={`py-[18px] px-[15px] bg-white rounded-[5px] w-full placeholder:text-subparagraph outline-none ${errors.email ? 'border-red-500' : ''}`}
+                            className={` auto-fill-color py-[18px] px-[15px] bg-white rounded-[5px] w-full placeholder:text-subparagraph outline-none ${errors.email ? 'border-red-500' : ''}`}
                         />
                         {errors.email && (
                             <span className="text-red-500">
-                               Email is invalid
+                                Email is invalid
                             </span>
                         )}
                         {error && <p className='mt-1 text-xs text-red-600'>{error}</p>}
@@ -123,7 +129,7 @@ const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url , tittle }:
                 </div>
                 <div className='flex justify-center items-center flex-col pt-5 md:pt-[60px] px-5'>
                     <h3 className='text-[16p] font-normal leading-6 pb-[15px] open_sans text-subparagraph text-center'>
-                        Help us to expand the designer's community
+                        Join our community on social media for exclusive updates and design tips.
                     </h3>
                     <div className="flex items-center lg:max-w-[250px] w-full justify-between mt-5 md:mt-10 lg:mt-0">
                         {socialicons && socialicons.length > 0 && socialicons?.map((item, index) => (
@@ -136,7 +142,7 @@ const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url , tittle }:
                     </div>
                 </div>
             </div>
-        </Modal>
+        </Modal >
     );
 };
 

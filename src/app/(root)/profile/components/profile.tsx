@@ -153,9 +153,19 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
      */
     const handlePhonenumberUpdate = async () => {
         try {
+
+
+
+
             if (number === "" || number === null || number === undefined) {
                 setPhoneNumberError("Please enter contact number")
                 return
+            }
+
+            const phoneRegex = /^\d{10}$/; // Adjust this pattern as needed for other formats
+            if (!phoneRegex.test(number)) {
+                setPhoneNumberError("Please enter a valid contact number");
+                return;
             }
 
             if (number === response?.user?.number) {
@@ -252,7 +262,6 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
 
     }, [phoneNumberError, nameError])
 
-    console.log(response?.user, "sdd")
 
     return (
         <>
@@ -267,9 +276,9 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                             <h2 className='lg:py-1 text-subheading text-[28px] font-bold leading-9 capitalize mb-5'>Profile details</h2>
                             <div className='pt-10 '>
                                 <div className=' flex items-end justify-between'>
-                                    <div className='relative max-w-[115px] md:max-w-[168px] w-full h-[168px]'>
+                                    <div className='relative max-w-[115px] md:max-w-[168px] w-full h-[116px] md:h-[168px] '>
                                         <Image
-                                            className='rounded-full h-[168px] '
+                                            className='rounded-full h-[116px] md:h-[168px] '
                                             src={profileImage}
                                             height={168}
                                             width={168}
@@ -416,7 +425,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                         </div> */}
                         <div className='max-w-[670px] mt-4 md:mt-[50px]'>
                             <Button className='py-[13px] text-lg px-[30px]' variant='secondary' type='button' onClick={() => { setIsDeleteUser(true) }}>delete account</Button>
-                            <p className='pt-5 text-textparagraph'><strong>Note:</strong> As you have an active paid plan, you can't delete your account directly. Please contact <a href="#" className='text-primary-100 '>templatestudio.ai</a> for assistance </p>
+                            <p className='pt-5 text-textparagraph'><strong>Note:</strong> As you have an active paid plan, you can't delete your account directly. Please contact <a href="#" className='text-primary-100 '>support@templatestudio.ai</a> for assistance </p>
                         </div>
                     </div>
                 </div>

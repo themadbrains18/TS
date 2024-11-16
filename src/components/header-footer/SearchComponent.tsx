@@ -104,7 +104,6 @@ import SearchDropdown from '../SearchDropdown';
 import { navtabprops } from '@/types/type';
 import { cn } from '@/libs/utils';
 import Link from 'next/link';
-
 interface Template {
     templates:
     {
@@ -119,7 +118,6 @@ interface Template {
 }
 
 const SearchComponent: React.FC<navtabprops> = ({ subCat, classname, opensearch, openinput, mainclass, searchresults, resinputoff }) => {
-    console.log(subCat, "subCatsubCatsubCat")
     const [selectedCategory, setSelectedCategory] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
     const { data: templates, error, loading, fetchData } = useFetch<Template>();

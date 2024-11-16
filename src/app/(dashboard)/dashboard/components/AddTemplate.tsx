@@ -10,8 +10,8 @@ import DeleteTemplate from '@/components/popups/DeleteTemplate';
 import DashInput from '../addtemplate/components/DashInput';
 import useFetch from '@/hooks/useFetch';
 import { signOut, useSession } from 'next-auth/react';
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface Template {
   templates:
@@ -37,13 +37,16 @@ const AddTemplate = () => {
     fetchTemplates();
   }, [fetchData]);
 
+
   const templateheading = [
+    { heading: "No." },
     { heading: "template name" },
     { heading: "template type" },
     { heading: "version" },
     { heading: "price" },
     { heading: "action" },
   ];
+
 
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
   const [currentTemplateIndex, setCurrentTemplateIndex] = useState<number | null>(null);
@@ -77,6 +80,7 @@ const AddTemplate = () => {
   /**
    * Function to handle the DELETE request
    */
+
   const handleDelete = async (id: string) => {
     try {
       await fetchData(`/templates/${id}`, { method: 'DELETE' });
@@ -154,6 +158,9 @@ const AddTemplate = () => {
                     <>
                       {response?.templates.map((template: any, index: number) => (
                         <tr key={index} className="hover:bg-gray-50">
+                          <td className="   px-6 py-5 text-sm  md:text-base text-subparagraph capitalize  md:max-w-full font-semibold">
+                      {index+1}
+                          </td>
                           <td className="   px-6 py-5 text-sm  md:text-base text-subparagraph capitalize  md:max-w-full font-semibold">
                             <h2 className='max-w-[300px] truncate'>
                               {template.title}
