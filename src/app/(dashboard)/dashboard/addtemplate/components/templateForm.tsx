@@ -153,11 +153,11 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             setValue('techDetails', initialData?.techDetails);
             handleTemplateSelect(initialData?.templateTypeId)
             setValue('industry', initialData.industryTypeId)
-            
-            if(initialData?.subCategoryId==="cm208jwgm0005joy0c8dfxnsa" ){
+
+            if (initialData?.subCategoryId === "cm208jwgm0005joy0c8dfxnsa") {
                 // console.log("in this section");
                 setIsMobileSelected(true)
-                
+
             }
         }
         if (initialData && initialData?.credits.length > 0) {
@@ -283,7 +283,13 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
         console.log(data, "====", isMobileSelected);
         console.log(data?.previewImages, "data?.previewImages");
+        console.log(data?.industryName, "data?.previewImages");
 
+        if (selectedIndustry === 'Others' && data?.industryName === "") {
+            setError('industryName', { message: "This field is required" })
+            setLoader(false)
+            return
+        }
 
         // if (!isMobileSelected) {
         //     // console.log("herer", data?.previewImages?.length);
@@ -349,7 +355,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         router?.back()
     }
 
-    const [tags, setTags] = useState<string[]>(initialData?.seoTags||[]);
+    const [tags, setTags] = useState<string[]>(initialData?.seoTags || []);
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === ' ' || event.key === ',') {
@@ -373,7 +379,12 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     const [otherIndustry, setOtherIndustry] = useState<string>();
 
     const handleInputChangeindustryvalue = (e: any) => {
+
         setOtherIndustry(e.target.value); // Correctly updating state
+        if (otherIndustry !== "") {
+            clearErrors('industryName')
+
+        }
     };
 
     const [selectedIndustry, setSelectedIndustry] = useState();
@@ -381,7 +392,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         setSelectedIndustry(value);
     };
 
-    console.log( typeof initialData.seoTags, "wererererererererer")
+    console.log(typeof initialData.seoTags, "wererererererererer")
 
     return (
 
@@ -525,10 +536,13 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                         />
                                     ))}
                                 </div>
+                                {errors.industry && (
+                                    <p style={{ color: 'red' }}>{errors.industry.message}</p>
+                                )}
 
                                 {/* Conditional rendering of input box when "Other" is selected */}
 
-                                {selectedIndustry === 'Others' && (
+                                {(selectedIndustry === 'Others' || initialData?.industryName ) && (
                                     <div className="mt-3 flex items-center gap-2">
                                         <input
                                             {...register("industryName")}
@@ -542,8 +556,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                     </div>
                                 )}
 
-                                {errors.industry && (
-                                    <p style={{ color: 'red' }}>{errors.industry.message}</p>
+                                {errors.industryName && (
+                                    <p style={{ color: 'red' }}>{errors.industryName.message}</p>
                                 )}
 
                             </div>
@@ -785,7 +799,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                             </span>
                                                         ))}
 
-                                                       
+
 
                                                     </div>
                                                     <input
@@ -793,7 +807,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                         type="text"
                                                         className="py-[18px] px-5 border border-neutral-400 rounded-md outline-none placeholder:text-neutral-400 bg-white"
                                                         placeholder="Type and press space or comma to add tags"
-                                                        disabled={tags?.length>=5}
+                                                        disabled={tags?.length >= 5}
                                                         onKeyDown={handleKeyDown}
                                                     />
                                                 </>
