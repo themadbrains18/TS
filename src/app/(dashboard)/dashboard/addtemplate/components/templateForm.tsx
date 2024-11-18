@@ -279,17 +279,17 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         setLoader(true)
         const formData = new FormData();
 
-        console.log(data,"====",isMobileSelected);
-        console.log(data?.previewImages,"data?.previewImages");
-        
+        console.log(data, "====", isMobileSelected);
+        console.log(data?.previewImages, "data?.previewImages");
 
-        if(!isMobileSelected){
-            console.log("herer",data?.previewImages?.length);
-            
-            if(data?.previewImages?.length<=0){
-                console.log("in this");
-                
-                setError('previewImages',{message:"Minimum 1 file is required"})
+
+        if (!isMobileSelected) {
+            // console.log("herer", data?.previewImages?.length);
+
+            if (data?.previewImages?.length <= 0) {
+                // console.log("in this");
+
+                setError('previewImages', { message: "Minimum 1 file is required" })
                 setLoader(false)
                 return;
             }
@@ -346,12 +346,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         router?.back()
     }
 
-
-
-console.log(errors,"==errors");
-
-
-
+    // console.log(errors,"==errors");
 
     return (
 
