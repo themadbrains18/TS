@@ -18,7 +18,6 @@ import { useSession } from 'next-auth/react';
 import { toast } from 'react-toastify';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Calligraffitti } from 'next/font/google';
 
 /**
  * Define types for data structures
@@ -41,9 +40,11 @@ interface Font {
 interface FormData {
     title: string;
     version: string;
-    seoTags: string;
+    seoTags: string[];
     price: number;
     templateTypeId: string;
+    industryName: string;
+    subCategory: string;
     subCategoryId: string;
     softwareTypeId: string;
     sourceFiles: FileList;
@@ -54,7 +55,6 @@ interface FormData {
     industry: string
     techDetails: string[]
     isPaid: boolean
-
 }
 
 
@@ -70,7 +70,6 @@ interface TemplateFormProps {
 }
 
 
-
 const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) => {
     /**
      * Fetch data hooks for template types, subcategories, and industries
@@ -78,6 +77,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     const { data, fetchData, loading } = useFetch<TemplateType[]>();
     const { data: templateData, fetchData: fetchTemplateData, } = useFetch<any>();
     const { data: industryData, fetchData: fetchIndustryData } = useFetch<IndustryType[]>();
+
 
     /**
      *  State for fonts, images, icons, and illustrations
@@ -93,7 +93,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     const [technicalDetails, setTechnicalDetails] = useState(
         initialData?.techDetails?.length ? initialData?.techDetails : Array(4).fill("")
     );
-
+    console.log(initialData, "data")
     const { data: session } = useSession()
 
     /**
@@ -106,22 +106,22 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     const [showSoftwareType, setShowSoftwareType] = useState('')
 
 
+
     const { register, handleSubmit, control, formState: { errors }, setValue, clearErrors, setError } = useForm<FormData>({
-        defaultValues: { ...initialData },
+        defaultValues: { ...initialData, seoTags: [] },
         resolver: zodResolver(type == "create" ? uploadTemplateSchema : uploadTemplateUpdateSchema)
     });
-
 
     /**
      * Handle template dropdown selection
      */
+
     const handleTemplateSelect = (value: string) => {
         setShowSoftwareType(value);
         setSelectedValue(value);
         setValue("templateTypeId", value)
         fetchTemplateData(`/sub-categories/${value}`);
     };
-
 
     /**
      * Handle category dropdown selection
@@ -131,19 +131,16 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         setCategoryValue(value);
     };
 
-
-
     // State to check if "Mobile" is selected
-    // const [isMobileSelected, setIsMobileSelected] = useState(false);
-    // const handleSelectChange = (value: any) => {
-    //     // Call the provided category select handler
-    //     handleCategorySelect(value);
-    //     // Update state based on the selected value
-    //     const isMobile = templateData?.subCategories?.find((option: any) => option.id === value)?.name === 'Mobile Design Mockups';
-    //     setIsMobileSelected(isMobile);
-    // };
+    const [isMobileSelected, setIsMobileSelected] = useState(false);
 
-
+    const handleSelectChange = (value: any) => {
+        // Call the provided category select handler
+        handleCategorySelect(value);
+        // Update state based on the selected value
+        const isMobile = templateData?.subCategories?.find((option: any) => option.id === value)?.name === 'Mobile Design Mockups';
+        setIsMobileSelected(isMobile);
+    };
 
     useEffect(() => {
         fetchData(`/template-types`);
@@ -166,10 +163,10 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         }
     }, [initialData])
 
-
     /**
      * Generalized function to add new input fields
      */
+
     const addInputFields = <T,>(setter: React.Dispatch<React.SetStateAction<T[]>>, values: T[], isObject: boolean) => {
         const newValue = isObject ? { name: '', url: '' } : '';
         setter([...values, newValue as T]);
@@ -178,6 +175,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     /**
      * Function to handle input field changes
      */
+
     const handleInputChange = <T,>(setter: React.Dispatch<React.SetStateAction<T[]>>, index: number, value: T, values: T[]) => {
         const newValues = [...values];
         newValues[index] = value;
@@ -187,8 +185,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     /**
      * Function to remove input fields
      */
-    const removeInputField = <T,>(setter: React.Dispatch<React.SetStateAction<T[]>>, index: number, values: T[]) => {
 
+    const removeInputField = <T,>(setter: React.Dispatch<React.SetStateAction<T[]>>, index: number, values: T[]) => {
         if (values.length > 1) {
             const newValues = [...values];
             newValues.splice(index, 1);
@@ -198,12 +196,13 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                 newValues.forEach((detail: any, i) => setValue(`techDetails.${i}`, detail));
             }
         }
-
     };
 
     /**
      * Function to render input fields
      */
+
+
     const renderInputFields = (items: Font[], setter: React.Dispatch<React.SetStateAction<Font[]>>, title: string) => (
         <div className='pb-3'>
             <h4 className='text-lg font-semibold capitalize pb-4'>{title}</h4>
@@ -275,6 +274,19 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         setLoader(true)
         const formData = new FormData();
 
+
+        console.log(data, "==datat");
+
+
+        if (!isMobileSelected) {
+            if (data?.previewImages?.length <= 0) {
+                setError('previewImages', { message: "Minimum 1 file is required" })
+                setLoader(false)
+                return;
+            }
+        }
+
+
         // Append form fields to FormData
         Object.entries(data).forEach(([key, value]) => {
             if (Array.isArray(value)) {
@@ -326,36 +338,39 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         router?.back()
     }
 
-
-
-
-
-
-    //  new update by 
-
     const [tags, setTags] = useState<string[]>([]);
 
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, field: any) => {
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === ' ' || event.key === ',') {
-            const trimmedValue = field.value.trim();
-            if (trimmedValue && !tags.includes(trimmedValue)) {
-                setTags((prevTags) => [...prevTags, trimmedValue]);
-                field.onChange(''); // Clear the input field
+            event.preventDefault(); // Prevent default space or comma behavior
+            const value = event.currentTarget.value.trim(); // Get trimmed value
+            if (value && !tags.includes(value)) {
+                const newTags = [...tags, value];
+                setTags(newTags);
+                setValue('seoTags', newTags); // Ensure the form value is updated as an array
             }
-            event.preventDefault(); // Prevent adding the space or comma
+            event.currentTarget.value = ''; // Clear the input field
         }
     };
 
     const removeTag = (index: number) => {
-        setTags((prevTags) => prevTags.filter((_, i) => i !== index));
+        const updatedTags = tags.filter((_, i) => i !== index);
+        setTags(updatedTags);
+        setValue('seoTags', updatedTags); // Update the form value as an array
+    };
+
+    const [otherIndustry, setOtherIndustry] = useState<String>();
+
+    const handleInputChangeindustryvalue = (e: any) => {
+        setOtherIndustry(e.target.value); // Correctly updating state
     };
 
     const [selectedIndustry, setSelectedIndustry] = useState();
-    console.log(selectedIndustry, "selectedIndustryselectedIndustry")
-    const [otherIndustry, setOtherIndustry] = useState('');
     const handleIndustryChange = (value: any) => {
         setSelectedIndustry(value);
     };
+
+    console.log(errors, "wererererererererer")
 
     return (
 
@@ -425,7 +440,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                     render={({ field }) => (
                                         <select className='custom-dropdown-template' id="subCategoryId"  {...field}
                                             defaultValue=""
-                                            onChange={(e) => { field.onChange(e.target.value); handleCategorySelect(e.target.value) }}
+                                            onChange={(e) => { setValue('subCategory', e.target.options[e.target.selectedIndex].text); handleSelectChange(e.target.value); field.onChange(e.target.value); handleCategorySelect(e.target.value) }}
                                             // onChange={(e) => { field.onChange(e.target.value); handleSelectChange(e.target.value); handleCategorySelect(e.target.value) }}
                                             disabled={type === "edit"}>
                                             <option value="" disabled>Select SubCategory</option>
@@ -463,28 +478,31 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                         </select>
                                     )}
                                 />
+
                                 {errors.softwareTypeId && <p style={{ color: 'red' }}>{errors.softwareTypeId.message}</p>}
+
                             </div>}
                         </div>
 
                         <div className='mt-5'>
                             <h3 className='text-xl font-semibold capitalize '>Industry</h3>
                             <div className='flex flex-col mb-3'>
-                                <div className='flex justify-between gap-x-3 max-w-full overflow-scroll hiddenscroll py-2'>
+                                <div className='grid grid-cols-4 justify-between gap-x-3 max-w-full   py-2'>
                                     {industryData?.map((item) => (
                                         <Controller
-                                            key={item.id}
+                                            key={item?.id}
                                             name="industry"
                                             control={control}
                                             render={({ field }) => (
-                                                <label htmlFor={item.id} className="my-custom-radio-label capitalize cursor-pointer flex items-center">
+                                                <label htmlFor={item?.id} className="my-custom-radio-label capitalize cursor-pointer flex items-center">
                                                     <input
                                                         type="radio"
-                                                        id={item.id}
+                                                        id={item?.id}
                                                         {...field}
-                                                        value={item.id}
-                                                        checked={selectedIndustry === item?.id}
+                                                        value={item?.id}
+                                                        defaultChecked={selectedIndustry === item?.id}
                                                         onChange={() => {
+                                                            setValue('industry', item?.id)
                                                             field.onChange(item?.id);
                                                             handleIndustryChange(item?.name);
                                                         }}
@@ -495,50 +513,28 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                             )}
                                         />
                                     ))}
-
-                                    {/* Add an "Other" option */}
-                                    <Controller
-                                        name="industry"
-                                        control={control}
-                                        render={({ field }) => (
-                                            <label htmlFor="other" className="my-custom-radio-label capitalize cursor-pointer flex items-center">
-                                                <input
-                                                    type="radio"
-                                                    id="other"
-                                                    {...field}
-                                                    value="other"
-                                                    checked={selectedIndustry === 'other'}
-                                                    onChange={() => {
-                                                        field.onChange('other');
-                                                        handleIndustryChange('other');
-                                                    }}
-                                                    className="cursor-pointer"
-                                                />
-                                                <span className="ml-1 text-nowrap">Other</span>
-                                            </label>
-                                        )}
-                                    />
                                 </div>
 
                                 {/* Conditional rendering of input box when "Other" is selected */}
+
                                 {selectedIndustry === 'Others' && (
-                                    <>
-                                        <div className="mt-3 flex items-center">
-                                            <input
-                                                type="text"
-                                                placeholder="Please specify"
-                                                value={otherIndustry}
-                                                onChange={(e) => setOtherIndustry(e.target.value)}
-                                                className="border rounded p-2 w-full"
-                                            />
-                                            <Icon name='saveicon' className=' border' />
-                                        </div>
-                                    </>
+                                    <div className="mt-3 flex items-center gap-2">
+                                        <input
+                                            {...register("industryName")}
+                                            type="text"
+                                            placeholder="Please specify"
+                                            name="industryName"
+                                            value={otherIndustry}
+                                            onChange={handleInputChangeindustryvalue} // Use a function to handle the change
+                                            className="border h-[50px] rounded p-2 w-full outline-none"
+                                        />
+                                    </div>
                                 )}
 
                                 {errors.industry && (
                                     <p style={{ color: 'red' }}>{errors.industry.message}</p>
                                 )}
+
                             </div>
 
                             <div className='flex flex-col gap-y-5'>
@@ -615,7 +611,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                 {/*  Source file */}
                                 <div className='pt-5'>
                                     <h3 className='text-xl font-semibold capitalize pb-4'>Source File</h3>
-                                    <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
+                                    {/* <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
                                         <Controller
                                             name="sourceFiles"
                                             control={control}
@@ -634,7 +630,25 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                             )}
                                         />
                                     </div>
-                                    {errors.sourceFiles && <p style={{ color: 'red' }}>{errors.sourceFiles.message}</p>}
+                                    {errors.sourceFiles && <p style={{ color: 'red' }}>{errors.sourceFiles.message}</p>} */}
+
+                                    <Controller
+                                        name="sourceFiles"
+                                        control={control}
+                                        render={({ field }) => (
+                                            <input
+                                                {...field}
+                                                id='sourceFiles'
+                                                type="text"
+                                                placeholder="Enter source files URL"
+                                                className="w-full py-3 px-2 border border-neutral-400 rounded-md outline-none"
+                                            />
+                                        )}
+                                    />
+
+                                    {errors.sourceFiles && (
+                                        <p style={{ color: "red" }}>{errors.sourceFiles.message}</p>
+                                    )}
                                 </div>
 
                                 {/* Slider Images  */}
@@ -669,36 +683,36 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
                                 {/* Deskto preview images */}
 
-                                {/* {
-                                    !isMobileSelected && */}
-                                <div className='pt-5'>
-                                    <h3 className='text-xl font-semibold capitalize pb-4'>Desktop Preview Images</h3>
-                                    <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
-                                        <Controller
-                                            name="previewImages"
-                                            control={control}
-                                            rules={{ required: false }}
-                                            render={({ field: { onChange } }) => (
-                                                <FileUpload
-                                                    name='previewImages'
-                                                    onFileSelect={(file) => { onChange(file) }}
-                                                    register={register}
-                                                    type={type}
-                                                    supportedfiles="jpg,png,jpeg"
-                                                    multiple={true}
-                                                    id="3"
-                                                    initialUrls={initialData?.previewImages ? initialData?.previewImages.map((img: any) => ({
-                                                        url: img.imageUrl,
-                                                        id: img.id,
-                                                    })) : []} // Pass URLs here
-                                                    title='Upload Desktop Preview Images Here only 10'
-                                                />
-                                            )}
-                                        />
+                                {
+                                    !isMobileSelected &&
+                                    <div className='pt-5'>
+                                        <h3 className='text-xl font-semibold capitalize pb-4'>Desktop Preview Images</h3>
+                                        <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
+                                            <Controller
+                                                name="previewImages"
+                                                control={control}
+                                                rules={{ required: false }}
+                                                render={({ field: { onChange } }) => (
+                                                    <FileUpload
+                                                        name='previewImages'
+                                                        onFileSelect={(file) => { onChange(file) }}
+                                                        register={register}
+                                                        type={type}
+                                                        supportedfiles="jpg,png,jpeg"
+                                                        multiple={true}
+                                                        id="3"
+                                                        initialUrls={initialData?.previewImages ? initialData?.previewImages.map((img: any) => ({
+                                                            url: img.imageUrl,
+                                                            id: img.id,
+                                                        })) : []} // Pass URLs here
+                                                        title='Upload Desktop Preview Images Here only 10'
+                                                    />
+                                                )}
+                                            />
+                                        </div>
+                                        {errors.previewImages && <p style={{ color: 'red' }}>{errors.previewImages.message}</p>}
                                     </div>
-                                    {errors.previewImages && <p style={{ color: 'red' }}>{errors.previewImages.message}</p>}
-                                </div>
-                                {/* } */}
+                                }
 
 
                                 {/* movilePreview Iamges */}
@@ -740,14 +754,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                         <Controller
                                             name="seoTags"
                                             control={control}
-                                            rules={{
-                                                required: 'SEO Keywords Tag is required',
-                                                maxLength: {
-                                                    value: 100,
-                                                    message: 'SEO Keywords Tag cannot exceed 100 characters',
-                                                },
-                                            }}
-                                            render={({ field }) => (
+                                            render={({ }) => (
                                                 <>
                                                     <div className="flex flex-wrap items-center gap-2 mb-2 pt-3">
                                                         {tags.map((tag, index) => (
@@ -767,13 +774,11 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                         ))}
                                                     </div>
                                                     <input
-                                                        {...field}
-                                                        {...register('seoTags')} // Optional with Controller
                                                         id="seoTags"
                                                         type="text"
                                                         className="py-[18px] px-5 border border-neutral-400 rounded-md outline-none placeholder:text-neutral-400 bg-white"
                                                         placeholder="Type and press space or comma to add tags"
-                                                        onKeyDown={(event) => handleKeyDown(event, field)}
+                                                        onKeyDown={handleKeyDown}
                                                     />
                                                 </>
                                             )}
@@ -782,6 +787,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                             <p style={{ color: 'red' }}>{errors.seoTags.message}</p>
                                         )}
                                     </div>
+
                                     <div className='pt-5'>
                                         <StaticCheckBox onClick={() => { setStaticCheck(!staticcheck), setValue('isPaid', !staticcheck) }} checked={staticcheck} label='Paid' />
                                         {
@@ -801,13 +807,16 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                         />
                                                     )}
                                                 />
+
                                                 {
                                                     errors.price &&
                                                     <p style={{ color: 'red' }}>{errors.price.message}</p>
                                                 }
+
                                             </div>
                                         }
                                     </div>
+
                                     {
                                         loading || loader ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='py-3 mt-5' hideChild='hidden'  >
 
@@ -815,7 +824,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                             upload
                                         </Button>
                                     }
-
 
                                 </div>
                             </div>

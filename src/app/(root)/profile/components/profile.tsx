@@ -307,7 +307,6 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                                 type='text'
                                                 value={response?.user ? response?.user?.name : name}
                                                 onChange={(e) => setName(e?.target?.value)}
-
                                             />
                                             {
                                                 isNameActive ?

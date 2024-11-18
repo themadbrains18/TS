@@ -74,7 +74,7 @@ const FeatureCard: React.FC<featurecardprops> = ({ id, buttonprops, category, cu
                                 by
                                 <span className='text-xs text-subheading font-semibold leading-5 capitalize pr-[6px]'>{uploadername ? uploadername : "The Mad Brains"}</span>
                                 <Icon className="w-[1px] h-4 " name='linevertical' />
-                                <span className='text-xs text-subheading font-semibold leading-5 capitalize pl-[6px]'>{category}</span>
+                                <span className='text-xs max-w-[130px] truncate  text-subheading font-semibold leading-5 capitalize pl-[6px]'>{category}</span>
                             </p>
                         </div>
                         <Button variant='primary' className='py-[5px] px-[10px] text-sm leading-5 font-semibold capitalize'>

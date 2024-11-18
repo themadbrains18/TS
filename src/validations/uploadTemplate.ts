@@ -70,20 +70,26 @@ const isFileSizeValid = (file: any) => {
   return true;
 };
 
+
 /**
  * Base template schema (fields shared by both create and update)
  */
+
+
 const uploadTemplateBase = z.object({
   title: z.string().min(1, { message: "Enter template name" }).max(100),
   templateTypeId: z.string().max(200, { message: "Select Template Type" }),
+  subCategory: z.string().nullable().optional(),
   subCategoryId: z.string().max(200, { message: "Select Category" }),
   softwareTypeId: z.string().min(1, { message: "Select Software Type" }),
-  // industry: z.string().min(1, { message: "Select at least one Industry Type" }),
   industry: z.string().min(1, { message: "Select at least one Industry Type" }),
+  industryName: z.string().optional(),
   version: z.string().min(1, { message: "Enter Your Version" }),
   description: z.string().min(50, { message: "Enter description min 50 character" }),
   techDetails: z.array(z.string().min(1, "Detail cannot be empty")).min(4, "At least 4 technical details are required"),
-  seoTags: z.string().min(2, { message: "Enter Your Tags" }),
+  seoTags: z
+    .array(z.string().min(2, { message: "Tags must be at least 2 characters long." }))
+    .min(5, { message: "You must include at least 5 tags." }),
   isPaid: z.boolean().optional().default(false),
   price: z.string().optional(),
 });
@@ -95,18 +101,53 @@ const uploadTemplateBase = z.object({
  */
 
 
+// export const uploadTemplateSchema = uploadTemplateBase.extend({
+//   // Validates the uploaded files
+//   sourceFiles: fileValidationSchema(1, 1, fileObjectSchema, 'Only zip files are allowed.'),
+//   sliderImages: fileValidationSchema(3, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
+//   previewMobileImages: fileValidationSchema(1, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
+//   previewImages: fileValidationSchema(1, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
+// }).refine((data) => {
+//   return !data.isPaid || !!data.price;
+// }, {
+//   message: "Dollar price is required if it's paid.",
+//   path: ["price"],
+// })
 
+
+/**
+ * Schema for creating a template
+ */
 export const uploadTemplateSchema = uploadTemplateBase.extend({
   // Validates the uploaded files
-  sourceFiles: fileValidationSchema(1, 1, fileObjectSchema, 'Only zip files are allowed.'),
+  sourceFiles: z.string().nonempty("Source files are required"),
   sliderImages: fileValidationSchema(3, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
   previewMobileImages: fileValidationSchema(1, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
-  previewImages: fileValidationSchema(1, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
+  previewImages: fileValidationSchema(0, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.')
+    .or(z.null())
+    .or(z.array(z.undefined())),
+
 }).refine((data) => {
   return !data.isPaid || !!data.price;
 }, {
   message: "Dollar price is required if it's paid.",
   path: ["price"],
+}).superRefine((data, ctx) => {
+  console.log(data, ctx);
+
+  const { subCategory } = data; // Correctly access parent data via ctx.data
+
+  // If subCategory includes 'mobile', we allow previewImages to be undefined
+  if (subCategory?.includes('Mobile')) {
+    return; // No validation needed if subCategory is 'mobile'
+  }
+  if (data?.previewImages && data?.previewImages.length <= 0) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "At least 1 preview image is required.",
+      path: ['previewImages'],
+    });
+  }
 })
 
 /**
