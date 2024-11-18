@@ -321,7 +321,8 @@ export interface TechTemplate {
   sliderImages: PreviewImage[]; // Images for the slider
   previewImages: PreviewImage[]; // Preview images
   previewMobileImages: PreviewImage[]; // Mobile preview images
-  sourceFiles: SourceFile[]; // Source files associated with the template
+  // sourceFiles: SourceFile[]; // Source files associated with the template
+  sourceFiles: string; // Source files associated with the template
   softwareType: SoftwareType; // Software type associated with the template
   subCategory: SubCategory; // Subcategory information
   templateType: SubCategory; // Template type information
@@ -455,7 +456,8 @@ interface Template {
   title: string; // Title of the template
   price: number; // Price of the template
   sliderImages: PreviewImage[]; // Slider images associated with the template
-  sourceFiles: SourceFile[]; // Source files associated with the template
+  // sourceFiles: SourceFile[]; // Source files associated with the template
+  sourceFiles: string; // Source files associated with the template
 }
 
 /**

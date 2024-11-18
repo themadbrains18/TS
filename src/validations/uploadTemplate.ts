@@ -33,14 +33,32 @@ const fileValidationSchema = (
   min: number,
   max: number,
   acceptedSchema: z.ZodTypeAny,
-  fileTypeMessage: string
+  fileTypeMessage: string,
+  maxTotalSize?: number
 ) =>
   z.preprocess(
     (input) => (Array.isArray(input) ? input : []), // Fallback to empty array if not an array
     z.array(acceptedSchema)
       .refine(files => files.length >= min && files.length <= max, `Minimum ${min} and maximum ${max} files allowed.`)
       .refine(files => files.every(file => fileUrlOrImageUrl(file) ? true : isValidFileType(file)), fileTypeMessage)
-      .refine(files => files.every(file => isFileSizeValid(file)), 'File size exceeds the limit of 1MB.')
+      .refine(files => {
+        if (maxTotalSize) {
+          const totalSize = files.reduce((acc, file) => {
+            // console.log(file,"==file");
+            
+            if (file instanceof File) {
+              return acc + file.size;
+            }
+            return acc; // Non-File types don't contribute to total size
+          }, 0);
+          // console.log(totalSize,"==totalSize");
+          // console.log(maxTotalSize,"==maxTotalSize");
+          // console.log(totalSize <= maxTotalSize,"==totalSize <= maxTotalSize");
+          
+          return totalSize <= maxTotalSize;
+        }
+        return true;
+      }, `Total size of all files must not exceed ${maxTotalSize! / (1024 * 1024)} MB.`)
   );
 
 
@@ -99,41 +117,35 @@ const uploadTemplateBase = z.object({
 /**
  * Schema for creating a template
  */
-
-
-// export const uploadTemplateSchema = uploadTemplateBase.extend({
-//   // Validates the uploaded files
-//   sourceFiles: fileValidationSchema(1, 1, fileObjectSchema, 'Only zip files are allowed.'),
-//   sliderImages: fileValidationSchema(3, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
-//   previewMobileImages: fileValidationSchema(1, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
-//   previewImages: fileValidationSchema(1, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
-// }).refine((data) => {
-//   return !data.isPaid || !!data.price;
-// }, {
-//   message: "Dollar price is required if it's paid.",
-//   path: ["price"],
-// })
-
-
-/**
- * Schema for creating a template
- */
 export const uploadTemplateSchema = uploadTemplateBase.extend({
   // Validates the uploaded files
-  sourceFiles: z.string().nonempty("Source files are required"),
-  sliderImages: fileValidationSchema(3, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
-  previewMobileImages: fileValidationSchema(1, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
-  previewImages: fileValidationSchema(0, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.')
-    .or(z.null())
-    .or(z.array(z.undefined())),
+sourceFiles: z.string().nonempty("Source files are required"),
+
+  sliderImages: fileValidationSchema(3, 5, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
+
+  previewMobileImages: fileValidationSchema(
+    1, // Minimum 1 image
+    100,
+    imageObjectSchema,
+    'Only .jpg, .jpeg, .png, and .webp are allowed.',
+    10 * 1024 * 1024 // Maximum total size of 10 MB
+  ),
+  previewImages: fileValidationSchema(
+    0, // Minimum 0 images
+    100,
+    imageObjectSchema,
+    'Only .jpg, .jpeg, .png, and .webp are allowed.',
+    10 * 1024 * 1024 // Maximum total size of 10 MB
+  ).or(z.null()).or(z.array(z.undefined())),
 
 }).refine((data) => {
   return !data.isPaid || !!data.price;
 }, {
   message: "Dollar price is required if it's paid.",
   path: ["price"],
-}).superRefine((data, ctx) => {
-  console.log(data, ctx);
+})
+.superRefine((data, ctx) => {
+  // console.log(data, ctx);
 
   const { subCategory } = data; // Correctly access parent data via ctx.data
 
@@ -155,15 +167,45 @@ export const uploadTemplateSchema = uploadTemplateBase.extend({
  */
 
 export const uploadTemplateUpdateSchema = uploadTemplateBase.extend({
-  sourceFiles: fileValidationSchema(1, 1, fileObjectSchema, 'Only zip files are allowed.').nullable(),
-  sliderImages: fileValidationSchema(3, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
+  sourceFiles: z.string().optional(),
+  sliderImages: fileValidationSchema(3, 5, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
   // .or(z.null())
   // .or(z.array(z.undefined())),
-  previewMobileImages: fileValidationSchema(1, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
+  previewMobileImages: fileValidationSchema(
+    1, // Minimum 1 image
+    100,
+    imageObjectSchema,
+    'Only .jpg, .jpeg, .png, and .webp are allowed.',
+    10 * 1024 * 1024 // Maximum total size of 10 MB
+  ),
   // .or(z.null())
   // .or(z.array(z.undefined())),
-  previewImages: fileValidationSchema(1, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
+  previewImages: fileValidationSchema(
+    0, // Minimum 0 images
+    100,
+    imageObjectSchema,
+    'Only .jpg, .jpeg, .png, and .webp are allowed.',
+    10 * 1024 * 1024 // Maximum total size of 10 MB
+  ).or(z.null()).or(z.array(z.undefined())),
   // .or(z.null())
   // .or(z.array(z.undefined())),
   price: z.coerce.number().optional(),
 })
+
+/**
+ * Schema for creating a template
+ */
+
+
+// export const uploadTemplateSchema = uploadTemplateBase.extend({
+//   // Validates the uploaded files
+//   sourceFiles: fileValidationSchema(1, 1, fileObjectSchema, 'Only zip files are allowed.'),
+//   sliderImages: fileValidationSchema(3, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
+//   previewMobileImages: fileValidationSchema(1, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
+//   previewImages: fileValidationSchema(1, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
+// }).refine((data) => {
+//   return !data.isPaid || !!data.price;
+// }, {
+//   message: "Dollar price is required if it's paid.",
+//   path: ["price"],
+// })

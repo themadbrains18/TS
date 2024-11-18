@@ -47,7 +47,8 @@ interface FormData {
     subCategory: string;
     subCategoryId: string;
     softwareTypeId: string;
-    sourceFiles: FileList;
+    // sourceFiles: FileList;
+    sourceFiles: string;
     sliderImages: FileList;
     previewImages: FileList;
     previewMobileImages: FileList;
@@ -274,17 +275,21 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         setLoader(true)
         const formData = new FormData();
 
+        console.log(data, "====", isMobileSelected);
+        console.log(data?.previewImages, "data?.previewImages");
 
-        console.log(data, "==datat");
 
+        // if (!isMobileSelected) {
+        //     // console.log("herer", data?.previewImages?.length);
 
-        if (!isMobileSelected) {
-            if (data?.previewImages?.length <= 0) {
-                setError('previewImages', { message: "Minimum 1 file is required" })
-                setLoader(false)
-                return;
-            }
-        }
+        //     if (data?.previewImages?.length <= 0) {
+        //         // console.log("in this");
+
+        //         setError('previewImages', { message: "Minimum 1 file is required" })
+        //         setLoader(false)
+        //         return;
+        //     }
+        // }
 
 
         // Append form fields to FormData
@@ -359,7 +364,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         setValue('seoTags', updatedTags); // Update the form value as an array
     };
 
-    const [otherIndustry, setOtherIndustry] = useState<String>();
+    const [otherIndustry, setOtherIndustry] = useState<string>();
 
     const handleInputChangeindustryvalue = (e: any) => {
         setOtherIndustry(e.target.value); // Correctly updating state
@@ -369,8 +374,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     const handleIndustryChange = (value: any) => {
         setSelectedIndustry(value);
     };
-
-    console.log(errors, "wererererererererer")
 
     return (
 
@@ -500,9 +503,9 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                         id={item?.id}
                                                         {...field}
                                                         value={item?.id}
-                                                        defaultChecked={selectedIndustry === item?.id}
+                                                        defaultChecked={(initialData && 'industryTypeId' in initialData) && initialData?.industryTypeId === item?.id}
+                                                        // defaultChecked={selectedIndustry === item?.id}
                                                         onChange={() => {
-                                                            setValue('industry', item?.id)
                                                             field.onChange(item?.id);
                                                             handleIndustryChange(item?.name);
                                                         }}
@@ -524,7 +527,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                             type="text"
                                             placeholder="Please specify"
                                             name="industryName"
-                                            value={otherIndustry}
+                                            defaultValue={otherIndustry || ""}
                                             onChange={handleInputChangeindustryvalue} // Use a function to handle the change
                                             className="border h-[50px] rounded p-2 w-full outline-none"
                                         />
@@ -673,7 +676,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                         id: img.id,
                                                     }))
                                                         : []} // Pass URLs here
-                                                    title='Upload Slider Images Here only 10'
+                                                    title='Upload Slider Images Here Upto 5'
                                                 />
                                             )}
                                         />
@@ -705,7 +708,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                             url: img.imageUrl,
                                                             id: img.id,
                                                         })) : []} // Pass URLs here
-                                                        title='Upload Desktop Preview Images Here only 10'
+                                                        title='Upload Desktop Preview Images Here '
                                                     />
                                                 )}
                                             />
@@ -736,7 +739,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                         url: img.imageUrl,
                                                         id: img.id,
                                                     })) : []} // Pass URLs here
-                                                    title='Upload Mobile Preview Images Here only 10'
+                                                    title='Upload Mobile Preview Images Here'
                                                 />
                                             )}
                                         />

@@ -194,7 +194,7 @@ const Download = () => {
                 date={new Date(item.downloadedAt).toLocaleDateString()}
                 image={item.template.sliderImages[0]?.imageUrl}
                 premium={item.template.price > 0}
-                url={item?.template?.sourceFiles[0]?.fileUrl}
+                url={item?.template?.sourceFiles}
               />
             ))
           ) : (
