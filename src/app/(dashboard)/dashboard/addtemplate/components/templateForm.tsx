@@ -277,7 +277,13 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
         console.log(data, "====", isMobileSelected);
         console.log(data?.previewImages, "data?.previewImages");
+        console.log(data?.industryName, "data?.previewImages");
 
+        if(selectedIndustry === 'Others' && data?.industryName===""){
+            setError('industryName', { message: "This field is required" })
+            setLoader(false)
+return
+        }
 
         // if (!isMobileSelected) {
         //     // console.log("herer", data?.previewImages?.length);
@@ -367,7 +373,12 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     const [otherIndustry, setOtherIndustry] = useState<string>();
 
     const handleInputChangeindustryvalue = (e: any) => {
+
         setOtherIndustry(e.target.value); // Correctly updating state
+        if(otherIndustry!==""){
+            clearErrors('industryName')
+
+        }
     };
 
     const [selectedIndustry, setSelectedIndustry] = useState();
@@ -517,6 +528,9 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                         />
                                     ))}
                                 </div>
+                                {errors.industry && (
+                                    <p style={{ color: 'red' }}>{errors.industry.message}</p>
+                                )}
 
                                 {/* Conditional rendering of input box when "Other" is selected */}
 
@@ -534,8 +548,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                     </div>
                                 )}
 
-                                {errors.industry && (
-                                    <p style={{ color: 'red' }}>{errors.industry.message}</p>
+                                {errors.industryName && (
+                                    <p style={{ color: 'red' }}>{errors.industryName.message}</p>
                                 )}
 
                             </div>
