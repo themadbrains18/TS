@@ -78,6 +78,7 @@ const uploadTemplateBase = z.object({
   templateTypeId: z.string().max(200, { message: "Select Template Type" }),
   subCategoryId: z.string().max(200, { message: "Select Category" }),
   softwareTypeId: z.string().min(1, { message: "Select Software Type" }),
+  // industry: z.string().min(1, { message: "Select at least one Industry Type" }),
   industry: z.string().min(1, { message: "Select at least one Industry Type" }),
   version: z.string().min(1, { message: "Enter Your Version" }),
   description: z.string().min(50, { message: "Enter description min 50 character" }),
@@ -88,9 +89,11 @@ const uploadTemplateBase = z.object({
 });
 
 
+
 /**
  * Schema for creating a template
  */
+
 
 
 export const uploadTemplateSchema = uploadTemplateBase.extend({
@@ -116,10 +119,10 @@ export const uploadTemplateUpdateSchema = uploadTemplateBase.extend({
   // .or(z.null())
   // .or(z.array(z.undefined())),
   previewMobileImages: fileValidationSchema(1, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
-    // .or(z.null())
-    // .or(z.array(z.undefined())),
+  // .or(z.null())
+  // .or(z.array(z.undefined())),
   previewImages: fileValidationSchema(1, MAX_FILE_COUNT, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
-    // .or(z.null())
-    // .or(z.array(z.undefined())),
+  // .or(z.null())
+  // .or(z.array(z.undefined())),
   price: z.coerce.number().optional(),
 })

@@ -31,7 +31,6 @@ const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute, bac
     const [resendOtploading, setResendOtploading] = useState(false)
 
 
-    console.log(response, error, "responseresponse")
 
 
 

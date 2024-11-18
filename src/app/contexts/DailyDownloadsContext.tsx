@@ -17,6 +17,7 @@ interface DownloadContextType {
 /**
  * Provide a default value for the context
  */
+
 const DownloadContext = createContext<DownloadContextType | undefined>(undefined);
 
 export const useDownload = (): DownloadContextType => {
@@ -53,7 +54,7 @@ export const DownloadProvider: React.FC<DownloadProviderProps> = ({ children }) 
   };
 
   useEffect(() => {
-    if(session){
+    if (session) {
       fetchDailyDownloads();
     }
   }, [session]);

@@ -5,8 +5,8 @@ import React from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
 interface DashInputProps extends dashinput {
-  error?: string; 
-  register?: UseFormRegisterReturn; 
+  error?: string;
+  register?: UseFormRegisterReturn;
 }
 
 const DashInput: React.FC<DashInputProps> = ({ className, placeholder, type, value, onChange, name, error, register }) => {
@@ -18,7 +18,7 @@ const DashInput: React.FC<DashInputProps> = ({ className, placeholder, type, val
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className={cn`outline-none border ${error ? 'border-red-500' : 'border-neutral-400'} rounded-md placeholder:text-neutral-500 placeholder:capitalize capitalize w-full p-3 ${className}`}
+        className={cn`outline-none border ${error ? 'border-red-500' : 'border-neutral-400'} rounded-md placeholder:text-neutral-500  w-full p-3 ${className}`}
         {...register} // Pass the register method to the input
       />
       {/* Conditionally render error message */}

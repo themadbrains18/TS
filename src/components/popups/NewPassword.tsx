@@ -24,9 +24,9 @@ interface FormValues {
 
 const NewPassword = ({ formData, otp }: newpasswordpopup) => {
     const [isChecked1, setIsChecked1] = useState(false);
-    const [isLoading , setisLoading] = useState(false);
+    const [isLoading, setisLoading] = useState(false);
 
-console.log("");
+    console.log("");
 
 
     const { data: response, error, loading, fetchData } = useFetch<FormValues>();
@@ -68,14 +68,14 @@ console.log("");
                 setisLoading(false)
                 // Handle failure (e.g., display an error message)
             }
-        } catch (error) {   
+        } catch (error) {
             console.error("Error during password reset:", error);
         }
     };
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <div className='  md:space-y-[30px] space-y-[15px] ' >
+                <div className='md:space-y-[30px] space-y-[15px] ' >
                     <Controller
                         name='newPassword'
                         control={control}

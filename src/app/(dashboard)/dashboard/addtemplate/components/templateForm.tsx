@@ -18,6 +18,7 @@ import { useSession } from 'next-auth/react';
 import { toast } from 'react-toastify';
 import Link from 'next/link';
 import Image from 'next/image';
+import { Calligraffitti } from 'next/font/google';
 
 /**
  * Define types for data structures
@@ -98,18 +99,17 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     /**
      * Dropdown selection states
      */
+
     const [selectedValue, setSelectedValue] = useState<string | null>(null);
     const [categoryValue, setCategoryValue] = useState<string | null>(null);
     const [staticcheck, setStaticCheck] = useState<boolean>(initialData?.isPaid || false);
     const [showSoftwareType, setShowSoftwareType] = useState('')
 
 
-
     const { register, handleSubmit, control, formState: { errors }, setValue, clearErrors, setError } = useForm<FormData>({
         defaultValues: { ...initialData },
         resolver: zodResolver(type == "create" ? uploadTemplateSchema : uploadTemplateUpdateSchema)
     });
-
 
 
     /**
@@ -122,32 +122,26 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         fetchTemplateData(`/sub-categories/${value}`);
     };
 
+
     /**
      * Handle category dropdown selection
      */
+
     const handleCategorySelect = (value: string) => {
         setCategoryValue(value);
     };
 
 
 
-
-
-
     // State to check if "Mobile" is selected
     // const [isMobileSelected, setIsMobileSelected] = useState(false);
-
     // const handleSelectChange = (value: any) => {
     //     // Call the provided category select handler
     //     handleCategorySelect(value);
-
     //     // Update state based on the selected value
     //     const isMobile = templateData?.subCategories?.find((option: any) => option.id === value)?.name === 'Mobile Design Mockups';
     //     setIsMobileSelected(isMobile);
     // };
-
-
-
 
 
 
@@ -216,26 +210,29 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             <div className="p-5 border-b border-neutral-400">
                 {items.map((item, index) => (
                     <div key={index} className="flex items-center gap-x-3 pb-3">
+
                         <DashInput
                             type='text'
-                            placeholder='font name'
+                            placeholder={` ${title} name`}
                             value={item?.name}
                             onChange={(e) => handleInputChange(setter, index, { ...item, name: e.target.value }, items)}
                         />
+
                         <DashInput
                             type='text'
-                            placeholder='font url'
+                            placeholder={` ${title} url`}
                             value={item.url}
                             onChange={(e) => handleInputChange(setter, index, { ...item, url: e.target.value }, items)}
                         />
+
                         {items.length > 1 && (
-                            <Button
+                            <button
                                 onClick={() => removeInputField(setter, index, items)}
-                                className="py-1 px-2"
-                            >
-                                Remove
-                            </Button>
+                                className="py-3 px-3 border" >
+                                <Icon name='closeiconfilter' size={16} />
+                            </button>
                         )}
+
                     </div>
                 ))}
                 <Button onClick={() => addInputFields(setter, items, true)} variant='primary' className='py-2 mt-2'>Add more</Button>
@@ -257,11 +254,11 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                             onChange={(e) => { handleInputChange(setTechnicalDetails, index, e.target.value, technicalDetails); setValue(`techDetails.${index}`, e.target.value); }}
                         />
                         {technicalDetails.length > 4 && (
-                            <Button
+                            <button
                                 onClick={() => removeInputField(setTechnicalDetails, index, technicalDetails)}
-                                className="py-1 px-2" >
-                                Remove
-                            </Button>
+                                className="py-3 px-3 border" >
+                                <Icon name='closeiconfilter' size={16} />
+                            </button>
                         )}
                     </div>
                 ))}
@@ -278,8 +275,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         setLoader(true)
         const formData = new FormData();
 
-
-
         // Append form fields to FormData
         Object.entries(data).forEach(([key, value]) => {
             if (Array.isArray(value)) {
@@ -288,6 +283,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                 formData.append(key, value);
             }
         });
+
         formData.delete("industry")
         formData.append('industry', data?.industry);
         const credits = [
@@ -335,6 +331,31 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
 
 
+    //  new update by 
+
+    const [tags, setTags] = useState<string[]>([]);
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, field: any) => {
+        if (event.key === ' ' || event.key === ',') {
+            const trimmedValue = field.value.trim();
+            if (trimmedValue && !tags.includes(trimmedValue)) {
+                setTags((prevTags) => [...prevTags, trimmedValue]);
+                field.onChange(''); // Clear the input field
+            }
+            event.preventDefault(); // Prevent adding the space or comma
+        }
+    };
+
+    const removeTag = (index: number) => {
+        setTags((prevTags) => prevTags.filter((_, i) => i !== index));
+    };
+
+    const [selectedIndustry, setSelectedIndustry] = useState();
+    console.log(selectedIndustry, "selectedIndustryselectedIndustry")
+    const [otherIndustry, setOtherIndustry] = useState('');
+    const handleIndustryChange = (value: any) => {
+        setSelectedIndustry(value);
+    };
 
     return (
 
@@ -357,6 +378,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                         </div>
                     </div>
                 </div>
+
                 <div className="max-w-[802px] w-full py-0 px-4 my-0 mx-auto pt-10">
                     <h2 className='text-3xl capitalize font-bold pb-8 '>Upload Product</h2>
                     <form onSubmit={handleSubmit(onSubmit)}>
@@ -388,10 +410,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                         </select>
                                     )}
                                 />
-
-
-                                {errors.templateTypeId && (
-                                    <p style={{ color: 'red' }}>{errors.templateTypeId.message}</p>
+                                {errors?.templateTypeId && (
+                                    <p style={{ color: 'red' }}>{errors?.templateTypeId.message}</p>
                                 )}
                             </div>
 
@@ -409,7 +429,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                             // onChange={(e) => { field.onChange(e.target.value); handleSelectChange(e.target.value); handleCategorySelect(e.target.value) }}
                                             disabled={type === "edit"}>
                                             <option value="" disabled>Select SubCategory</option>
-
                                             {templateData?.subCategories?.map((option: any) => {
                                                 return (
                                                     <option className='cursor-pointer' key={option.id} value={option.id}>
@@ -446,36 +465,81 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                 />
                                 {errors.softwareTypeId && <p style={{ color: 'red' }}>{errors.softwareTypeId.message}</p>}
                             </div>}
-
                         </div>
+
                         <div className='mt-5'>
                             <h3 className='text-xl font-semibold capitalize '>Industry</h3>
-                            <div className='flex justify-between gap-x-3  mb-3 max-w-full overflow-scroll hiddenscroll py-2'>
-                                {industryData?.map((item) => (
+                            <div className='flex flex-col mb-3'>
+                                <div className='flex justify-between gap-x-3 max-w-full overflow-scroll hiddenscroll py-2'>
+                                    {industryData?.map((item) => (
+                                        <Controller
+                                            key={item.id}
+                                            name="industry"
+                                            control={control}
+                                            render={({ field }) => (
+                                                <label htmlFor={item.id} className="my-custom-radio-label capitalize cursor-pointer flex items-center">
+                                                    <input
+                                                        type="radio"
+                                                        id={item.id}
+                                                        {...field}
+                                                        value={item.id}
+                                                        checked={selectedIndustry === item?.id}
+                                                        onChange={() => {
+                                                            field.onChange(item?.id);
+                                                            handleIndustryChange(item?.name);
+                                                        }}
+                                                        className="cursor-pointer"
+                                                    />
+                                                    <span className="ml-1 text-nowrap">{item?.name}</span>
+                                                </label>
+                                            )}
+                                        />
+                                    ))}
+
+                                    {/* Add an "Other" option */}
                                     <Controller
-                                        key={item.id} // Add key here for each map iteration
                                         name="industry"
                                         control={control}
                                         render={({ field }) => (
-                                            <label htmlFor={item.id} className="my-custom-radio-label capitalize cursor-pointer flex items-center">
+                                            <label htmlFor="other" className="my-custom-radio-label capitalize cursor-pointer flex items-center">
                                                 <input
                                                     type="radio"
-                                                    id={item.id}
+                                                    id="other"
                                                     {...field}
-                                                    value={item.id}
-                                                    defaultChecked={(initialData && 'industryTypeId' in initialData) && initialData?.industryTypeId === item?.id}
-                                                    onChange={() => field.onChange(item?.id)}
+                                                    value="other"
+                                                    checked={selectedIndustry === 'other'}
+                                                    onChange={() => {
+                                                        field.onChange('other');
+                                                        handleIndustryChange('other');
+                                                    }}
                                                     className="cursor-pointer"
                                                 />
-                                                <span className="ml-1 text-nowrap">{item?.name}</span> {/* Label text next to the radio */}
+                                                <span className="ml-1 text-nowrap">Other</span>
                                             </label>
                                         )}
                                     />
-                                ))}
+                                </div>
+
+                                {/* Conditional rendering of input box when "Other" is selected */}
+                                {selectedIndustry === 'Others' && (
+                                    <>
+                                        <div className="mt-3 flex items-center">
+                                            <input
+                                                type="text"
+                                                placeholder="Please specify"
+                                                value={otherIndustry}
+                                                onChange={(e) => setOtherIndustry(e.target.value)}
+                                                className="border rounded p-2 w-full"
+                                            />
+                                            <Icon name='saveicon' className=' border' />
+                                        </div>
+                                    </>
+                                )}
+
+                                {errors.industry && (
+                                    <p style={{ color: 'red' }}>{errors.industry.message}</p>
+                                )}
                             </div>
-                            {errors.industry && (
-                                <p style={{ color: 'red' }}>{errors.industry.message}</p>
-                            )}
 
                             <div className='flex flex-col gap-y-5'>
                                 <div className='flex flex-col'>
@@ -669,31 +733,54 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
                                 {/* SEO tags and price component */}
                                 <div className='mt-5'>
-
-                                    <div className='flex flex-col'>
-                                        <label className='text-xl font-semibold capitalize' htmlFor="seoTags">SEO Keywords Tag</label>
+                                    <div className="flex flex-col">
+                                        <label className="text-xl font-semibold capitalize" htmlFor="seoTags">
+                                            SEO Keywords Tag
+                                        </label>
                                         <Controller
-                                            name='seoTags'
+                                            name="seoTags"
                                             control={control}
                                             rules={{
                                                 required: 'SEO Keywords Tag is required',
                                                 maxLength: {
                                                     value: 100,
-                                                    message: 'SEO Keywords Tag cannot exceed 100 characters'
-                                                }
+                                                    message: 'SEO Keywords Tag cannot exceed 100 characters',
+                                                },
                                             }}
                                             render={({ field }) => (
-                                                <input
-                                                    {...field} // This spreads the necessary field props from Controller
-                                                    {...register('seoTags')} // This can be included for demonstration but is redundant
-                                                    id='seoTags'
-                                                    type="text"
-                                                    className='py-[18px] px-5 border border-neutral-400 rounded-md outline-none placeholder:text-neutral-400 bg-white'
-                                                    placeholder='SEO Keywords Tag'
-                                                />
+                                                <>
+                                                    <div className="flex flex-wrap items-center gap-2 mb-2 pt-3">
+                                                        {tags.map((tag, index) => (
+                                                            <span
+                                                                key={index}
+                                                                className="bg-blue-100 text-blue-700 px-2 py-1 rounded-md flex items-center"
+                                                            >
+                                                                {tag}
+                                                                <button
+                                                                    type="button"
+                                                                    className="ml-2 text-red-500 hover:text-red-700"
+                                                                    onClick={() => removeTag(index)}
+                                                                >
+                                                                    &times;
+                                                                </button>
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                    <input
+                                                        {...field}
+                                                        {...register('seoTags')} // Optional with Controller
+                                                        id="seoTags"
+                                                        type="text"
+                                                        className="py-[18px] px-5 border border-neutral-400 rounded-md outline-none placeholder:text-neutral-400 bg-white"
+                                                        placeholder="Type and press space or comma to add tags"
+                                                        onKeyDown={(event) => handleKeyDown(event, field)}
+                                                    />
+                                                </>
                                             )}
                                         />
-                                        {errors.seoTags && <p style={{ color: 'red' }}>{errors.seoTags.message}</p>}
+                                        {errors.seoTags && (
+                                            <p style={{ color: 'red' }}>{errors.seoTags.message}</p>
+                                        )}
                                     </div>
                                     <div className='pt-5'>
                                         <StaticCheckBox onClick={() => { setStaticCheck(!staticcheck), setValue('isPaid', !staticcheck) }} checked={staticcheck} label='Paid' />

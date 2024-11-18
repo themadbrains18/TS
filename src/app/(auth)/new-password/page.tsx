@@ -33,6 +33,7 @@ const NewPassword = ({ formdata }: any) => {
      */
     const { data: response, loading, fetchData } = useFetch<FormValues>();
 
+
     /**
      * React hook form setup with validation using zod
      */
@@ -44,6 +45,7 @@ const NewPassword = ({ formdata }: any) => {
      * 
      * Submit handler for form data
      */
+
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
         formdata.newPassword = data.newPassword;
         formdata.confirmPassword = data.confirmPassword;
@@ -57,11 +59,9 @@ const NewPassword = ({ formdata }: any) => {
                 },
             }
             );
-
             // Redirect to login page if the password reset is successful
         } catch (err) {
             console.log(err)
-
         }
     };
     useEffect(() => {
@@ -102,7 +102,7 @@ const NewPassword = ({ formdata }: any) => {
                     <form onSubmit={handleSubmit(onSubmit)}>
 
                         <div className="flex flex-col justify-center h-[559px] md:h-[759px]">
-                            <div className='  md:space-y-[30px] space-y-[15px] ' >
+                            <div className='md:space-y-[30px] space-y-[15px] '>
                                 {/* Input fields for new password and confirm password */}
                                 <Controller
                                     name='newPassword'
@@ -118,6 +118,7 @@ const NewPassword = ({ formdata }: any) => {
                                         />
                                     )}
                                 />
+
                                 <Controller
                                     name='confirmPassword'
                                     control={control}

@@ -69,6 +69,7 @@ const LoginForm = () => {
         }
     };
 
+
     /**
      * Effect hook to manage redirection or OTP flow
      */
