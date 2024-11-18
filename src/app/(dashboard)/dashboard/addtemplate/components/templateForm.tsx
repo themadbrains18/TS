@@ -153,6 +153,12 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             setValue('techDetails', initialData?.techDetails);
             handleTemplateSelect(initialData?.templateTypeId)
             setValue('industry', initialData.industryTypeId)
+            
+            if(initialData?.subCategoryId==="cm208jwgm0005joy0c8dfxnsa" ){
+                // console.log("in this section");
+                setIsMobileSelected(true)
+                
+            }
         }
         if (initialData && initialData?.credits.length > 0) {
             const creditData = initialData?.credits[0];
@@ -343,7 +349,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         router?.back()
     }
 
-    const [tags, setTags] = useState<string[]>([]);
+    const [tags, setTags] = useState<string[]>(initialData?.seoTags||[]);
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === ' ' || event.key === ',') {
@@ -374,6 +380,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     const handleIndustryChange = (value: any) => {
         setSelectedIndustry(value);
     };
+
+    console.log( typeof initialData.seoTags, "wererererererererer")
 
     return (
 
@@ -642,6 +650,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                             <input
                                                 {...field}
                                                 id='sourceFiles'
+                                                value={initialData && initialData?.sourceFiles}
                                                 type="text"
                                                 placeholder="Enter source files URL"
                                                 className="w-full py-3 px-2 border border-neutral-400 rounded-md outline-none"
@@ -775,12 +784,16 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                                 </button>
                                                             </span>
                                                         ))}
+
+                                                       
+
                                                     </div>
                                                     <input
                                                         id="seoTags"
                                                         type="text"
                                                         className="py-[18px] px-5 border border-neutral-400 rounded-md outline-none placeholder:text-neutral-400 bg-white"
                                                         placeholder="Type and press space or comma to add tags"
+                                                        disabled={tags?.length>=5}
                                                         onKeyDown={handleKeyDown}
                                                     />
                                                 </>
