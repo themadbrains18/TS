@@ -607,7 +607,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                         id: img.id,
                                                     }))
                                                         : []} // Pass URLs here
-                                                    title='Upload Slider Images Here only 10'
+                                                    title='Upload Slider Images Here Upto 5'
                                                 />
                                             )}
                                         />
@@ -639,7 +639,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                             url: img.imageUrl,
                                                             id: img.id,
                                                         })) : []} // Pass URLs here
-                                                        title='Upload Desktop Preview Images Here only 10'
+                                                        title='Upload Desktop Preview Images Here '
                                                     />
                                                 )}
                                             />
@@ -670,7 +670,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                         url: img.imageUrl,
                                                         id: img.id,
                                                     })) : []} // Pass URLs here
-                                                    title='Upload Mobile Preview Images Here only 10'
+                                                    title='Upload Mobile Preview Images Here'
                                                 />
                                             )}
                                         />
