@@ -117,7 +117,7 @@ const Download = () => {
                 </h2>
               </div> */}
               {/* Category Dropdown Items */}
-              <div
+              {/* <div
                 className={`absolute right-0 max-[640px]:left-0 ${category ? "opacity-1 visible" : "opacity-0 invisible"
                   } duration-[0.5s] top-[45px] z-10 bg-white`}
               >
@@ -130,7 +130,7 @@ const Download = () => {
                     {item.title}
                   </h4>
                 ))}
-              </div>
+              </div> */}
             </div>
 
             {/* Sort Dropdown */}
@@ -141,12 +141,12 @@ const Download = () => {
             >
               <div
                 onClick={() => setSort(!sort)}
-                className={`w-full border duration-[0.5s] flex flex-nowrap gap-x-[6px] ${sort ? "border-primary-100" : "border-divider-100"
+                className={`w-[208px] justify-between border duration-[0.5s] flex flex-nowrap gap-x-[6px] ${sort ? "border-primary-100" : "border-divider-100"
                   } group py-2 px-[10px] sm:px-5 sm:pr-[15px] items-center`}
               >
                 <h2
                   className={`text-primary text-base font-semibold leading-6 duration-[0.2s] ${sort ? "text-primary-100" : "text-subheading"
-                    } text-nowrap max-w-20 truncate`}
+                    } text-nowrap truncate`}
                 >
                   {selectedSort}
                 </h2>
@@ -158,14 +158,14 @@ const Download = () => {
               </div>
               {/* Sort Dropdown Items */}
               <div
-                className={`absolute right-0 max-[640px]:left-0 ${sort ? "opacity-1 visible" : "opacity-0 invisible"
+                className={`absolute w-[208px] right-0 max-[640px]:left-0 ${sort ? "opacity-1 visible" : "opacity-0 invisible"
                   } duration-[0.5s] top-[45px] z-10 bg-white`}
               >
                 {Sortdata.map((item, index) => (
                   <h4
                     key={index + item.title}
                     onClick={() => handleItemClick(item.title)}
-                    className="text-subparagraph text-start leading-6 py-2 px-3 sm:px-[30px] capitalize cursor-pointer hover:bg-primary-200 border-l-[2px] hover:border-primary-100 text-nowrap max-w-[208px] truncate"
+                    className="text-subparagraph text-start leading-6 py-2 px-3 sm:px-[30px] capitalize cursor-pointer hover:bg-primary-200 border-l-[2px] w-[208px] hover:border-primary-100 text-nowrap truncate"
                   >
                     {item.title}
                   </h4>

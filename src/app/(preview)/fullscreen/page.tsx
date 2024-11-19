@@ -16,7 +16,6 @@ import { PreviewImage } from '@/types/type';
 const FullScreen: FC<any> = ({
     previewImages, previewMobileImages, handleGoBack
 }) => {
-    const router = useRouter();
     const swiperRef = useRef<SwiperType | null>(null);
     const [activeIndex, setActiveIndex] = useState(0); // Track the current active slide
 

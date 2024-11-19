@@ -36,7 +36,7 @@ const FeatureCard: React.FC<featurecardprops> = ({ id, buttonprops, category, cu
                                 <h3 className='capitalize text-white text-lg font-bold leading-7'>view details</h3>
                                 <Icon name='share' />
                             </div>
-                            <span className='py-[5px] px-10px rounded-[30px] absolute top-5 right-5 text-white z-10 inline-block bg-[#00000019]'>{`${currentimage}/${totalimages}`}</span>
+                            <span className=' p-2 rounded-[30px] absolute top-5 right-5 text-white z-10 inline-block bg-[#00000019]'>{`${currentimage}/${totalimages}`}</span>
                         </div>
                     </Link>
                 </div>

@@ -23,7 +23,7 @@ const Footer = () => {
   const { data: response, error, loading, fetchData } = useFetch<subCat[]>();
 
   useEffect(() => {
-      fetchData("/sub-categories", {next:{revalidate:2000}});
+    fetchData("/sub-categories", { next: { revalidate: 2000 } });
   }, []);
 
   const socialicons = [
@@ -73,8 +73,8 @@ const Footer = () => {
             <div className=" lg:max-w-[368px] lg:h-[293px] w-full flex flex-col justify-between items-start">
               <div>
                 <Link href={'/'} >
-                  <Image className=" md:hidden cursor-pointer" src={'/icons/logofooter.svg'} width={247} height={35} alt="logo" />
-                  <Image className="hidden md:block cursor-pointer" src={'/icons/footerlogo.svg'} width={247} height={35} alt="logo" />
+                  {/* <Image className=" md:hidden cursor-pointer" src={'/icons/logofooter.svg'} width={247} height={35} alt="logo" /> */}
+                  <Image className="cursor-pointer" src={'/icons/logofooter.svg'} width={247} height={35} alt="logo" />
                 </Link>
                 <p className=" mt-[15px] md:mt-8 text-subparagraph text-sm leading-5">Template Studio is the place to find free of cost high-quality design resources for designers, creative agencies and developers</p>
               </div>
