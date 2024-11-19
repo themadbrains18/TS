@@ -392,7 +392,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         setSelectedIndustry(value);
     };
 
-    console.log(typeof initialData.seoTags, "wererererererererer")
 
     return (
 
@@ -805,7 +804,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                     <input
                                                         id="seoTags"
                                                         type="text"
-                                                        className="py-[18px] px-5 border border-neutral-400 rounded-md outline-none placeholder:text-neutral-400 bg-white"
+                                                        className={`py-[18px] px-5 border border-neutral-400 rounded-md outline-none placeholder:text-neutral-400 bg-white ${tags?.length>=5 && 'bg-neutral-400 cursor-not-allowed'}`}
                                                         placeholder="Type and press space or comma to add tags"
                                                         disabled={tags?.length >= 5}
                                                         onKeyDown={handleKeyDown}
