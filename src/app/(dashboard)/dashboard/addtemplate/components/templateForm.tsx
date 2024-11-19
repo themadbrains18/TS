@@ -800,6 +800,7 @@ return
                                                 </>
                                             )}
                                         />
+                                        <p className='text-xs'>*Note: 5 keywords are allowed</p>
                                         {errors.seoTags && (
                                             <p style={{ color: 'red' }}>{errors.seoTags.message}</p>
                                         )}
