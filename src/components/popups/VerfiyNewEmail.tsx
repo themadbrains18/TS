@@ -30,7 +30,7 @@ const VerfiyNewEmail: FC<verifyNewemail> = ({
 
 }) => {
 
-  const { data: response,loading, fetchData } = useFetch<any>();
+  const { data: response, loading, fetchData } = useFetch<any>();
   const { data: session } = useSession();
   const { register, handleSubmit, setValue, reset, setError, formState: { errors }, clearErrors, getValues } = useForm<FormData>();
   const [disabled, setDisabled] = useState(true);
@@ -198,7 +198,7 @@ const VerfiyNewEmail: FC<verifyNewemail> = ({
    * This effect runs whenever the `response` object changes.
    */
   useEffect(() => {
-    
+
     if (response?.otp === true) {
       // setValue('otp', ['', '', '', '', '', '']);
       // reset();
@@ -233,14 +233,14 @@ const VerfiyNewEmail: FC<verifyNewemail> = ({
     <div className="py-4 sm:py-[30px]">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="">
-          <div className='flex justify-between items-end gap-x-[10px] sm:gap-x-5' >
+          <div className='flex justify-between items-end gap-x-[10px] sm:gap-x-5 ' >
             <Input
               register={register}
               label={"New Email"}
               name="newEmail"
               placeholder={`Enter new email`}
               onChange={() => clearErrors("newEmail")}
-                className='!py-[13px] px-4 sm:px-5'
+              className='!py-[13px] px-4 sm:px-5 auto-fill-color'
             />
             {startTimer > 0 ? (
               <Button className='bg-primary-100 text-white capitalize  leading-6 transition-all duration-300 hover:bg-[#872fcb] py-[13px] px-[10px] sm:px-[30px] text-nowrap text-sm sm:text-base font-normal' variant='primary' type='button' disabled={true} >
@@ -281,7 +281,7 @@ const VerfiyNewEmail: FC<verifyNewemail> = ({
           <div className="mt-[30px] sm:mt-10">
             <Button
               loadingbtn={loadingbtnverify}
-              iconClass='w-7 h-7' className="w-full py-2 sm:py-[13px] text-lg font-normal text-center justify-center"   type="submit" variant="primary"
+              iconClass='w-7 h-7' className="w-full py-2 sm:py-[13px] text-lg font-normal text-center justify-center" type="submit" variant="primary"
               disabled={disabled}>
               {
                 loadingbtnverify ? "" : "Verify Now"

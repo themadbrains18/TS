@@ -39,7 +39,7 @@ const fileValidationSchema = (
   z.preprocess(
     (input) => (Array.isArray(input) ? input : []), // Fallback to empty array if not an array
     z.array(acceptedSchema)
-      .refine(files => files.length >= min && files.length <= max, `Minimum ${min} and maximum ${max} files allowed.`)
+      .refine(files => files.length >= min && files.length <= max, `Minimum ${min} files allowed.`)
       .refine(files => files.every(file => fileUrlOrImageUrl(file) ? true : isValidFileType(file)), fileTypeMessage)
       .refine(files => {
         if (maxTotalSize) {

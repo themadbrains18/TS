@@ -295,9 +295,9 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                 </div>
 
                                 <div className='mt-5 flex flex-col gap-y-4 lg:gap-y-[30px]'>
-
                                     <div>
                                         <div className='flex items-end gap-x-[10px]'>
+
                                             <Input
                                                 disabled={isNameDisabled}
                                                 className='px-4 py-[13px] md:py-[13px]'
@@ -308,6 +308,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                                 value={response?.user ? response?.user?.name : name}
                                                 onChange={(e) => setName(e?.target?.value)}
                                             />
+
                                             {
                                                 isNameActive ?
                                                     <Button
@@ -331,6 +332,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                                         iconClass='fill-white w-6 h-6'
                                                         editicon={true} >edit</Button>
                                             }
+
                                         </div>
                                         {
                                             nameError && <p className='text-red-500'> {nameError}</p>

@@ -231,7 +231,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                     {step === 1 && (
                         <>
                             <form onSubmit={handleSubmit(onSubmit)}>
-                                <div className="flex justify-between items-end gap-x-[10px] sm:gap-x-5">
+                                <div className="flex justify-between items-end gap-x-[10px] sm:gap-x-5 ">
                                     <Input
                                         register={register}
                                         label={"Current Email"}
@@ -240,7 +240,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                                         value={session?.email}
                                         disabled={step === 1}
                                         onChange={() => clearErrors("email")}
-                                      className='!py-[13px] px-4 sm:px-5'
+                                      className='!py-[13px] px-4 sm:px-5 auto-fill-color'
                                     />
                                     {startTimer > 0 ? (
                                         <Button className='text-nowrapbg-primary-100 text-white capitalize  leading-6 transition-all duration-300 hover:bg-[#872fcb] py-[13px] px-[10px] sm:px-[30px] text-nowrap text-sm sm:text-base font-normal' variant='primary' type='button' disabled={true} >
