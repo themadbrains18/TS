@@ -107,7 +107,7 @@ const uploadTemplateBase = z.object({
   techDetails: z.array(z.string().min(1, "Detail cannot be empty")).min(4, "At least 4 technical details are required"),
   seoTags: z
     .array(z.string().min(2, { message: "Tags must be at least 2 characters long." }))
-    .min(5, { message: "You must include at least 5 tags." }),
+    .max(5, { message: "You must include at least 5 tags." }),
   isPaid: z.boolean().optional().default(false),
   price: z.string().optional(),
 });

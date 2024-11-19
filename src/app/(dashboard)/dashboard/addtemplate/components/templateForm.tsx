@@ -153,6 +153,12 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             setValue('techDetails', initialData?.techDetails);
             handleTemplateSelect(initialData?.templateTypeId)
             setValue('industry', initialData.industryTypeId)
+
+            if (initialData?.subCategoryId === "cm208jwgm0005joy0c8dfxnsa") {
+                // console.log("in this section");
+                setIsMobileSelected(true)
+
+            }
         }
         if (initialData && initialData?.credits.length > 0) {
             const creditData = initialData?.credits[0];
@@ -279,10 +285,10 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         console.log(data?.previewImages, "data?.previewImages");
         console.log(data?.industryName, "data?.previewImages");
 
-        if(selectedIndustry === 'Others' && data?.industryName===""){
+        if (selectedIndustry === 'Others' && data?.industryName === "") {
             setError('industryName', { message: "This field is required" })
             setLoader(false)
-return
+            return
         }
 
         // if (!isMobileSelected) {
@@ -349,7 +355,7 @@ return
         router?.back()
     }
 
-    const [tags, setTags] = useState<string[]>([]);
+    const [tags, setTags] = useState<string[]>(initialData?.seoTags || []);
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === ' ' || event.key === ',') {
@@ -375,7 +381,7 @@ return
     const handleInputChangeindustryvalue = (e: any) => {
 
         setOtherIndustry(e.target.value); // Correctly updating state
-        if(otherIndustry!==""){
+        if (otherIndustry !== "") {
             clearErrors('industryName')
 
         }
@@ -385,6 +391,8 @@ return
     const handleIndustryChange = (value: any) => {
         setSelectedIndustry(value);
     };
+
+    console.log(typeof initialData.seoTags, "wererererererererer")
 
     return (
 
@@ -534,7 +542,7 @@ return
 
                                 {/* Conditional rendering of input box when "Other" is selected */}
 
-                                {selectedIndustry === 'Others' && (
+                                {(selectedIndustry === 'Others' || initialData?.industryName ) && (
                                     <div className="mt-3 flex items-center gap-2">
                                         <input
                                             {...register("industryName")}
@@ -656,6 +664,7 @@ return
                                             <input
                                                 {...field}
                                                 id='sourceFiles'
+                                                value={initialData && initialData?.sourceFiles}
                                                 type="text"
                                                 placeholder="Enter source files URL"
                                                 className="w-full py-3 px-2 border border-neutral-400 rounded-md outline-none"
@@ -789,12 +798,16 @@ return
                                                                 </button>
                                                             </span>
                                                         ))}
+
+
+
                                                     </div>
                                                     <input
                                                         id="seoTags"
                                                         type="text"
                                                         className="py-[18px] px-5 border border-neutral-400 rounded-md outline-none placeholder:text-neutral-400 bg-white"
                                                         placeholder="Type and press space or comma to add tags"
+                                                        disabled={tags?.length >= 5}
                                                         onKeyDown={handleKeyDown}
                                                     />
                                                 </>
