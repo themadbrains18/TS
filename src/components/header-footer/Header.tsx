@@ -390,7 +390,7 @@ const Header = () => {
                           title={`${item?.name}`}
                           titleboxclass="border-b"
                         >
-                          <NavTabs classname="max-w-[768px]:min-w-[148px]" setSidebar={() => setSidebar(!sidebar)} subCat={item?.subCategories} />
+                          <NavTabs  setSidebar={() => setSidebar(!sidebar)} subCat={item?.subCategories} />
                         </Accordion>
                       </Fragment>)
                     })
