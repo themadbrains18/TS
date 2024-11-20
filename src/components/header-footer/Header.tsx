@@ -373,7 +373,7 @@ const Header = () => {
             <div className={cn`flex z-[2] flex-col fixed bg-white w-full transition-all duration-[1s] h-screen  top-0 ${sidebar ? "left-0" : "left-[-100%]"}`}>
               <div className="flex items-center justify-between p-[15px]">
                 <Link onClick={() => { setSidebar(!sidebar) }} href={'/'}>
-                  <Image className="cursor-pointer h-9" width={193} height={38} src={'/icons/logo.svg'} alt="logo" />
+                  <Image className="cursor-pointer h-9" width={193} height={38} src={'/icons/Logo.svg'} alt="logo" />
                 </Link>
                 <div onClick={() => { setSidebar(!sidebar) }} >
                   <Icon className="fill-primary-100" name="crossicon" />

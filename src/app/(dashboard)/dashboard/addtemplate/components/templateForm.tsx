@@ -18,6 +18,7 @@ import { useSession } from 'next-auth/react';
 import { toast } from 'react-toastify';
 import Link from 'next/link';
 import Image from 'next/image';
+import NotFound from '@/app/not-found';
 
 /**
  * Define types for data structures
@@ -96,6 +97,14 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     );
     console.log(initialData, "data")
     const { data: session } = useSession()
+
+
+
+    if (type === "edit" &&  initialData?.error == "Template not found.") {
+        return <NotFound />
+    }
+
+
 
     /**
      * Dropdown selection states
@@ -541,22 +550,24 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
                                 {/* Conditional rendering of input box when "Other" is selected */}
 
-                                {(selectedIndustry === 'Others' || initialData?.industryName ) && (
-                                    <div className="mt-3 flex items-center gap-2">
-                                        <input
-                                            {...register("industryName")}
-                                            type="text"
-                                            placeholder="Please specify"
-                                            name="industryName"
-                                            defaultValue={otherIndustry || ""}
-                                            onChange={handleInputChangeindustryvalue} // Use a function to handle the change
-                                            className="border h-[50px] rounded p-2 w-full outline-none"
-                                        />
-                                    </div>
-                                )}
+                                {(selectedIndustry === 'Others' || initialData?.industryName) && (
+                                    <div>
+                                        <div className="mt-3 flex items-center gap-2">
+                                            <input
+                                                {...register("industryName")}
+                                                type="text"
+                                                placeholder="Please specify"
+                                                name="industryName"
+                                                defaultValue={otherIndustry || ""}
+                                                onChange={handleInputChangeindustryvalue} // Use a function to handle the change
+                                                className="border h-[50px] rounded p-2 w-full outline-none"
+                                            />
 
-                                {errors.industryName && (
-                                    <p style={{ color: 'red' }}>{errors.industryName.message}</p>
+                                        </div>
+                                        {errors.industryName && (
+                                            <p style={{ color: 'red' }}>{errors.industryName.message}</p>
+                                        )}
+                                    </div>
                                 )}
 
                             </div>
@@ -804,7 +815,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                     <input
                                                         id="seoTags"
                                                         type="text"
-                                                        className={`py-[18px] px-5 border border-neutral-400 rounded-md outline-none placeholder:text-neutral-400 bg-white ${tags?.length>=5 && 'bg-neutral-400 cursor-not-allowed'}`}
+                                                        className={`py-[18px] px-5 border border-neutral-400 rounded-md outline-none placeholder:text-neutral-400 bg-white ${tags?.length >= 5 && 'bg-neutral-400 cursor-not-allowed'}`}
                                                         placeholder="Type and press space or comma to add tags"
                                                         disabled={tags?.length >= 5}
                                                         onKeyDown={handleKeyDown}
