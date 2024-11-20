@@ -79,7 +79,7 @@ const InputOtp: React.FC<InputOtpProps> = ({ register, setValue, className, clea
     return (
         <div className="flex flex-col items-center bg-primary-200 ">
             <div className={cn`flex space-x-[30px] m-[15px] ${className}`}>
-                {new Array(6).fill("").map((_, index) => (
+                {new Array(6).fill("")?.map((_, index) => (
                     <input
                         key={index}
                         type="text"

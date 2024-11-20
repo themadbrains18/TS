@@ -29,19 +29,21 @@ const Page = () => {
 
     const [isChecked1, setIsChecked1] = useState(false);
     const [otpPath, setOtppath] = useState(false);
-    const [formData, setFormData] = useState({})
+    const [formData, setFormData] = useState({});
+
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const { control, handleSubmit, formState: { errors } } = useForm<FormData>({
-        resolver: zodResolver(signupSchema)
+        resolver: zodResolver(signupSchema),
     });
 
     const { data: response, loading, fetchData } = useFetch<ApiResponse>();
 
-    /*
-     * Handles form submission for user registration.
-     */
     const onSubmit: SubmitHandler<FormData> = async (data) => {
-        setFormData(data)
+        if (isSubmitting) return;
+        setIsSubmitting(true);
+
+        setFormData(data);
         await fetchData("/register", {
             method: "POST",
             body: JSON.stringify(data),
@@ -49,26 +51,29 @@ const Page = () => {
                 'Content-Type': 'application/json',
             },
         });
+
+        // Set a timeout to re-enable the button after 1500ms
+
+        setTimeout(() => {
+            setIsSubmitting(false);
+        }, 1800);
+
     };
 
-
-
     const backstate = () => {
-        setOtppath(false)
-    }
+        setOtppath(false);
+    };
 
     useEffect(() => {
         if (response?.otp) {
-            setOtppath(true)
+            setOtppath(true);
         }
     }, [response]);
-
 
     return (
         <>
             {
                 otpPath ? (
-
                     <Otp
                         backstate={backstate}
                         prevRouteName={"Register"}
@@ -79,7 +84,6 @@ const Page = () => {
                         setFormData={setFormData}
                         setOtppath={setOtppath}
                     />
-
                 ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-2">
                         {/* Left Section */}
@@ -170,25 +174,27 @@ const Page = () => {
                                         />
                                     </div>
 
-
                                     {/* Register Button */}
                                     <div className="my-[30px] tab:my-[60px]">
-                                        <Button disabled={loading ? true : false} loadingbtn={loading ? true : false} variant='primary' className='w-full items-center justify-center' type='submit' iconClass='w-7 h-7'>
+                                        <Button
+                                            disabled={loading || isSubmitting}
+                                            loadingbtn={loading || isSubmitting}
+                                            variant="primary"
+                                            className="w-full items-center justify-center"
+                                            type="submit"
+                                            iconClass="w-7 h-7"
+                                        >
                                             {
-                                                loading ? "" : "Create Account"
+                                                loading || isSubmitting ? "" : "Create Account"
                                             }
                                         </Button>
 
-                                        {/* <div className="text-end pt-5">
-                                            <Link href={'/forgot-password'} className="text-[16px] font-semibold leading-6 text-subparagraph">
-                                                Forgot Password?
-                                            </Link>
-                                        </div> */}
-
-                                        <div className=" mt-[60px] py-[6px]">
-                                            <p className='text-[16px] font-normal leading-6 text-textparagraph'>Already Have Account ?   <Link href={'/login'} className="text-textheading font-semibold">
-                                                Login
-                                            </Link>
+                                        <div className="mt-[60px] py-[6px]">
+                                            <p className="text-[16px] font-normal leading-6 text-textparagraph">
+                                                Already Have Account ?{" "}
+                                                <Link href={'/login'} className="text-textheading font-semibold">
+                                                    Login
+                                                </Link>
                                             </p>
                                         </div>
                                     </div>

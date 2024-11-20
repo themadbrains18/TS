@@ -161,7 +161,7 @@ const Download = () => {
                 className={`absolute w-[208px] right-0 max-[640px]:left-0 ${sort ? "opacity-1 visible" : "opacity-0 invisible"
                   } duration-[0.5s] top-[45px] z-10 bg-white`}
               >
-                {Sortdata.map((item, index) => (
+                {Sortdata?.map((item, index) => (
                   <h4
                     key={index + item.title}
                     onClick={() => handleItemClick(item.title)}
@@ -187,7 +187,7 @@ const Download = () => {
               <DownloadSkeleton />
             </>
           ) : downloads.length > 0 ? (
-            downloads.map((item) => (
+            downloads?.map((item) => (
               <DownloadCard
                 key={item.id}
                 tittle={item.template.title}

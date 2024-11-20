@@ -24,7 +24,7 @@ const RelatedProducts = () => {
                             <div className='mt-5 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 md:gap-[30px] '>
                                 {
                                     data && data?.data && data?.data?.length > 0 &&
-                                    data?.data?.slice(0, 4).map((item, index) => (
+                                    data?.data?.slice(0, 4)?.map((item, index) => (
                                         <Fragment key={index}>
                                             <FeatureCard
                                             id={item?.id}

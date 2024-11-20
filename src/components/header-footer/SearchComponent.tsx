@@ -136,7 +136,7 @@ const SearchComponent: React.FC<navtabprops> = ({ subCat, classname, opensearch,
 
 
 
-
+    console.log(templates?.templates, "templates?.templates")
 
     return (
         <div className={` ${mainclass} flex items-center relative justify-end`}>
@@ -163,13 +163,15 @@ const SearchComponent: React.FC<navtabprops> = ({ subCat, classname, opensearch,
                 />
                 <Icon name="crossicon" className="cursor-pointer fill-primary-100"
                     onClick={() => {
+
                         setSearchQuery("");
                         if (openinput) openinput(); // Ensure openinput is defined before calling
                     }}
                 />
             </div>
+
             {/* Render search results */}
-            {opensearch && <div className={cn`${searchresults} search-results absolute top-[104%] mt-2 w-full min-w-[180px] bg-white shadow-lg rounded-md overflow-y-auto z-[99] custom-scrollbar-horizon  `}>
+            {opensearch && <div className={cn`${searchresults} search-results absolute top-[104%] mt-2 w-full min-w-[180px] duration-100 bg-white shadow-lg rounded-md overflow-y-auto z-[99] custom-scrollbar-horizon  `}>
                 {loading && <p className="p-4 text-gray-500 text-center">Loading...</p>}
 
                 {/* Display results or no results found */}
@@ -187,6 +189,7 @@ const SearchComponent: React.FC<navtabprops> = ({ subCat, classname, opensearch,
                         </div>
                     </Link>
                 ))}
+
             </div>}
         </div>
     );

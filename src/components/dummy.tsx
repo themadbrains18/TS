@@ -28,7 +28,7 @@ const Appdata: React.FC<AccordionData> = () => {
   return (
     <>
       <div className="">
-        {accordionData.map((item, index) => (
+        {accordionData?.map((item, index) => (
           <Accordion key={index} title={item}>
             <NavTabs />
           </Accordion>

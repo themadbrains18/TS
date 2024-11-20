@@ -100,9 +100,9 @@ const AddTemplate = () => {
 
 
   const handleSearch = async (value: string) => {
-    if (value === "") {
-      fetchTemplates()
-    }
+    // if (value === "") {
+    //   fetchTemplates()
+    // }
     await fetchData(`/templates/search?query=${value}`)
   }
 
@@ -156,7 +156,7 @@ const AddTemplate = () => {
                 <tbody className="divide-y divide-gray-200">
                   {response?.templates && response?.templates.length > 0 ? (
                     <>
-                      {response?.templates.map((template: any, index: number) => (
+                      {response?.templates?.map((template: any, index: number) => (
                         <tr key={index} className="hover:bg-gray-50">
                           <td className="   px-6 py-5 text-sm  md:text-base text-subparagraph capitalize  md:max-w-full font-semibold">
                       {index+1}
@@ -176,7 +176,7 @@ const AddTemplate = () => {
                             {template.price}
                           </td>
                           <td className="px-6 py-5 text-sm md:text-base text-subparagraph flex gap-x-2 flex-nowrap">
-                            {hideIconStates[index] ? (
+                            {/* {hideIconStates[index] ? (
                               <Icon
                                 onClick={() => openPopup(index)}
                                 className="w-6 h-6 fill-subheading cursor-pointer"
@@ -188,7 +188,7 @@ const AddTemplate = () => {
                                 className="w-6 h-6 fill-subheading cursor-pointer"
                                 name="showicon"
                               />
-                            )}
+                            )} */}
                             <Icon
                               onClick={() => setDeletePopupIndex(index)}
                               className="w-6 h-6 fill-subheading cursor-pointer"

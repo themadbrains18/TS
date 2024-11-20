@@ -78,6 +78,7 @@ const isValidFileType = (file: any) => {
   return true;
 };
 
+
 /**
  * Helper function to check if the file size is valid
  */
@@ -107,10 +108,13 @@ const uploadTemplateBase = z.object({
   techDetails: z.array(z.string().min(1, "Detail cannot be empty")).min(4, "At least 4 technical details are required"),
   seoTags: z
     .array(z.string().min(2, { message: "Tags must be at least 2 characters long." }))
-    .max(5, { message: "You must include at least 5 tags." }),
+    .min(2, { message: "You must include at least 2 tags." })
+    .max(5, { message: "Maximum 5 tags are allowed." }),
   isPaid: z.boolean().optional().default(false),
   price: z.string().optional(),
 });
+
+
 
 
 

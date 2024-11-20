@@ -95,7 +95,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
   );
   const [fileError, setFileError] = useState<string | null>(null);
   const [fileNames, setFileNames] = useState<string[]>(
-    fileNameUrl.map((url) => extractFileName(url))
+    fileNameUrl?.map((url) => extractFileName(url))
   );
 
   const supportedFileTypes = supportedfiles.split(',');
@@ -204,7 +204,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
 
       {previewUrls.length > 0 && (
         <div className="grid grid-cols-3 gap-2 mt-3">
-          {previewUrls.map((item, index) => (
+          {previewUrls?.map((item, index) => (
             <FilePreview
               key={item?.id || index}
               previewUrl={item.url}
@@ -216,7 +216,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
 
       {fileNames.length > 0 && (
         <div className="grid grid-cols-3 gap-2 mt-3">
-          {fileNames.map((fileName, index) => (
+          {fileNames?.map((fileName, index) => (
             <FileNameDisplay
               key={fileName}
               fileName={fileName}

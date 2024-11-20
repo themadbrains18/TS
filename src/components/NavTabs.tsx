@@ -19,7 +19,7 @@ import useFetch from "@/hooks/useFetch";
 
 
 
-const NavTabs: React.FC<navtabprops> = ({ subCat, setSidebar }) => {
+const NavTabs: React.FC<navtabprops> = ({ subCat, setSidebar, classname }) => {
   const [activetab, setActivetab] = useState(0);
   const searchParams = useSearchParams();
   const [subCategory, setSubCategory] = useState<any>(subCat && subCat?.length > 0 ? subCat?.[0] : {})
@@ -54,7 +54,7 @@ const NavTabs: React.FC<navtabprops> = ({ subCat, setSidebar }) => {
   return (
     <>
       {/* Tabs Section */}
-      <div className="bg-white lg:shadow-lg overflow-scroll hiddenscroll  w-full">
+      <div className={` ${classname} bg-white lg:shadow-lg overflow-scroll hiddenscroll  w-full`}>
         <div className=" lg:px-10 lg:pt-10 lg:pb-[30px] flex gap-x-[5px] lg:gap-x-5 items-center overflow-scroll hiddenscroll">
           {subCat && subCat?.length > 0 && subCat?.map((item, index) => (
             <Fragment key={Date.now() + index + "subCatitem"}>
@@ -101,7 +101,7 @@ const NavTabs: React.FC<navtabprops> = ({ subCat, setSidebar }) => {
                 view all products
               </Button>
             )}
-            
+
           </div>
 
           {/* NavCards Section */}

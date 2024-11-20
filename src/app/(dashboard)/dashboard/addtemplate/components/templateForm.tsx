@@ -100,7 +100,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
 
 
-    if (type === "edit" &&  initialData?.error == "Template not found.") {
+    if (type === "edit" && initialData?.error == "Template not found.") {
         return <NotFound />
     }
 
@@ -223,7 +223,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         <div className='pb-3'>
             <h4 className='text-lg font-semibold capitalize pb-4'>{title}</h4>
             <div className="p-5 border-b border-neutral-400">
-                {items.map((item, index) => (
+                {items?.map((item, index) => (
                     <div key={index} className="flex items-center gap-x-3 pb-3">
 
                         <DashInput
@@ -260,7 +260,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     const renderTechnicalDetailsFields = () => (
         <div className='pb-3'>
             <div className="p-5 border-b border-neutral-400">
-                {technicalDetails.map((detail: string, index: number) => (
+                {technicalDetails?.map((detail: string, index: number) => (
                     <div key={index} className="flex items-center gap-x-3 pb-3">
                         <DashInput
                             type='text'
@@ -326,10 +326,10 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         formData.append('industry', data?.industry);
         const credits = [
             {
-                fonts: fonts.map(font => ({ name: font.name, url: font.url })),
-                images: images.map(image => ({ name: image.name, url: image.url })),
-                icons: icons.map(icon => ({ name: icon.name, url: icon.url })),
-                illustrations: illustrations.map(illustration => ({ name: illustration.name, url: illustration.url })),
+                fonts: fonts?.map(font => ({ name: font.name, url: font.url })),
+                images: images?.map(image => ({ name: image.name, url: image.url })),
+                icons: icons?.map(icon => ({ name: icon.name, url: icon.url })),
+                illustrations: illustrations?.map(illustration => ({ name: illustration.name, url: illustration.url })),
             }
         ];
         formData.append("credits", JSON.stringify(credits));
@@ -402,6 +402,10 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     };
 
 
+    console.log(selectedIndustry)
+
+
+    console.log(initialData, "data")
     return (
 
         <>
@@ -498,7 +502,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                         <select defaultValue="" className='custom-dropdown-template' id="softwareTypeId" {...field} onChange={(e) => { field.onChange(e.target.value); handleCategorySelect(e.target.value) }}
                                             disabled={type === "edit"}>
                                             <option value="" disabled>Select Software Type</option>
-                                            {templateData?.softwareCategories.map((softwareCategory: any) => {
+                                            {templateData?.softwareCategories?.map((softwareCategory: any) => {
                                                 return (
                                                     <option className='cursor-pointer' key={softwareCategory.id} value={softwareCategory.id}>
                                                         {softwareCategory?.name}
@@ -704,7 +708,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                     multiple={true}
                                                     id="2"
                                                     register={register}
-                                                    initialUrls={initialData?.sliderImages ? initialData?.sliderImages.map((img: any) => ({
+                                                    initialUrls={initialData?.sliderImages ? initialData?.sliderImages?.map((img: any) => ({
                                                         url: img.imageUrl,
                                                         id: img.id,
                                                     }))
@@ -737,7 +741,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                         supportedfiles="jpg,png,jpeg"
                                                         multiple={true}
                                                         id="3"
-                                                        initialUrls={initialData?.previewImages ? initialData?.previewImages.map((img: any) => ({
+                                                        initialUrls={initialData?.previewImages ? initialData?.previewImages?.map((img: any) => ({
                                                             url: img.imageUrl,
                                                             id: img.id,
                                                         })) : []} // Pass URLs here
@@ -768,7 +772,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                     supportedfiles="jpg,png,jpeg"
                                                     multiple={true}
                                                     id="4"
-                                                    initialUrls={initialData?.previewMobileImages ? initialData?.previewMobileImages.map((img: any) => ({
+                                                    initialUrls={initialData?.previewMobileImages ? initialData?.previewMobileImages?.map((img: any) => ({
                                                         url: img.imageUrl,
                                                         id: img.id,
                                                     })) : []} // Pass URLs here
@@ -793,7 +797,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                             render={({ }) => (
                                                 <>
                                                     <div className="flex flex-wrap items-center gap-2 mb-2 pt-3">
-                                                        {tags.map((tag, index) => (
+                                                        {tags && tags.length>0 && tags?.map((tag, index) => (
                                                             <span
                                                                 key={index}
                                                                 className="bg-blue-100 text-blue-700 px-2 py-1 rounded-md flex items-center"
