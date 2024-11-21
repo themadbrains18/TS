@@ -173,7 +173,7 @@ export const uploadTemplateSchema = uploadTemplateBase.extend({
 
 export const uploadTemplateUpdateSchema = uploadTemplateBase.extend({
   sourceFiles: z.string().optional(),
-  sliderImages: fileValidationSchema(3, 5, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
+  sliderImages: fileValidationSchema(3, 5, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.', 10 * 1024 * 1024),
   // .or(z.null())
   // .or(z.array(z.undefined())),
   previewMobileImages: fileValidationSchema(
