@@ -798,12 +798,13 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                     deleteimages={deleteimages}
                                                     type={type}
                                                     name='sliderImages'
-                                                    onFileSelect={(newFiles) => {
-                                                        // Convert `value` to an array if it's a FileList
-                                                        const existingFiles = Array.isArray(value) ? value : Array.from(value);
-                                                        const updatedFiles = [...existingFiles, ...newFiles]; // Merge existing and new files
-                                                        onChange(updatedFiles);
-                                                      }}
+                                                    // onFileSelect={(newFiles) => {
+                                                    //     // Convert `value` to an array if it's a FileList
+                                                    //     const existingFiles = Array.isArray(value) ? value : Array.from(value);
+                                                    //     const updatedFiles = [...existingFiles, ...newFiles]; // Merge existing and new files
+                                                    //     onChange(updatedFiles);
+                                                    //   }}
+                                                    onFileSelect={(file) => { onChange(file) }}
                                                     supportedfiles="jpg,png,jpeg"
                                                     multiple={true}
                                                     id="2"
@@ -836,12 +837,13 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                     <FileUpload
                                                         deleteimages={deleteimages}
                                                         name='previewImages'
-                                                        onFileSelect={(newFiles) => {
-                                                            // Convert `value` to an array if it's a FileList
-                                                            const existingFiles = Array.isArray(value) ? value : Array.from(value);
-                                                            const updatedFiles = [...existingFiles, ...newFiles]; // Merge existing and new files
-                                                            onChange(updatedFiles);
-                                                          }}
+                                                        // onFileSelect={(newFiles) => {
+                                                        //     // Convert `value` to an array if it's a FileList
+                                                        //     const existingFiles = Array.isArray(value) ? value : Array.from(value);
+                                                        //     const updatedFiles = [...existingFiles, ...newFiles]; // Merge existing and new files
+                                                        //     onChange(updatedFiles);
+                                                        //   }}
+                                                        onFileSelect={(file) => { onChange(file) }}
                                                         register={register}
                                                         type={type}
                                                         supportedfiles="jpg,png,jpeg"
@@ -875,12 +877,13 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                     type={type}
                                                     register={register}
                                                     name='previewMobileImages'
-                                                    onFileSelect={(newFiles) => {
-                                                        // Convert `value` to an array if it's a FileList
-                                                        const existingFiles = Array.isArray(value) ? value : Array.from(value);
-                                                        const updatedFiles = [...existingFiles, ...newFiles]; // Merge existing and new files
-                                                        onChange(updatedFiles);
-                                                      }}
+                                                    // onFileSelect={(newFiles) => {
+                                                    //     // Convert `value` to an array if it's a FileList
+                                                    //     const existingFiles = Array.isArray(value) ? value : Array.from(value);
+                                                    //     const updatedFiles = [...existingFiles, ...newFiles]; // Merge existing and new files
+                                                    //     onChange(updatedFiles);
+                                                    //   }}
+                                                    onFileSelect={(file) => { onChange(file) }}
                                                     supportedfiles="jpg,png,jpeg"
                                                     multiple={true}
                                                     id="4"
