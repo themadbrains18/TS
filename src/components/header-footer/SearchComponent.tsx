@@ -136,7 +136,7 @@ const SearchComponent: React.FC<navtabprops> = ({ subCat, classname, opensearch,
 
 
 
-
+    console.log(templates?.templates, "templates?.templates")
 
     return (
         <div className={` ${mainclass} flex items-center relative justify-end`}>
@@ -163,13 +163,15 @@ const SearchComponent: React.FC<navtabprops> = ({ subCat, classname, opensearch,
                 />
                 <Icon name="crossicon" className="cursor-pointer fill-primary-100"
                     onClick={() => {
+
                         setSearchQuery("");
                         if (openinput) openinput(); // Ensure openinput is defined before calling
                     }}
                 />
             </div>
+
             {/* Render search results */}
-            {opensearch && <div className={cn`${searchresults} search-results absolute top-[104%] mt-2 w-full min-w-[180px] bg-white shadow-lg rounded-md overflow-y-auto z-[99] custom-scrollbar-horizon  `}>
+            {opensearch && <div className={cn`${searchresults} search-results absolute top-[104%] mt-2 w-full min-w-[180px] duration-100 bg-white shadow-lg rounded-md overflow-y-auto z-[99] custom-scrollbar-horizon  `}>
                 {loading && <p className="p-4 text-gray-500 text-center">Loading...</p>}
 
                 {/* Display results or no results found */}
@@ -181,12 +183,13 @@ const SearchComponent: React.FC<navtabprops> = ({ subCat, classname, opensearch,
                 {templates?.templates?.map((template) => (
                     <Link href={`/productdetail/${template?.id}`} key={template?.id}>
                         <div onClick={resinputoff} className=" cursor-pointer border-b w-full last:border-b-0">
-                            <p className="text-subparagraph text-start leading-6 py-2 px-[30px] capitalize cursor-pointer line-clamp-1 text-nowrap hover:bg-primary-200 border-l-[2px] hover:border-primary-100 text-sm font-medium truncate ">
+                            <p className="text-subparagraph text-start  leading-6 py-2 px-[30px] capitalize  cursor-pointer  text-nowrap hover:bg-primary-200 border-l-[2px] hover:border-primary-100 text-sm font-medium truncate max-w-[200px] ">
                                 {template?.title}
                             </p>
                         </div>
                     </Link>
                 ))}
+
             </div>}
         </div>
     );

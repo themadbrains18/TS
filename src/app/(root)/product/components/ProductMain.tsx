@@ -144,7 +144,7 @@ const ProductMain = () => {
                             <div className='w-full'>
                                 <div className="flex max-[768px]:flex-col-reverse md:flex justify-between pb-5 md:border-b md:mb-[30px] items-center">
                                     <div className='md:max-w-[600px] w-full overflow-x-scroll md:overflow-hidden flex-nowrap flex md:flex-wrap gap-[10px] hiddenscroll'>
-                                        {items.map((item, index) => (
+                                        {items?.map((item, index) => (
                                             <div key={Date.now() + index}>
                                                 <div className="border-[1px] py-[6px] px-[14px] flex items-center w-full max-w-max bg-primary-300 gap-[5px]">
                                                     <span className="whitespace-nowrap text-xs tab:text-sm font-normal leading-5 text-subparagraph">

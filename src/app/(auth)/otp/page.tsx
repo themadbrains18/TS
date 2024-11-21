@@ -29,7 +29,8 @@ const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute, bac
     const [startTimer, setStartTimer] = useState(180);
     const [canResend, setCanResend] = useState(false);
     const [resendOtploading, setResendOtploading] = useState(false)
-
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    console.log(isSubmitting, "isSubmittingisSubmitting")
 
 
 
@@ -58,6 +59,9 @@ const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute, bac
 
     const onSubmit: SubmitHandler<FormData> = async (data) => {
 
+        if (isSubmitting) return;
+        setIsSubmitting(true);
+
         try {
             formData.otp = data?.otp.join('');
             setFormData(formData);
@@ -74,7 +78,7 @@ const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute, bac
                     setloader(false)
                 }
                 else {
-                    toast.error("Invalid or expire otp")
+                    toast.error("Invalid or expire otp", { autoClose: 1500 })
                     setloader(false)
                 }
             } else {
@@ -89,6 +93,10 @@ const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute, bac
         } catch (err) {
             toast.error("Submission error");
         }
+
+        setTimeout(() => {
+            setIsSubmitting(false);
+        }, 2500);
 
     };
 
@@ -171,7 +179,7 @@ const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute, bac
                         <div className="md:pt-20 pt-10 pb-10 px-4 w-full bg-[#FDFCFF]">
                             <div className='max-w-[599px] m-auto'>
                                 <h2 className="text-[22px] tab:text-[36px] font-bold leading-[44px] pb-[30px] md:pb-[60px]">{tittle}</h2>
-                                <button className='flex gap-[7px] items-center pb-[30px] md:pb-[60px]' onClick={() => { setOtppath && setOtppath(false) }}>
+                                <button type='button' className='flex gap-[7px] items-center pb-[30px] md:pb-[60px]' onClick={() => { setOtppath && setOtppath(false) }}>
                                     <Icon name='iconleft' />
                                     <h2 onClick={backstate} className="text-[18px] font-bold leading-7 text-primary-900">Back To {prevRouteName}</h2>
                                 </button>
@@ -191,37 +199,32 @@ const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute, bac
                                         <p className='text-sm leading-5 text-neutral-600'>Please check your email, 6-digit confirmation code sent to {formData.email}, please enter the confirmation code to verify it's you.</p>
                                     </div>
 
-
-
-
-
                                     <div className='mb-[60px]'>
 
                                         {
                                             api === "login" ? (
                                                 <Button
-                                                    disabled={loader}
-                                                    loadingbtn={loader}
+                                                    disabled={loader || isSubmitting}
+                                                    loadingbtn={loader || isSubmitting}
                                                     variant='primary'
                                                     className='w-full items-center justify-center'
                                                     type='submit'
                                                     iconClass='w-7 h-7'>
                                                     {
-                                                        loader ? "" : "Verify Now"
+                                                        loader || isSubmitting ? "" : "Verify Now"
                                                     }
                                                 </Button>
                                             ) : (
                                                 <Button
-                                                    disabled={loading}
-                                                    loadingbtn={loading}
+                                                    disabled={loading || isSubmitting}
+                                                    loadingbtn={loading || isSubmitting}
                                                     variant='primary'
                                                     className='w-full items-center justify-center'
                                                     type='submit'
                                                     iconClass='w-7 h-7'>
                                                     {
-                                                        loading ? "" : "Verify Now"
+                                                        loading || isSubmitting ? "" : "Verify Now"
                                                     }
-
                                                 </Button>
                                             )
                                         }
@@ -233,8 +236,8 @@ const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute, bac
                                         </h3>
                                     ) : (
                                         <h3 className='text-center text-[14px] leading-5 font-normal text-neutral-600'>
-                                            <button type='button' className={` ${resendOtploading ? 'cursor-not-allowed opacity-80' : "cursor-pointer opacity-100"} text-action-900`}
-                                                onClick={resendCode}>Resend Code</button>
+                                            <button type='button' disabled={resendOtploading} className={` ${resendOtploading ? 'cursor-not-allowed opacity-80' : "cursor-pointer opacity-100"} text-action-900`}
+                                                onClick={resendCode }>Resend Code</button>
                                         </h3>
                                     )}
                                 </div>

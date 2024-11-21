@@ -62,7 +62,7 @@ const ProductFilterside = ({ items, setItems, closefilter, setSelectedFilters }:
                 </button>
             </div>
             <div className='overflow-y-scroll  h-[calc(100%_-_100px)] custom-scrollbar-horizon   ' >
-                {filterData.map((filterSection, index) => (
+                {filterData?.map((filterSection, index) => (
                     <Accordion
                         key={index}
                         title={filterSection?.title}

@@ -57,7 +57,7 @@ const TrendingTechnology = () => {
                     })}
                 </div> */}
                 <div className='flex justify-center items-center gap-[15px] md:gap-[30px]'>
-                    {response && response.length > 0 && response.map((item, index) => {
+                    {response && response?.length > 0 && response?.map((item, index) => {
                         const imageSrc = getImageForTemplate(item?.name, item?.name);
                         return (
                             <Fragment key={index}>

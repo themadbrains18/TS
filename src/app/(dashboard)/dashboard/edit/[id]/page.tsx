@@ -7,56 +7,59 @@ import { authOptions } from '@/libs/auth';
 
 const page = async ({ params }: { params: { id: string } }) => {
 
-    const template = async (): Promise<TechTemplate | any | number> => {
-        let session: Session | null = await getServerSession(authOptions)
-        if (!session?.user) return 'Unauthorize'
+  const template = async (): Promise<TechTemplate | any | number> => {
+    let session: Session | null = await getServerSession(authOptions)
+    if (!session?.user) return 'Unauthorize'
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/templates-by-id/${params.id}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-        if (!response) return null
+    const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/templates-by-id/${params.id}`, {
 
-        return await response.json();
-    };
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
 
-    const getData = await template();
+    });
+    if (!response) return null
 
-    if (getData == null) {
-        return <NotFound />
-    }
+    return await response.json();
+  };
+
+  const getData = await template();
+
+  if (getData == null) {
+    return <NotFound />
+  }
 
 
-    return (
-        <>
-          <Suspense
-                fallback={<>
-                    <div className="hover:bg-gray-50 animate-pulse">
-                      <div className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize max-w-[200px] truncate md:max-w-full font-semibold">
-                        <div className="h-4 bg-gray-200 rounded w-full"></div>
-                      </div>
-                      <div className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">
-                        <div className="h-4 bg-gray-200 rounded w-full"></div>
-                      </div>
-                      <div className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">
-                        <div className="h-4 bg-gray-200 rounded w-full"></div>
-                      </div>
-                      <div className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">
-                        <div className="h-4 bg-gray-200 rounded w-full"></div>
-                      </div>
-                      <div className="px-6 py-5 text-sm md:text-base text-subparagraph flex gap-x-2 flex-nowrap">
-                        <div className="w-6 h-6 bg-gray-200 rounded mr-2"></div>
-                        <div className="w-6 h-6 bg-gray-200 rounded mr-2"></div>
-                        <div className="w-6 h-6 bg-gray-200 rounded mr-2"></div>
-                      </div>
-                    </div>
-                </>}>
-                <TemplateForm initialData={getData} type='edit' id={params?.id} />
-            </Suspense>
-        </>
-    )
+
+  return (
+    <>
+      <Suspense
+        fallback={<>
+          <div className="hover:bg-gray-50 animate-pulse">
+            <div className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize max-w-[200px] truncate md:max-w-full font-semibold">
+              <div className="h-4 bg-gray-200 rounded w-full"></div>
+            </div>
+            <div className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">
+              <div className="h-4 bg-gray-200 rounded w-full"></div>
+            </div>
+            <div className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">
+              <div className="h-4 bg-gray-200 rounded w-full"></div>
+            </div>
+            <div className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">
+              <div className="h-4 bg-gray-200 rounded w-full"></div>
+            </div>
+            <div className="px-6 py-5 text-sm md:text-base text-subparagraph flex gap-x-2 flex-nowrap">
+              <div className="w-6 h-6 bg-gray-200 rounded mr-2"></div>
+              <div className="w-6 h-6 bg-gray-200 rounded mr-2"></div>
+              <div className="w-6 h-6 bg-gray-200 rounded mr-2"></div>
+            </div>
+          </div>
+        </>}>
+        <TemplateForm initialData={getData} type='edit' id={params?.id} />
+      </Suspense>
+    </>
+  )
 }
 
 export default page

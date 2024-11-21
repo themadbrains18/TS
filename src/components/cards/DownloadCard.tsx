@@ -5,6 +5,7 @@ import Icon from '../Icon';
 import Button from '../ui/Button';
 import { downloadcard } from '@/types/type';
 import { cn } from '@/libs/utils';
+import Link from 'next/link';
 
 const DownloadCard: FC<downloadcard> = ({
     date,
@@ -33,7 +34,7 @@ const DownloadCard: FC<downloadcard> = ({
                     width={415}
                     height={342}
                     alt='download template'
-                    onError={() => setImgSrc(downloadtemp)} 
+                    onError={() => setImgSrc(downloadtemp)}
                 />
             </div>
             <div className='p-[10px] md:px-5  md:py-[15px] flex justify-between items-center'>
@@ -42,20 +43,20 @@ const DownloadCard: FC<downloadcard> = ({
                     <p className={cn`text-subheading text-xs leading-5 font-normal ${dateClass}`}>{date}</p>
                 </div>
                 <div className='flex items-center gap-x-[10px] max-w-[108px] w-full justify-end'>
-  <div className='border border-divider-200 bg-primary-200'>
-    {premium && (
-        <Icon className='w-6 h-6 m-1 cursor-pointer' name='premium' />
-    )}
-  </div>
-      <a href={url} download>
-  <Button
-  variant='primary'
-  className={cn`p-2 max-w-[66px] w-full flex justify-center ${downloadClass}`}
-  downloadicon={true}
-  iconClass='w-5 h-5'
-  />
-  </a>
-</div>
+                    <div className='border border-divider-200 bg-primary-200'>
+                        {premium && (
+                            <Icon className='w-6 h-6 m-1 cursor-pointer' name='premium' />
+                        )}
+                    </div>
+                    <Link href={`${url}`} download>
+                        <Button
+                            variant='primary'
+                            className={cn`p-2 max-w-[66px] w-full flex justify-center ${downloadClass}`}
+                            downloadicon={true}
+                            iconClass='w-5 h-5'
+                        />
+                    </Link>
+                </div>
 
             </div>
         </section>

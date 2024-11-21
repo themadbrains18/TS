@@ -228,7 +228,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
     }, [startTimer]);
 
     console.log("errors", errors);
-    
+
 
     return (
         <Modal isOpen={isPopupOpen} className='max-w-[616px] w-full' onClose={() => { closePopup(); setStep(1); setStartTimer(0); setInitialSend(true); setDisabled(true); reset() }}>
@@ -238,7 +238,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                     {step === 1 && (
                         <>
                             <form onSubmit={handleSubmit(onSubmit)}>
-                                <div className="flex justify-between items-end gap-x-[10px] sm:gap-x-5">
+                                <div className="flex justify-between items-end gap-x-[10px] sm:gap-x-5 ">
                                     <Input
                                         register={register}
                                         label={"Current Email"}
@@ -247,10 +247,10 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                                         value={session?.email}
                                         disabled={step === 1}
                                         onChange={() => clearErrors("email")}
-                                        className='!py-[13px] px-4 sm:px-5'
+                                        className='!py-[13px] px-4 sm:px-5 auto-fill-color'
                                     />
                                     {startTimer > 0 ? (
-                                        <Button  className='bg-primary-100 text-white capitalize  leading-6 transition-all duration-300 hover:bg-[#872fcb] py-[13px] px-[10px] sm:px-[30px] text-nowrap text-sm sm:text-base font-normal' variant='primary' type='button' disabled={true} >
+                                        <Button className='bg-primary-100 text-white capitalize  leading-6 transition-all duration-300 hover:bg-[#872fcb] py-[13px] px-[10px] sm:px-[30px] text-nowrap text-sm sm:text-base font-normal' variant='primary' type='button' disabled={true} >
                                             Resend OTP in {Math.floor(startTimer / 60)}:{(startTimer % 60).toString().padStart(2, '0')}
                                         </Button>
                                     ) : (
@@ -280,7 +280,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                                         setValue={setValue}
                                         clearErrors={clearErrors}
                                     />
-                                    {errors?.otp && <p className="text-red-500">{errors?.otp?.length && errors?.otp?.length>0 && `Please enter otp`}</p>}
+                                    {errors?.otp && <p className="text-red-500">{errors?.otp?.length && errors?.otp?.length > 0 && `Please enter otp`}</p>}
                                     <p className="mt-5 text-xs font-normal text-[#4B5563]">
                                         Please check your mail for a 6-digit confirmation code to {session?.email}. Enter the confirmation code to verify.
                                     </p>

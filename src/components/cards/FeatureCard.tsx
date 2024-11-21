@@ -31,12 +31,12 @@ const FeatureCard: React.FC<featurecardprops> = ({ id, buttonprops, category, cu
                     />
 
                     <Link href={`/productdetail/${id}`}>
-                        <div className='absolute top-0 right-0 left-0 bottom-0 bg-subheading opacity-[0.5] sm:opacity-0 transition-all duration-[0.5s] group-hover:opacity-60 flex items-center justify-center gap-x-1 cursor-pointer'>
-                            <div className='flex items-center justify-center cursor-pointer z-10'>
+                        <div className='absolute top-0 right-0 left-0 bottom-0 group-hover:bg-[#28204699]  max-[500px]:bg-[#28204699] transition-all duration-[0.5s] flex items-center justify-center gap-x-1 cursor-pointer'>
+                            <div className='flex items-center justify-center cursor-pointer z-10 group-hover:opacity-100 sm:opacity-0 duration-[0.5s]'>
                                 <h3 className='capitalize text-white text-lg font-bold leading-7'>view details</h3>
                                 <Icon name='share' />
                             </div>
-                            <span className='py-[5px] px-10px rounded-[30px] absolute top-5 right-5 text-white z-10 inline-block bg-[#00000019]'>{`${currentimage}/${totalimages}`}</span>
+                            <span className=' p-2 rounded-[30px] absolute top-5 right-5 text-white z-10 inline-block bg-[#00000019]'>{`${currentimage}/${totalimages}`}</span>
                         </div>
                     </Link>
                 </div>

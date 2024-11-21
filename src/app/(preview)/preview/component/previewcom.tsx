@@ -71,7 +71,7 @@ const Previewcom: FC<PreviewImagesProps> = ({ previewImages = [], previewMobileI
                                             <div className='grid gap-y-5  tab:grid-cols-2 sm:grid-cols-3 xl:grid-cols-4  gap-x-[30px]'>
 
                                                 {
-                                                    previewImages.map((item, index) => (
+                                                    previewImages?.map((item, index) => (
                                                         <Fragment key={`desktop-${index}`}>
                                                             <Image
                                                                 onClick={() => setShowFullScreen(true)}
@@ -104,7 +104,7 @@ const Previewcom: FC<PreviewImagesProps> = ({ previewImages = [], previewMobileI
                                         previewMobileImages && previewMobileImages.length > 0 ?
                                             <div className='grid gap-y-5  tab:grid-cols-2 sm:grid-cols-3 xl:grid-cols-4  gap-x-[30px]'>
                                                 {
-                                                    previewMobileImages.map((item, index) => (
+                                                    previewMobileImages?.map((item, index) => (
                                                         <Fragment key={`mobile-${index}`}>
                                                             <Image
                                                                 onClick={() => setShowFullScreen(true)}
