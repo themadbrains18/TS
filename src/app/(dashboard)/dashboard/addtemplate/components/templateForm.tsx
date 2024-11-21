@@ -73,22 +73,45 @@ interface TemplateFormProps {
 
 
 const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) => {
+
     /**
      * Fetch data hooks for template types, subcategories, and industries
      */
+
     const { data, fetchData, loading } = useFetch<TemplateType[]>();
     const { data: templateData, fetchData: fetchTemplateData, } = useFetch<any>();
     const { data: industryData, fetchData: fetchIndustryData } = useFetch<IndustryType[]>();
 
-
     /**
-     *  State for fonts, images, icons, and illustrations
+     *  State for fonts, images, editimagedata, icons, and illustrations
      */
+
     const [fonts, setFonts] = useState<Font[]>([{ name: '', url: '' }]);
     const [images, setImages] = useState<Font[]>([{ name: '', url: '' }]);
     const [icons, setIcons] = useState<Font[]>([{ name: '', url: '' }]);
     const [illustrations, setIllustrations] = useState<Font[]>([{ name: '', url: '' }]);
     const [loader, setLoader] = useState(false)
+
+    // type edit 
+
+    const [editimagedata, setEditImageData] = useState<{ imgId: string; imgName: string }[]>([]);
+    console.log(editimagedata, "editimagedataeditimagedataeditimagedataeditimagedata")
+    const deleteimages = (imgData:any) => {
+        console.log(imgData, "datadata")
+        // console.log(name, "name")
+        setEditImageData((prevState:any) => {
+            // Check if the data with the same id already exists in the state
+            const exists = prevState.some((item:any) => item.id === imgData.imgId);
+            console.log(exists, "exists")
+            if (!exists) {
+                // Add the new data if it doesn't already exist
+                return [...prevState, imgData];
+            }
+            // If it already exists, return the state as is
+            return prevState;
+        });
+    };
+
 
     /**
      * Technical details state (4 inputs by default)
@@ -158,7 +181,10 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             setValue('techDetails', initialData?.techDetails);
             handleTemplateSelect(initialData?.templateTypeId)
             setValue('industry', initialData.industryTypeId)
-            setValue('seoTags', initialData.seoTags)
+            setValue('seoTags', initialData?.seoTags)
+            setValue('sliderImages', initialData?.sliderImages)
+            setValue('previewImages', initialData?.previewImages)
+            setValue('previewMobileImages', initialData?.previewMobileImages)
 
             if (initialData?.subCategoryId === "cm208jwgm0005joy0c8dfxnsa") {
                 // console.log("in this section");
@@ -359,6 +385,16 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
         const endpoint = type === 'edit' ? `${process.env.NEXT_PUBLIC_APIURL}/templates/${id}` : `${process.env.NEXT_PUBLIC_APIURL}/templates`;
         const method = type === 'edit' ? 'PUT' : 'POST';
+let res:any;
+        if(type==="edit"){
+          res=   editimagedata?.map((item)=>{
+                deleteSliderImage(item?.imgId,item?.imgName)
+            })
+        }
+        if(res?.ok){
+            console.log("delete succesdful");
+            
+        }
 
         // Redirect only after fetchData completes
         await fetch(endpoint, {
@@ -426,8 +462,27 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         setSelectedIndustry(value);
     };
 
-    console.log(errors,"==errors");
-    
+
+    const deleteSliderImage = async (id: string, name: string) => {
+        try {
+          const response = await fetch(`${process?.env?.NEXT_PUBLIC_APIURL}/${name}/${id}`, {
+            method: 'DELETE',
+            headers:{
+            'Authorization': `Bearer ${session?.token}`,
+            }
+          });
+          if (response.ok) {
+            console.log('Image deleted successfully');
+            return response
+          } else {
+            console.error('Failed to delete image');
+          }
+        } catch (error) {
+          console.error('Error deleting image:', error);
+        }
+      };
+    console.log(errors, "==errors");
+
 
     return (
 
@@ -724,6 +779,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                             rules={{ required: false }}
                                             render={({ field: { onChange } }) => (
                                                 <FileUpload
+                                                    deleteimages={deleteimages}
                                                     type={type}
                                                     name='sliderImages'
                                                     onFileSelect={(file) => { onChange(file) }}
@@ -757,6 +813,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                 rules={{ required: false }}
                                                 render={({ field: { onChange } }) => (
                                                     <FileUpload
+                                                    deleteimages={deleteimages}
                                                         name='previewImages'
                                                         onFileSelect={(file) => { onChange(file) }}
                                                         register={register}
@@ -788,6 +845,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                             rules={{ required: false }}
                                             render={({ field: { onChange } }) => (
                                                 <FileUpload
+                                                deleteimages={deleteimages}
                                                     type={type}
                                                     register={register}
                                                     name='previewMobileImages'
