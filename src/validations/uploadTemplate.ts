@@ -105,7 +105,7 @@ const uploadTemplateBase = z.object({
   industryName: z.string().optional(),
   version: z.string().min(1, { message: "Enter Your Version" }),
   description: z.string().min(50, { message: "Enter description min 50 character" }),
-  techDetails: z.array(z.string().min(1, "Detail cannot be empty")).min(4, "At least 4 technical details are required"),
+  techDetails: z.array(z.string().min(2, "Detail cannot be empty")).min(4, "At least 4 technical details are required"),
   seoTags: z
     .array(z.string().min(2, { message: "Tags must be at least 2 characters long." }))
     .min(2, { message: "You must include at least 2 tags." })
