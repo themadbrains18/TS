@@ -39,7 +39,7 @@ const fileValidationSchema = (
   z.preprocess(
     (input) => (Array.isArray(input) ? input : []), // Fallback to empty array if not an array
     z.array(acceptedSchema)
-      .refine(files => files.length >= min && files.length <= max, `Minimum ${min} files required.`)
+      .refine(files => files.length >= min && files.length <= max, `Minimum ${min} files required ${max<10 && `Maximum ${max} files are allowed`}.`)
       .refine(files => files.every(file => fileUrlOrImageUrl(file) ? true : isValidFileType(file)), fileTypeMessage)
       .refine(files => {
         if (maxTotalSize) {
@@ -95,6 +95,7 @@ const isFileSizeValid = (file: any) => {
  */
 
 
+
 const uploadTemplateBase = z.object({
   title: z.string().min(1, { message: "Enter template name" }).max(100),
   templateTypeId: z.string().max(200, { message: "Select Template Type" }),
@@ -102,7 +103,7 @@ const uploadTemplateBase = z.object({
   subCategoryId: z.string().max(200, { message: "Select Category" }),
   softwareTypeId: z.string().min(1, { message: "Select Software Type" }),
   industry: z.string().min(1, { message: "Select at least one Industry Type" }),
-  industryName: z.string().optional(),
+  industryName: z.string().optional().nullable(),
   version: z.string().min(1, { message: "Enter Your Version" }),
   description: z.string().min(50, { message: "Enter description min 50 character" }),
   techDetails: z.array(z.string().min(2, "Detail cannot be empty")).min(4, "At least 4 technical details are required"),
