@@ -36,6 +36,7 @@ const FilePreview = ({
         className="object-cover mb-2"
       />
       <button
+      type='button'
         onClick={(e) => {
           e.stopPropagation();
           onRemove();
