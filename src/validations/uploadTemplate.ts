@@ -39,23 +39,13 @@ const fileValidationSchema = (
   z.preprocess(
     (input) => (Array.isArray(input) ? input : []), // Fallback to empty array if not an array
     z.array(acceptedSchema)
-    .refine(
-      (files) => files.length >= min && files.length <= max,
-      (files) => ({
-        message:
-          files.length > max && max > 10
-            ? `Maximum ${max} files are allowed for this upload.`
-            : files.length > max
-            ? `Maximum ${max} files are allowed.`
-            : `Minimum ${min} files are required.`,
-      })
-    )
+    .refine(files => files.length >= min && files.length <= max, `Minimum ${min} files required ${max<10?`and Maximum ${max} files allowed`:"."}`)
       .refine(files => files.every(file => fileUrlOrImageUrl(file) ? true : isValidFileType(file)), fileTypeMessage)
       .refine(files => {
         if (maxTotalSize) {
           const totalSize = files.reduce((acc, file) => {
             // console.log(file,"==file");
-            
+
             if (file instanceof File) {
               return acc + file.size;
             }
@@ -64,7 +54,7 @@ const fileValidationSchema = (
           // console.log(totalSize,"==totalSize");
           // console.log(maxTotalSize,"==maxTotalSize");
           // console.log(totalSize <= maxTotalSize,"==totalSize <= maxTotalSize");
-          
+
           return totalSize <= maxTotalSize;
         }
         return true;
@@ -129,7 +119,7 @@ const uploadTemplateBase = z.object({
  */
 export const uploadTemplateSchema = uploadTemplateBase.extend({
   // Validates the uploaded files
-sourceFiles: z.string().nonempty("Source files are required"),
+  sourceFiles: z.string().nonempty("Source files are required"),
 
   sliderImages: fileValidationSchema(3, 5, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
 
@@ -154,23 +144,23 @@ sourceFiles: z.string().nonempty("Source files are required"),
   message: "Dollar price is required if it's paid.",
   path: ["price"],
 })
-.superRefine((data, ctx) => {
-  // console.log(data, ctx);
+  .superRefine((data, ctx) => {
+    // console.log(data, ctx);
 
-  const { subCategory } = data; // Correctly access parent data via ctx.data
+    const { subCategory } = data; // Correctly access parent data via ctx.data
 
-  // If subCategory includes 'mobile', we allow previewImages to be undefined
-  if (subCategory?.includes('Mobile')) {
-    return; // No validation needed if subCategory is 'mobile'
-  }
-  if (data?.previewImages && data?.previewImages.length <= 0) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      message: "At least 1 preview image is required.",
-      path: ['previewImages'],
-    });
-  }
-})
+    // If subCategory includes 'mobile', we allow previewImages to be undefined
+    if (subCategory?.includes('Mobile')) {
+      return; // No validation needed if subCategory is 'mobile'
+    }
+    if (data?.previewImages && data?.previewImages.length <= 0) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "At least 1 preview image is required.",
+        path: ['previewImages'],
+      });
+    }
+  })
 
 /**
  * Schema for updating a template

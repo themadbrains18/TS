@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { PreviewImage } from '@/types/type'
 import Previewcom from '../component/previewcom'
 import { Metadata } from 'next'
+import NotFound from '@/app/not-found'
 
 
 
@@ -26,7 +27,7 @@ const Page = async ({ params }: { params: Params }) => {
     })
 
     if (!response.ok) {
-        throw new Error('Template not found');
+        return < NotFound />
     }
     const res = await response.json()
 

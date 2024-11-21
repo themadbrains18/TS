@@ -14,7 +14,8 @@ interface FileUploadProps {
   error?: FieldError;
   initialUrls?: { url: string; id: string }[]; // Initial images as URLs
   fileNameUrl?: string[]; // Initial filenames
-title?: string
+  title?: string
+  deleteimages?: any
 }
 
 const FilePreview = ({
@@ -58,7 +59,7 @@ const FileNameDisplay = ({
     <div className="relative border p-2 mb-2 z-50 mx-auto w-full">
       <p className="text-center">{fileName}</p>
       <button
-      type='button'
+        type='button'
         onClick={(e) => {
           e.stopPropagation();
           onRemove();
@@ -87,9 +88,10 @@ const FileUpload: React.FC<FileUploadProps> = ({
   error,
   initialUrls = [],
   fileNameUrl = [],
-  title
+  title,
+  deleteimages
 }) => {
-  const {data:session} = useSession()
+
   const [files, setFiles] = useState<File[]>([]);
   const [previewUrls, setPreviewUrls] = useState<{ url: string; id: string }[]>(
     initialUrls
@@ -140,7 +142,8 @@ const FileUpload: React.FC<FileUploadProps> = ({
     }
   };
 
-  const handleRemove = (index: number, id?: string,name?:string) => {
+  const handleRemove = (index: number, id?: string, name?: string) => {
+    console.log(name, "namename")
     const updatedFiles = files.filter((_, i) => i !== index);
     const updatedPreviews = previewUrls.filter((_, i) => i !== index);
     const updatedFileNames = fileNames.filter((_, i) => i !== index);
@@ -150,32 +153,20 @@ const FileUpload: React.FC<FileUploadProps> = ({
     setFileNames(updatedFileNames);
     onFileSelect(updatedFiles);
 
-    console.log("hereere", type,id,name);
-    
+
     if (type === 'edit' && id && name) {
-      deleteSliderImage(id, name);
+      let obj = {
+        imgId: id,
+        imgName: name
+      }
+
+      deleteimages(obj)
+      // deleteSliderImage(id, name);
     }
   };
 
-  const deleteSliderImage = async (id: string,name:string) => {
-    try {
-      console.log(name,"==name");
-      
-      const response = await fetch(`${process?.env?.NEXT_PUBLIC_APIURL}/${name}/${id}`, {
-        method: 'DELETE',
-        headers:{
-        'Authorization': `Bearer ${session?.token}`,
-        }
-      });
-      if (response.ok) {
-        console.log('Image deleted successfully');
-      } else {
-        console.error('Failed to delete image');
-      }
-    } catch (error) {
-      console.error('Error deleting image:', error);
-    }
-  };
+
+
 
   return (
     <div className="flex flex-col items-center">
@@ -209,7 +200,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
             <FilePreview
               key={item?.id || index}
               previewUrl={item.url}
-              onRemove={() => handleRemove(index, item.id,name)}
+              onRemove={() => { handleRemove(index, item.id, name) }}
             />
           ))}
         </div>
@@ -226,6 +217,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
           ))}
         </div>
       )}
+
     </div>
   );
 };
