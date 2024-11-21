@@ -39,7 +39,7 @@ const fileValidationSchema = (
   z.preprocess(
     (input) => (Array.isArray(input) ? input : []), // Fallback to empty array if not an array
     z.array(acceptedSchema)
-      .refine(files => files.length >= min && files.length <= max, `Minimum ${min} files required.`)
+      .refine(files => files.length >= min && files.length <= max, `Minimum ${min} files required ${max<10 && `Maximum ${max} files are allowed`}.`)
       .refine(files => files.every(file => fileUrlOrImageUrl(file) ? true : isValidFileType(file)), fileTypeMessage)
       .refine(files => {
         if (maxTotalSize) {
@@ -93,6 +93,7 @@ const isFileSizeValid = (file: any) => {
 /**
  * Base template schema (fields shared by both create and update)
  */
+
 
 
 const uploadTemplateBase = z.object({

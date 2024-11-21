@@ -89,22 +89,19 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     const [icons, setIcons] = useState<Font[]>([{ name: '', url: '' }]);
     const [illustrations, setIllustrations] = useState<Font[]>([{ name: '', url: '' }]);
     const [loader, setLoader] = useState(false)
+
     /**
      * Technical details state (4 inputs by default)
      */
+
     const [technicalDetails, setTechnicalDetails] = useState(
         initialData?.techDetails?.length ? initialData?.techDetails : Array(4).fill("")
     );
-    console.log(initialData, "data")
     const { data: session } = useSession()
-
-
 
     if (type === "edit" && initialData?.error == "Template not found.") {
         return <NotFound />
     }
-
-
 
     /**
      * Dropdown selection states
@@ -115,12 +112,11 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     const [staticcheck, setStaticCheck] = useState<boolean>(initialData?.isPaid || false);
     const [showSoftwareType, setShowSoftwareType] = useState('')
 
-
-
     const { register, handleSubmit, control, formState: { errors }, setValue, clearErrors, setError } = useForm<FormData>({
         defaultValues: { ...initialData, seoTags: [] },
         resolver: zodResolver(type == "create" ? uploadTemplateSchema : uploadTemplateUpdateSchema)
     });
+
 
     /**
      * Handle template dropdown selection
@@ -162,6 +158,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             setValue('techDetails', initialData?.techDetails);
             handleTemplateSelect(initialData?.templateTypeId)
             setValue('industry', initialData.industryTypeId)
+            setValue('seoTags', initialData.seoTags)
 
             if (initialData?.subCategoryId === "cm208jwgm0005joy0c8dfxnsa") {
                 // console.log("in this section");
@@ -286,7 +283,28 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
     const router = useRouter();
 
+
+
+    const [errorvalidaiton, seterrorvalidaiton] = useState<string | null>(null);
+    const errorRef = useRef<HTMLDivElement | null>(null);
+    useEffect(() => {
+        if (errorvalidaiton && errorRef.current) {
+            errorRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }, [errorvalidaiton]);
+
+
     const onSubmit: SubmitHandler<FormData> = async (data) => {
+
+        const result = uploadTemplateSchema.safeParse(data);
+
+        if (!result.success) {
+            const firstError = result.error.errors[0]; // Get the first validation error
+            seterrorvalidaiton(firstError.message);
+        } else {
+            seterrorvalidaiton(null);
+        }
+
 
 
         // Simulate form validation
@@ -298,10 +316,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
         setLoader(true)
         const formData = new FormData();
-
-        console.log(data, "====", isMobileSelected);
-        console.log(data?.previewImages, "data?.previewImages");
-        console.log(data?.industryName, "data?.previewImages");
 
         if (selectedIndustry === 'Others' && data?.industryName === "") {
             setError('industryName', { message: "This field is required" })
@@ -411,17 +425,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     const handleIndustryChange = (value: any) => {
         setSelectedIndustry(value);
     };
-
-
-
-
-    const [errorvalidaiton, seterrorvalidaiton] = useState<string | null>(null);
-    const errorRef = useRef<HTMLDivElement | null>(null);
-    useEffect(() => {
-        if (errorvalidaiton && errorRef.current) {
-            errorRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-    }, [errorvalidaiton]);
 
 
     return (

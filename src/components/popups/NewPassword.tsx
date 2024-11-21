@@ -8,6 +8,7 @@ import { newChangePassword } from '@/validations/NewPassword';
 import Input from '../ui/Input';
 import { signOut } from 'next-auth/react';
 import CheckBox from '../ui/checkbox';
+import { toast } from 'react-toastify';
 
 interface newpasswordpopup {
     formData?: {
@@ -26,14 +27,11 @@ const NewPassword = ({ formData, otp }: newpasswordpopup) => {
     const [isChecked1, setIsChecked1] = useState(false);
     const [isLoading, setisLoading] = useState(false);
 
-    console.log("");
-
-
-    const { data: response, error, loading, fetchData } = useFetch<FormValues>();
 
     const { handleSubmit, control, formState: { errors } } = useForm<FormValues>({
         resolver: zodResolver(newChangePassword)
     });
+
 
     /**
      * onSubmit function handles form submission.
@@ -41,6 +39,8 @@ const NewPassword = ({ formData, otp }: newpasswordpopup) => {
      * 
      * @param data - The form data submitted by the user, which includes the new password, confirmation password, email, and OTP.
      */
+    
+
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
 
         try {
@@ -58,12 +58,14 @@ const NewPassword = ({ formData, otp }: newpasswordpopup) => {
                 }),
             });
 
+
+            const res = await result.json();
             if (result.ok) {
-                const res = await result.json();
                 signOut()
 
                 // Handle success (e.g., display a success message)
             } else {
+                toast.error(res?.message)
                 console.error("Failed to reset password:", result.statusText);
                 setisLoading(false)
                 // Handle failure (e.g., display an error message)
@@ -72,6 +74,7 @@ const NewPassword = ({ formData, otp }: newpasswordpopup) => {
             console.error("Error during password reset:", error);
         }
     };
+
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -129,7 +132,6 @@ const NewPassword = ({ formData, otp }: newpasswordpopup) => {
                     </Button>
                 </div>
             </form>
-
         </>
     )
 }

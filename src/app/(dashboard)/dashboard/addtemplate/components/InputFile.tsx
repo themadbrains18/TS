@@ -58,6 +58,7 @@ const FileNameDisplay = ({
     <div className="relative border p-2 mb-2 z-50 mx-auto w-full">
       <p className="text-center">{fileName}</p>
       <button
+      type='button'
         onClick={(e) => {
           e.stopPropagation();
           onRemove();
