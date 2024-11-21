@@ -45,6 +45,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
     const [resendData, setResendData] = useState<FormData>();
     const [initialSend, setInitialSend] = useState(true);
     const [FormData, setFormData] = useState({})
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     /**
      * onSubmit function handles the form submission process.
@@ -98,6 +99,9 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
      * @returns {void}
      */
     const handleEmmailUpdate = async () => {
+
+        if (isSubmitting) return;
+        setIsSubmitting(true);
         try {
             setLoadingbtn(true);
             const email = step === 1
@@ -133,6 +137,10 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
         } finally {
             setLoadingbtn(false);
         }
+
+        setTimeout(() => {
+            setIsSubmitting(false);
+        }, 2500);
     };
 
 
@@ -144,6 +152,10 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
      */
 
     const resendCode = async () => {
+
+
+        
+
         if (!canResend) return;
 
         try {
@@ -170,6 +182,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
         finally {
             setLoadingbtn(false)
         }
+       
     };
 
 

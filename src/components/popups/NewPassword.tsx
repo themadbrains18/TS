@@ -26,6 +26,8 @@ interface FormValues {
 const NewPassword = ({ formData, otp }: newpasswordpopup) => {
     const [isChecked1, setIsChecked1] = useState(false);
     const [isLoading, setisLoading] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
 
 
     const { handleSubmit, control, formState: { errors } } = useForm<FormValues>({
@@ -39,9 +41,12 @@ const NewPassword = ({ formData, otp }: newpasswordpopup) => {
      * 
      * @param data - The form data submitted by the user, which includes the new password, confirmation password, email, and OTP.
      */
-    
+
 
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
+
+        if (isSubmitting) return;
+        setIsSubmitting(true);
 
         try {
             setisLoading(true)
@@ -65,14 +70,16 @@ const NewPassword = ({ formData, otp }: newpasswordpopup) => {
 
                 // Handle success (e.g., display a success message)
             } else {
-                toast.error(res?.message)
-                console.error("Failed to reset password:", result.statusText);
+                toast.error(res?.message, { autoClose: 1500 })
                 setisLoading(false)
                 // Handle failure (e.g., display an error message)
             }
         } catch (error) {
             console.error("Error during password reset:", error);
         }
+        setTimeout(() => {
+            setIsSubmitting(false);
+        }, 2500);
     };
 
     return (

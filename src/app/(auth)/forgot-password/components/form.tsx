@@ -31,6 +31,8 @@ const Form = () => {
 
     const [otpPath, setOtppath] = useState(false); // Flag to control whether to show the OTP page
     const [formData, setFormData] = useState({}); // Stores form data for OTP submission
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     const router = useRouter();
 
     /**
@@ -47,6 +49,8 @@ const Form = () => {
      */
 
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
+        if (isSubmitting) return;
+        setIsSubmitting(true);
         try {
             setFormData(data); // Save form data for OTP
             // Send POST request with email/phone number data
@@ -60,6 +64,9 @@ const Form = () => {
         } catch (error) {
             console.log(error)
         }
+        setTimeout(() => {
+            setIsSubmitting(false);
+        }, 2500);
     };
 
     /**

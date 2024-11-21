@@ -30,7 +30,6 @@ const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute, bac
     const [canResend, setCanResend] = useState(false);
     const [resendOtploading, setResendOtploading] = useState(false)
     const [isSubmitting, setIsSubmitting] = useState(false);
-    console.log(isSubmitting, "isSubmittingisSubmitting")
 
 
 

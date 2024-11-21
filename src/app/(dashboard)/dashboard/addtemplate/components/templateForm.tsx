@@ -663,7 +663,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                     <div className='p-5 border border-neutral-400 rounded-md'>
                                         {renderTechnicalDetailsFields()}
                                     </div>
-                                    {errors.techDetails && <p ref={errorRef} style={{ color: 'red' }}>{errors.techDetails.message}</p>}
+                                    {errors.techDetails && <p style={{ color: 'red' }}>Required</p>}
                                 </div>
 
                                 {/* File Uploads */}
