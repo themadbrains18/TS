@@ -389,7 +389,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     const [tags, setTags] = useState<string[]>(initialData?.seoTags || []);
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === ' ' || event.key === ',') {
+        if (event.key === ',') {
             event.preventDefault(); // Prevent default space or comma behavior
             const value = event.currentTarget.value.trim(); // Get trimmed value
 
@@ -841,7 +841,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                         id="seoTags"
                                                         type="text"
                                                         className={`py-[18px] px-5 border border-neutral-400 rounded-md outline-none placeholder:text-neutral-400 bg-white ${tags?.length >= 5 && 'bg-neutral-400 cursor-not-allowed'}`}
-                                                        placeholder="Type and press space or comma to add tags"
+                                                        placeholder="Type comma to add tags"
                                                         disabled={tags?.length >= 5}
                                                         onKeyDown={handleKeyDown}
                                                     />
