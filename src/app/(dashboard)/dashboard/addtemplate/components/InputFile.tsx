@@ -143,11 +143,15 @@ const FileUpload: React.FC<FileUploadProps> = ({
     }
   };
 
+  // console.log(previewUrls,"==preview urls");
+  
   const handleRemove = (index: number, id?: string, name?: string) => {
-    console.log(name, "namename")
+    // console.log(index,"=index",previewUrls);
+    
     const updatedFiles = files.filter((_, i) => i !== index);
     const updatedPreviews = previewUrls.filter((_, i) => i !== index);
     const updatedFileNames = fileNames.filter((_, i) => i !== index);
+// console.log(updatedPreviews,"==updated");
 
     setFiles(updatedFiles);
     setPreviewUrls(updatedPreviews);

@@ -95,14 +95,11 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     // type edit 
 
     const [editimagedata, setEditImageData] = useState<{ imgId: string; imgName: string }[]>([]);
-    console.log(editimagedata, "editimagedataeditimagedataeditimagedataeditimagedata")
-    const deleteimages = (imgData:any) => {
-        console.log(imgData, "datadata")
+    const deleteimages = (imgData: any) => {
         // console.log(name, "name")
-        setEditImageData((prevState:any) => {
+        setEditImageData((prevState: any) => {
             // Check if the data with the same id already exists in the state
-            const exists = prevState.some((item:any) => item.id === imgData.imgId);
-            console.log(exists, "exists")
+            const exists = prevState.some((item: any) => item.id === imgData.imgId);
             if (!exists) {
                 // Add the new data if it doesn't already exist
                 return [...prevState, imgData];
@@ -135,7 +132,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     const [staticcheck, setStaticCheck] = useState<boolean>(initialData?.isPaid || false);
     const [showSoftwareType, setShowSoftwareType] = useState('')
 
-    const { register, handleSubmit, control, formState: { errors }, setValue, clearErrors, setError } = useForm<FormData>({
+    const { register, handleSubmit, control, formState: { errors }, setValue, clearErrors, setError, getValues } = useForm<FormData>({
         defaultValues: { ...initialData, seoTags: [] },
         resolver: zodResolver(type == "create" ? uploadTemplateSchema : uploadTemplateUpdateSchema)
     });
@@ -175,6 +172,9 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         fetchData(`/template-types`);
         fetchIndustryData(`/industry-type`);
     }, [fetchData, fetchIndustryData]);
+
+    // console.log(getValues('sliderImages'), "==slider images");
+
 
     useEffect(() => {
         if (initialData) {
@@ -319,48 +319,52 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         }
     }, [errorvalidaiton]);
 
+    interface FormDataObject {
+        [key: string]: any; // Define a dynamic type for the form data fields
+      }
 
-    const onSubmit: SubmitHandler<FormData> = async (data) => {
+    const onSubmit: SubmitHandler<FormDataObject> = async (data) => {
+        console.log(editimagedata,"=editimagedata");
 
-        const result = uploadTemplateSchema.safeParse(data);
 
+        if(type=="edit"){
+            editimagedata?.map((item)=>{
+                data[item?.imgName] = data[item?.imgName].filter((e:any)=>e.id!==item?.imgId)
+            })
+        }
+        
+        console.log(data,"==data");
+
+        // if(data?.seoTags?.length<2){
+        //     setError('seoTags',"")
+        // }
+
+        let schema=type == "create" ? uploadTemplateSchema : uploadTemplateUpdateSchema
+        const result = schema.safeParse(data);
+    
         if (!result.success) {
-            const firstError = result.error.errors[0]; // Get the first validation error
+            const firstError:any = result.error.errors[0]; // Get the first validation error
             seterrorvalidaiton(firstError.message);
+
+            setError(firstError.path[0],{message:firstError?.message})
+            console.log("here", result.error);
+            console.log("here1", result.error.errors[0]);
+            
+            return;
         } else {
             seterrorvalidaiton(null);
         }
-
-
-
-        // Simulate form validation
-        const isValid = false; // Assume the form is invalid
-
-        if (!isValid) {
-            seterrorvalidaiton('There is an error with your form submission.');
-        }
-
-        setLoader(true)
-        const formData = new FormData();
-
+    
         if (selectedIndustry === 'Others' && data?.industryName === "") {
-            setError('industryName', { message: "This field is required" })
-            setLoader(false)
-            return
+            setError('industryName', { message: "This field is required" });
+            return;
         }
-
-        // if (!isMobileSelected) {
-        //     // console.log("herer", data?.previewImages?.length);
-
-        //     if (data?.previewImages?.length <= 0) {
-        //         // console.log("in this");
-
-        //         setError('previewImages', { message: "Minimum 1 file is required" })
-        //         setLoader(false)
-        //         return;
-        //     }
-        // }
-
+    
+        setLoader(true);
+        const formData = new FormData();
+    
+        console.log(data?.sliderImages, "==slider images");
+    
         // Append form fields to FormData
         Object.entries(data).forEach(([key, value]) => {
             if (Array.isArray(value)) {
@@ -369,9 +373,10 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                 formData.append(key, value);
             }
         });
-
-        formData.delete("industry")
+    
+        formData.delete("industry");
         formData.append('industry', data?.industry);
+    
         const credits = [
             {
                 fonts: fonts?.map(font => ({ name: font.name, url: font.url })),
@@ -381,42 +386,53 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             }
         ];
         formData.append("credits", JSON.stringify(credits));
-
-
-        const endpoint = type === 'edit' ? `${process.env.NEXT_PUBLIC_APIURL}/templates/${id}` : `${process.env.NEXT_PUBLIC_APIURL}/templates`;
+    
+        const endpoint = type === 'edit'
+            ? `${process.env.NEXT_PUBLIC_APIURL}/templates/${id}`
+            : `${process.env.NEXT_PUBLIC_APIURL}/templates`;
         const method = type === 'edit' ? 'PUT' : 'POST';
-let res:any;
-        if(type==="edit"){
-          res=   editimagedata?.map((item)=>{
-                deleteSliderImage(item?.imgId,item?.imgName)
-            })
-        }
-        if(res?.ok){
-            console.log("delete succesdful");
-            
-        }
-
-        // Redirect only after fetchData completes
-        await fetch(endpoint, {
-            method: method, body: formData, headers: {
-                'Authorization': `Bearer ${session?.token}`, // Adding Authorization header with Bearer token
-            },
-        }).then(async (res) => {
-            const result = await res.json()
-            if (!res?.ok) {
-                toast.error(result.message)
-                setLoader(false)
+    
+        try {
+            if (type === "edit" && editimagedata?.length > 0) {
+                // Delete images first
+                await Promise.all(
+                    editimagedata.map(async (item) => {
+                        const response = await deleteSliderImage(item?.imgId, item?.imgName);
+                        if (response?.ok) {
+                            console.log(`Deleted image: ${item?.imgName}`);
+                        } else {
+                            console.error(`Failed to delete image: ${item?.imgName}`);
+                        }
+                    })
+                );
             }
-            else {
-                toast.success(result.message)
-                setLoader(false)
-                router.push('/dashboard')
+    
+            console.log([...formData.getAll('sliderImages')], "==slider images after deletion");
+    
+            // Submit the form data
+            const response = await fetch(endpoint, {
+                method,
+                body: formData,
+                headers: {
+                    'Authorization': `Bearer ${session?.token}`, // Adding Authorization header with Bearer token
+                },
+            });
+    
+            const result = await response.json();
+    
+            if (!response.ok) {
+                toast.error(result.message);
+            } else {
+                toast.success(result.message);
+                router.push('/dashboard');
             }
-
-        }).catch(error => {
+        } catch (error) {
             console.error("An error occurred during submission:", error);
-        });
+        } finally {
+            setLoader(false);
+        }
     };
+    
 
     const goback = () => {
         router?.back()
@@ -465,22 +481,22 @@ let res:any;
 
     const deleteSliderImage = async (id: string, name: string) => {
         try {
-          const response = await fetch(`${process?.env?.NEXT_PUBLIC_APIURL}/${name}/${id}`, {
-            method: 'DELETE',
-            headers:{
-            'Authorization': `Bearer ${session?.token}`,
+            const response = await fetch(`${process?.env?.NEXT_PUBLIC_APIURL}/${name}/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${session?.token}`,
+                }
+            });
+            if (response.ok) {
+                console.log('Image deleted successfully');
+                return response
+            } else {
+                console.error('Failed to delete image');
             }
-          });
-          if (response.ok) {
-            console.log('Image deleted successfully');
-            return response
-          } else {
-            console.error('Failed to delete image');
-          }
         } catch (error) {
-          console.error('Error deleting image:', error);
+            console.error('Error deleting image:', error);
         }
-      };
+    };
     console.log(errors, "==errors");
 
 
@@ -756,7 +772,7 @@ let res:any;
                                             <input
                                                 {...field}
                                                 id='sourceFiles'
-                                                value={initialData && initialData?.sourceFiles}
+                                                defaultValue={initialData && initialData?.sourceFiles}
                                                 type="text"
                                                 placeholder="Enter source files URL"
                                                 className="w-full py-3 px-2 border border-neutral-400 rounded-md outline-none"
@@ -777,12 +793,17 @@ let res:any;
                                             name="sliderImages"
                                             control={control}
                                             rules={{ required: false }}
-                                            render={({ field: { onChange } }) => (
+                                            render={({ field: { onChange, value = [] } }) => (
                                                 <FileUpload
                                                     deleteimages={deleteimages}
                                                     type={type}
                                                     name='sliderImages'
-                                                    onFileSelect={(file) => { onChange(file) }}
+                                                    onFileSelect={(newFiles) => {
+                                                        // Convert `value` to an array if it's a FileList
+                                                        const existingFiles = Array.isArray(value) ? value : Array.from(value);
+                                                        const updatedFiles = [...existingFiles, ...newFiles]; // Merge existing and new files
+                                                        onChange(updatedFiles);
+                                                      }}
                                                     supportedfiles="jpg,png,jpeg"
                                                     multiple={true}
                                                     id="2"
@@ -811,11 +832,16 @@ let res:any;
                                                 name="previewImages"
                                                 control={control}
                                                 rules={{ required: false }}
-                                                render={({ field: { onChange } }) => (
+                                                render={({ field: { onChange, value = [] } }) => (
                                                     <FileUpload
-                                                    deleteimages={deleteimages}
+                                                        deleteimages={deleteimages}
                                                         name='previewImages'
-                                                        onFileSelect={(file) => { onChange(file) }}
+                                                        onFileSelect={(newFiles) => {
+                                                            // Convert `value` to an array if it's a FileList
+                                                            const existingFiles = Array.isArray(value) ? value : Array.from(value);
+                                                            const updatedFiles = [...existingFiles, ...newFiles]; // Merge existing and new files
+                                                            onChange(updatedFiles);
+                                                          }}
                                                         register={register}
                                                         type={type}
                                                         supportedfiles="jpg,png,jpeg"
@@ -843,13 +869,18 @@ let res:any;
                                             name="previewMobileImages"
                                             control={control}
                                             rules={{ required: false }}
-                                            render={({ field: { onChange } }) => (
+                                            render={({ field: { onChange, value = [] } }) => (
                                                 <FileUpload
-                                                deleteimages={deleteimages}
+                                                    deleteimages={deleteimages}
                                                     type={type}
                                                     register={register}
                                                     name='previewMobileImages'
-                                                    onFileSelect={(file) => { onChange(file) }}
+                                                    onFileSelect={(newFiles) => {
+                                                        // Convert `value` to an array if it's a FileList
+                                                        const existingFiles = Array.isArray(value) ? value : Array.from(value);
+                                                        const updatedFiles = [...existingFiles, ...newFiles]; // Merge existing and new files
+                                                        onChange(updatedFiles);
+                                                      }}
                                                     supportedfiles="jpg,png,jpeg"
                                                     multiple={true}
                                                     id="4"

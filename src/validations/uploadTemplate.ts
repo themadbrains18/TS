@@ -107,7 +107,8 @@ const uploadTemplateBase = z.object({
   techDetails: z.array(z.string().min(1, "Detail cannot be empty")).min(4, "At least 4 technical details are required"),
   seoTags: z
     .array(z.string().min(2, { message: "Tags must be at least 2 characters long." }))
-    .max(5, { message: "You must include at least 5 tags." }),
+    .min(2,"You must include at least 2 tags.")
+    .max(5, { message: "Only 5 tags are allowed." }),
   isPaid: z.boolean().optional().default(false),
   price: z.string().optional(),
 });
@@ -169,8 +170,6 @@ export const uploadTemplateSchema = uploadTemplateBase.extend({
 export const uploadTemplateUpdateSchema = uploadTemplateBase.extend({
   sourceFiles: z.string().optional(),
   sliderImages: fileValidationSchema(3, 5, imageObjectSchema, 'Only .jpg, .jpeg, .png, and .webp are allowed.'),
-  // .or(z.null())
-  // .or(z.array(z.undefined())),
   previewMobileImages: fileValidationSchema(
     1, // Minimum 1 image
     100,
@@ -178,8 +177,6 @@ export const uploadTemplateUpdateSchema = uploadTemplateBase.extend({
     'Only .jpg, .jpeg, .png, and .webp are allowed.',
     10 * 1024 * 1024 // Maximum total size of 10 MB
   ),
-  // .or(z.null())
-  // .or(z.array(z.undefined())),
   previewImages: fileValidationSchema(
     0, // Minimum 0 images
     100,
@@ -189,7 +186,7 @@ export const uploadTemplateUpdateSchema = uploadTemplateBase.extend({
   ).or(z.null()).or(z.array(z.undefined())),
   // .or(z.null())
   // .or(z.array(z.undefined())),
-  price: z.coerce.number().optional(),
+  price: z.union([z.string(), z.number()]).optional(),
 })
 
 /**
