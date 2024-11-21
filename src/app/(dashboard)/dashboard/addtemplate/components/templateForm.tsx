@@ -426,6 +426,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         setSelectedIndustry(value);
     };
 
+    console.log(errors,"==errors");
+    
 
     return (
 
