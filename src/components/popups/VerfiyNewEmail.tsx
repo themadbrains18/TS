@@ -156,15 +156,15 @@ const VerfiyNewEmail: FC<verifyNewemail> = ({
         if (res.ok) {
           setStartTimer(180); // Reset timer to 60 seconds
           setCanResend(false); // Disable resend option temporarily
-          toast.success("OTP resent successfully");
+          toast.success("OTP resent successfully", { autoClose: 1500 });
         } else {
-          toast.error("Failed to resend OTP");
+          toast.error("Failed to resend OTP", { autoClose: 1500 });
         }
       });
     } catch (error) {
       console.log("Error resending OTP:", error);
     } finally {
-      setLoadingbtn(false)
+      setTimeout(()=>setLoadingbtn(false), 2500)
     }
   };
 

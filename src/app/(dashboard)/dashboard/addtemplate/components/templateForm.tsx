@@ -111,10 +111,10 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         });
 
         let images = initialData?.[imgData?.imgName]
-        console.log(images,"==images");
+        // console.log(images,"==images");
         
         images = images.filter((item: any) => item.id !== imgData.imgId)
-    console.log(images,imgData?.imgName);
+    // console.log(images,imgData?.imgName);
     
         setValue(imgData?.imgName, images)
 
@@ -236,14 +236,19 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
      * Function to remove input fields
      */
 
-    const removeInputField = <T,>(setter: React.Dispatch<React.SetStateAction<T[]>>, index: number, values: T[]) => {
+    const removeInputField = (setter: any, index: number, values: any[]) => {
+        console.log(values,"==values");
+        
         if (values.length > 1) {
             const newValues = [...values];
             newValues.splice(index, 1);
             setter(newValues);
 
             if (setter == setTechnicalDetails) {
-                newValues.forEach((detail: any, i) => setValue(`techDetails.${i}`, detail));
+                console.log("in this",newValues);
+                
+                newValues.forEach((detail: any, i) =>{console.log(i,"==index",detail,"==detail",);
+                    setValue(`techDetails.${i}`, detail)}); // Correct the field path
             }
         }
     };
@@ -334,7 +339,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         [key: string]: any; // Define a dynamic type for the form data fields
     }
 
-    console.log(getValues("sliderImages"))
+    console.log(getValues("techDetails"))
     const onSubmit: SubmitHandler<FormDataObject> = async (data) => {
         console.log(editimagedata, "=editimagedata");
 
@@ -429,9 +434,9 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             const result = await response.json();
 
             if (!response.ok) {
-                toast.error(result.message);
+                toast.error(result.message,{ autoClose: 1500 });
             } else {
-                toast.success(result.message);
+                toast.success(result.message,{ autoClose: 1500 });
                 router.push('/dashboard');
             }
         } catch (error) {
