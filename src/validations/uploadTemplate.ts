@@ -51,10 +51,6 @@ const fileValidationSchema = (
             }
             return acc; // Non-File types don't contribute to total size
           }, 0);
-          // console.log(totalSize,"==totalSize");
-          // console.log(maxTotalSize,"==maxTotalSize");
-          // console.log(totalSize <= maxTotalSize,"==totalSize <= maxTotalSize");
-
           return totalSize <= maxTotalSize;
         }
         return true;

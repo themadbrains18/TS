@@ -95,6 +95,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     // type edit 
 
     const [editimagedata, setEditImageData] = useState<{ imgId: string; imgName: string }[]>([]);
+
+
     const deleteimages = (imgData: any) => {
         // console.log(name, "name")
         setEditImageData((prevState: any) => {
@@ -107,6 +109,11 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             // If it already exists, return the state as is
             return prevState;
         });
+
+        let images = initialData?.[imgData?.imgName]
+        images = images.filter((item: any) => item.id !== imgData.imgId)
+        setValue(imgData?.imgName, images)
+
     };
 
 
@@ -321,50 +328,51 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
     interface FormDataObject {
         [key: string]: any; // Define a dynamic type for the form data fields
-      }
+    }
 
+    console.log(getValues("previewMobileImages"))
     const onSubmit: SubmitHandler<FormDataObject> = async (data) => {
-        console.log(editimagedata,"=editimagedata");
+        console.log(editimagedata, "=editimagedata");
 
 
-        if(type=="edit"){
-            editimagedata?.map((item)=>{
-                data[item?.imgName] = data[item?.imgName].filter((e:any)=>e.id!==item?.imgId)
+        if (type == "edit") {
+            editimagedata?.map((item) => {
+                data[item?.imgName] = data[item?.imgName].filter((e: any) => e.id !== item?.imgId)
             })
         }
-        
-        console.log(data,"==data");
+
+        console.log(data, "==data");
 
         // if(data?.seoTags?.length<2){
         //     setError('seoTags',"")
         // }
 
-        let schema=type == "create" ? uploadTemplateSchema : uploadTemplateUpdateSchema
+        let schema = type == "create" ? uploadTemplateSchema : uploadTemplateUpdateSchema
         const result = schema.safeParse(data);
-    
+
         if (!result.success) {
-            const firstError:any = result.error.errors[0]; // Get the first validation error
+            const firstError: any = result.error.errors[0]; // Get the first validation error
             seterrorvalidaiton(firstError.message);
 
-            setError(firstError.path[0],{message:firstError?.message})
+            setError(firstError.path[0], { message: firstError?.message })
             console.log("here", result.error);
             console.log("here1", result.error.errors[0]);
-            
+
             return;
         } else {
             seterrorvalidaiton(null);
         }
-    
+
         if (selectedIndustry === 'Others' && data?.industryName === "") {
             setError('industryName', { message: "This field is required" });
             return;
         }
-    
+
         setLoader(true);
         const formData = new FormData();
-    
+
         console.log(data?.sliderImages, "==slider images");
-    
+
         // Append form fields to FormData
         Object.entries(data).forEach(([key, value]) => {
             if (Array.isArray(value)) {
@@ -373,10 +381,10 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                 formData.append(key, value);
             }
         });
-    
+
         formData.delete("industry");
         formData.append('industry', data?.industry);
-    
+
         const credits = [
             {
                 fonts: fonts?.map(font => ({ name: font.name, url: font.url })),
@@ -386,12 +394,12 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             }
         ];
         formData.append("credits", JSON.stringify(credits));
-    
+
         const endpoint = type === 'edit'
             ? `${process.env.NEXT_PUBLIC_APIURL}/templates/${id}`
             : `${process.env.NEXT_PUBLIC_APIURL}/templates`;
         const method = type === 'edit' ? 'PUT' : 'POST';
-    
+
         try {
             if (type === "edit" && editimagedata?.length > 0) {
                 // Delete images first
@@ -406,9 +414,9 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                     })
                 );
             }
-    
+
             console.log([...formData.getAll('sliderImages')], "==slider images after deletion");
-    
+
             // Submit the form data
             const response = await fetch(endpoint, {
                 method,
@@ -417,9 +425,9 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                     'Authorization': `Bearer ${session?.token}`, // Adding Authorization header with Bearer token
                 },
             });
-    
+
             const result = await response.json();
-    
+
             if (!response.ok) {
                 toast.error(result.message);
             } else {
@@ -432,7 +440,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             setLoader(false);
         }
     };
-    
+
 
     const goback = () => {
         router?.back()
@@ -809,10 +817,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                     multiple={true}
                                                     id="2"
                                                     register={register}
-                                                    initialUrls={initialData?.sliderImages ? initialData?.sliderImages?.map((img: any) => ({
-                                                        url: img.imageUrl,
-                                                        id: img.id,
-                                                    }))
+                                                    initialUrls={initialData?.sliderImages ? initialData?.sliderImages
                                                         : []} // Pass URLs here
                                                     title='Upload Slider Images Here Upto 5'
                                                 />
@@ -849,10 +854,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                         supportedfiles="jpg,png,jpeg"
                                                         multiple={true}
                                                         id="3"
-                                                        initialUrls={initialData?.previewImages ? initialData?.previewImages?.map((img: any) => ({
-                                                            url: img.imageUrl,
-                                                            id: img.id,
-                                                        })) : []} // Pass URLs here
+                                                        initialUrls={initialData?.previewImages ? initialData?.previewImages : []} // Pass URLs here
                                                         title='Upload Desktop Preview Images Here '
                                                     />
                                                 )}
@@ -877,20 +879,11 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                     type={type}
                                                     register={register}
                                                     name='previewMobileImages'
-                                                    // onFileSelect={(newFiles) => {
-                                                    //     // Convert `value` to an array if it's a FileList
-                                                    //     const existingFiles = Array.isArray(value) ? value : Array.from(value);
-                                                    //     const updatedFiles = [...existingFiles, ...newFiles]; // Merge existing and new files
-                                                    //     onChange(updatedFiles);
-                                                    //   }}
                                                     onFileSelect={(file) => { onChange(file) }}
                                                     supportedfiles="jpg,png,jpeg"
                                                     multiple={true}
                                                     id="4"
-                                                    initialUrls={initialData?.previewMobileImages ? initialData?.previewMobileImages?.map((img: any) => ({
-                                                        url: img.imageUrl,
-                                                        id: img.id,
-                                                    })) : []} // Pass URLs here
+                                                    initialUrls={initialData?.previewMobileImages  ?initialData?.previewMobileImages : []} // Pass URLs here
                                                     title='Upload Mobile Preview Images Here'
                                                 />
                                             )}

@@ -12,7 +12,7 @@ interface FileUploadProps {
   register: UseFormRegister<any>;
   name: string;
   error?: FieldError;
-  initialUrls?: { url: string; id: string }[]; // Initial images as URLs
+  initialUrls?: { imageUrl: string; id: string;templateId:string }[]; // Initial images as URLs
   fileNameUrl?: string[]; // Initial filenames
   title?: string
   deleteimages?: any
@@ -94,7 +94,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
 }) => {
 
   const [files, setFiles] = useState<File[]>([]);
-  const [previewUrls, setPreviewUrls] = useState<{ url: string; id: string }[]>(
+  const [previewUrls, setPreviewUrls] = useState<{ imageUrl: string; id: string }[]>(
     initialUrls
   );
   const [fileError, setFileError] = useState<string | null>(null);
@@ -109,7 +109,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
 
     if (newFiles.length > 0) {
       const validFiles: File[] = [];
-      const newPreviewUrls: { url: string; id: string }[] = [];
+      const newPreviewUrls: { imageUrl: string; id: string }[] = [];
       const newFileNames: string[] = [];
 
       for (const file of newFiles) {
@@ -120,7 +120,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
             newFileNames.push(file.name);
           } else {
             const preview = URL.createObjectURL(file);
-            newPreviewUrls.push({ url: preview, id: '' });
+            newPreviewUrls.push({ imageUrl: preview, id: '' });
           }
         } else {
           setFileError(`Unsupported file type. Supported types: ${supportedfiles}`);
@@ -156,7 +156,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
     setFiles(updatedFiles);
     setPreviewUrls(updatedPreviews);
     setFileNames(updatedFileNames);
-    onFileSelect(updatedFiles);
+    onFileSelect([...updatedFiles, ...updatedPreviews]);
 
 
     if (type === 'edit' && id && name) {
@@ -204,7 +204,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
           {previewUrls?.map((item, index) => (
             <FilePreview
               key={item?.id || index}
-              previewUrl={item.url}
+              previewUrl={item.imageUrl}
               onRemove={() => { handleRemove(index, item.id, name) }}
             />
           ))}
