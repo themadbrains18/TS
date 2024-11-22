@@ -199,10 +199,14 @@ console.log(previewUrls,"==previewUrls");
     }
   };
 
+  let  deletedValues:any=[]
   const handleRemoveAll = (name: string) => {
     setPreviewUrls([])
     setFiles([])
-    setDeleteAll(name)
+    console.log(deletedValues,"==deletedValues");
+    
+    deletedValues.push(name)
+    setDeleteAll(deletedValues)
   }
 
 

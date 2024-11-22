@@ -91,7 +91,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     const [icons, setIcons] = useState<Font[]>([{ name: '', url: '' }]);
     const [illustrations, setIllustrations] = useState<Font[]>([{ name: '', url: '' }]);
     const [loader, setLoader] = useState(false)
-    const [deleteAllImages, setDeleteAllImages] = useState('')
+    const [deleteAllImages, setDeleteAllImages] = useState<string[]>([])
 
     // type edit 
 
@@ -230,12 +230,23 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
      *  
      */
 
-    const deleteAll=(name: any)=>{
-        setDeleteAllImages(name)
-        console.log(name,"==name");
-        
-        setValue(name,[])
-    }
+    const deleteAll = (name: string[]) => {
+        console.log(name, "==name");
+      
+        // Update deleteAllImages with new data
+        setDeleteAllImages((prev) => {
+          const updated = [...prev, ...name]; // Add all items from `name` to the existing list
+          console.log(updated, "==updated deleteAllImages");
+          return updated;
+        });
+      
+        // Clear the form fields for all items in the `name` array
+        name.forEach((item:any) => {
+          console.log(item, "==item");
+          setValue(item, []); // Assuming `item` is a valid field name
+        });
+      };
+      
 
     /**
      * Function to handle input field changes
@@ -462,13 +473,16 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                     })
                 );
             }
-            if(type=="edit" && deleteAllImages!==""){
-                const response = await fetch(`${process?.env?.NEXT_PUBLIC_APIURL}/${deleteAllImages}/all/${initialData?.id}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Authorization': `Bearer ${session?.token}`,
-                    }
-                });
+            if(type=="edit" && deleteAllImages.length>0){
+                deleteAllImages.map(async(item)=>{
+                    const response = await fetch(`${process?.env?.NEXT_PUBLIC_APIURL}/${item}/all/${initialData?.id}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': `Bearer ${session?.token}`,
+                        }
+                    });
+
+                })
             }
 
             console.log([...formData.getAll('previewImages')], "==slider images after deletion");
