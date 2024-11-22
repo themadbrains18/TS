@@ -96,7 +96,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
   setDeleteAll
 }) => {
 
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<any >(initialUrls || []);
   const [previewUrls, setPreviewUrls] = useState<{ imageUrl: string; id: string }[]>(
     initialUrls
   );
@@ -117,8 +117,8 @@ const FileUpload: React.FC<FileUploadProps> = ({
       const validFiles: File[] = [];
       const newPreviewUrls: { imageUrl: string; id: string }[] = [];
       const newFileNames: string[] = [];
-      let totalSize = files.reduce((sum, file) => sum + file.size, 0); // Sum size of existing files
-
+      let totalSize = files.reduce((sum:0, file:any) => sum + file?.size, 0); // Sum size of existing files
+  
       // Calculate the total size of new files
       for (const file of newFiles) {
         totalSize += file.size;
@@ -147,7 +147,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
       }
 
       if (multiple) {
-        setFiles((prev) => [...prev, ...validFiles]);
+        setFiles((prev:any) => [...prev, ...validFiles]);
         setPreviewUrls((prev) => [...prev, ...newPreviewUrls]);
         setFileNames((prev) => [...prev, ...newFileNames]);
       } else {
@@ -155,11 +155,13 @@ const FileUpload: React.FC<FileUploadProps> = ({
         setPreviewUrls(newPreviewUrls);
         setFileNames(newFileNames);
       }
-
-      console.log(previewUrls, "===previewUrls");
-
+  
+      console.log(previewUrls,"===previewUrls");
+      console.log(validFiles,"===validFiles");
+      console.log(files,"===files");
+      
       setFileError(null);
-      onFileSelect(multiple ? [...previewUrls, ...validFiles] : validFiles);
+      onFileSelect(multiple ? [...files, ...validFiles] : validFiles);
     }
   };
 
@@ -168,18 +170,21 @@ const FileUpload: React.FC<FileUploadProps> = ({
 
   const handleRemove = (index: number, id?: string, name?: string) => {
     // console.log(index,"=index",previewUrls);
+    
+    console.log(files,"==files",index);
+    
 
-    console.log(files, "==files");
-
-
-    const updatedFiles = files.filter((_, i) => i !== index);
+    const updatedFiles = files.filter((_:any, i:any) => i !== index);
     const updatedPreviews = previewUrls.filter((_, i) => i !== index);
     const updatedFileNames = fileNames.filter((_, i) => i !== index);
-    // console.log(updatedFiles,"==updatedFiles");
+console.log(updatedFiles,"==updatedFiles");
+console.log(updatedPreviews,"==updatedPreviews");
+console.log(previewUrls,"==previewUrls");
 
     setFiles(updatedFiles);
     setPreviewUrls(updatedPreviews);
     setFileNames(updatedFileNames);
+    let urls= updatedPreviews.filter((item)=>item?.id!=="")
     onFileSelect(updatedFiles);
 
 
@@ -196,6 +201,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
 
   const handleRemoveAll = (name: string) => {
     setPreviewUrls([])
+    setFiles([])
     setDeleteAll(name)
   }
 

@@ -40,8 +40,8 @@ const NavCard: React.FC<navcardprops> = ({
 
   return (
     <>
-      <div className={` ${classnamemain} cursor-pointer border border-divider-100 `}>
-        <div className={`relative ${classname}  `}>
+      <div className={` ${classnamemain} cursor-pointer border border-divider-100 group/item animate-zoom `}>
+        <div className={`relative ${classname}`}>
           <div className=" h-auto  object-cover" >
             <Image
               src={data?.sliderImages[0]?.imageUrl || "/images/product1.png"}
@@ -52,13 +52,13 @@ const NavCard: React.FC<navcardprops> = ({
               className="  w-full h-auto object-cover"
             />
           </div>
-          <Link
-            href={`/productdetail/${id}`}
-          >
-            <div className="bg-subheading opacity-[0] absolute top-0 right-0 left-0 bottom-0 transition-all duration-200 hover:opacity-[0.45] flex justify-center items-center">
-              <p className="text-white leading-5 font-semibold opacity-[1] capitalize relative z-10 "  >
-                view details
-              </p>
+          <Link href={`/productdetail/${id}`} >
+            <div className="group">
+              <div className="absolute group-hover/item:bg-[#28204699] max-[500px]:bg-[#28204699] transition-all duration-[0.5s] top-0 right-0 left-0 bottom-0 flex justify-center items-center">
+                <p className="text-white group-hover/item:opacity-100 sm:opacity-0 duration-[0.5s] leading-5 font-semibold capitalize relative z-10">
+                  view details
+                </p>
+              </div>
             </div>
           </Link>
         </div>

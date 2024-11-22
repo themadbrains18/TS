@@ -91,35 +91,35 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     const [icons, setIcons] = useState<Font[]>([{ name: '', url: '' }]);
     const [illustrations, setIllustrations] = useState<Font[]>([{ name: '', url: '' }]);
     const [loader, setLoader] = useState(false)
-    const [deleteAll, setDeleteAll] = useState('')
+    const [deleteAllImages, setDeleteAllImages] = useState('')
 
     // type edit 
 
     const [editimagedata, setEditImageData] = useState<{ imgId: string; imgName: string }[]>([]);
 
 
-    const deleteimages = (imgData: any) => {
-        // console.log(name, "name")
-        setEditImageData((prevState: any) => {
-            // Check if the data with the same id already exists in the state
-            const exists = prevState.some((item: any) => item.id === imgData.imgId);
-            if (!exists) {
-                // Add the new data if it doesn't already exist
-                return [...prevState, imgData];
-            }
-            // If it already exists, return the state as is
-            return prevState;
-        });
+    // const deleteimages = (imgData: any) => {
+    //     // console.log(name, "name")
+    //     setEditImageData((prevState: any) => {
+    //         // Check if the data with the same id already exists in the state
+    //         const exists = prevState.some((item: any) => item.id === imgData.imgId);
+    //         if (!exists) {
+    //             // Add the new data if it doesn't already exist
+    //             return [...prevState, imgData];
+    //         }
+    //         // If it already exists, return the state as is
+    //         return prevState;
+    //     });
 
-        let images = initialData?.[imgData?.imgName]
-        // console.log(images,"==images");
+    //     let images = initialData?.[imgData?.imgName]
+    //     // console.log(images,"==images");
 
-        images = images.filter((item: any) => item.id !== imgData.imgId)
-        // console.log(images,imgData?.imgName);
+    //     images = images.filter((item: any) => item.id !== imgData.imgId)
+    //     // console.log(images,imgData?.imgName);
 
-        setValue(imgData?.imgName, images)
+    //     setValue(imgData?.imgName, images)
 
-    };
+    // };
 
 
 
@@ -187,7 +187,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         fetchIndustryData(`/industry-type`);
     }, [fetchData, fetchIndustryData]);
 
-    // console.log(getValues('sliderImages'), "==slider images");
+    console.log(getValues('sliderImages'), "==slider images");
 
 
     useEffect(() => {
@@ -226,6 +226,18 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     };
 
     /**
+     * delete all images
+     *  
+     */
+
+    const deleteAll=(name:string)=>{
+        setDeleteAllImages(name)
+        console.log(name,"==name");
+        
+        setValue(name,[])
+    }
+
+    /**
      * Function to handle input field changes
      */
 
@@ -262,12 +274,12 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
      * Function to render input fields
      */
 
-
     const renderInputFields = (items: Font[], setter: React.Dispatch<React.SetStateAction<Font[]>>, title: string) => (
         <div className='pb-3'>
             <h4 className='text-lg font-semibold capitalize pb-4'>{title}</h4>
             <div className="p-5 border-b border-neutral-400">
                 {items?.map((item, index) => (
+
                     <div key={index} className="flex items-center gap-x-3 pb-3">
 
                         <DashInput
@@ -298,6 +310,31 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             </div>
         </div>
     );
+
+
+    const deleteimages = (imgData: any) => {
+        // console.log(name, "name")
+        setEditImageData((prevState: any) => {
+            // Check if the data with the same id already exists in the state
+            const exists = prevState.some((item: any) => item.id === imgData.imgId);
+            if (!exists) {
+                // Add the new data if it doesn't already exist
+                return [...prevState, imgData];
+            }
+            // If it already exists, return the state as is
+            return prevState;
+        });
+
+        let images:any =getValues(imgData?.imgName)
+        console.log(images, "==images");
+
+        images = images.filter((item: any) => item.id !== imgData.imgId)
+        console.log(images, imgData?.imgName);
+
+        setValue(imgData?.imgName, images)
+
+    };
+
     /**
      * Render technical details fields
      */
@@ -345,8 +382,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     }
 
     console.log(getValues("techDetails"))
-
-
+    console.log(getValues("sliderImages"))
     const onSubmit: SubmitHandler<FormDataObject> = async (data) => {
         console.log(editimagedata, "=editimagedata");
 
@@ -426,8 +462,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                     })
                 );
             }
-            if(type=="edit" && deleteAll!==""){
-                const response = await fetch(`${process?.env?.NEXT_PUBLIC_APIURL}/${deleteAll}/all/${initialData?.id}`, {
+            if(type=="edit" && deleteAllImages!==""){
+                const response = await fetch(`${process?.env?.NEXT_PUBLIC_APIURL}/${deleteAllImages}/all/${initialData?.id}`, {
                     method: 'DELETE',
                     headers: {
                         'Authorization': `Bearer ${session?.token}`,
@@ -527,6 +563,9 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     };
     console.log(errors, "==errors");
 
+
+
+    console.log(initialData?.industryName, "initialData?.industryName")
 
     return (
 
@@ -833,7 +872,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                     //     onChange(updatedFiles);
                                                     //   }}
                                                     onFileSelect={(file: any) => { onChange(file) }}
-                                                    setDeleteAll={setDeleteAll}
+                                                    setDeleteAll={deleteAll}
                                                     supportedfiles="jpg,png,jpeg"
                                                     multiple={true}
                                                     id="2"
@@ -870,7 +909,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                         //     onChange(updatedFiles);
                                                         //   }}
                                                         onFileSelect={(file: any) => { onChange(file) }}
-                                                        setDeleteAll={setDeleteAll}
+                                                        setDeleteAll={deleteAll}
                                                         register={register}
                                                         type={type}
                                                         supportedfiles="jpg,png,jpeg"
@@ -898,7 +937,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                             render={({ field: { onChange, value = [] } }) => (
                                                 <FileUpload
                                                     deleteimages={deleteimages}
-                                                    setDeleteAll={setDeleteAll}
+                                                    setDeleteAll={deleteAll}
                                                     type={type}
                                                     register={register}
                                                     name='previewMobileImages'

@@ -21,6 +21,8 @@ const LoginForm = () => {
     const [isChecked1, setIsChecked1] = useState(false);
     const [otpPath, setOtppath] = useState(false);
     const [formData, setFormData] = useState({});
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
 
     /**
      * Interface to define structure of form values
@@ -54,6 +56,9 @@ const LoginForm = () => {
      * Submit handler for the login form
      */
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
+        if (isSubmitting) return;
+        setIsSubmitting(true);
+
         setFormData(data);
         // Make API request to login
         await fetchData("/login", {
@@ -67,6 +72,11 @@ const LoginForm = () => {
         if (response?.success) {
             reset();
         }
+
+
+        setTimeout(() => {
+            setIsSubmitting(false);
+        }, 1800);
     };
 
 

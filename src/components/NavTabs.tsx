@@ -3,9 +3,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import Button from "./ui/Button";
 import NavCard from "./cards/NavCard";
 import { cn } from "@/libs/utils";
-import headerdata from "@/json/header.json";
 import { navtabprops, subCat, TechTemplate, TemplateResponse } from "@/types/type";
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import useFetch from "@/hooks/useFetch";
 
@@ -54,7 +52,7 @@ const NavTabs: React.FC<navtabprops> = ({ subCat, setSidebar, classname }) => {
   return (
     <>
       {/* Tabs Section */}
-      <div className={` ${classname} bg-white lg:shadow-lg overflow-scroll hiddenscroll  w-full`}>
+      <div className={`${classname} bg-white lg:shadow-lg overflow-scroll hiddenscroll w-full`}>
         <div className=" lg:px-10 lg:pt-10 lg:pb-[30px] flex gap-x-[5px] lg:gap-x-5 items-center overflow-scroll hiddenscroll">
           {subCat && subCat?.length > 0 && subCat?.map((item, index) => (
             <Fragment key={Date.now() + index + "subCatitem"}>
@@ -117,7 +115,7 @@ const NavTabs: React.FC<navtabprops> = ({ subCat, setSidebar, classname }) => {
                       data={item}
                       icon="/icons/figma.svg"
                       themeicon={item?.softwareType?.name}
-                      classnamemain="md:min-w-[248px] w-[148px] "
+                      classnamemain="md:min-w-[248px] w-[148px]"
                     />
                   </Fragment>
                 ))

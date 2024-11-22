@@ -14,9 +14,10 @@ const HeroSection = () => {
      *   <HeroSection />
      * )
      */
+
     return (
         <>
-            <section className='bg-[url("/images/heropurplebg.png")] bg-no-repeat bg-cover bg-right'>
+            <section className='bg-[url("/images/heropurplebg.png")] bg-no-repeat bg-cover bg-right animate-fade-up'>
                 <div className="container">
                     <div className='grid lg:grid-cols-2 lg:gap-x-5 '>
                         <div className='pt-10 lg:pt-[125px] lg:max-w-[570px] w-full'>
