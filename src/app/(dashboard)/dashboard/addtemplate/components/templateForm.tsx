@@ -6,7 +6,7 @@ import DashInput from './DashInput';
 import Button from '@/components/ui/Button';
 import FileUpload from './InputFile';
 import useFetch from '@/hooks/useFetch';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { Controller, Path, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { subCat } from '@/types/type';
@@ -230,7 +230,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
      *  
      */
 
-    const deleteAll=(name:string)=>{
+    const deleteAll=(name: any)=>{
         setDeleteAllImages(name)
         console.log(name,"==name");
         
