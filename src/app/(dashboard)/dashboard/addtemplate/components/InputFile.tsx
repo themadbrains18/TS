@@ -105,14 +105,29 @@ const FileUpload: React.FC<FileUploadProps> = ({
 
   const supportedFileTypes = supportedfiles.split(',');
 
+  const MAX_SIZE_MB = 10; // Max total size in MB
+  const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024; // Convert to bytes
+  
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newFiles = event.target.files ? Array.from(event.target.files) : [];
-
+    
     if (newFiles.length > 0) {
       const validFiles: File[] = [];
       const newPreviewUrls: { imageUrl: string; id: string }[] = [];
       const newFileNames: string[] = [];
-
+      let totalSize = files.reduce((sum, file) => sum + file.size, 0); // Sum size of existing files
+  
+      // Calculate the total size of new files
+      for (const file of newFiles) {
+        totalSize += file.size;
+      }
+  
+      if (totalSize > MAX_SIZE_BYTES) {
+        setFileError(`The total file size exceeds the 10 MB limit. Please select smaller files.`);
+        return; // Do not proceed if total size exceeds 10 MB
+      }
+  
+      // Process valid files
       for (const file of newFiles) {
         const fileExtension = file.name.split('.').pop()?.toLowerCase();
         if (fileExtension && supportedFileTypes.includes(fileExtension)) {
@@ -128,7 +143,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
           return;
         }
       }
-
+  
       if (multiple) {
         setFiles((prev) => [...prev, ...validFiles]);
         setPreviewUrls((prev) => [...prev, ...newPreviewUrls]);
@@ -138,26 +153,32 @@ const FileUpload: React.FC<FileUploadProps> = ({
         setPreviewUrls(newPreviewUrls);
         setFileNames(newFileNames);
       }
-
+  
+      console.log(previewUrls,"===previewUrls");
+      
       setFileError(null);
-      onFileSelect(multiple ? [...files, ...validFiles] : validFiles);
+      onFileSelect(multiple ? [...previewUrls, ...validFiles] : validFiles);
     }
   };
+  
 
   // console.log(previewUrls,"==preview urls");
   
   const handleRemove = (index: number, id?: string, name?: string) => {
     // console.log(index,"=index",previewUrls);
     
+    console.log(files,"==files");
+    
+
     const updatedFiles = files.filter((_, i) => i !== index);
     const updatedPreviews = previewUrls.filter((_, i) => i !== index);
     const updatedFileNames = fileNames.filter((_, i) => i !== index);
-// console.log(updatedPreviews,"==updated");
+console.log(updatedFiles,"==updatedFiles");
 
     setFiles(updatedFiles);
     setPreviewUrls(updatedPreviews);
     setFileNames(updatedFileNames);
-    onFileSelect([...updatedFiles, ...updatedPreviews]);
+    onFileSelect(updatedFiles);
 
 
     if (type === 'edit' && id && name) {

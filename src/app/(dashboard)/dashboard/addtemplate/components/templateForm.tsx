@@ -111,7 +111,11 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         });
 
         let images = initialData?.[imgData?.imgName]
+        console.log(images,"==images");
+        
         images = images.filter((item: any) => item.id !== imgData.imgId)
+    console.log(images,imgData?.imgName);
+    
         setValue(imgData?.imgName, images)
 
     };
@@ -330,7 +334,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         [key: string]: any; // Define a dynamic type for the form data fields
     }
 
-    console.log(getValues("previewMobileImages"))
+    console.log(getValues("sliderImages"))
     const onSubmit: SubmitHandler<FormDataObject> = async (data) => {
         console.log(editimagedata, "=editimagedata");
 
@@ -342,10 +346,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         }
 
         console.log(data, "==data");
-
-        // if(data?.seoTags?.length<2){
-        //     setError('seoTags',"")
-        // }
 
         let schema = type == "create" ? uploadTemplateSchema : uploadTemplateUpdateSchema
         const result = schema.safeParse(data);
@@ -415,7 +415,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                 );
             }
 
-            console.log([...formData.getAll('sliderImages')], "==slider images after deletion");
+            console.log([...formData.getAll('previewImages')], "==slider images after deletion");
 
             // Submit the form data
             const response = await fetch(endpoint, {
