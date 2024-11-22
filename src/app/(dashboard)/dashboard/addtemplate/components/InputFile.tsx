@@ -5,7 +5,8 @@ import { UseFormRegister, FieldError } from 'react-hook-form';
 
 interface FileUploadProps {
   type?: string;
-  onFileSelect: (files: File[]) => void;
+  // onFileSelect: (files: File[] |{ imageUrl: string; id: string; templateId: string }[]) => void;
+  onFileSelect:any;
   supportedfiles: string;
   multiple?: boolean;
   id?: string;

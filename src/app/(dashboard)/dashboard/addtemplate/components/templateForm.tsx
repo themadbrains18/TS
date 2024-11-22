@@ -812,7 +812,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                     //     const updatedFiles = [...existingFiles, ...newFiles]; // Merge existing and new files
                                                     //     onChange(updatedFiles);
                                                     //   }}
-                                                    onFileSelect={(file) => { onChange(file) }}
+                                                    onFileSelect={(file:any) => { onChange(file) }}
                                                     supportedfiles="jpg,png,jpeg"
                                                     multiple={true}
                                                     id="2"
@@ -848,7 +848,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                         //     const updatedFiles = [...existingFiles, ...newFiles]; // Merge existing and new files
                                                         //     onChange(updatedFiles);
                                                         //   }}
-                                                        onFileSelect={(file) => { onChange(file) }}
+                                                        onFileSelect={(file:any) => { onChange(file) }}
                                                         register={register}
                                                         type={type}
                                                         supportedfiles="jpg,png,jpeg"
@@ -879,7 +879,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                     type={type}
                                                     register={register}
                                                     name='previewMobileImages'
-                                                    onFileSelect={(file) => { onChange(file) }}
+                                                    onFileSelect={(file:any) => { onChange(file) }}
                                                     supportedfiles="jpg,png,jpeg"
                                                     multiple={true}
                                                     id="4"
