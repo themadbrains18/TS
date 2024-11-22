@@ -97,28 +97,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     const [editimagedata, setEditImageData] = useState<{ imgId: string; imgName: string }[]>([]);
 
 
-    const deleteimages = (imgData: any) => {
-        // console.log(name, "name")
-        setEditImageData((prevState: any) => {
-            // Check if the data with the same id already exists in the state
-            const exists = prevState.some((item: any) => item.id === imgData.imgId);
-            if (!exists) {
-                // Add the new data if it doesn't already exist
-                return [...prevState, imgData];
-            }
-            // If it already exists, return the state as is
-            return prevState;
-        });
-
-        let images = initialData?.[imgData?.imgName]
-        // console.log(images,"==images");
-        
-        images = images.filter((item: any) => item.id !== imgData.imgId)
-    // console.log(images,imgData?.imgName);
-    
-        setValue(imgData?.imgName, images)
-
-    };
 
 
     /**
@@ -184,7 +162,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         fetchIndustryData(`/industry-type`);
     }, [fetchData, fetchIndustryData]);
 
-    // console.log(getValues('sliderImages'), "==slider images");
+    console.log(getValues('sliderImages'), "==slider images");
 
 
     useEffect(() => {
@@ -294,6 +272,30 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         </div>
     );
 
+
+    const deleteimages = (imgData: any) => {
+        // console.log(name, "name")
+        setEditImageData((prevState: any) => {
+            // Check if the data with the same id already exists in the state
+            const exists = prevState.some((item: any) => item.id === imgData.imgId);
+            if (!exists) {
+                // Add the new data if it doesn't already exist
+                return [...prevState, imgData];
+            }
+            // If it already exists, return the state as is
+            return prevState;
+        });
+
+        let images:any =getValues(imgData?.imgName)
+        console.log(images, "==images");
+
+        images = images.filter((item: any) => item.id !== imgData.imgId)
+        console.log(images, imgData?.imgName);
+
+        setValue(imgData?.imgName, images)
+
+    };
+
     /**
      * Render technical details fields
      */
@@ -341,6 +343,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     }
 
     console.log(getValues("techDetails"))
+    console.log(getValues("sliderImages"))
     const onSubmit: SubmitHandler<FormDataObject> = async (data) => {
         console.log(editimagedata, "=editimagedata");
 

@@ -183,6 +183,22 @@ export const uploadTemplateUpdateSchema = uploadTemplateBase.extend({
   // .or(z.null())
   // .or(z.array(z.undefined())),
   price: z.union([z.string(), z.number()]).optional(),
+}) .superRefine((data, ctx) => {
+  // console.log(data, ctx);
+
+  const { subCategory } = data; // Correctly access parent data via ctx.data
+
+  // If subCategory includes 'mobile', we allow previewImages to be undefined
+  if (subCategory?.includes('Mobile')) {
+    return; // No validation needed if subCategory is 'mobile'
+  }
+  if (data?.previewImages && data?.previewImages.length <= 0) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "At least 1 preview image is required.",
+      path: ['previewImages'],
+    });
+  }
 })
 
 /**
