@@ -156,9 +156,9 @@ const FileUpload: React.FC<FileUploadProps> = ({
         setFileNames(newFileNames);
       }
   
-      console.log(previewUrls,"===previewUrls");
-      console.log(validFiles,"===validFiles");
-      console.log(files,"===files");
+      // console.log(previewUrls,"===previewUrls");
+      // console.log(validFiles,"===validFiles");
+      // console.log(files,"===files");
       
       setFileError(null);
       onFileSelect(multiple ? [...files, ...validFiles] : validFiles);
@@ -171,15 +171,15 @@ const FileUpload: React.FC<FileUploadProps> = ({
   const handleRemove = (index: number, id?: string, name?: string) => {
     // console.log(index,"=index",previewUrls);
     
-    console.log(files,"==files",index);
+    // console.log(files,"==files",index);
     
 
     const updatedFiles = files.filter((_:any, i:any) => i !== index);
     const updatedPreviews = previewUrls.filter((_, i) => i !== index);
     const updatedFileNames = fileNames.filter((_, i) => i !== index);
-console.log(updatedFiles,"==updatedFiles");
-console.log(updatedPreviews,"==updatedPreviews");
-console.log(previewUrls,"==previewUrls");
+// console.log(updatedFiles,"==updatedFiles");
+// console.log(updatedPreviews,"==updatedPreviews");
+// console.log(previewUrls,"==previewUrls");
 
     setFiles(updatedFiles);
     setPreviewUrls(updatedPreviews);

@@ -14,7 +14,7 @@ const ProductFilterside = ({ items, setItems, closefilter, setSelectedFilters }:
         fetchSoftwareData('/software-types');
 
     }, []);
-    console.log(softwareData, "softwareData")
+    // console.log(softwareData, "softwareData")
     const filterData = [
         {
             title: "Price Range",

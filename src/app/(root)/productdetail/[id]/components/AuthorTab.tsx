@@ -41,7 +41,7 @@ const AuthorTab: React.FC<UserDetailProps> = ({ userDetail }) => {
   }, []);
 
 
-  console.log(data, "dataa")
+  // console.log(data, "dataa")
 
   return (
     <div className="mt-10 lg:mt-20">

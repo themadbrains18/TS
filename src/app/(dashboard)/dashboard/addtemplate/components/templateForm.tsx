@@ -187,7 +187,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         fetchIndustryData(`/industry-type`);
     }, [fetchData, fetchIndustryData]);
 
-    console.log(getValues('sliderImages'), "==slider images");
+    // console.log(getValues('sliderImages'), "==slider images");
 
 
     useEffect(() => {
@@ -206,7 +206,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
             }
         }
-        if (initialData && initialData?.credits.length > 0) {
+        if (initialData && initialData?.credits?.length > 0) {
             const creditData = initialData?.credits[0];
 
             setFonts(creditData.fonts || [{ name: '', url: '' }]);
@@ -231,22 +231,22 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
      */
 
     const deleteAll = (name: string[]) => {
-        console.log(name, "==name");
-      
+        // console.log(name, "==name");
+
         // Update deleteAllImages with new data
         setDeleteAllImages((prev) => {
-          const updated = [...prev, ...name]; // Add all items from `name` to the existing list
-          console.log(updated, "==updated deleteAllImages");
-          return updated;
+            const updated = [...prev, ...name]; // Add all items from `name` to the existing list
+            // console.log(updated, "==updated deleteAllImages");
+            return updated;
         });
-      
+
         // Clear the form fields for all items in the `name` array
-        name.forEach((item:any) => {
-          console.log(item, "==item");
-          setValue(item, []); // Assuming `item` is a valid field name
+        name.forEach((item: any) => {
+            // console.log(item, "==item");
+            setValue(item, []); // Assuming `item` is a valid field name
         });
-      };
-      
+    };
+
 
     /**
      * Function to handle input field changes
@@ -263,22 +263,29 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
      */
 
     const removeInputField = (setter: any, index: number, values: any[]) => {
-        console.log(values, "==values");
 
-        if (values.length > 1) {
-            const newValues = [...values];
-            newValues.splice(index, 1);
-            setter(newValues);
+        let technicalDetails = getValues("techDetails")
+        technicalDetails.splice(index, 1)
+        setter(technicalDetails);
+        console.log(technicalDetails, "===technicalDetails 22");
+        setValue('techDetails', technicalDetails)
 
-            if (setter == setTechnicalDetails) {
-                console.log("in this", newValues);
+        // if (values.length > 1) {
 
-                newValues.forEach((detail: any, i) => {
-                    console.log(i, "==index", detail, "==detail",);
-                    setValue(`techDetails.${i}`, detail)
-                }); // Correct the field path
-            }
-        }
+
+        //     const newValues = [...values];
+        //     newValues.splice(index, 1);
+        //     setter(newValues);
+
+        //     if (setter == setTechnicalDetails) {
+        //         console.log("in this", newValues);
+
+        //         newValues.forEach((detail: any, i) => {
+        //             console.log(i, "==index", detail, "==detail",);
+        //             setValue(`techDetails.${i}`, detail)
+        //         }); // Correct the field path
+        //     }
+        // }
     };
 
     /**
@@ -336,11 +343,11 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             return prevState;
         });
 
-        let images:any =getValues(imgData?.imgName)
-        console.log(images, "==images");
+        let images: any = getValues(imgData?.imgName)
+        // console.log(images, "==images");
 
         images = images.filter((item: any) => item.id !== imgData.imgId)
-        console.log(images, imgData?.imgName);
+        // console.log(images, imgData?.imgName);
 
         setValue(imgData?.imgName, images)
 
@@ -362,6 +369,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                         />
                         {technicalDetails.length > 4 && (
                             <button
+                                type='button'
                                 onClick={() => removeInputField(setTechnicalDetails, index, technicalDetails)}
                                 className="py-3 px-3 border" >
                                 <Icon name='closeiconfilter' size={16} />
@@ -392,10 +400,10 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         [key: string]: any; // Define a dynamic type for the form data fields
     }
 
-    console.log(getValues("techDetails"))
-    console.log(getValues("sliderImages"))
+    // console.log(getValues("techDetails"))
+    // console.log(getValues("sliderImages"))
     const onSubmit: SubmitHandler<FormDataObject> = async (data) => {
-        console.log(editimagedata, "=editimagedata");
+        // console.log(editimagedata, "=editimagedata");
 
 
         if (type == "edit") {
@@ -404,7 +412,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             })
         }
 
-        console.log(data, "==data");
+        // console.log(data, "==data");
 
         let schema = type == "create" ? uploadTemplateSchema : uploadTemplateUpdateSchema
         const result = schema.safeParse(data);
@@ -414,8 +422,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             seterrorvalidaiton(firstError.message);
 
             setError(firstError.path[0], { message: firstError?.message })
-            console.log("here", result.error);
-            console.log("here1", result.error.errors[0]);
+            // console.log("here", result.error);
+            // console.log("here1", result.error.errors[0]);
 
             return;
         } else {
@@ -430,7 +438,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         setLoader(true);
         const formData = new FormData();
 
-        console.log(data?.sliderImages, "==slider images");
+        // console.log(data?.sliderImages, "==slider images");
 
         // Append form fields to FormData
         Object.entries(data).forEach(([key, value]) => {
@@ -473,8 +481,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                     })
                 );
             }
-            if(type=="edit" && deleteAllImages.length>0){
-                deleteAllImages.map(async(item)=>{
+            if (type == "edit" && deleteAllImages.length > 0) {
+                deleteAllImages.map(async (item) => {
                     const response = await fetch(`${process?.env?.NEXT_PUBLIC_APIURL}/${item}/all/${initialData?.id}`, {
                         method: 'DELETE',
                         headers: {
@@ -485,7 +493,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                 })
             }
 
-            console.log([...formData.getAll('previewImages')], "==slider images after deletion");
+            // console.log([...formData.getAll('previewImages')], "==slider images after deletion");
 
             // Submit the form data
             const response = await fetch(endpoint, {
@@ -566,7 +574,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                 }
             });
             if (response.ok) {
-                console.log('Image deleted successfully');
+                // console.log('Image deleted successfully');
                 return response
             } else {
                 console.error('Failed to delete image');
@@ -575,11 +583,11 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             console.error('Error deleting image:', error);
         }
     };
-    console.log(errors, "==errors");
+    // console.log(errors, "==errors");
 
 
 
-    console.log(initialData?.industryName, "initialData?.industryName")
+    // console.log(initialData?.industryName, "initialData?.industryName")
 
     return (
 
