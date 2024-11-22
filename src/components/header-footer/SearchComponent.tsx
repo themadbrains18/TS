@@ -183,7 +183,7 @@ const SearchComponent: React.FC<navtabprops> = ({ subCat, classname, opensearch,
                 {templates?.templates?.map((template) => (
                     <Link href={`/productdetail/${template?.id}`} key={template?.id}>
                         <div onClick={resinputoff} className=" cursor-pointer border-b w-full last:border-b-0">
-                            <p className="text-subparagraph text-start  leading-6 py-2 px-[30px] capitalize  cursor-pointer  text-nowrap hover:bg-primary-200 border-l-[2px] hover:border-primary-100 text-sm font-medium truncate max-w-[200px] ">
+                            <p className="text-subparagraph text-start  leading-6 py-2 px-[30px] capitalize  cursor-pointer  text-nowrap hover:bg-primary-200 border-l-[2px] hover:border-primary-100 text-sm font-medium truncate md:max-w-[200px] ">
                                 {template?.title}
                             </p>
                         </div>

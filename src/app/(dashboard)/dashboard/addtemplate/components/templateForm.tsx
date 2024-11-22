@@ -247,6 +247,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             <h4 className='text-lg font-semibold capitalize pb-4'>{title}</h4>
             <div className="p-5 border-b border-neutral-400">
                 {items?.map((item, index) => (
+                    
                     <div key={index} className="flex items-center gap-x-3 pb-3">
 
                         <DashInput

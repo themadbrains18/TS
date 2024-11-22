@@ -232,7 +232,7 @@ const VerfiyNewEmail: FC<verifyNewemail> = ({
   return (
     <div className="py-4 sm:py-[30px]">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="">
+        <div>
           <div className='flex justify-between items-end gap-x-[10px] sm:gap-x-5 ' >
             <Input
               register={register}

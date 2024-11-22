@@ -38,7 +38,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, className, ove
         >
             <div
                 ref={modalRef}
-                className={cn`bg-white overflow-hidden shadow-xl max-w-fit  w-full mx-4  ${className}`}
+                className={cn`bg-white overflow-hidden shadow-xl max-w-fit  w-full mx-4 animate-zoom  ${className}`}
             >
                 {children}
             </div>

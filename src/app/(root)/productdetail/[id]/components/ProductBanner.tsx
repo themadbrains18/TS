@@ -97,7 +97,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                         </div>
 
                         {/* Main Grid Section */}
-                        <div className="grid grid-cols-1 gap-5 lg:grid-cols-[57.5%,40.5%] lg:gap-x-[30px] ">
+                        <div className="grid grid-cols-1 gap-5 lg:grid-cols-[57.5%,40.5%] lg:gap-x-[30px] animate-fade-up">
                             <div>
                                 <div className="lg:max-w-[874px] w-full relative z-10 bg-[#FFFFFF] select-none">
 
@@ -150,7 +150,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                                 <SwiperSlide className='w-full' key={id}>
                                                     <div
                                                         onClick={() => setActiveImageId(id)} // Set active image by ID
-                                                        className={`cursor-pointer min-w-[50px] w-full border-2 overflow-hidden p-[5px] h-[88px] ${activeImageId === id ? 'border-primary-900 border-[0.5px] md:border-[2px]' : 'border-transparent'}`}
+                                                        className={`cursor-pointer min-w-[50px] w-full border-2 overflow-hidden p-[5px] h-[88px] ${activeImageId === id ? 'border-primary-900 border-[0.5px] md:border-[2px]' : 'border-transparent'} animate-zoom`}
                                                     >
                                                         <Image className="w-full object-contain h-[76px]" src={`${imageUrl}`} height={76} width={120} alt={`Thumbnail ${id}`} />
                                                     </div>

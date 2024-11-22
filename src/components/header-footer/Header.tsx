@@ -175,7 +175,7 @@ const Header = () => {
     <>
       {session && session.user && ["ADMIN"].includes((session?.role).toString()) && <>
         <div className="">
-          <Link href="/dashboard" className="fixed  top-[68px] lg:top-[130px] right-0 z-30 bg-primary-700 h-11 flex items-center pl-4 pr-2 rounded-s-3xl text-white gap-1.5">
+          <Link href="/dashboard" className="fixed  top-[68px] lg:top-[130px] right-0 z-20 bg-primary-700 h-11 flex items-center pl-4 pr-2 rounded-s-3xl text-white gap-1.5">
             <span className="tetx-sm">Go to Dashboard</span>
           </Link>
         </div>
@@ -390,7 +390,7 @@ const Header = () => {
                           title={`${item?.name}`}
                           titleboxclass="border-b"
                         >
-                          <NavTabs  setSidebar={() => setSidebar(!sidebar)} subCat={item?.subCategories} />
+                          <NavTabs setSidebar={() => setSidebar(!sidebar)} subCat={item?.subCategories} />
                         </Accordion>
                       </Fragment>)
                     })
