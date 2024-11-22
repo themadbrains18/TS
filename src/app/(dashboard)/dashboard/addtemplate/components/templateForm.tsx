@@ -91,6 +91,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     const [icons, setIcons] = useState<Font[]>([{ name: '', url: '' }]);
     const [illustrations, setIllustrations] = useState<Font[]>([{ name: '', url: '' }]);
     const [loader, setLoader] = useState(false)
+    const [deleteAll, setDeleteAll] = useState('')
 
     // type edit 
 
@@ -112,13 +113,15 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
         let images = initialData?.[imgData?.imgName]
         // console.log(images,"==images");
-        
+
         images = images.filter((item: any) => item.id !== imgData.imgId)
-    // console.log(images,imgData?.imgName);
-    
+        // console.log(images,imgData?.imgName);
+
         setValue(imgData?.imgName, images)
 
     };
+
+
 
 
     /**
@@ -237,18 +240,20 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
      */
 
     const removeInputField = (setter: any, index: number, values: any[]) => {
-        console.log(values,"==values");
-        
+        console.log(values, "==values");
+
         if (values.length > 1) {
             const newValues = [...values];
             newValues.splice(index, 1);
             setter(newValues);
 
             if (setter == setTechnicalDetails) {
-                console.log("in this",newValues);
-                
-                newValues.forEach((detail: any, i) =>{console.log(i,"==index",detail,"==detail",);
-                    setValue(`techDetails.${i}`, detail)}); // Correct the field path
+                console.log("in this", newValues);
+
+                newValues.forEach((detail: any, i) => {
+                    console.log(i, "==index", detail, "==detail",);
+                    setValue(`techDetails.${i}`, detail)
+                }); // Correct the field path
             }
         }
     };
@@ -340,6 +345,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     }
 
     console.log(getValues("techDetails"))
+
+
     const onSubmit: SubmitHandler<FormDataObject> = async (data) => {
         console.log(editimagedata, "=editimagedata");
 
@@ -419,6 +426,14 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                     })
                 );
             }
+            if(type=="edit" && deleteAll!==""){
+                const response = await fetch(`${process?.env?.NEXT_PUBLIC_APIURL}/${deleteAll}/all/${initialData?.id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${session?.token}`,
+                    }
+                });
+            }
 
             console.log([...formData.getAll('previewImages')], "==slider images after deletion");
 
@@ -434,9 +449,9 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             const result = await response.json();
 
             if (!response.ok) {
-                toast.error(result.message,{ autoClose: 1500 });
+                toast.error(result.message, { autoClose: 1500 });
             } else {
-                toast.success(result.message,{ autoClose: 1500 });
+                toast.success(result.message, { autoClose: 1500 });
                 router.push('/dashboard');
             }
         } catch (error) {
@@ -817,7 +832,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                     //     const updatedFiles = [...existingFiles, ...newFiles]; // Merge existing and new files
                                                     //     onChange(updatedFiles);
                                                     //   }}
-                                                    onFileSelect={(file:any) => { onChange(file) }}
+                                                    onFileSelect={(file: any) => { onChange(file) }}
+                                                    setDeleteAll={setDeleteAll}
                                                     supportedfiles="jpg,png,jpeg"
                                                     multiple={true}
                                                     id="2"
@@ -853,7 +869,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                         //     const updatedFiles = [...existingFiles, ...newFiles]; // Merge existing and new files
                                                         //     onChange(updatedFiles);
                                                         //   }}
-                                                        onFileSelect={(file:any) => { onChange(file) }}
+                                                        onFileSelect={(file: any) => { onChange(file) }}
+                                                        setDeleteAll={setDeleteAll}
                                                         register={register}
                                                         type={type}
                                                         supportedfiles="jpg,png,jpeg"
@@ -881,14 +898,15 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                             render={({ field: { onChange, value = [] } }) => (
                                                 <FileUpload
                                                     deleteimages={deleteimages}
+                                                    setDeleteAll={setDeleteAll}
                                                     type={type}
                                                     register={register}
                                                     name='previewMobileImages'
-                                                    onFileSelect={(file:any) => { onChange(file) }}
+                                                    onFileSelect={(file: any) => { onChange(file) }}
                                                     supportedfiles="jpg,png,jpeg"
                                                     multiple={true}
                                                     id="4"
-                                                    initialUrls={initialData?.previewMobileImages  ?initialData?.previewMobileImages : []} // Pass URLs here
+                                                    initialUrls={initialData?.previewMobileImages ? initialData?.previewMobileImages : []} // Pass URLs here
                                                     title='Upload Mobile Preview Images Here'
                                                 />
                                             )}
