@@ -45,6 +45,7 @@ export const DownloadProvider: React.FC<DownloadProviderProps> = ({ children }) 
     const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/free-download`, {
       headers: {
         Authorization: `Bearer ` + session?.token,
+        'ngrok-skip-browser-warning':'true'
       },
     });
     const data = await response.json();

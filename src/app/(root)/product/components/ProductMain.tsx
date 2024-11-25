@@ -99,7 +99,11 @@ const ProductMain = () => {
             if (sort) {
                 apiUrl += `&sortBy=${sort}`;
             }
-            const response = await fetch(apiUrl);
+            const response = await fetch(apiUrl,{
+                headers:{
+                    'ngrok-skip-browser-warning':'true'
+                }
+            });
             const data: TemplateResponse = await response.json();
             setTotalPages(data?.pagination?.totalPages || 1);
             setCurrentPage(data?.pagination?.currentPage || 1);

@@ -22,6 +22,7 @@ const Page = async ({ params }: { params: Params }) => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning':'true'
         },
         next: { revalidate: 0 }
     })
@@ -44,7 +45,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
     const { id } = params;
 
     try {
-        const siteData = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/templates-by-id/${id}`).then((res) => res.json());
+        const siteData = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/templates-by-id/${id}`,{headers:{'ngrok-skip-browser-warning':'true'}}).then((res) => res.json());
 
         return {
             title: siteData.title || 'Template Studio - Product Details',

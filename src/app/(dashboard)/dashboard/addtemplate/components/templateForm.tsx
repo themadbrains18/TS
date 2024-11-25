@@ -487,6 +487,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                         method: 'DELETE',
                         headers: {
                             'Authorization': `Bearer ${session?.token}`,
+                            'ngrok-skip-browser-warning':'true'
                         }
                     });
 
@@ -501,6 +502,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                 body: formData,
                 headers: {
                     'Authorization': `Bearer ${session?.token}`, // Adding Authorization header with Bearer token
+                    'ngrok-skip-browser-warning':'true'
                 },
             });
 
@@ -571,6 +573,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${session?.token}`,
+                    'ngrok-skip-browser-warning':'true'
                 }
             });
             if (response.ok) {

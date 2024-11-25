@@ -152,6 +152,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: session?.token ? `Bearer ${session?.token}` : "",
+                    'ngrok-skip-browser-warning':'true'
                 }
             }).then(res => {
                 if (res.ok) {

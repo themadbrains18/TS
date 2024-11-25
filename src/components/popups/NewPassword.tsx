@@ -54,6 +54,7 @@ const NewPassword = ({ formData, otp }: newpasswordpopup) => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    'ngrok-skip-browser-warning':'true'
                 },
                 body: JSON.stringify({
                     newPassword: data.newPassword,

@@ -114,6 +114,7 @@ const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute, bac
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: session?.token ? `Bearer ${session?.token}` : "",
+                    'ngrok-skip-browser-warning':'true'
                 }
             }).then(res => {
                 if (res.ok) {

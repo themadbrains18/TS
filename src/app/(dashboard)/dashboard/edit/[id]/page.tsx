@@ -16,6 +16,7 @@ const page = async ({ params }: { params: { id: string } }) => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning':'true'
       },
 
     });
