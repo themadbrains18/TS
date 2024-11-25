@@ -67,6 +67,7 @@ function useFetch<T>(): FetchResult<T> {
         const headers: HeadersInit = {
           ...options.headers,
           Authorization: token ? `Bearer ${token}` : "",
+          'ngrok-skip-browser-warning':'true'
           //  "Content-Type": "application/json",
         };
 
