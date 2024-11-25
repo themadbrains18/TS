@@ -19,7 +19,7 @@ const FeatureCard: React.FC<featurecardprops> = ({ id, buttonprops, category, cu
     };
     return (
         <>
-            <div className='group  border border-divider-100  ' >
+            <div className='group  border border-divider-100 animate-zoom'>
                 <div className='relative h-auto'>
                     <Image
                         src={imgSrc}

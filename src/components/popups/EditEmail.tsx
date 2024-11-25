@@ -55,6 +55,8 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
      */
 
     const onSubmit: SubmitHandler<FormData> = async (data) => {
+        if (isSubmitting) return;
+        setIsSubmitting(true);
         try {
 
 
@@ -89,6 +91,9 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
             setLoadingOtp(false)
 
         }
+        setTimeout(() => {
+            setIsSubmitting(false);
+        }, 2500);
     };
 
 
@@ -141,6 +146,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
         setTimeout(() => {
             setIsSubmitting(false);
         }, 2500);
+
     };
 
 
@@ -154,7 +160,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
     const resendCode = async () => {
 
 
-        
+
 
         if (!canResend) return;
 
@@ -171,18 +177,20 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                 if (res.ok) {
                     setStartTimer(180); // Reset timer to 60 seconds
                     setCanResend(false); // Disable resend option temporarily
-                    toast.success("OTP resent successfully");
+                    toast.success("OTP resent successfully", { autoClose: 1500 });
                 } else {
-                    toast.error("Failed to resend OTP");
+                    toast.error("Failed to resend OTP", { autoClose: 1500 });
                 }
             });
         } catch (error) {
             console.log("Error resending OTP:", error);
         }
         finally {
-            setLoadingbtn(false)
+            setTimeout(() => {
+                setLoadingbtn(false)
+            }, 2500)
         }
-       
+
     };
 
 

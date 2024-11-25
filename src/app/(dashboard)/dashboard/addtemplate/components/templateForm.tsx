@@ -6,7 +6,7 @@ import DashInput from './DashInput';
 import Button from '@/components/ui/Button';
 import FileUpload from './InputFile';
 import useFetch from '@/hooks/useFetch';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { Controller, Path, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { subCat } from '@/types/type';
@@ -91,26 +91,37 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     const [icons, setIcons] = useState<Font[]>([{ name: '', url: '' }]);
     const [illustrations, setIllustrations] = useState<Font[]>([{ name: '', url: '' }]);
     const [loader, setLoader] = useState(false)
+    const [deleteAllImages, setDeleteAllImages] = useState<string[]>([])
 
     // type edit 
 
     const [editimagedata, setEditImageData] = useState<{ imgId: string; imgName: string }[]>([]);
-    console.log(editimagedata, "editimagedataeditimagedataeditimagedataeditimagedata")
-    const deleteimages = (imgData:any) => {
-        console.log(imgData, "datadata")
-        // console.log(name, "name")
-        setEditImageData((prevState:any) => {
-            // Check if the data with the same id already exists in the state
-            const exists = prevState.some((item:any) => item.id === imgData.imgId);
-            console.log(exists, "exists")
-            if (!exists) {
-                // Add the new data if it doesn't already exist
-                return [...prevState, imgData];
-            }
-            // If it already exists, return the state as is
-            return prevState;
-        });
-    };
+
+
+    // const deleteimages = (imgData: any) => {
+    //     // console.log(name, "name")
+    //     setEditImageData((prevState: any) => {
+    //         // Check if the data with the same id already exists in the state
+    //         const exists = prevState.some((item: any) => item.id === imgData.imgId);
+    //         if (!exists) {
+    //             // Add the new data if it doesn't already exist
+    //             return [...prevState, imgData];
+    //         }
+    //         // If it already exists, return the state as is
+    //         return prevState;
+    //     });
+
+    //     let images = initialData?.[imgData?.imgName]
+    //     // console.log(images,"==images");
+
+    //     images = images.filter((item: any) => item.id !== imgData.imgId)
+    //     // console.log(images,imgData?.imgName);
+
+    //     setValue(imgData?.imgName, images)
+
+    // };
+
+
 
 
     /**
@@ -135,7 +146,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     const [staticcheck, setStaticCheck] = useState<boolean>(initialData?.isPaid || false);
     const [showSoftwareType, setShowSoftwareType] = useState('')
 
-    const { register, handleSubmit, control, formState: { errors }, setValue, clearErrors, setError } = useForm<FormData>({
+    const { register, handleSubmit, control, formState: { errors }, setValue, clearErrors, setError, getValues } = useForm<FormData>({
         defaultValues: { ...initialData, seoTags: [] },
         resolver: zodResolver(type == "create" ? uploadTemplateSchema : uploadTemplateUpdateSchema)
     });
@@ -176,6 +187,9 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         fetchIndustryData(`/industry-type`);
     }, [fetchData, fetchIndustryData]);
 
+    // console.log(getValues('sliderImages'), "==slider images");
+
+
     useEffect(() => {
         if (initialData) {
             setValue('techDetails', initialData?.techDetails);
@@ -192,7 +206,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
             }
         }
-        if (initialData && initialData?.credits.length > 0) {
+        if (initialData && initialData?.credits?.length > 0) {
             const creditData = initialData?.credits[0];
 
             setFonts(creditData.fonts || [{ name: '', url: '' }]);
@@ -212,6 +226,29 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     };
 
     /**
+     * delete all images
+     *  
+     */
+
+    const deleteAll = (name: string[]) => {
+        // console.log(name, "==name");
+
+        // Update deleteAllImages with new data
+        setDeleteAllImages((prev) => {
+            const updated = [...prev, ...name]; // Add all items from `name` to the existing list
+            // console.log(updated, "==updated deleteAllImages");
+            return updated;
+        });
+
+        // Clear the form fields for all items in the `name` array
+        name.forEach((item: any) => {
+            // console.log(item, "==item");
+            setValue(item, []); // Assuming `item` is a valid field name
+        });
+    };
+
+
+    /**
      * Function to handle input field changes
      */
 
@@ -225,28 +262,42 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
      * Function to remove input fields
      */
 
-    const removeInputField = <T,>(setter: React.Dispatch<React.SetStateAction<T[]>>, index: number, values: T[]) => {
-        if (values.length > 1) {
-            const newValues = [...values];
-            newValues.splice(index, 1);
-            setter(newValues);
+    const removeInputField = (setter: any, index: number, values: any[]) => {
 
-            if (setter == setTechnicalDetails) {
-                newValues.forEach((detail: any, i) => setValue(`techDetails.${i}`, detail));
-            }
-        }
+        let technicalDetails = getValues("techDetails")
+        technicalDetails.splice(index, 1)
+        setter(technicalDetails);
+        console.log(technicalDetails, "===technicalDetails 22");
+        setValue('techDetails', technicalDetails)
+
+        // if (values.length > 1) {
+
+
+        //     const newValues = [...values];
+        //     newValues.splice(index, 1);
+        //     setter(newValues);
+
+        //     if (setter == setTechnicalDetails) {
+        //         console.log("in this", newValues);
+
+        //         newValues.forEach((detail: any, i) => {
+        //             console.log(i, "==index", detail, "==detail",);
+        //             setValue(`techDetails.${i}`, detail)
+        //         }); // Correct the field path
+        //     }
+        // }
     };
 
     /**
      * Function to render input fields
      */
 
-
     const renderInputFields = (items: Font[], setter: React.Dispatch<React.SetStateAction<Font[]>>, title: string) => (
         <div className='pb-3'>
             <h4 className='text-lg font-semibold capitalize pb-4'>{title}</h4>
             <div className="p-5 border-b border-neutral-400">
                 {items?.map((item, index) => (
+
                     <div key={index} className="flex items-center gap-x-3 pb-3">
 
                         <DashInput
@@ -277,6 +328,31 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             </div>
         </div>
     );
+
+
+    const deleteimages = (imgData: any) => {
+        // console.log(name, "name")
+        setEditImageData((prevState: any) => {
+            // Check if the data with the same id already exists in the state
+            const exists = prevState.some((item: any) => item.id === imgData.imgId);
+            if (!exists) {
+                // Add the new data if it doesn't already exist
+                return [...prevState, imgData];
+            }
+            // If it already exists, return the state as is
+            return prevState;
+        });
+
+        let images: any = getValues(imgData?.imgName)
+        // console.log(images, "==images");
+
+        images = images.filter((item: any) => item.id !== imgData.imgId)
+        // console.log(images, imgData?.imgName);
+
+        setValue(imgData?.imgName, images)
+
+    };
+
     /**
      * Render technical details fields
      */
@@ -293,6 +369,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                         />
                         {technicalDetails.length > 4 && (
                             <button
+                                type='button'
                                 onClick={() => removeInputField(setTechnicalDetails, index, technicalDetails)}
                                 className="py-3 px-3 border" >
                                 <Icon name='closeiconfilter' size={16} />
@@ -319,47 +396,49 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         }
     }, [errorvalidaiton]);
 
+    interface FormDataObject {
+        [key: string]: any; // Define a dynamic type for the form data fields
+    }
 
-    const onSubmit: SubmitHandler<FormData> = async (data) => {
+    // console.log(getValues("techDetails"))
+    // console.log(getValues("sliderImages"))
+    const onSubmit: SubmitHandler<FormDataObject> = async (data) => {
+        // console.log(editimagedata, "=editimagedata");
 
-        const result = uploadTemplateSchema.safeParse(data);
+
+        if (type == "edit") {
+            editimagedata?.map((item) => {
+                data[item?.imgName] = data[item?.imgName].filter((e: any) => e.id !== item?.imgId)
+            })
+        }
+
+        // console.log(data, "==data");
+
+        let schema = type == "create" ? uploadTemplateSchema : uploadTemplateUpdateSchema
+        const result = schema.safeParse(data);
 
         if (!result.success) {
-            const firstError = result.error.errors[0]; // Get the first validation error
+            const firstError: any = result.error.errors[0]; // Get the first validation error
             seterrorvalidaiton(firstError.message);
+
+            setError(firstError.path[0], { message: firstError?.message })
+            // console.log("here", result.error);
+            // console.log("here1", result.error.errors[0]);
+
+            return;
         } else {
             seterrorvalidaiton(null);
         }
 
-
-
-        // Simulate form validation
-        const isValid = false; // Assume the form is invalid
-
-        if (!isValid) {
-            seterrorvalidaiton('There is an error with your form submission.');
+        if (selectedIndustry === 'Others' && data?.industryName === "") {
+            setError('industryName', { message: "This field is required" });
+            return;
         }
 
-        setLoader(true)
+        setLoader(true);
         const formData = new FormData();
 
-        if (selectedIndustry === 'Others' && data?.industryName === "") {
-            setError('industryName', { message: "This field is required" })
-            setLoader(false)
-            return
-        }
-
-        // if (!isMobileSelected) {
-        //     // console.log("herer", data?.previewImages?.length);
-
-        //     if (data?.previewImages?.length <= 0) {
-        //         // console.log("in this");
-
-        //         setError('previewImages', { message: "Minimum 1 file is required" })
-        //         setLoader(false)
-        //         return;
-        //     }
-        // }
+        // console.log(data?.sliderImages, "==slider images");
 
         // Append form fields to FormData
         Object.entries(data).forEach(([key, value]) => {
@@ -370,8 +449,9 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             }
         });
 
-        formData.delete("industry")
+        formData.delete("industry");
         formData.append('industry', data?.industry);
+
         const credits = [
             {
                 fonts: fonts?.map(font => ({ name: font.name, url: font.url })),
@@ -382,41 +462,63 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         ];
         formData.append("credits", JSON.stringify(credits));
 
-
-        const endpoint = type === 'edit' ? `${process.env.NEXT_PUBLIC_APIURL}/templates/${id}` : `${process.env.NEXT_PUBLIC_APIURL}/templates`;
+        const endpoint = type === 'edit'
+            ? `${process.env.NEXT_PUBLIC_APIURL}/templates/${id}`
+            : `${process.env.NEXT_PUBLIC_APIURL}/templates`;
         const method = type === 'edit' ? 'PUT' : 'POST';
-let res:any;
-        if(type==="edit"){
-          res=   editimagedata?.map((item)=>{
-                deleteSliderImage(item?.imgId,item?.imgName)
-            })
-        }
-        if(res?.ok){
-            console.log("delete succesdful");
-            
-        }
 
-        // Redirect only after fetchData completes
-        await fetch(endpoint, {
-            method: method, body: formData, headers: {
-                'Authorization': `Bearer ${session?.token}`, // Adding Authorization header with Bearer token
-            },
-        }).then(async (res) => {
-            const result = await res.json()
-            if (!res?.ok) {
-                toast.error(result.message)
-                setLoader(false)
+        try {
+            if (type === "edit" && editimagedata?.length > 0) {
+                // Delete images first
+                await Promise.all(
+                    editimagedata.map(async (item) => {
+                        const response = await deleteSliderImage(item?.imgId, item?.imgName);
+                        if (response?.ok) {
+                            console.log(`Deleted image: ${item?.imgName}`);
+                        } else {
+                            console.error(`Failed to delete image: ${item?.imgName}`);
+                        }
+                    })
+                );
             }
-            else {
-                toast.success(result.message)
-                setLoader(false)
-                router.push('/dashboard')
+            if (type == "edit" && deleteAllImages.length > 0) {
+                deleteAllImages.map(async (item) => {
+                    const response = await fetch(`${process?.env?.NEXT_PUBLIC_APIURL}/${item}/all/${initialData?.id}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': `Bearer ${session?.token}`,
+                        }
+                    });
+
+                })
             }
 
-        }).catch(error => {
+            // console.log([...formData.getAll('previewImages')], "==slider images after deletion");
+
+            // Submit the form data
+            const response = await fetch(endpoint, {
+                method,
+                body: formData,
+                headers: {
+                    'Authorization': `Bearer ${session?.token}`, // Adding Authorization header with Bearer token
+                },
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                toast.error(result.message, { autoClose: 1500 });
+            } else {
+                toast.success(result.message, { autoClose: 1500 });
+                router.push('/dashboard');
+            }
+        } catch (error) {
             console.error("An error occurred during submission:", error);
-        });
+        } finally {
+            setLoader(false);
+        }
     };
+
 
     const goback = () => {
         router?.back()
@@ -425,7 +527,7 @@ let res:any;
     const [tags, setTags] = useState<string[]>(initialData?.seoTags || []);
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === ' ' || event.key === ',') {
+        if (event.key === ',') {
             event.preventDefault(); // Prevent default space or comma behavior
             const value = event.currentTarget.value.trim(); // Get trimmed value
 
@@ -465,24 +567,27 @@ let res:any;
 
     const deleteSliderImage = async (id: string, name: string) => {
         try {
-          const response = await fetch(`${process?.env?.NEXT_PUBLIC_APIURL}/${name}/${id}`, {
-            method: 'DELETE',
-            headers:{
-            'Authorization': `Bearer ${session?.token}`,
+            const response = await fetch(`${process?.env?.NEXT_PUBLIC_APIURL}/${name}/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${session?.token}`,
+                }
+            });
+            if (response.ok) {
+                // console.log('Image deleted successfully');
+                return response
+            } else {
+                console.error('Failed to delete image');
             }
-          });
-          if (response.ok) {
-            console.log('Image deleted successfully');
-            return response
-          } else {
-            console.error('Failed to delete image');
-          }
         } catch (error) {
-          console.error('Error deleting image:', error);
+            console.error('Error deleting image:', error);
         }
-      };
-    console.log(errors, "==errors");
+    };
+    // console.log(errors, "==errors");
 
+
+
+    // console.log(initialData?.industryName, "initialData?.industryName")
 
     return (
 
@@ -756,7 +861,7 @@ let res:any;
                                             <input
                                                 {...field}
                                                 id='sourceFiles'
-                                                value={initialData && initialData?.sourceFiles}
+                                                defaultValue={initialData && initialData?.sourceFiles}
                                                 type="text"
                                                 placeholder="Enter source files URL"
                                                 className="w-full py-3 px-2 border border-neutral-400 rounded-md outline-none"
@@ -777,20 +882,24 @@ let res:any;
                                             name="sliderImages"
                                             control={control}
                                             rules={{ required: false }}
-                                            render={({ field: { onChange } }) => (
+                                            render={({ field: { onChange, value = [] } }) => (
                                                 <FileUpload
                                                     deleteimages={deleteimages}
                                                     type={type}
                                                     name='sliderImages'
-                                                    onFileSelect={(file) => { onChange(file) }}
+                                                    // onFileSelect={(newFiles) => {
+                                                    //     // Convert `value` to an array if it's a FileList
+                                                    //     const existingFiles = Array.isArray(value) ? value : Array.from(value);
+                                                    //     const updatedFiles = [...existingFiles, ...newFiles]; // Merge existing and new files
+                                                    //     onChange(updatedFiles);
+                                                    //   }}
+                                                    onFileSelect={(file: any) => { onChange(file) }}
+                                                    setDeleteAll={deleteAll}
                                                     supportedfiles="jpg,png,jpeg"
                                                     multiple={true}
                                                     id="2"
                                                     register={register}
-                                                    initialUrls={initialData?.sliderImages ? initialData?.sliderImages?.map((img: any) => ({
-                                                        url: img.imageUrl,
-                                                        id: img.id,
-                                                    }))
+                                                    initialUrls={initialData?.sliderImages ? initialData?.sliderImages
                                                         : []} // Pass URLs here
                                                     title='Upload Slider Images Here Upto 5'
                                                 />
@@ -811,20 +920,24 @@ let res:any;
                                                 name="previewImages"
                                                 control={control}
                                                 rules={{ required: false }}
-                                                render={({ field: { onChange } }) => (
+                                                render={({ field: { onChange, value = [] } }) => (
                                                     <FileUpload
-                                                    deleteimages={deleteimages}
+                                                        deleteimages={deleteimages}
                                                         name='previewImages'
-                                                        onFileSelect={(file) => { onChange(file) }}
+                                                        // onFileSelect={(newFiles) => {
+                                                        //     // Convert `value` to an array if it's a FileList
+                                                        //     const existingFiles = Array.isArray(value) ? value : Array.from(value);
+                                                        //     const updatedFiles = [...existingFiles, ...newFiles]; // Merge existing and new files
+                                                        //     onChange(updatedFiles);
+                                                        //   }}
+                                                        onFileSelect={(file: any) => { onChange(file) }}
+                                                        setDeleteAll={deleteAll}
                                                         register={register}
                                                         type={type}
                                                         supportedfiles="jpg,png,jpeg"
                                                         multiple={true}
                                                         id="3"
-                                                        initialUrls={initialData?.previewImages ? initialData?.previewImages?.map((img: any) => ({
-                                                            url: img.imageUrl,
-                                                            id: img.id,
-                                                        })) : []} // Pass URLs here
+                                                        initialUrls={initialData?.previewImages ? initialData?.previewImages : []} // Pass URLs here
                                                         title='Upload Desktop Preview Images Here '
                                                     />
                                                 )}
@@ -843,20 +956,18 @@ let res:any;
                                             name="previewMobileImages"
                                             control={control}
                                             rules={{ required: false }}
-                                            render={({ field: { onChange } }) => (
+                                            render={({ field: { onChange, value = [] } }) => (
                                                 <FileUpload
-                                                deleteimages={deleteimages}
+                                                    deleteimages={deleteimages}
+                                                    setDeleteAll={deleteAll}
                                                     type={type}
                                                     register={register}
                                                     name='previewMobileImages'
-                                                    onFileSelect={(file) => { onChange(file) }}
+                                                    onFileSelect={(file: any) => { onChange(file) }}
                                                     supportedfiles="jpg,png,jpeg"
                                                     multiple={true}
                                                     id="4"
-                                                    initialUrls={initialData?.previewMobileImages ? initialData?.previewMobileImages?.map((img: any) => ({
-                                                        url: img.imageUrl,
-                                                        id: img.id,
-                                                    })) : []} // Pass URLs here
+                                                    initialUrls={initialData?.previewMobileImages ? initialData?.previewMobileImages : []} // Pass URLs here
                                                     title='Upload Mobile Preview Images Here'
                                                 />
                                             )}
@@ -899,7 +1010,7 @@ let res:any;
                                                         id="seoTags"
                                                         type="text"
                                                         className={`py-[18px] px-5 border border-neutral-400 rounded-md outline-none placeholder:text-neutral-400 bg-white ${tags?.length >= 5 && 'bg-neutral-400 cursor-not-allowed'}`}
-                                                        placeholder="Type and press space or comma to add tags"
+                                                        placeholder="Type comma to add tags"
                                                         disabled={tags?.length >= 5}
                                                         onKeyDown={handleKeyDown}
                                                     />

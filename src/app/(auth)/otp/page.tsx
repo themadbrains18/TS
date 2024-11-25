@@ -74,12 +74,14 @@ const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute, bac
                 });
                 if (result?.ok) {
                     router.push('/');
-                    setloader(false)
+                        setloader(false)
+            
                 }
                 else {
                     toast.error("Invalid or expire otp", { autoClose: 1500 })
-                    setloader(false)
-                }
+                 
+                        setloader(false)
+                             }
             } else {
                 await fetchData(`/${api}`, {
                     method: "POST",
@@ -90,7 +92,7 @@ const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute, bac
                 });
             }
         } catch (err) {
-            toast.error("Submission error");
+            toast.error("Submission error",{ autoClose: 1500 });
         }
 
         setTimeout(() => {
@@ -117,9 +119,9 @@ const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute, bac
                 if (res.ok) {
                     setStartTimer(180);
                     setCanResend(false);
-                    toast.success("OTP resent successfully");
+                    toast.success("OTP resent successfully",{ autoClose: 1500 });
                 } else {
-                    toast.error("Failed to resend OTP");
+                    toast.error("Failed to resend OTP",{ autoClose: 1500 });
                 }
             });
         } catch (error) {
@@ -142,7 +144,7 @@ const Otp = ({ formData, api, setFormData, tittle, prevRouteName, prevRoute, bac
             setPath(true);
         }
         if (error && api === "login") {
-            toast.error("Invalid OTP");
+            toast.error("Invalid OTP",{ autoClose: 1500 });
         }
     }, [response, error]);
 

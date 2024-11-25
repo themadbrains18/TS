@@ -156,9 +156,11 @@ const Download = () => {
                   name="sortaroow"
                 />
               </div>
+
               {/* Sort Dropdown Items */}
+
               <div
-                className={`absolute w-[208px] right-0 max-[640px]:left-0 ${sort ? "opacity-1 visible" : "opacity-0 invisible"
+                className={`absolute shadow-lg w-[208px] right-0 max-[640px]:left-0 ${sort ? "opacity-1 visible" : "opacity-0 invisible"
                   } duration-[0.5s] top-[45px] z-10 bg-white`}
               >
                 {Sortdata?.map((item, index) => (

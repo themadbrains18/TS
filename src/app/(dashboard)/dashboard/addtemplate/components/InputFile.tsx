@@ -5,17 +5,19 @@ import { UseFormRegister, FieldError } from 'react-hook-form';
 
 interface FileUploadProps {
   type?: string;
-  onFileSelect: (files: File[]) => void;
+  // onFileSelect: (files: File[] |{ imageUrl: string; id: string; templateId: string }[]) => void;
+  onFileSelect: any;
   supportedfiles: string;
   multiple?: boolean;
   id?: string;
   register: UseFormRegister<any>;
   name: string;
   error?: FieldError;
-  initialUrls?: { url: string; id: string }[]; // Initial images as URLs
+  initialUrls?: { imageUrl: string; id: string; templateId: string }[]; // Initial images as URLs
   fileNameUrl?: string[]; // Initial filenames
   title?: string
   deleteimages?: any
+  setDeleteAll?: any
 }
 
 const FilePreview = ({
@@ -36,6 +38,7 @@ const FilePreview = ({
         className="object-cover mb-2"
       />
       <button
+        type='button'
         onClick={(e) => {
           e.stopPropagation();
           onRemove();
@@ -89,11 +92,12 @@ const FileUpload: React.FC<FileUploadProps> = ({
   initialUrls = [],
   fileNameUrl = [],
   title,
-  deleteimages
+  deleteimages,
+  setDeleteAll
 }) => {
 
-  const [files, setFiles] = useState<File[]>([]);
-  const [previewUrls, setPreviewUrls] = useState<{ url: string; id: string }[]>(
+  const [files, setFiles] = useState<any >(initialUrls || []);
+  const [previewUrls, setPreviewUrls] = useState<{ imageUrl: string; id: string }[]>(
     initialUrls
   );
   const [fileError, setFileError] = useState<string | null>(null);
@@ -103,14 +107,29 @@ const FileUpload: React.FC<FileUploadProps> = ({
 
   const supportedFileTypes = supportedfiles.split(',');
 
+  const MAX_SIZE_MB = 10; // Max total size in MB
+  const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024; // Convert to bytes
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newFiles = event.target.files ? Array.from(event.target.files) : [];
 
     if (newFiles.length > 0) {
       const validFiles: File[] = [];
-      const newPreviewUrls: { url: string; id: string }[] = [];
+      const newPreviewUrls: { imageUrl: string; id: string }[] = [];
       const newFileNames: string[] = [];
+      let totalSize = files.reduce((sum:0, file:any) => sum + file?.size, 0); // Sum size of existing files
+  
+      // Calculate the total size of new files
+      for (const file of newFiles) {
+        totalSize += file.size;
+      }
 
+      if (totalSize > MAX_SIZE_BYTES) {
+        setFileError(`The total file size exceeds the 10 MB limit. Please select smaller files.`);
+        return; // Do not proceed if total size exceeds 10 MB
+      }
+
+      // Process valid files
       for (const file of newFiles) {
         const fileExtension = file.name.split('.').pop()?.toLowerCase();
         if (fileExtension && supportedFileTypes.includes(fileExtension)) {
@@ -119,7 +138,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
             newFileNames.push(file.name);
           } else {
             const preview = URL.createObjectURL(file);
-            newPreviewUrls.push({ url: preview, id: '' });
+            newPreviewUrls.push({ imageUrl: preview, id: '' });
           }
         } else {
           setFileError(`Unsupported file type. Supported types: ${supportedfiles}`);
@@ -128,7 +147,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
       }
 
       if (multiple) {
-        setFiles((prev) => [...prev, ...validFiles]);
+        setFiles((prev:any) => [...prev, ...validFiles]);
         setPreviewUrls((prev) => [...prev, ...newPreviewUrls]);
         setFileNames((prev) => [...prev, ...newFileNames]);
       } else {
@@ -136,21 +155,36 @@ const FileUpload: React.FC<FileUploadProps> = ({
         setPreviewUrls(newPreviewUrls);
         setFileNames(newFileNames);
       }
-
+  
+      // console.log(previewUrls,"===previewUrls");
+      // console.log(validFiles,"===validFiles");
+      // console.log(files,"===files");
+      
       setFileError(null);
       onFileSelect(multiple ? [...files, ...validFiles] : validFiles);
     }
   };
 
+
+  // console.log(previewUrls,"==preview urls");
+
   const handleRemove = (index: number, id?: string, name?: string) => {
-    console.log(name, "namename")
-    const updatedFiles = files.filter((_, i) => i !== index);
+    // console.log(index,"=index",previewUrls);
+    
+    // console.log(files,"==files",index);
+    
+
+    const updatedFiles = files.filter((_:any, i:any) => i !== index);
     const updatedPreviews = previewUrls.filter((_, i) => i !== index);
     const updatedFileNames = fileNames.filter((_, i) => i !== index);
+// console.log(updatedFiles,"==updatedFiles");
+// console.log(updatedPreviews,"==updatedPreviews");
+// console.log(previewUrls,"==previewUrls");
 
     setFiles(updatedFiles);
     setPreviewUrls(updatedPreviews);
     setFileNames(updatedFileNames);
+    let urls= updatedPreviews.filter((item)=>item?.id!=="")
     onFileSelect(updatedFiles);
 
 
@@ -165,11 +199,20 @@ const FileUpload: React.FC<FileUploadProps> = ({
     }
   };
 
+  let  deletedValues:any=[]
+  const handleRemoveAll = (name: string) => {
+    setPreviewUrls([])
+    setFiles([])
+    console.log(deletedValues,"==deletedValues");
+    
+    deletedValues.push(name)
+    setDeleteAll(deletedValues)
+  }
 
 
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center relative">
       <h3 className="text-base text-center capitalize">{title}</h3>
       <p className="py-3 text-neutral-500 text-xs">File Supported: {supportedfiles}</p>
 
@@ -195,15 +238,18 @@ const FileUpload: React.FC<FileUploadProps> = ({
       )}
 
       {previewUrls.length > 0 && (
-        <div className="grid grid-cols-3 gap-2 mt-3">
-          {previewUrls?.map((item, index) => (
-            <FilePreview
-              key={item?.id || index}
-              previewUrl={item.url}
-              onRemove={() => { handleRemove(index, item.id, name) }}
-            />
-          ))}
-        </div>
+        <>
+          <p className='text-red-500 absolute top-[70px] right-0 cursor-pointer' onClick={() => { handleRemoveAll(name) }}>Remove All</p>
+          <div className="grid grid-cols-3 gap-2 mt-3">
+            {previewUrls?.map((item, index) => (
+              <FilePreview
+                key={item?.id || index}
+                previewUrl={item.imageUrl}
+                onRemove={() => { handleRemove(index, item.id, name) }}
+              />
+            ))}
+          </div>
+        </>
       )}
 
       {fileNames.length > 0 && (

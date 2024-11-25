@@ -11,7 +11,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         open: ['var(--font-open)'],
-        inter:['var(--font-inter)'],
+        inter: ['var(--font-inter)'],
       },
       screens: {
         "tab": "500px"
@@ -57,6 +57,7 @@ const config: Config = {
         1: "0px 0px 30px 0px rgba(182, 89, 255, 0.04), 0px 8px 40px 0px rgba(0, 0, 0, 0.06);",
       },
     },
+
     gridTemplateAreas: {
       'layout': [
         'header header',
@@ -64,8 +65,63 @@ const config: Config = {
         'footer footer',
       ],
     },
-  },
 
+    animation: {
+      // Fade up and down
+      "fade-up": "fade-up 0.5s",
+      "fade-down": "fade-down 0.5s",
+      // Tooltip
+      "slide-up-fade": "slide-up-fade 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+      "slide-down-fade": "slide-down-fade 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+      // Additional animations
+      "bounce": "bounce 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55)",
+      "shake": "shake 0.3s ease-in-out",
+      "zoom": "zoom 0.4s",
+      // "zoom": "zoom 0.5s cubic-bezier(0.19, 1, 0.22, 1)",
+    },
+
+    keyframes: {
+      // Fade up and down
+      "fade-up": {
+        "0%": { opacity: "0", transform: "translateY(10px)" },
+        "80%": { opacity: "0.6" },
+        "100%": { opacity: "1", transform: "translateY(0px)" },
+      },
+      "fade-down": {
+        "0%": { opacity: "0", transform: "translateY(-10px)" },
+        "80%": { opacity: "0.6" },
+        "100%": { opacity: "1", transform: "translateY(0px)" },
+      },
+      // Tooltip
+      "slide-up-fade": {
+        "0%": { opacity: "0", transform: "translateY(6px)" },
+        "100%": { opacity: "1", transform: "translateY(0)" },
+      },
+      "slide-down-fade": {
+        "0%": { opacity: "0", transform: "translateY(-6px)" },
+        "100%": { opacity: "1", transform: "translateY(0)" },
+      },
+      // Bounce Animation
+      "bounce": {
+        "0%, 100%": { transform: "translateY(0)" },
+        "50%": { transform: "translateY(-20px)" },
+      },
+      // Shake Animation
+      "shake": {
+        "0%": { transform: "translateX(0)" },
+        "25%": { transform: "translateX(-5px)" },
+        "50%": { transform: "translateX(5px)" },
+        "75%": { transform: "translateX(-5px)" },
+        "100%": { transform: "translateX(0)" },
+      },
+      // Zoom Animation
+      "zoom": {
+        "0%": { transform: "scale(0.9)", opacity: "0" },
+        "100%": { transform: "scale(1)", opacity: "1" },
+      },
+    }
+
+  },
   plugins: [],
 };
 export default config;
