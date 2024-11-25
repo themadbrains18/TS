@@ -44,6 +44,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
     const [resendData, setResendData] = useState<FormData>();
     const [initialSend, setInitialSend] = useState(true);
     const [FormData, setFormData] = useState({})
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     /**
      * onSubmit function handles the form submission process.
@@ -53,9 +54,10 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
      */
 
     const onSubmit: SubmitHandler<FormData> = async (data) => {
+        if (isSubmitting) return;
+        setIsSubmitting(true);
+        
         try {
-
-
             if (step === 1) data.currentEmail = session?.email || "";
             else data.newEmail = data?.email || "";
 
@@ -85,7 +87,10 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
         } catch (error) {
             console.error("Error updating email:", error);
             setLoadingOtp(false)
-
+        } finally {
+            setTimeout(() => {
+                setIsSubmitting(false);
+            }, 2500);
         }
     };
 
@@ -97,6 +102,9 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
      * @returns {void}
      */
     const handleEmmailUpdate = async () => {
+        if (isSubmitting) return;
+        setIsSubmitting(true);
+
         try {
             setLoadingbtn(true);
             const email = step === 1
@@ -131,6 +139,9 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
             console.error("Error updating email:", error);
         } finally {
             setLoadingbtn(false);
+            setTimeout(() => {
+                setIsSubmitting(false);
+            }, 2500);
         }
     };
 
@@ -142,6 +153,10 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
      * @returns {void}
      */
     const resendCode = async () => {
+
+        if (isSubmitting) return;
+        setIsSubmitting(true);
+
         if (!canResend) return;
 
         try {
@@ -157,9 +172,9 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                 if (res.ok) {
                     setStartTimer(180); // Reset timer to 60 seconds
                     setCanResend(false); // Disable resend option temporarily
-                    toast.success("OTP resent successfully"),{ autoClose: 1500 };
+                    toast.success("OTP resent successfully"), { autoClose: 1500 };
                 } else {
-                    toast.error("Failed to resend OTP",{ autoClose: 1500 });
+                    toast.error("Failed to resend OTP", { autoClose: 1500 });
                 }
             });
         } catch (error) {
@@ -167,6 +182,9 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
         }
         finally {
             setLoadingbtn(false)
+            setTimeout(() => {
+                setIsSubmitting(false);
+            }, 2500);
         }
     };
 
@@ -224,9 +242,9 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
     }, [startTimer]);
 
     return (
-        <Modal isOpen={isPopupOpen} className='max-w-[616px] w-full' onClose={() => { closePopup(); setStep(1); setInitialSend(true); setStartTimer(0); setDisabled(true)}}>
+        <Modal isOpen={isPopupOpen} className='max-w-[616px] w-full' onClose={() => { closePopup(); setStep(1); setInitialSend(true); setStartTimer(0); setDisabled(true) }}>
             <div className="relative px-4 py-9 sm:py-[30px] sm:px-10 max-w-[616px] bg-gradient-to-b from-[#E5EFFF] to-[#E5EFFF]">
-                <Icon onClick={() => { closePopup(); setStep(1);setInitialSend(true);setStartTimer(0); setDisabled(true) }} className="absolute top-5 right-5 fill-[#5D5775] w-5 h-5 cursor-pointer z-50" name="crossicon" />
+                <Icon onClick={() => { closePopup(); setStep(1); setInitialSend(true); setStartTimer(0); setDisabled(true) }} className="absolute top-5 right-5 fill-[#5D5775] w-5 h-5 cursor-pointer z-50" name="crossicon" />
                 <div className="sm:py-[50px]">
                     {step === 1 && (
                         <>
@@ -240,7 +258,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                                         value={session?.email}
                                         disabled={step === 1}
                                         onChange={() => clearErrors("email")}
-                                      className='!py-[13px] px-4 sm:px-5 auto-fill-color'
+                                        className='!py-[13px] px-4 sm:px-5 auto-fill-color'
                                     />
                                     {startTimer > 0 ? (
                                         <Button className='text-nowrapbg-primary-100 text-white capitalize  leading-6 transition-all duration-300 hover:bg-[#872fcb] py-[13px] px-[10px] sm:px-[30px] text-nowrap text-sm sm:text-base font-normal' variant='primary' type='button' disabled={true} >
