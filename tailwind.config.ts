@@ -67,6 +67,9 @@ const config: Config = {
     },
 
     animation: {
+
+      spinCustom: 'spinCustom 1.5s ease-in-out infinite',
+
       // Fade up and down
       "fade-up": "fade-up 0.5s",
       "fade-down": "fade-down 0.5s",
@@ -81,6 +84,11 @@ const config: Config = {
     },
 
     keyframes: {
+      spinCustom: {
+        '0%': { transform: 'rotate(0deg)' },
+        '50%': { transform: 'rotate(180deg)' },
+        '100%': { transform: 'rotate(360deg)' },
+      },
       // Fade up and down
       "fade-up": {
         "0%": { opacity: "0", transform: "translateY(10px)" },

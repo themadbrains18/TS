@@ -56,6 +56,7 @@ const LoginForm = () => {
      * Submit handler for the login form
      */
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
+
         if (isSubmitting) return;
         setIsSubmitting(true);
 
@@ -90,6 +91,19 @@ const LoginForm = () => {
         if (session) {
             router.push('/');
         }
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Disable default "Enter" behavior
+            }
+        };
+        // Attach event listener when the component mounts
+        window.addEventListener('keydown', handleKeyDown);
+        // Detach event listener when the component unmounts
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+
+
     }, [response, session, router]);
 
     return (

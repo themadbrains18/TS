@@ -50,7 +50,7 @@ const ProductFilterside = ({ items, setItems, closefilter, setSelectedFilters }:
         }
     };
     return (
-        <div className="max-w-full sm:max-w-[357px] w-full py-[30px] px-[20px] bg-white  h-screen">
+        <div className="max-w-full sm:max-w-[357px] w-full py-[30px] px-[20px] bg-white  h-screen animate-fade-up">
             <div className="flex justify-between items-center border-b border-divider-100 pl-5 pr-2.5 md:px-0 pb-5 mb-5 ">
                 <div className="flex gap-[5px] items-center">
                     <Icon name="filter" />
@@ -71,7 +71,7 @@ const ProductFilterside = ({ items, setItems, closefilter, setSelectedFilters }:
                         titleclass='md:text-[18px] text-[16px] font-semibold leading-7'
                         className='border-b border-divider-100 '
                     >
-                        <div className="grid gap-[10px]">
+                        <div className="grid gap-[10px] ">
                             {filterSection && filterSection?.items?.map((item, itemIndex) => (
                                 <div className='md:pl-5 md:pr-2  py-[5px]' >
                                     <CheckboxFilter

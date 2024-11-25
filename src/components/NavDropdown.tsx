@@ -27,8 +27,8 @@ const NavDropdown: React.FC<navdropdownprops> = ({ title, subCat }) => {
             name="soliddownicon"
           />
         </div>
-        <div className="hiddenscroll max-w-[60.3vw] w-full  overflow-scroll flex absolute top-[110px] left-[24.8%] transition-all duration-[0.5s] opacity-0 invisible    group-hover:visible group-hover:opacity-[1] cursor-pointer shadow-md">
-          <NavTabs  subCat={subCat} />
+        <div className="hiddenscroll max-w-[60.3vw] w-full  overflow-scroll flex absolute top-[95%] left-[24.8%] transition-all duration-[0.5s] opacity-0 invisible    group-hover:visible group-hover:opacity-[1] cursor-pointer shadow-md">
+          <NavTabs subCat={subCat} />
         </div>
       </section>
       <div className="overflow-hidden h-0 duration-[0.5s]">dsfdefdsfdfdfgd</div>

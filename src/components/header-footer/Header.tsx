@@ -169,6 +169,34 @@ const Header = () => {
     setIsLoading(false);
   };
 
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [headerHeight, setHeaderHeight] = useState(0); // Track the header height
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50); // Set scrolled state
+    };
+
+    const updateHeaderHeight = () => {
+      const header = document.querySelector("header");
+      if (header instanceof HTMLElement) {
+        setHeaderHeight(header.offsetHeight); // Update height dynamically
+      }
+    };
+
+    // Add event listeners
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", updateHeaderHeight);
+
+    // Initial height update
+    updateHeaderHeight();
+
+    // Cleanup listeners
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", updateHeaderHeight);
+    };
+  }, []);
 
 
   return (
@@ -180,11 +208,12 @@ const Header = () => {
           </Link>
         </div>
       </>}
-      <header className="  bg-white fixed top-0 left-0 right-0  border-b-[1px] border-[#11083319] z-20   ">
+      <header
+        className="bg-white fixed top-0 left-0 right-0  border-b-[1px] border-[#11083319] z-20   ">
         <div className="relative" >
           {/* Destop header */}
           <div className="container hidden min-[1028px]:block">
-            <div className="py-10 flex items-center justify-between">
+            <div className={` transition-all duration-500 ${isScrolled ? "py-5" : "py-10"}  flex items-center justify-between animate-zoom`}>
               <div className="flex items-center justify-between xl:max-w-[809px] max-w-[690px] w-full cursor-pointer">
                 <Link className="w-[276px]" href={'/'}>
                   <Image
@@ -302,12 +331,11 @@ const Header = () => {
                   session?.user
                   &&
                   <div ref={profileresRef}>
-                    <div onClick={openProfileres} className="w-[30px] h-[30px] cursor-pointer object-center overflow-hidden">
-
+                    <div onClick={openProfileres} className="w-[30px] h-[30px] cursor-pointer overflow-hidden">
                       <Image
-                        width={50}
-                        height={50}
-                        className="rounded-full object-contain"
+                        width={30}
+                        height={30}
+                        className="rounded-full h-[30px] object-cover"
                         src={imageUrl || "/images/userdummy.png"}
                         alt="diamond"
                       />

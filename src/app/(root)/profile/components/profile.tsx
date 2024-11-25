@@ -24,10 +24,13 @@ interface sessionProps {
 
 const Profile: React.FC<sessionProps> = ({ session, userData }) => {
     // Separate state for each button
+    const [userinfo, setuserInfo] = useState()
+    console.log(userinfo, "userinfouserinfouserinfo")
+
     const [isNameActive, setIsNameActive] = useState<boolean>(false)
     const [isUsernameActive, setIsUsernameActive] = useState<boolean>(false)
     const [isEmailActive, setIsEmailActive] = useState<boolean>(false);
-    const [isNameDisabled, setIsNameDisabled] = useState<boolean>(false);
+    const [isNameDisabled, setIsNameDisabled] = useState<boolean>(true);
     const [isUserDisabled, setIsUserDisabled] = useState<boolean>(true);
     const [isEmailDisabled, setIsEmailDisabled] = useState<boolean>(true);
     const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
@@ -61,11 +64,15 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
     };
 
     const { data: response, loading, fetchData } = useFetch<any>();
+
     // const { data: imagersponse, loading:imageloading, fetchData:fetchimage } = useFetch<any>();
     const { error: deleteerror, loading: deleteloading, fetchData: deleteuser } = useFetch<any>();
     const { loading: updateLoading, fetchData: updateFetchData } = useFetch<any>();
     const { loading: updateloadingNumber, fetchData: updateNumber } = useFetch<any>();
     const { fetchData: updatePassword } = useFetch<any>();
+
+
+
 
 
     /**
@@ -101,7 +108,6 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
     const fetchUserData = async () => {
         try {
             fetchData(`/get-user`);
-
         } catch (error) {
             console.log(error)
         }
@@ -115,8 +121,6 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
       */
     const handleNameUpdate = async () => {
         try {
-
-
 
             if (name === "") {
                 setNameeror("User Name Is Empty")
@@ -153,9 +157,6 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
      */
     const handlePhonenumberUpdate = async () => {
         try {
-
-
-
 
             if (number === "" || number === null || number === undefined) {
                 setPhoneNumberError("Please enter contact number")
@@ -234,17 +235,17 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
       */
     useEffect(() => {
         fetchUserData();
-    }, []);
+    }, [isNameDisabled, isUsernameActive]);
 
-    /**
+    /**F
      * useEffect to handle response changes.
      * This effect runs every time the `response` state changes.
      */
     useEffect(() => {
-
         if (response) {
             fetchDailyDownloads()
             setProfileImage(response?.user?.profileImageUrl || response?.user?.profileImg || profileimage);
+            setuserInfo(response)
         }
     }, [response])
 
@@ -257,10 +258,11 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
         if (phoneNumberError) {
             setTimeout(() => {
                 setPhoneNumberError("")
-            }, 1000)
+            }, 2000)
         }
 
     }, [phoneNumberError, nameError])
+
 
 
     return (
@@ -283,7 +285,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                             height={168}
                                             width={168}
                                             alt='userimage'
-                                        />
+                                        />    
                                         <label htmlFor="profilepic" className='py-[5px] px-[14px] text-[11px] md:text-base md:py-2 text-nowrap absolute bottom-0 left-[6px] right-[6px] md:left-2 md:right-2 text-center bg-primary-300 text-[#282827] capitalize cursor-pointer border-b transition-all duration-200 hover:border-primary-100 font-regular leading-6 flex justify-center'>{loading ? <Icon name='purpleloader' className='w-7 h-7' /> : "change image"} </label>
                                         <input
                                             className='hidden'
@@ -297,7 +299,6 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                 <div className='mt-5 flex flex-col gap-y-4 lg:gap-y-[30px]'>
                                     <div>
                                         <div className='flex items-end gap-x-[10px]'>
-
                                             <Input
                                                 disabled={isNameDisabled}
                                                 className='px-4 py-[13px] md:py-[13px]'
@@ -308,7 +309,6 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                                 value={response?.user ? response?.user?.name : name}
                                                 onChange={(e) => setName(e?.target?.value)}
                                             />
-
                                             {
                                                 isNameActive ?
                                                     <Button
@@ -316,7 +316,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                                         iconClass='w-6 h-6'
                                                         direction='flex-row-reverse gap-x-[10px]'
                                                         className='py-[13px] px-4 md:py-4 md:px-[14px]'
-                                                        onClick={() => { setIsNameActive(false), setIsNameDisabled(!isNameDisabled), handleNameUpdate() }}
+                                                        onClick={() => { setIsNameActive(true), setIsNameDisabled(!isNameDisabled), handleNameUpdate() }}
                                                         variant='primary'
                                                         saveicon={true}
                                                     >
@@ -327,7 +327,10 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                                         hideChild='hidden md:block'
                                                         direction='flex-row-reverse gap-x-[10px]'
                                                         className='py-[13px] px-4 md:py-4 md:px-[14px]'
-                                                        onClick={() => { setIsNameActive(true), setIsNameDisabled(!isNameDisabled) }}
+                                                        onClick={() => {
+                                                            setIsNameActive(true),
+                                                                setIsNameDisabled(!isNameDisabled)
+                                                        }}
                                                         variant='primary'
                                                         iconClass='fill-white w-6 h-6'
                                                         editicon={true} >edit</Button>
@@ -360,11 +363,21 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                                         iconClass='w-6 h-6'
                                                         onClick={() => { setIsUsernameActive(false), setIsUserDisabled(!isUserDisabled), handlePhonenumberUpdate() }}
                                                         variant='primary'
-                                                        saveicon={true}> {updateloadingNumber ? 'Saving...' : 'Save'}</Button> :
+                                                        saveicon={true}>
+                                                        {updateloadingNumber ? 'Saving...' : 'Save'}</Button> :
                                                     <Button
                                                         hideChild='hidden md:block'
                                                         direction='flex-row-reverse gap-x-[10px]'
-                                                        className='py-[13px] px-4 md:py-4 md:px-[14px]' onClick={() => { setIsUsernameActive(true), setIsUserDisabled(!isUserDisabled) }} variant='primary' iconClass='fill-white w-6 h-6' editicon={true}>edit</Button>
+                                                        className='py-[13px] px-4 md:py-4 md:px-[14px]'
+                                                        onClick={() => {
+                                                            setIsUsernameActive(true), setIsUserDisabled(!isUserDisabled)
+                                                        }}
+                                                        variant='primary'
+                                                        iconClass='fill-white w-6 h-6'
+                                                        editicon={true}
+                                                    >
+                                                        edit
+                                                    </Button>
                                             }
                                         </div>
                                         {
@@ -388,7 +401,11 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                                 hideChild='hidden md:block'
                                                 direction='flex-row-reverse gap-x-[10px]'
                                                 className='py-[13px] px-4 md:py-4 md:px-[14px]'
-                                                onClick={() => { setIsEmailActive(true), setIsEmailDisabled(!isEmailDisabled), openPopup() }}
+                                                onClick={() => {
+                                                    setIsEmailActive(true),
+                                                        setIsEmailDisabled(!isEmailDisabled),
+                                                        openPopup()
+                                                }}
                                                 variant='primary'
                                                 iconClass='fill-white w-6 h-6'
                                                 editicon={true}>

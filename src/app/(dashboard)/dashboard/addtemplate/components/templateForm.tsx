@@ -264,28 +264,28 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
     const removeInputField = (setter: any, index: number, values: any[]) => {
 
-        let technicalDetails = getValues("techDetails")
-        technicalDetails.splice(index, 1)
-        setter(technicalDetails);
-        console.log(technicalDetails, "===technicalDetails 22");
-        setValue('techDetails', technicalDetails)
+        // let technicalDetails = getValues("techDetails")
+        // technicalDetails?.splice(index, 1)
+        // setter(technicalDetails);
+        // console.log(technicalDetails, "===technicalDetails 22");
+        // setValue('techDetails', technicalDetails)
 
-        // if (values.length > 1) {
+        if (values.length > 1) {
 
 
-        //     const newValues = [...values];
-        //     newValues.splice(index, 1);
-        //     setter(newValues);
+            const newValues = [...values];
+            newValues.splice(index, 1);
+            setter(newValues);
 
-        //     if (setter == setTechnicalDetails) {
-        //         console.log("in this", newValues);
+            if (setter == setTechnicalDetails) {
+                console.log("in this", newValues);
 
-        //         newValues.forEach((detail: any, i) => {
-        //             console.log(i, "==index", detail, "==detail",);
-        //             setValue(`techDetails.${i}`, detail)
-        //         }); // Correct the field path
-        //     }
-        // }
+                newValues.forEach((detail: any, i) => {
+                    console.log(i, "==index", detail, "==detail",);
+                }); // Correct the field path
+                setValue(`techDetails`, newValues)
+            }
+        }
     };
 
     /**
@@ -297,7 +297,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             <h4 className='text-lg font-semibold capitalize pb-4'>{title}</h4>
             <div className="p-5 border-b border-neutral-400">
                 {items?.map((item, index) => (
-
                     <div key={index} className="flex items-center gap-x-3 pb-3">
 
                         <DashInput
@@ -316,15 +315,22 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
                         {items.length > 1 && (
                             <button
+                                type='button'
                                 onClick={() => removeInputField(setter, index, items)}
-                                className="py-3 px-3 border" >
+                                className="py-3 px-3 border">
                                 <Icon name='closeiconfilter' size={16} />
                             </button>
                         )}
 
                     </div>
                 ))}
-                <Button onClick={() => addInputFields(setter, items, true)} variant='primary' className='py-2 mt-2'>Add more</Button>
+                <Button
+                    type='button'
+                    onClick={() => addInputFields(setter, items, true)}
+                    variant='primary'
+                    className='py-2 mt-2'>
+                    Add more
+                </Button>
             </div>
         </div>
     );
