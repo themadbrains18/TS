@@ -64,6 +64,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
     };
 
     const { data: response, loading, fetchData } = useFetch<any>();
+    const { data: userresponse, loading : userloading, fetchData : getuser } = useFetch<any>();
 
     // const { data: imagersponse, loading:imageloading, fetchData:fetchimage } = useFetch<any>();
     const { error: deleteerror, loading: deleteloading, fetchData: deleteuser } = useFetch<any>();
@@ -107,7 +108,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
       */
     const fetchUserData = async () => {
         try {
-            fetchData(`/get-user`);
+            getuser(`/get-user`);
         } catch (error) {
             console.log(error)
         }
@@ -127,7 +128,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                 return
             }
 
-            if (name === response?.user?.name) {
+            if (name === userresponse?.user?.name) {
                 setNameeror("This User Already Exists ")
                 return
             }
@@ -169,7 +170,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                 return;
             }
 
-            if (number === response?.user?.number) {
+            if (number === userresponse?.user?.number) {
                 setPhoneNumberError("This number is  already exists")
                 return
             }
@@ -285,7 +286,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                             height={168}
                                             width={168}
                                             alt='userimage'
-                                        />    
+                                        />
                                         <label htmlFor="profilepic" className='py-[5px] px-[14px] text-[11px] md:text-base md:py-2 text-nowrap absolute bottom-0 left-[6px] right-[6px] md:left-2 md:right-2 text-center bg-primary-300 text-[#282827] capitalize cursor-pointer border-b transition-all duration-200 hover:border-primary-100 font-regular leading-6 flex justify-center'>{loading ? <Icon name='purpleloader' className='w-7 h-7' /> : "change image"} </label>
                                         <input
                                             className='hidden'
@@ -306,7 +307,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                                 placeholder='Name'
                                                 name='name'
                                                 type='text'
-                                                value={response?.user ? response?.user?.name : name}
+                                                value={userresponse?.user ? userresponse?.user?.name : name}
                                                 onChange={(e) => setName(e?.target?.value)}
                                             />
                                             {
@@ -316,7 +317,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                                         iconClass='w-6 h-6'
                                                         direction='flex-row-reverse gap-x-[10px]'
                                                         className='py-[13px] px-4 md:py-4 md:px-[14px]'
-                                                        onClick={() => { setIsNameActive(true), setIsNameDisabled(!isNameDisabled), handleNameUpdate() }}
+                                                        onClick={() => { setIsNameActive(false), setIsNameDisabled(!isNameDisabled), handleNameUpdate() }}
                                                         variant='primary'
                                                         saveicon={true}
                                                     >
@@ -351,7 +352,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                                 placeholder='Number'
                                                 name='number'
                                                 type='text'
-                                                value={response?.user ? response?.user?.number : number}
+                                                value={userresponse?.user ? userresponse?.user?.number : number}
                                                 onChange={(e) => setNumber(e.target.value)}
                                             />
                                             {

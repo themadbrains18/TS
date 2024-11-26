@@ -70,8 +70,12 @@ const NewPassword = ({ formData, otp }: newpasswordpopup) => {
 
                 // Handle success (e.g., display a success message)
             } else {
+          
+                
                 toast.error(res?.message, { autoClose: 1500 })
-                setisLoading(false)
+                setTimeout(()=>{
+                    setisLoading(false)
+                },2500)
                 // Handle failure (e.g., display an error message)
             }
         } catch (error) {

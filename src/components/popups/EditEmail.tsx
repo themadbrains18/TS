@@ -33,7 +33,6 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
     handlepasswordUpdate
 }) => {
     const { data: response, fetchData } = useFetch<any>();
-
     const { data: session } = useSession();
     const { register, handleSubmit, setValue, reset, setError, formState: { errors }, clearErrors, getValues } = useForm<FormData>();
     const [disabled, setDisabled] = useState(true);
@@ -84,7 +83,9 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                 },
             });
             if (!response.ok) {
-                setLoadingOtp(false)
+                setTimeout(() => {
+                    setLoadingOtp(false)
+                }, 2500)
             }
         } catch (error) {
             console.error("Error updating email:", error);
@@ -136,17 +137,16 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                     'Content-Type': 'application/json',
                 },
             });
-
         } catch (error) {
             console.error("Error updating email:", error);
+
         } finally {
             setLoadingbtn(false);
+            setTimeout(() => {
+                setIsSubmitting(false);
+            }, 2500);
+
         }
-
-        setTimeout(() => {
-            setIsSubmitting(false);
-        }, 2500);
-
     };
 
 
@@ -158,9 +158,6 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
      */
 
     const resendCode = async () => {
-
-
-
 
         if (!canResend) return;
 
@@ -194,14 +191,12 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
     };
 
 
-
     /**
      * This hook listens for changes in the `response` object and updates various states accordingly.
      * 
      * Dependencies:
      * - This effect runs every time `response` changes.
     */
-
 
 
     useEffect(() => {

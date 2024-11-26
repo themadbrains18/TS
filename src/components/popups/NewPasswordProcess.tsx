@@ -56,7 +56,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
     const onSubmit: SubmitHandler<FormData> = async (data) => {
         if (isSubmitting) return;
         setIsSubmitting(true);
-        
+
         try {
             if (step === 1) data.currentEmail = session?.email || "";
             else data.newEmail = data?.email || "";
@@ -82,7 +82,9 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                 },
             });
             if (!response.ok) {
-                setLoadingOtp(false)
+                setTimeout(() => {
+                    setLoadingOtp(false)
+                }, 2500);
             }
         } catch (error) {
             console.error("Error updating email:", error);

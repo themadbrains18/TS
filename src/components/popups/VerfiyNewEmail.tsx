@@ -42,6 +42,7 @@ const VerfiyNewEmail: FC<verifyNewemail> = ({
   const [resendData, setResendData] = useState<savedData>();
   const [initialSend, setInitialSend] = useState(true);
   const [clearotptime, setClearotptime] = useState<boolean>()
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
 
 
@@ -55,6 +56,8 @@ const VerfiyNewEmail: FC<verifyNewemail> = ({
 
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     try {
       setLoadingbtnverify(true)
       if (step === 2 && data?.newEmail && !emailRegex.test(data?.newEmail)) {
@@ -85,7 +88,10 @@ const VerfiyNewEmail: FC<verifyNewemail> = ({
     } catch (error) {
       console.error("Error updating email:", error);
     } finally {
-      setLoadingbtnverify(false)
+      setTimeout(() => {
+        setLoadingbtnverify(false)
+        setIsSubmitting(false);
+      }, 2500);
     }
   };
 
@@ -164,7 +170,7 @@ const VerfiyNewEmail: FC<verifyNewemail> = ({
     } catch (error) {
       console.log("Error resending OTP:", error);
     } finally {
-      setTimeout(()=>setLoadingbtn(false), 2500)
+      setTimeout(() => setLoadingbtn(false), 2500)
     }
   };
 
