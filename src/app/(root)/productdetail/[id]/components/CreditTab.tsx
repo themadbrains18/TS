@@ -30,7 +30,6 @@ interface CreditsProps {
 }
 
 const CreditTab: React.FC<CreditsProps> = ({ credits }) => {
-    console.log(credits, "=credits");
 
     return (
         <>

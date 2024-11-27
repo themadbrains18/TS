@@ -136,7 +136,6 @@ const SearchComponent: React.FC<navtabprops> = ({ subCat, classname, opensearch,
 
 
 
-    // console.log(templates?.templates, "templates?.templates")
 
     return (
         <div className={` ${mainclass} flex items-center relative justify-end`}>

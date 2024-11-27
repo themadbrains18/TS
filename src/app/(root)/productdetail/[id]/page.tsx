@@ -45,7 +45,6 @@ const Page = async ({ params }: { params: Params }) => {
    * You can also redirect or show a 404 page
   */
   if (!response.ok) {
-    // console.log("first")
     return < NotFound />
     //  throw new Error('Template not found');
   }

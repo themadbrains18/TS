@@ -243,7 +243,6 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
         };
     }, [startTimer]);
 
-    console.log("errors", errors);
 
 
     return (

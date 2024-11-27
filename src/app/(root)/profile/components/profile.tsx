@@ -25,8 +25,6 @@ interface sessionProps {
 const Profile: React.FC<sessionProps> = ({ session, userData }) => {
     // Separate state for each button
     const [userinfo, setuserInfo] = useState()
-    console.log(userinfo, "userinfouserinfouserinfo")
-
     const [isNameActive, setIsNameActive] = useState<boolean>(false)
     const [isUsernameActive, setIsUsernameActive] = useState<boolean>(false)
     const [isEmailActive, setIsEmailActive] = useState<boolean>(false);
