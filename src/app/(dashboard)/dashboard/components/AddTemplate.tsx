@@ -158,8 +158,8 @@ const AddTemplate = () => {
                     <>
                       {response?.templates?.map((template: any, index: number) => (
                         <tr key={index} className="hover:bg-gray-50">
-                          <td className="   px-6 py-5 text-sm  md:text-base text-subparagraph capitalize  md:max-w-full font-semibold">
-                      {index+1}
+                          <td className="px-6 py-5 text-sm  md:text-base text-subparagraph capitalize  md:max-w-full font-semibold">
+                            {index + 1}
                           </td>
                           <td className="   px-6 py-5 text-sm  md:text-base text-subparagraph capitalize  md:max-w-full font-semibold">
                             <h2 className='max-w-[300px] truncate'>
@@ -195,7 +195,7 @@ const AddTemplate = () => {
                               name="deleteicon"
                             />
                             <Icon
-                              onClick={() => router.push(`/dashboard/edit/${template.id}`)}
+                              onClick={() => { router.push(`/dashboard/edit/${template.id}`); router.refresh(); }}
                               className="w-5 h-6 fill-subheading cursor-pointer"
                               name="editicon"
                             />

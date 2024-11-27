@@ -23,7 +23,13 @@ const HeroSection = () => {
                         <div className='pt-10 lg:pt-[125px] lg:max-w-[570px] w-full'>
                             <div className='relative'>
                                 <Image width={200} height={40} src={"/images/Vector.png"} alt='vectorsicon' className='absolute top-0 left-0' />
-                                <h3 className='text-sm tab:text-lg text-subheading leading-7 font-semibold capitalize '>Trending of the Day</h3>
+                                {/* <h3 className='text-sm tab:text-lg text-subheading leading-7 font-semibold capitalize '>Trending of the Day</h3> */}
+                                {/* animation text */}
+                                <div className="animate two">
+                                    <span>T</span><span>r</span><span>e</span><span>n</span><span>d</span><span>i</span><span>n</span><span>g</span>
+                                    <span>&nbsp;</span><span>O</span><span>f</span><span>&nbsp;</span><span>T</span><span>h</span><span>e</span>
+                                    <span>&nbsp;</span><span>D</span><span>a</span><span>y</span>
+                                </div>
                             </div>
                             <div className='lg:max-w-[570px] w-full mt-[10px] tab:mt-5'>
                                 <h1 className='text-[#1f124d] text-4xl leading-[43px] md:text-[55px] md:leading-[70px] font-extrabold' >Free High-quality UI kits and design resources</h1>

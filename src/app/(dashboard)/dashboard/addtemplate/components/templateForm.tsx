@@ -214,7 +214,16 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             setIcons(creditData.icons || [{ name: '', url: '' }]);
             setIllustrations(creditData.illustrations || [{ name: '', url: '' }]);
         }
-    }, [initialData])
+
+        if (initialData?.industryName != null) {
+            console.log(industryData, "===industryData");
+
+            let data: any = industryData?.filter((item) => item?.id === initialData?.industryTypeId)
+            data && data?.length > 0 && setSelectedIndustry(data[0]?.name)
+
+        }
+
+    }, [initialData, industryData])
 
     /**
      * Generalized function to add new input fields
@@ -412,6 +421,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         // console.log(editimagedata, "=editimagedata");
 
 
+
+
         if (type == "edit") {
             editimagedata?.map((item) => {
                 data[item?.imgName] = data[item?.imgName].filter((e: any) => e.id !== item?.imgId)
@@ -441,6 +452,14 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             return;
         }
 
+        console.log(selectedIndustry, data?.industryName, "==dssdadsads");
+
+        if (selectedIndustry !== 'Others' && data?.industryName !== null) {
+            console.log("in this");
+
+            data.industryName = null
+        }
+
         setLoader(true);
         const formData = new FormData();
 
@@ -454,6 +473,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                 formData.append(key, value);
             }
         });
+        console.log(data?.industry, "===lsjkdjlsk");
 
         formData.delete("industry");
         formData.append('industry', data?.industry);
@@ -555,13 +575,12 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     };
 
     const [otherIndustry, setOtherIndustry] = useState<string>();
+    console.log(initialData?.industryName != null ? otherIndustry : "", "otherIndustryotherIndustryotherIndustry")
 
     const handleInputChangeindustryvalue = (e: any) => {
-
         setOtherIndustry(e.target.value); // Correctly updating state
         if (otherIndustry !== "") {
             clearErrors('industryName')
-
         }
     };
 
@@ -591,9 +610,9 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     };
     // console.log(errors, "==errors");
 
+    console.log(initialData?.industryName != null ? otherIndustry : "", "check")
 
-
-    // console.log(initialData?.industryName, "initialData?.industryName")
+    console.log((type === "edit" && selectedIndustry === "Others") && (initialData?.industryName != null), "candiotion 1")
 
     return (
 
@@ -610,7 +629,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                     alt="Logo"
                                 />
                             </Link>
-                            <div onClick={goback} >
+                            <div onClick={goback} className="cursor-pointer" >
                                 <Icon className="fill-primary-100" name="crossicon" />
                             </div>
                         </div>
@@ -710,6 +729,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                         <div className='mt-5'>
                             <h3 className='text-xl font-semibold capitalize '>Industry</h3>
                             <div className='flex flex-col mb-3'>
+
                                 <div className='grid grid-cols-4 justify-between gap-x-3 max-w-full   py-2'>
                                     {industryData?.map((item) => (
                                         <Controller
@@ -737,13 +757,14 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                         />
                                     ))}
                                 </div>
+
                                 {errors.industry && (
                                     <p ref={errorRef} style={{ color: 'red' }}>{errors.industry.message}</p>
                                 )}
 
                                 {/* Conditional rendering of input box when "Other" is selected */}
 
-                                {(selectedIndustry === 'Others' || initialData?.industryName) && (
+                                {(selectedIndustry === 'Others') && (
                                     <div>
                                         <div className="mt-3 flex items-center gap-2">
                                             <input
@@ -751,18 +772,16 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                 type="text"
                                                 placeholder="Please specify"
                                                 name="industryName"
-                                                defaultValue={otherIndustry || ""}
+                                                defaultValue={initialData?.industryName != null || initialData?.industryName != undefined ? otherIndustry : ""}
                                                 onChange={handleInputChangeindustryvalue} // Use a function to handle the change
                                                 className="border h-[50px] rounded p-2 w-full outline-none"
                                             />
-
                                         </div>
                                         {errors.industryName && (
                                             <p ref={errorRef} style={{ color: 'red' }}>{errors.industryName.message}</p>
                                         )}
                                     </div>
                                 )}
-
                             </div>
 
                             <div className='flex flex-col gap-y-5'>

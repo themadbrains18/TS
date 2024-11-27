@@ -288,9 +288,9 @@ const VerfiyNewEmail: FC<verifyNewemail> = ({
             <Button
               loadingbtn={loadingbtnverify}
               iconClass='w-7 h-7' className="w-full py-2 sm:py-[13px] text-lg font-normal text-center justify-center" type="submit" variant="primary"
-              disabled={disabled}>
+              disabled={disabled || isSubmitting}>
               {
-                loadingbtnverify ? "" : "Verify Now"
+                loadingbtnverify || isSubmitting ? "" : "Verify Now"
               }
             </Button>
           </div>

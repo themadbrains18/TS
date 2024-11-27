@@ -207,10 +207,11 @@ const Header = () => {
             <span className="tetx-sm">Go to Dashboard</span>
           </Link>
         </div>
-      </>}
+      </>
+      }
       <header
-        className="bg-white fixed top-0 left-0 right-0  border-b-[1px] border-[#11083319] z-20   ">
-        <div className="relative" >
+        className="bg-white fixed top-0 left-0 right-0  border-b-[1px] border-[#11083319] z-20 shadow-lg ">
+        <div className="relative " >
           {/* Destop header */}
           <div className="container hidden min-[1028px]:block">
             <div className={` transition-all duration-500 ${isScrolled ? "py-5" : "py-10"}  flex items-center justify-between animate-zoom`}>
@@ -236,13 +237,15 @@ const Header = () => {
                         data && data?.length > 0 && data?.map((item, index) => {
                           return (
                             <Fragment key={index}>
-                              <NavDropdown title={item?.name} subCat={item?.subCategories} />
+                              <NavDropdown
+                                title={item?.name}
+                                subCat={item?.subCategories}
+                              />
                             </Fragment>
                           )
                         })
                       }
                     </>}
-
                 </div>
               </div>
               <div className={cn`max-w-[576px] w-full flex items-center justify-end gap-x-2.5 `}>

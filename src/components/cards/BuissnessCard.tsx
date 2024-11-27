@@ -21,7 +21,7 @@ const BuissnessCard: React.FC<buissnesscardprops> = ({ logo, title, id, template
 
   return (
     <>
-      <Link href={`/product?template-type=${templateType}&&subcat=${id}`} className='p-[10px] flex items-center gap-x-[10px] md:gap-x-5 border border-divider-100 bg-white transition-all duration-300 hover:shadow-md cursor-pointer group hover:bg-[#FFF6FF] animate-fade-up '>
+      <Link href={`/product?template-type=${templateType}&&subcat=${id}`} className='p-[10px] flex items-center gap-x-[10px] md:gap-x-5 hover:border-[#FFF6FF] border border-divider-100 bg-white transition-all duration-300 hover:shadow-md cursor-pointer group hover:bg-[#FFF6FF] animate-fade-up '>
         <div className='rounded-md bg-[#FFF6FF] transition-all duration-300  group-hover:bg-white p-[5px] tab:p-3'>
           <Image className='max-w-[30px] tab:max-w-10 w-full' src={`/icons/${logo}`} width={40} height={40} alt='productlogo' />
         </div>

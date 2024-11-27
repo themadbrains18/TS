@@ -97,7 +97,7 @@ const uploadTemplateBase = z.object({
   subCategoryId: z.string().max(200, { message: "Select Category" }),
   softwareTypeId: z.string().min(1, { message: "Select Software Type" }),
   industry: z.string().min(1, { message: "Select at least one Industry Type" }),
-  industryName: z.string().optional().nullable(),
+  industryName: z.any().optional().nullable(),
   version: z.string().min(1, { message: "Enter Your Version" }),
   description: z.string().min(50, { message: "Enter description min 50 character" }),
   techDetails: z.array(z.string().min(1, "Detail cannot be empty")).min(4, "At least 4 technical details are required"),
