@@ -198,13 +198,16 @@ const Header = () => {
     };
   }, []);
 
-
   return (
     <>
       {session && session.user && ["ADMIN"].includes((session?.role).toString()) && <>
-        <div className="">
-          <Link href="/dashboard" className="fixed  top-[68px] lg:top-[130px] right-0 z-20 bg-primary-700 h-11 flex items-center pl-4 pr-2 rounded-s-3xl text-white gap-1.5">
-            <span className="tetx-sm">Go to Dashboard</span>
+        <div>
+          <Link
+            href="/dashboard"
+            className="fixed top-[68px] lg:top-[140px] right-0 z-20 rounded-s-3xl gap-1.5">
+            <abbr title="dashboard">
+              <Icon size={50} name="dashboard2" />
+            </abbr>
           </Link>
         </div>
       </>
@@ -215,7 +218,7 @@ const Header = () => {
           {/* Destop header */}
           <div className="container hidden min-[1028px]:block">
             <div className={` transition-all duration-500 ${isScrolled ? "py-5" : "py-10"}  flex items-center justify-between animate-zoom`}>
-              <div className="flex items-center justify-between xl:max-w-[809px] max-w-[690px] w-full cursor-pointer">
+              <div className="flex items-center justify-between xl:max-w-[809px] max-w-[690px] w-full cursor-pointer animate-fade-up">
                 <Link className="w-[276px]" href={'/'}>
                   <Image
                     src={"/icons/Logo.svg"}
@@ -248,7 +251,7 @@ const Header = () => {
                     </>}
                 </div>
               </div>
-              <div className={cn`max-w-[576px] w-full flex items-center justify-end gap-x-2.5 `}>
+              <div className={cn`max-w-[576px] w-full flex items-center justify-end gap-x-2.5 animate-fade-up `}>
 
                 <SearchComponent
                   classname="max-w-[410px]"

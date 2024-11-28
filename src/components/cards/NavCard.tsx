@@ -63,9 +63,9 @@ const NavCard: React.FC<navcardprops> = ({
           </Link>
         </div>
         <div className="flex items-center py-[10px] px-[15px] justify-between " >
-          <h4 className="mr-[2px] max-w-[150px] text-sm text-subheading leading-5 font-semibold text-ellipsis overflow-hidden text-nowrap">
+          <p className="mr-[2px] max-w-[150px] text-sm text-subheading leading-5 font-semibold text-ellipsis overflow-hidden text-nowrap">
             {title}
-          </h4>
+          </p>
           <div className="px-1 py-[3.2px] w-6 h-6">
             {
               themeicon === "Figma" ? <Icon className='max-w-6 w-full h-6' name='figma' /> : ""}

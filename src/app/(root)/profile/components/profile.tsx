@@ -15,6 +15,7 @@ import NewPasswordProcess from '@/components/popups/NewPasswordProcess'
 import { signOut } from 'next-auth/react'
 import EditEmail from '@/components/popups/EditEmail'
 import Icon from '@/components/Icon'
+import Link from 'next/link'
 
 
 interface sessionProps {
@@ -285,7 +286,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                             width={168}
                                             alt='userimage'
                                         />
-                                        <label htmlFor="profilepic" className='py-[5px] px-[14px] text-[11px] md:text-base md:py-2 text-nowrap absolute bottom-0 left-[6px] right-[6px] md:left-2 md:right-2 text-center bg-primary-300 text-[#282827] capitalize cursor-pointer border-b transition-all duration-200 hover:border-primary-100 font-regular leading-6 flex justify-center'>{loading ? <Icon name='purpleloader' className='w-7 h-7' /> : "change image"} </label>
+                                        <label htmlFor="profilepic" className='py-[5px] px-[14px] text-[11px] md:text-base md:py-2 text-nowrap absolute bottom-0 left-[6px] right-[6px] md:left-2 md:right-2 text-center bg-primary-300 text-darkblue capitalize cursor-pointer border-b transition-all duration-200 hover:border-primary-100 font-regular leading-6 flex justify-center'>{loading ? <Icon name='purpleloader' className='w-7 h-7' /> : "change image"} </label>
                                         <input
                                             className='hidden'
                                             id='profilepic'
@@ -442,7 +443,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                         </div> */}
                         <div className='max-w-[670px] mt-4 md:mt-[50px]'>
                             <Button className='py-[13px] text-lg px-[30px]' variant='secondary' type='button' onClick={() => { setIsDeleteUser(true) }}>delete account</Button>
-                            <p className='pt-5 text-textparagraph'><strong>Note:</strong> As you have an active paid plan, you can't delete your account directly. Please contact <a href="#" className='text-primary-100 '>support@templatestudio.ai</a> for assistance </p>
+                            <p className='pt-5 text-textparagraph'><strong>Note:</strong> As you have an active paid plan, you can't delete your account directly. Please contact <Link href="#" className='text-primary-100 '>support@templatestudio.ai</Link> for assistance </p>
                         </div>
                     </div>
                 </div>

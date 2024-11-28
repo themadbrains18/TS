@@ -83,7 +83,7 @@ const InputOtp: React.FC<InputOtpProps> = ({ register, setValue, className, clea
                     <input
                         key={index}
                         type="text"
-                        className="max-w-[60px] w-full h-[30px] md:h-[50px] text-center border placeholder:text-[#110833] shadow-[0px_1px_2px_0px_rgba(10,57,79,0.05)] rounded bg-divider-100 border-none outline-none"
+                        className="max-w-[60px] w-full h-[30px] md:h-[50px] text-center border placeholder:text-darkblue shadow-[0px_1px_2px_0px_rgba(10,57,79,0.05)] rounded bg-divider-100 border-none outline-none"
                         {...register(`otp[${index}]`, {
                             maxLength: 1,
                             required: true

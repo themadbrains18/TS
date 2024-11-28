@@ -32,7 +32,7 @@ const HeroSection = () => {
                                 </div>
                             </div>
                             <div className='lg:max-w-[570px] w-full mt-[10px] tab:mt-5'>
-                                <h1 className='text-[#1f124d] text-4xl leading-[43px] md:text-[55px] md:leading-[70px] font-extrabold' >Free High-quality UI kits and design resources</h1>
+                                <h1 className='text-darkpureple text-4xl leading-[43px] md:text-[55px] md:leading-[70px] font-extrabold' >Free High-quality UI kits and design resources</h1>
                             </div>
                             <div className='lg:max-w-[517px] w-full border-l md:border-l-[4px] border-[#CCE0A5] pl-1 md:pl-4 my-5 md:my-[30px]'>
                                 <p className='text-subheading text-sm md:text-xl font-normal md:leading-7'>

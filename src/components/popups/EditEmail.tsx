@@ -296,11 +296,11 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                                         clearErrors={clearErrors}
                                     />
                                     {errors?.otp && <p className="text-red-500">{errors?.otp?.length && errors?.otp?.length > 0 && `Please enter otp`}</p>}
-                                    <p className="mt-5 text-xs font-normal text-[#4B5563]">
+                                    <p className="mt-5 text-xs font-normal  text-lightblue ">
                                         Please check your mail for a 6-digit confirmation code to {session?.email}. Enter the confirmation code to verify.
                                     </p>
                                     <div className="mt-[30px] sm:mt-10">
-                                        <Button disabled={disabled ||isSubmitting} loadingbtn={loadingOtp  ? true : false} iconClass='w-7 h-7' className="w-full py-2 sm:py-[13px] text-lg font-normal text-center justify-center" type="submit" variant="primary" >{loadingOtp  ? "" : "Verify Now"}</Button>
+                                        <Button disabled={disabled || isSubmitting} loadingbtn={loadingOtp ? true : false} iconClass='w-7 h-7' className="w-full py-2 sm:py-[13px] text-lg font-normal text-center justify-center" type="submit" variant="primary" >{loadingOtp ? "" : "Verify Now"}</Button>
                                     </div>
                                 </div>
                             </form>

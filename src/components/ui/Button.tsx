@@ -32,7 +32,7 @@ const Button: React.FC<ButtonProps> = ({
       variant === "liquid",
     "bg-white text-primary-100 capitalize leading-5 font-semibold tab:py-[13px] tab:px-[30px] text-sm font-semibold ":
       variant === "solidicon",
-    "py-2 px-5 bg-primary-300 text-[#282827] capitalize cursor-pointer border-b transition-all duration-200 hover:border-primary-100 text-base font-regular leading-6":
+    "py-2 px-5 bg-primary-300 text-darkblue capitalize cursor-pointer border-b transition-all duration-200 hover:border-primary-100 text-base font-regular leading-6":
       variant === "basic",
   });
 

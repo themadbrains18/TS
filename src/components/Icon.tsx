@@ -47,6 +47,7 @@ import LoadingIcon from '@/../public/icons/loadingicon.svg'
 import PurpleLoader from '@/../public/icons/purpleloader.svg'
 import Linevertical from '@/../public/icons/linevertical.svg'
 import Bouncingcircles from '@/../public/icons/bouncingcircles.svg'
+import Dashboard2 from '@/../public/icons/dashboard2.svg'
 import { cn } from "@/libs/utils";
 
 // Map icon names to components
@@ -96,7 +97,8 @@ const icons = {
   loadingicon: LoadingIcon,
   purpleloader: PurpleLoader,
   linevertical: Linevertical,
-  bouncingcircles: Bouncingcircles
+  bouncingcircles: Bouncingcircles,
+  dashboard2: Dashboard2
 };
 
 export type IconName = keyof typeof icons;

@@ -75,9 +75,9 @@ const NavTabs: React.FC<navtabprops> = ({ subCat, setSidebar, classname }) => {
         {/* Feature Product Section */}
         <div className="lg:px-10 lg:pb-10">
           <div className="flex justify-between items-center lg:border-t-[1px] border-divider-100 lg:pt-[30px] pt-[20px] ">
-            <h4 className="border-l-[1px] pl-[6px] border-subparagraph text-subheading text-lg font-bold leading-7 bg-gradient-to-r from-primary-300 to-primary-200 cursor-pointer">
+            <p className="border-l-[1px] pl-[6px] border-subparagraph text-subheading text-lg font-bold leading-7 bg-gradient-to-r from-primary-300 to-primary-200 cursor-pointer">
               Feature Product
-            </h4>
+            </p>
 
             {data && data?.data?.length > 0 ? (
               <Button

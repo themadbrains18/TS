@@ -17,7 +17,7 @@ const NavDropdown: React.FC<navdropdownprops> = ({ title, subCat }) => {
 
   return (
     <>
-      <section className=" group">
+      <section className=" group ">
         <div className="inline-block gap-[7px]  cursor-pointer after:content-[''] after:absolute after:bottom-[-6px]  after:h-[1px] after:bg-primary-100 after:w-0 after:left-[50%] after:transition-all after:duration-[0.5s] group-hover:after:w-full group-hover:after:left-0 relative mx-[7px] text-nowrap">
           <h2 className='text-textheading leading-6 font-inter font-medium transition-all duration-[0.5s] group-hover:text-primary-100 cursor-pointer inline-block'>
             {title}

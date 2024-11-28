@@ -298,7 +298,7 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                                         clearErrors={clearErrors}
                                     />
                                     {errors?.otp && <p className="text-red-500">{errors?.otp?.message}</p>}
-                                    <p className="mt-5 text-xs font-normal text-[#4B5563]">
+                                    <p className="mt-5 text-xs font-normal text-lightblue">
                                         Please check your mail for a 6-digit confirmation code to {session?.email}. Enter the confirmation code to verify.
                                     </p>
                                     <div className="mt-[30px] sm:mt-10">
