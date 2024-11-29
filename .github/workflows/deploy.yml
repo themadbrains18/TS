@@ -36,24 +36,24 @@ jobs:
     - name: Set up SSH
       run: |
         mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/mdb_hostinger1
+        chmod 600 ~/.ssh/mdb_hostinger1
         ssh-keyscan -H 46.202.163.196 >> ~/.ssh/known_hosts
         # Debug SSH connection
-        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no root@46.202.163.196 'echo "SSH connection successful" || exit 1'
+        ssh -i ~/.ssh/mdb_hostinger1 -o StrictHostKeyChecking=no root@46.202.163.196 'echo "SSH connection successful" || exit 1'
         
     # - name: Remove .next cache
     #   run: ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no root@46.202.163.196 'rm -rf /var/www/templatestudio.ai/.next'
     - name: Set Ownership on Target Directory
       run: |
         echo "Setting ownership for /var/www/templatestudio.ai on the server"
-        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no root@46.202.163.196 'sudo chown -R ubuntu:ubuntu /var/www/templatestudio.ai'
+        ssh -i ~/.ssh/mdb_hostinger1 -o StrictHostKeyChecking=no root@46.202.163.196 'sudo chown -R ubuntu:ubuntu /var/www/templatestudio.ai'
 
     # Using rsync for faster and differential file transfer
     - name: Sync files using rsync
       run: |
         echo "Attempting to sync files using rsync"
-        rsync -avz --delete --exclude 'node_modules' --exclude '.git' --exclude '.next' --exclude '.github' -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" ./ root@46.202.163.196:/var/www/templatestudio.ai || exit 1
+        rsync -avz --delete --exclude 'node_modules' --exclude '.git' --exclude '.next' --exclude '.github' -e "ssh -i ~/.ssh/mdb_hostinger1 -o StrictHostKeyChecking=no" ./ root@46.202.163.196:/var/www/templatestudio.ai || exit 1
 
     # Alternative option: Using tarball compression if you want to use this instead of rsync
     # Uncomment the following block if you want to use tarball compression instead of rsync
@@ -84,4 +84,4 @@ jobs:
 
     - name: Deploy to AWS
       run: |
-        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no root@46.202.163.196 'cd /var/www/templatestudio.ai && npm install && npm run build && pm2 restart all' || exit 1
+        ssh -i ~/.ssh/mdb_hostinger1 -o StrictHostKeyChecking=no root@46.202.163.196 'cd /var/www/templatestudio.ai && npm install && npm run build && pm2 restart all' || exit 1
