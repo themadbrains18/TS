@@ -68,7 +68,7 @@ jobs:
     #     ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no root@46.202.163.196 'cd /var/www/templatestudio.ai && tar -xzf deployment.tar.gz && rm deployment.tar.gz'
 
 
-    # - name: Debug SCP Command
+    # - name: Debug SCP Command 
     #   run: |
     #     echo "Checking current directory"
     #     ls -la
