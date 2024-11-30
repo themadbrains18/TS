@@ -99,23 +99,36 @@ const Footer = () => {
               </div>
             </div>
             <div className="lg:max-w-[874px] my-5 lg:my-0 grid grid-cols-2  grid-areas-layout gap-5 w-full md:flex md:justify-between">
+
               <div>
                 <h3 className="text-xl font-semibold leading-7 text-subheading">Design </h3>
-                <ul className="flex flex-col gap-y-[10px] md:gap-y-[25px] mt-5 md:mt-10">
+                <div className="flex flex-col gap-y-[10px] md:gap-y-[25px] mt-5 md:mt-10">
                   {
                     response?.map((item, index) => {
                       return (
                         <Fragment key={index}>
-                          <Link href={`/product?template-type=${item?.templateTypeId}&subcat=${item?.id}`}><div className="h-6  overflow-hidden group inline-block"><p className="flex flex-col transition-all duration-500 group-hover:-translate-y-[26px]">
-                            <span className=" text-[14px] md:text-[16px] text-subparagraph leading-6 capitalize ">{item?.name}</span>
-                            <span className=" capitalize transition-all duration-500 text-subheading group-hover:border-b-[1px] group-hover:border-primary-100">{item?.name}</span>
-                          </p></div></Link>
+                          <Link
+                            href={`/product?template-type=${item?.templateTypeId}&subcat=${item?.id}`}>
+                            <div className="h-6  overflow-hidden group inline-block"><p className="flex flex-col transition-all duration-500 group-hover:-translate-y-[26px]"
+                            >
+                              <span
+                                className=" text-[14px] md:text-[16px] text-subparagraph leading-6 capitalize">
+                                {item?.name}
+                              </span>
+                              <span
+                                className=" capitalize transition-all duration-500 text-subheading group-hover:border-b-[1px] group-hover:border-primary-100">
+                                {item?.name}
+                              </span>
+                            </p>
+                            </div>
+                          </Link>
                         </Fragment>
                       )
                     })
                   }
-                </ul>
+                </div>
               </div>
+
               {/* <div>
                 <h3 className="text-xl font-semibold leading-7 text-subheading">Coded  </h3>
                 <ul className="flex flex-col gap-y-[10px] md:gap-y-[25px] mt-5 md:mt-10">
@@ -174,12 +187,12 @@ const Footer = () => {
                   {
                     agreements?.map((item, index) => {
                       return (<Fragment key={index}>
-                        <Link href={'#'}>
-                          <li className="h-6  overflow-hidden group inline-block"><p className="flex flex-col transition-all duration-500 group-hover:-translate-y-[26px]">
+                        <li className="h-6  overflow-hidden group inline-block">
+                          <p className="flex flex-col transition-all duration-500 group-hover:-translate-y-[26px]">
                             <span className="text-[14px] md:text-[16px] text-subparagraph leading-6 capitalize text-nowrap ">{item}</span>
                             <span className=" capitalize transition-all duration-500 text-subheading group-hover:border-b-[1px] group-hover:border-subheading text-nowrap">{item}</span>
                           </p>
-                          </li></Link>
+                        </li>
                       </Fragment>)
                     })
                   }

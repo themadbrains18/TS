@@ -46,20 +46,27 @@ const Page = async ({ params }: { params: Params }) => {
    * You can also redirect or show a 404 page
   */
   if (!response.ok) {
-    // console.log("first")
     return < NotFound />
     //  throw new Error('Template not found');
   }
 
-
   /**
    * Parse the JSON response
   */
- const template = await response.json();
+
+  const template = await response.json();
+
+  // Custom Spinner Component
+  const CustomSpinner = () => (
+    <div className="flex justify-center items-center h-screen">
+      <div className="w-12 h-12 border-4 border-gray-300 border-t-[#872fcb] rounded-full animate-spinCustom"></div>
+    </div>
+  );
+
 
   return (
     <>
-      <Suspense fallback={`<><div>Loading...</div></>`}>
+      <Suspense fallback={<CustomSpinner />}>
         <div>
           <div className=' relative xl:after:h-full xl:after:w-full xl:after:absolute xl:after:top-0 xl:after:left-0 xl:after:bg-[url(/images/bgeffect.png)] after:z-[-1] ' >
             <BreadCrumbs />

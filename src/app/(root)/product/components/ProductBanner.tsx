@@ -26,15 +26,15 @@ const ProductBanner = () => {
                                 /
                                 <Link href={'/Product'} >  Products </Link>
                             </h3>
-                            <div className='flex min-[991px]:flex-row flex-col gap-4  max-[1024px]:pt-4  justify-between ' >
-                                <h2 className=' text-[36px] xl:text-[40px]  2xl:text-[55px] font-bold 2xl:leading-[70px]  lg:leading-[50px] text-[#FFF]  min-[991px]:pt-20 max-w-[662px] w-full  leading-[1.3]' >
+                            <div className='flex min-[991px]:flex-row flex-col gap-4  max-[1024px]:pt-4  justify-between  animate-fade-up' >
+                                <h2 className=' text-[36px] xl:text-[40px]  2xl:text-[55px] font-bold 2xl:leading-[70px]  lg:leading-[50px] text-white  min-[991px]:pt-20 max-w-[662px] w-full  leading-[1.3]' >
                                     Free High-quality UI kits
                                     and design resources
                                 </h2>
                                 <div className='flex justify-end items-end  max-w-[600px] w-full ' >
                                     <div className='flex' >
                                         <div className='border-l border-[1px] mr-4 border-red border-[#CCE0A5]' ></div>
-                                        <p className='text-[14px] sm:text-[18px]  inline font-normal leading-[28px] text-[#fff] opacity-[0.7] ' >Template Studio is the place to find high-quality design resources for designers, creative agencies and developers</p>
+                                        <p className='text-[14px] sm:text-[18px]  inline font-normal leading-[28px] text-white opacity-[0.7] ' >Template Studio is the place to find high-quality design resources for designers, creative agencies and developers</p>
                                     </div>
                                 </div>
                             </div>

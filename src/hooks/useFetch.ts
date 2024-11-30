@@ -97,7 +97,6 @@ function useFetch<T>(): FetchResult<T> {
         setError(null);
       } catch (e: any) {
         if (!signal.aborted) {
-          console.error("Fetch error:", e);
           setError(e.message || "An unexpected error occurred");
           setData(null);
           toaster && toast.error(`${e.message}`,{ autoClose: 1500 });

@@ -15,4 +15,3 @@ const useToggle = (initialValue: boolean = false) => {
 };
 
 export default useToggle;
-

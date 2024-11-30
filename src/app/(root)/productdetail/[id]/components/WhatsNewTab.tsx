@@ -47,22 +47,18 @@ const WhatsNewTab: React.FC<whatsNewProps> = ({ details }) => {
                 <div className='mt-5 py-5 px-[10px] md:py-10 md:px-[50px] border border-divider-200'>
                     <div className='grid gap-y-[10px] md:gap-y-0 tab:grid-cols-2 mb-[10px] pb-[10px] md:pb-5 md:mb-5 gap-x-[15px] border-b border-divider-200'>
                         <ul className='list-inside list-disc m-0 p-0'>
-
                             <li className='text-sm text-subparagraph md:text-base md:leading-6 capi' >400+ Exclusive Pre-Built Templates</li>
                             <li className='text-sm text-subparagraph md:text-base md:leading-6 capi' >200+ Components</li>
                         </ul>
                     </div>
                     <div className='grid gap-y-[10px] md:gap-y-0 tab:grid-cols-2 mb-[10px] pb-[10px] md:pb-5 md:mb-5 gap-x-[15px] border-b border-divider-200'>
                         <ul className='list-inside list-disc m-0 p-0'>
-
                             <li className='text-sm text-subparagraph md:text-base md:leading-6 capi' >400+ Exclusive Pre-Built Templates</li>
                             <li className='text-sm text-subparagraph md:text-base md:leading-6 capi' >200+ Components</li>
                         </ul>
                     </div>
-
                     <div className='grid gap-y-[10px] md:gap-y-0 tab:grid-cols-2 mb-[10px] pb-[10px] md:pb-5 md:mb-5 gap-x-[15px] border-b border-divider-200'>
                         <ul className='list-inside list-disc m-0 p-0'>
-
                             <li className='text-sm text-subparagraph md:text-base md:leading-6 capi' >400+ Exclusive Pre-Built Templates</li>
                             <li className='text-sm text-subparagraph md:text-base md:leading-6 capi' >200+ Components</li>
                         </ul>
@@ -72,7 +68,6 @@ const WhatsNewTab: React.FC<whatsNewProps> = ({ details }) => {
                             <li className='text-sm text-subparagraph md:text-base md:leading-6 capi' >400+ Exclusive Pre-Built Templates</li>
                             <li className='text-sm text-subparagraph md:text-base md:leading-6 capi' >200+ Components</li>
                         </ul>
-
                     </div>
                 </div>
             </div>

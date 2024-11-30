@@ -99,7 +99,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
 
     // const deleteimages = (imgData: any) => {
-    //     // console.log(name, "name")
     //     setEditImageData((prevState: any) => {
     //         // Check if the data with the same id already exists in the state
     //         const exists = prevState.some((item: any) => item.id === imgData.imgId);
@@ -112,16 +111,12 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     //     });
 
     //     let images = initialData?.[imgData?.imgName]
-    //     // console.log(images,"==images");
 
     //     images = images.filter((item: any) => item.id !== imgData.imgId)
-    //     // console.log(images,imgData?.imgName);
 
     //     setValue(imgData?.imgName, images)
 
     // };
-
-
 
 
     /**
@@ -187,7 +182,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         fetchIndustryData(`/industry-type`);
     }, [fetchData, fetchIndustryData]);
 
-    // console.log(getValues('sliderImages'), "==slider images");
 
 
     useEffect(() => {
@@ -201,9 +195,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             setValue('previewMobileImages', initialData?.previewMobileImages)
 
             if (initialData?.subCategoryId === "cm208jwgm0005joy0c8dfxnsa") {
-                // console.log("in this section");
                 setIsMobileSelected(true)
-
             }
         }
         if (initialData && initialData?.credits?.length > 0) {
@@ -214,7 +206,14 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             setIcons(creditData.icons || [{ name: '', url: '' }]);
             setIllustrations(creditData.illustrations || [{ name: '', url: '' }]);
         }
-    }, [initialData])
+
+        if (initialData?.industryName != null) {
+            let data: any = industryData?.filter((item) => item?.id === initialData?.industryTypeId)
+            data && data?.length > 0 && setSelectedIndustry(data[0]?.name)
+
+        }
+
+    }, [initialData, industryData])
 
     /**
      * Generalized function to add new input fields
@@ -231,18 +230,14 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
      */
 
     const deleteAll = (name: string[]) => {
-        // console.log(name, "==name");
-
         // Update deleteAllImages with new data
         setDeleteAllImages((prev) => {
             const updated = [...prev, ...name]; // Add all items from `name` to the existing list
-            // console.log(updated, "==updated deleteAllImages");
             return updated;
         });
 
         // Clear the form fields for all items in the `name` array
         name.forEach((item: any) => {
-            // console.log(item, "==item");
             setValue(item, []); // Assuming `item` is a valid field name
         });
     };
@@ -264,28 +259,24 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
     const removeInputField = (setter: any, index: number, values: any[]) => {
 
-        let technicalDetails = getValues("techDetails")
-        technicalDetails.splice(index, 1)
-        setter(technicalDetails);
-        console.log(technicalDetails, "===technicalDetails 22");
-        setValue('techDetails', technicalDetails)
+        // let technicalDetails = getValues("techDetails")
+        // technicalDetails?.splice(index, 1)
+        // setter(technicalDetails);
+        // setValue('techDetails', technicalDetails)
 
-        // if (values.length > 1) {
+        if (values.length > 1) {
 
 
-        //     const newValues = [...values];
-        //     newValues.splice(index, 1);
-        //     setter(newValues);
+            const newValues = [...values];
+            newValues.splice(index, 1);
+            setter(newValues);
 
-        //     if (setter == setTechnicalDetails) {
-        //         console.log("in this", newValues);
-
-        //         newValues.forEach((detail: any, i) => {
-        //             console.log(i, "==index", detail, "==detail",);
-        //             setValue(`techDetails.${i}`, detail)
-        //         }); // Correct the field path
-        //     }
-        // }
+            if (setter == setTechnicalDetails) {
+                newValues.forEach((detail: any, i) => {
+                }); // Correct the field path
+                setValue(`techDetails`, newValues)
+            }
+        }
     };
 
     /**
@@ -297,7 +288,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             <h4 className='text-lg font-semibold capitalize pb-4'>{title}</h4>
             <div className="p-5 border-b border-neutral-400">
                 {items?.map((item, index) => (
-
                     <div key={index} className="flex items-center gap-x-3 pb-3">
 
                         <DashInput
@@ -316,22 +306,28 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
                         {items.length > 1 && (
                             <button
+                                type='button'
                                 onClick={() => removeInputField(setter, index, items)}
-                                className="py-3 px-3 border" >
+                                className="py-3 px-3 border">
                                 <Icon name='closeiconfilter' size={16} />
                             </button>
                         )}
 
                     </div>
                 ))}
-                <Button onClick={() => addInputFields(setter, items, true)} variant='primary' className='py-2 mt-2'>Add more</Button>
+                <Button
+                    type='button'
+                    onClick={() => addInputFields(setter, items, true)}
+                    variant='primary'
+                    className='py-2 mt-2'>
+                    Add more
+                </Button>
             </div>
         </div>
     );
 
 
     const deleteimages = (imgData: any) => {
-        // console.log(name, "name")
         setEditImageData((prevState: any) => {
             // Check if the data with the same id already exists in the state
             const exists = prevState.some((item: any) => item.id === imgData.imgId);
@@ -344,10 +340,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         });
 
         let images: any = getValues(imgData?.imgName)
-        // console.log(images, "==images");
 
         images = images.filter((item: any) => item.id !== imgData.imgId)
-        // console.log(images, imgData?.imgName);
 
         setValue(imgData?.imgName, images)
 
@@ -356,6 +350,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     /**
      * Render technical details fields
      */
+
     const renderTechnicalDetailsFields = () => (
         <div className='pb-3'>
             <div className="p-5 border-b border-neutral-400">
@@ -384,8 +379,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         </div>
     );
 
-    const router = useRouter();
 
+    const router = useRouter();
 
 
     const [errorvalidaiton, seterrorvalidaiton] = useState<string | null>(null);
@@ -400,19 +395,13 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         [key: string]: any; // Define a dynamic type for the form data fields
     }
 
-    // console.log(getValues("techDetails"))
-    // console.log(getValues("sliderImages"))
     const onSubmit: SubmitHandler<FormDataObject> = async (data) => {
-        // console.log(editimagedata, "=editimagedata");
-
 
         if (type == "edit") {
             editimagedata?.map((item) => {
                 data[item?.imgName] = data[item?.imgName].filter((e: any) => e.id !== item?.imgId)
             })
         }
-
-        // console.log(data, "==data");
 
         let schema = type == "create" ? uploadTemplateSchema : uploadTemplateUpdateSchema
         const result = schema.safeParse(data);
@@ -422,8 +411,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             seterrorvalidaiton(firstError.message);
 
             setError(firstError.path[0], { message: firstError?.message })
-            // console.log("here", result.error);
-            // console.log("here1", result.error.errors[0]);
 
             return;
         } else {
@@ -435,10 +422,13 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             return;
         }
 
+
+        if (selectedIndustry !== 'Others' && data?.industryName !== null) {
+            data.industryName = null
+        }
+
         setLoader(true);
         const formData = new FormData();
-
-        // console.log(data?.sliderImages, "==slider images");
 
         // Append form fields to FormData
         Object.entries(data).forEach(([key, value]) => {
@@ -494,7 +484,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                 })
             }
 
-            // console.log([...formData.getAll('previewImages')], "==slider images after deletion");
 
             // Submit the form data
             const response = await fetch(endpoint, {
@@ -553,11 +542,9 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     const [otherIndustry, setOtherIndustry] = useState<string>();
 
     const handleInputChangeindustryvalue = (e: any) => {
-
         setOtherIndustry(e.target.value); // Correctly updating state
         if (otherIndustry !== "") {
             clearErrors('industryName')
-
         }
     };
 
@@ -577,7 +564,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                 }
             });
             if (response.ok) {
-                // console.log('Image deleted successfully');
                 return response
             } else {
                 console.error('Failed to delete image');
@@ -586,11 +572,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             console.error('Error deleting image:', error);
         }
     };
-    // console.log(errors, "==errors");
 
 
-
-    // console.log(initialData?.industryName, "initialData?.industryName")
 
     return (
 
@@ -607,7 +590,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                     alt="Logo"
                                 />
                             </Link>
-                            <div onClick={goback} >
+                            <div onClick={goback} className="cursor-pointer" >
                                 <Icon className="fill-primary-100" name="crossicon" />
                             </div>
                         </div>
@@ -707,6 +690,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                         <div className='mt-5'>
                             <h3 className='text-xl font-semibold capitalize '>Industry</h3>
                             <div className='flex flex-col mb-3'>
+
                                 <div className='grid grid-cols-4 justify-between gap-x-3 max-w-full   py-2'>
                                     {industryData?.map((item) => (
                                         <Controller
@@ -734,13 +718,14 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                         />
                                     ))}
                                 </div>
+
                                 {errors.industry && (
                                     <p ref={errorRef} style={{ color: 'red' }}>{errors.industry.message}</p>
                                 )}
 
                                 {/* Conditional rendering of input box when "Other" is selected */}
 
-                                {(selectedIndustry === 'Others' || initialData?.industryName) && (
+                                {(selectedIndustry === 'Others') && (
                                     <div>
                                         <div className="mt-3 flex items-center gap-2">
                                             <input
@@ -748,18 +733,16 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                 type="text"
                                                 placeholder="Please specify"
                                                 name="industryName"
-                                                defaultValue={otherIndustry || ""}
+                                                defaultValue={initialData?.industryName != null || initialData?.industryName != undefined ? otherIndustry : ""}
                                                 onChange={handleInputChangeindustryvalue} // Use a function to handle the change
                                                 className="border h-[50px] rounded p-2 w-full outline-none"
                                             />
-
                                         </div>
                                         {errors.industryName && (
                                             <p ref={errorRef} style={{ color: 'red' }}>{errors.industryName.message}</p>
                                         )}
                                     </div>
                                 )}
-
                             </div>
 
                             <div className='flex flex-col gap-y-5'>
@@ -875,6 +858,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                     {errors.sourceFiles && (
                                         <p ref={errorRef} style={{ color: "red" }}>{errors.sourceFiles.message}</p>
                                     )}
+
                                 </div>
 
                                 {/* Slider Images  */}

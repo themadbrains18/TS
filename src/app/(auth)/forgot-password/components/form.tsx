@@ -76,6 +76,17 @@ const Form = () => {
         if (response?.otp) {
             setOtppath(true); // Show OTP page if OTP was successfully sent
         }
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Disable default "Enter" behavior
+            }
+        };
+        // Attach event listener when the component mounts
+        window.addEventListener('keydown', handleKeyDown);
+        // Detach event listener when the component unmounts
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
     }, [response, router]);
 
     return (

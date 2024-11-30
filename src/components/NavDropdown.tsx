@@ -17,7 +17,7 @@ const NavDropdown: React.FC<navdropdownprops> = ({ title, subCat }) => {
 
   return (
     <>
-      <section className=" group">
+      <section className=" group ">
         <div className="inline-block gap-[7px]  cursor-pointer after:content-[''] after:absolute after:bottom-[-6px]  after:h-[1px] after:bg-primary-100 after:w-0 after:left-[50%] after:transition-all after:duration-[0.5s] group-hover:after:w-full group-hover:after:left-0 relative mx-[7px] text-nowrap">
           <h2 className='text-textheading leading-6 font-inter font-medium transition-all duration-[0.5s] group-hover:text-primary-100 cursor-pointer inline-block'>
             {title}
@@ -27,8 +27,8 @@ const NavDropdown: React.FC<navdropdownprops> = ({ title, subCat }) => {
             name="soliddownicon"
           />
         </div>
-        <div className="hiddenscroll max-w-[60.3vw] w-full  overflow-scroll flex absolute top-[110px] left-[24.8%] transition-all duration-[0.5s] opacity-0 invisible    group-hover:visible group-hover:opacity-[1] cursor-pointer shadow-md">
-          <NavTabs  subCat={subCat} />
+        <div className="hiddenscroll max-w-[60.3vw] w-full  overflow-scroll flex absolute top-[95%] left-[24.8%] transition-all duration-[0.5s] opacity-0 invisible    group-hover:visible group-hover:opacity-[1] cursor-pointer shadow-md">
+          <NavTabs subCat={subCat} />
         </div>
       </section>
       <div className="overflow-hidden h-0 duration-[0.5s]">dsfdefdsfdfdfgd</div>

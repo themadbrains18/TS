@@ -21,8 +21,10 @@ const config: Config = {
         subparagraph: "#5D5775",
         bgcolor: "#FAFAFA",
         bgblack: "#0D0C0D",
-        lightsilver: "#C1C1C1",
         textheading: "#110833",
+        lightblue: "#4B5563",
+        darkblue: "#110833",
+        darkpureple: "#1f124d",
         textparagraph: "#544E4E",
         primarycyan: "#00BCFF",
         primarygreen: "#00CF7F",
@@ -67,6 +69,9 @@ const config: Config = {
     },
 
     animation: {
+
+      spinCustom: 'spinCustom 1.5s ease-in-out infinite',
+
       // Fade up and down
       "fade-up": "fade-up 0.5s",
       "fade-down": "fade-down 0.5s",
@@ -81,6 +86,11 @@ const config: Config = {
     },
 
     keyframes: {
+      spinCustom: {
+        '0%': { transform: 'rotate(0deg)' },
+        '50%': { transform: 'rotate(180deg)' },
+        '100%': { transform: 'rotate(360deg)' },
+      },
       // Fade up and down
       "fade-up": {
         "0%": { opacity: "0", transform: "translateY(10px)" },

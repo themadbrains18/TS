@@ -42,6 +42,7 @@ const VerfiyNewEmail: FC<verifyNewemail> = ({
   const [resendData, setResendData] = useState<savedData>();
   const [initialSend, setInitialSend] = useState(true);
   const [clearotptime, setClearotptime] = useState<boolean>()
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
 
 
@@ -55,6 +56,8 @@ const VerfiyNewEmail: FC<verifyNewemail> = ({
 
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     try {
       setLoadingbtnverify(true)
       if (step === 2 && data?.newEmail && !emailRegex.test(data?.newEmail)) {
@@ -85,7 +88,10 @@ const VerfiyNewEmail: FC<verifyNewemail> = ({
     } catch (error) {
       console.error("Error updating email:", error);
     } finally {
-      setLoadingbtnverify(false)
+      setTimeout(() => {
+        setLoadingbtnverify(false)
+        setIsSubmitting(false);
+      }, 2500);
     }
   };
 
@@ -165,7 +171,7 @@ const VerfiyNewEmail: FC<verifyNewemail> = ({
     } catch (error) {
       console.log("Error resending OTP:", error);
     } finally {
-      setTimeout(()=>setLoadingbtn(false), 2500)
+      setTimeout(() => setLoadingbtn(false), 2500)
     }
   };
 
@@ -276,16 +282,16 @@ const VerfiyNewEmail: FC<verifyNewemail> = ({
             reset={step === 2}
           />
           {errors?.otp && <p className="text-red-500">{errors?.otp?.message}</p>}
-          <p className="mt-5 text-xs font-normal text-[#4B5563]">
+          <p className="mt-5 text-xs font-normal text-lightblue">
             Please check your mail for a 6-digit confirmation code to {session?.email}. Enter the confirmation code to verify.
           </p>
           <div className="mt-[30px] sm:mt-10">
             <Button
               loadingbtn={loadingbtnverify}
               iconClass='w-7 h-7' className="w-full py-2 sm:py-[13px] text-lg font-normal text-center justify-center" type="submit" variant="primary"
-              disabled={disabled}>
+              disabled={disabled || isSubmitting}>
               {
-                loadingbtnverify ? "" : "Verify Now"
+                loadingbtnverify || isSubmitting ? "" : "Verify Now"
               }
             </Button>
           </div>

@@ -33,7 +33,6 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
     handlepasswordUpdate
 }) => {
     const { data: response, fetchData } = useFetch<any>();
-
     const { data: session } = useSession();
     const { register, handleSubmit, setValue, reset, setError, formState: { errors }, clearErrors, getValues } = useForm<FormData>();
     const [disabled, setDisabled] = useState(true);
@@ -55,6 +54,8 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
      */
 
     const onSubmit: SubmitHandler<FormData> = async (data) => {
+        if (isSubmitting) return;
+        setIsSubmitting(true);
         try {
 
 
@@ -82,13 +83,18 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                 },
             });
             if (!response.ok) {
-                setLoadingOtp(false)
+                setTimeout(() => {
+                    setLoadingOtp(false)
+                }, 2500)
             }
         } catch (error) {
             console.error("Error updating email:", error);
             setLoadingOtp(false)
 
         }
+        setTimeout(() => {
+            setIsSubmitting(false);
+        }, 2500);
     };
 
 
@@ -131,16 +137,16 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                     'Content-Type': 'application/json',
                 },
             });
-
         } catch (error) {
             console.error("Error updating email:", error);
+
         } finally {
             setLoadingbtn(false);
-        }
+            setTimeout(() => {
+                setIsSubmitting(false);
+            }, 2500);
 
-        setTimeout(() => {
-            setIsSubmitting(false);
-        }, 2500);
+        }
     };
 
 
@@ -152,9 +158,6 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
      */
 
     const resendCode = async () => {
-
-
-        
 
         if (!canResend) return;
 
@@ -172,22 +175,21 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                 if (res.ok) {
                     setStartTimer(180); // Reset timer to 60 seconds
                     setCanResend(false); // Disable resend option temporarily
-                    toast.success("OTP resent successfully",{ autoClose: 1500 });
+                    toast.success("OTP resent successfully", { autoClose: 1500 });
                 } else {
-                    toast.error("Failed to resend OTP",{ autoClose: 1500 });
+                    toast.error("Failed to resend OTP", { autoClose: 1500 });
                 }
             });
         } catch (error) {
             console.log("Error resending OTP:", error);
         }
         finally {
-            setTimeout(()=>{
+            setTimeout(() => {
                 setLoadingbtn(false)
-            },2500)
+            }, 2500)
         }
-       
-    };
 
+    };
 
 
     /**
@@ -196,7 +198,6 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
      * Dependencies:
      * - This effect runs every time `response` changes.
     */
-
 
 
     useEffect(() => {
@@ -243,7 +244,6 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
         };
     }, [startTimer]);
 
-    console.log("errors", errors);
 
 
     return (
@@ -297,12 +297,11 @@ const NewPasswordProcess: FC<verifyoldemail> = ({
                                         clearErrors={clearErrors}
                                     />
                                     {errors?.otp && <p className="text-red-500">{errors?.otp?.length && errors?.otp?.length > 0 && `Please enter otp`}</p>}
-                                    <p className="mt-5 text-xs font-normal text-[#4B5563]">
+                                    <p className="mt-5 text-xs font-normal  text-lightblue ">
                                         Please check your mail for a 6-digit confirmation code to {session?.email}. Enter the confirmation code to verify.
                                     </p>
                                     <div className="mt-[30px] sm:mt-10">
-                                        <Button disabled={disabled} loadingbtn={loadingOtp ? true : false} iconClass='w-7 h-7' className="w-full py-2 sm:py-[13px] text-lg font-normal text-center justify-center" type="submit" variant="primary" >{loadingOtp ? "" : "Verify Now"}</Button>
-
+                                        <Button disabled={disabled || isSubmitting} loadingbtn={loadingOtp ? true : false} iconClass='w-7 h-7' className="w-full py-2 sm:py-[13px] text-lg font-normal text-center justify-center" type="submit" variant="primary" >{loadingOtp ? "" : "Verify Now"}</Button>
                                     </div>
                                 </div>
                             </form>

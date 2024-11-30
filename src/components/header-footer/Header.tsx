@@ -169,23 +169,56 @@ const Header = () => {
     setIsLoading(false);
   };
 
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [headerHeight, setHeaderHeight] = useState(0); // Track the header height
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50); // Set scrolled state
+    };
+
+    const updateHeaderHeight = () => {
+      const header = document.querySelector("header");
+      if (header instanceof HTMLElement) {
+        setHeaderHeight(header.offsetHeight); // Update height dynamically
+      }
+    };
+
+    // Add event listeners
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", updateHeaderHeight);
+
+    // Initial height update
+    updateHeaderHeight();
+
+    // Cleanup listeners
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", updateHeaderHeight);
+    };
+  }, []);
 
   return (
     <>
       {session && session.user && ["ADMIN"].includes((session?.role).toString()) && <>
-        <div className="">
-          <Link href="/dashboard" className="fixed  top-[68px] lg:top-[130px] right-0 z-20 bg-primary-700 h-11 flex items-center pl-4 pr-2 rounded-s-3xl text-white gap-1.5">
-            <span className="tetx-sm">Go to Dashboard</span>
+        <div>
+          <Link
+            href="/dashboard"
+            className="fixed top-[68px] lg:top-[140px] right-0 z-20 rounded-s-3xl gap-1.5">
+            <abbr title="dashboard">
+              <Icon size={50} name="dashboard2" />
+            </abbr>
           </Link>
         </div>
-      </>}
-      <header className="  bg-white fixed top-0 left-0 right-0  border-b-[1px] border-[#11083319] z-20   ">
-        <div className="relative" >
+      </>
+      }
+      <header
+        className="bg-white fixed top-0 left-0 right-0  border-b-[1px] border-[#11083319] z-20 shadow-lg ">
+        <div className="relative " >
           {/* Destop header */}
           <div className="container hidden min-[1028px]:block">
-            <div className="py-10 flex items-center justify-between">
-              <div className="flex items-center justify-between xl:max-w-[809px] max-w-[690px] w-full cursor-pointer">
+            <div className={` transition-all duration-500 ${isScrolled ? "py-5" : "py-10"}  flex items-center justify-between animate-zoom`}>
+              <div className="flex items-center justify-between xl:max-w-[809px] max-w-[690px] w-full cursor-pointer animate-fade-up">
                 <Link className="w-[276px]" href={'/'}>
                   <Image
                     src={"/icons/Logo.svg"}
@@ -207,16 +240,18 @@ const Header = () => {
                         data && data?.length > 0 && data?.map((item, index) => {
                           return (
                             <Fragment key={index}>
-                              <NavDropdown title={item?.name} subCat={item?.subCategories} />
+                              <NavDropdown
+                                title={item?.name}
+                                subCat={item?.subCategories}
+                              />
                             </Fragment>
                           )
                         })
                       }
                     </>}
-
                 </div>
               </div>
-              <div className={cn`max-w-[576px] w-full flex items-center justify-end gap-x-2.5 `}>
+              <div className={cn`max-w-[576px] w-full flex items-center justify-end gap-x-2.5 animate-fade-up `}>
 
                 <SearchComponent
                   classname="max-w-[410px]"
@@ -302,12 +337,11 @@ const Header = () => {
                   session?.user
                   &&
                   <div ref={profileresRef}>
-                    <div onClick={openProfileres} className="w-[30px] h-[30px] cursor-pointer object-center overflow-hidden">
-
+                    <div onClick={openProfileres} className="w-[30px] h-[30px] cursor-pointer overflow-hidden">
                       <Image
-                        width={50}
-                        height={50}
-                        className="rounded-full object-contain"
+                        width={30}
+                        height={30}
+                        className="rounded-full h-[30px] object-cover"
                         src={imageUrl || "/images/userdummy.png"}
                         alt="diamond"
                       />

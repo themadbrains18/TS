@@ -39,12 +39,11 @@ const fileValidationSchema = (
   z.preprocess(
     (input) => (Array.isArray(input) ? input : []), // Fallback to empty array if not an array
     z.array(acceptedSchema)
-    .refine(files => files.length >= min && files.length <= max, `Minimum ${min} files required ${max<10?`and Maximum ${max} files allowed`:"."}`)
+      .refine(files => files.length >= min && files.length <= max, `Minimum ${min} files required ${max < 10 ? `and Maximum ${max} files allowed` : "."}`)
       .refine(files => files.every(file => fileUrlOrImageUrl(file) ? true : isValidFileType(file)), fileTypeMessage)
       .refine(files => {
         if (maxTotalSize) {
           const totalSize = files.reduce((acc, file) => {
-            // console.log(file,"==file");
 
             if (file instanceof File) {
               return acc + file.size;
@@ -97,13 +96,13 @@ const uploadTemplateBase = z.object({
   subCategoryId: z.string().max(200, { message: "Select Category" }),
   softwareTypeId: z.string().min(1, { message: "Select Software Type" }),
   industry: z.string().min(1, { message: "Select at least one Industry Type" }),
-  industryName: z.string().optional().nullable(),
+  industryName: z.any().optional().nullable(),
   version: z.string().min(1, { message: "Enter Your Version" }),
   description: z.string().min(50, { message: "Enter description min 50 character" }),
   techDetails: z.array(z.string().min(1, "Detail cannot be empty")).min(4, "At least 4 technical details are required"),
   seoTags: z
     .array(z.string().min(2, { message: "Tags must be at least 2 characters long." }))
-    .min(2,"You must include at least 2 tags.")
+    .min(2, "You must include at least 2 tags.")
     .max(5, { message: "Only 5 tags are allowed." }),
   isPaid: z.boolean().optional().default(false),
   price: z.string().optional(),
@@ -142,7 +141,6 @@ export const uploadTemplateSchema = uploadTemplateBase.extend({
   path: ["price"],
 })
   .superRefine((data, ctx) => {
-    // console.log(data, ctx);
 
     const { subCategory } = data; // Correctly access parent data via ctx.data
 
@@ -183,8 +181,7 @@ export const uploadTemplateUpdateSchema = uploadTemplateBase.extend({
   // .or(z.null())
   // .or(z.array(z.undefined())),
   price: z.union([z.string(), z.number()]).optional(),
-}) .superRefine((data, ctx) => {
-  // console.log(data, ctx);
+}).superRefine((data, ctx) => {
 
   const { subCategory } = data; // Correctly access parent data via ctx.data
 

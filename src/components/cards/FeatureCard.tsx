@@ -36,7 +36,7 @@ const FeatureCard: React.FC<featurecardprops> = ({ id, buttonprops, category, cu
                                 <h3 className='capitalize text-white text-lg font-bold leading-7'>view details</h3>
                                 <Icon name='share' />
                             </div>
-                            <span className=' p-2 rounded-[30px] absolute top-5 right-5 text-white z-10 inline-block bg-[#00000019]'>{`${currentimage}/${totalimages}`}</span>
+                            <span className=' p-2 rounded-[30px] absolute top-5 right-5 text-white z-0 inline-block bg-[#00000019]'>{`${currentimage}/${totalimages}`}</span>
                         </div>
                     </Link>
                 </div>
@@ -71,8 +71,8 @@ const FeatureCard: React.FC<featurecardprops> = ({ id, buttonprops, category, cu
                         <div className='flex items-center gap-x-2'>
                             <Image src={`${uploadericon ? uploadericon : '/icons/mdb.svg'}`} width={20} height={20} alt='uploadericon' />
                             <p className='text-subparagraph text-xs leading-5 capitalize text-nowrap text-ellipsis overflow-hidden flex'>
-                                by
-                                <span className='text-xs text-subheading font-semibold leading-5 capitalize pr-[6px]'>{uploadername ? uploadername : "The Mad Brains"}</span>
+                                <span className='text-subheading pr-[4px] '>by </span>
+                                <span className='text-xs text-subheading font-semibold leading-5 capitalize  pr-[6px]'>{uploadername ? uploadername : "The Mad Brains"}</span>
                                 <Icon className="w-[1px] h-4 " name='linevertical' />
                                 <span className='text-xs max-w-[130px] truncate  text-subheading font-semibold leading-5 capitalize pl-[6px]'>{category}</span>
                             </p>

@@ -32,9 +32,9 @@ const CategoryCard: React.FC<techcardprops> = ({ className, image, imageclass, t
                 href={`/product?template-type=${templateid}&subcat=${id}`} className={cn`p-[10px] md:p-5 bg-[#FFF6FF] w-full cursor-pointer group max-w-[370px]
                  ${className} animate-zoom `}>
                 <div className={cn` p-[5px] ${container}`}>
-                    <Image src={`/images/${image}`} className={cn`rounded-md transition-all duration-500 group-hover:scale-[0.95] ${imageclass}`} width={220} height={148} alt='image' />
+                    <Image quality={50} src={`/images/${image}`} className={cn`rounded-md transition-all duration-500 group-hover:scale-[0.95] ${imageclass}`} width={220} height={148} alt='image' />
                 </div>
-                <h3 className={cn` text-xs md:text-base text-center text-subparagraph md:leading-6 font-semibold capitalize mt-[10px] ${titleclass}`}>{`${title}`}</h3>
+                <p className={cn` text-xs md:text-base text-center text-subparagraph md:leading-6 font-semibold capitalize mt-[10px] ${titleclass}`}>{`${title}`}</p>
             </Link>
         </>)
 }
