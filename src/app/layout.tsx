@@ -43,6 +43,7 @@ export default async function RootLayout({ children, }: Readonly<{ children: Rea
     <html lang="en">
       <head>
         <meta name="google-site-verification" content="WukHyBqs1sIjRy0uoRgOkoY-3clXUzFM5kfJaRSQiZY" />
+        <meta name="robots" content="noindex, nofollow"/>
       </head>
       <body
         className={`${openSans.variable} ${inter.variable} antialiased`}

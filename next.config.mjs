@@ -21,6 +21,20 @@ const nextConfig = {
     
     return config;
   },
+  async headers() {
+    return [
+      {
+        source: "/:path*", // Apply to all routes
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, nofollow",
+          },
+        ],
+      },
+    ];
+  },
 };
+
 
 export default nextConfig;
