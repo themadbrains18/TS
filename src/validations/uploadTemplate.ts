@@ -143,6 +143,8 @@ export const uploadTemplateSchema = uploadTemplateBase.extend({
   .superRefine((data, ctx) => {
 
     const { subCategory } = data; // Correctly access parent data via ctx.data
+    console.log(subCategory,"=subcat");
+    
 
     // If subCategory includes 'mobile', we allow previewImages to be undefined
     if (subCategory?.includes('Mobile')) {
@@ -183,13 +185,13 @@ export const uploadTemplateUpdateSchema = uploadTemplateBase.extend({
   price: z.union([z.string(), z.number()]).optional(),
 }).superRefine((data, ctx) => {
 
-  const { subCategory } = data; // Correctly access parent data via ctx.data
-
+  const { subCategory, subCategoryId } = data; // Correctly access parent data via ctx.data
+  console.log(data,"=subcat");
   // If subCategory includes 'mobile', we allow previewImages to be undefined
   if (subCategory?.includes('Mobile')) {
     return; // No validation needed if subCategory is 'mobile'
   }
-  if (data?.previewImages && data?.previewImages.length <= 0) {
+  if (subCategoryId !=="cm208jwgm0005joy0c8dfxnsa" && data?.previewImages && data?.previewImages.length <= 0) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
       message: "At least 1 preview image is required.",

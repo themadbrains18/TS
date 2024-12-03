@@ -152,10 +152,13 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
      */
 
     const handleTemplateSelect = (value: string) => {
-        setShowSoftwareType(value);
-        setSelectedValue(value);
-        setValue("templateTypeId", value)
-        fetchTemplateData(`/sub-categories/${value}`);
+        console.log(value,"==value");
+        if(value){
+            setShowSoftwareType(value);
+            setSelectedValue(value);
+            setValue("templateTypeId", value)
+            fetchTemplateData(`/sub-categories/${value}`);
+        }
     };
 
     /**
@@ -185,6 +188,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
 
     useEffect(() => {
+        console.log(initialData,"==initialData?.previewImages");
+        
         if (initialData) {
             setValue('techDetails', initialData?.techDetails);
             handleTemplateSelect(initialData?.templateTypeId)
@@ -382,6 +387,9 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
     const router = useRouter();
 
+    console.log(errors,"==errors");
+    console.log(getValues('previewImages'),"==previewImages");
+    
 
     const [errorvalidaiton, seterrorvalidaiton] = useState<string | null>(null);
     const errorRef = useRef<HTMLDivElement | null>(null);
@@ -704,7 +712,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                         id={item?.id}
                                                         {...field}
                                                         value={item?.id}
-                                                        defaultChecked={(initialData && 'industryTypeId' in initialData) && initialData?.industryTypeId === item?.id}
+                                                        defaultChecked={initialData && initialData?.industryTypeId === item?.id}
                                                         // defaultChecked={selectedIndustry === item?.id}
                                                         onChange={() => {
                                                             field.onChange(item?.id);
