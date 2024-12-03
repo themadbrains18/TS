@@ -191,7 +191,7 @@ export const uploadTemplateUpdateSchema = uploadTemplateBase.extend({
   if (subCategory?.includes('Mobile')) {
     return; // No validation needed if subCategory is 'mobile'
   }
-  if (subCategoryId !=="cm208jwgm0005joy0c8dfxnsa" && data?.previewImages && data?.previewImages.length <= 0) {
+  if (subCategoryId !=="cm48et4wn0004qnnxptj5ioaz" && data?.previewImages && data?.previewImages.length <= 0) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
       message: "At least 1 preview image is required.",

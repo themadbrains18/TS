@@ -199,7 +199,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             setValue('previewImages', initialData?.previewImages)
             setValue('previewMobileImages', initialData?.previewMobileImages)
 
-            if (initialData?.subCategoryId === "cm208jwgm0005joy0c8dfxnsa") {
+            if (initialData?.subCategoryId === "cm48et4wn0004qnnxptj5ioaz") {
                 setIsMobileSelected(true)
             }
         }

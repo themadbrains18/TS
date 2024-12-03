@@ -24,7 +24,7 @@ const ProductBanner = () => {
                             <h3 className='text-4 font-normal leading-6 inline text-divider-100' >
                                 <Link href={"/"} >Home </Link>
                                 /
-                                <Link href={'/Product'} >  Products </Link>
+                                <Link href={'/product'} >  Products </Link>
                             </h3>
                             <div className='flex min-[991px]:flex-row flex-col gap-4  max-[1024px]:pt-4  justify-between  animate-fade-up' >
                                 <h2 className=' text-[36px] xl:text-[40px]  2xl:text-[55px] font-bold 2xl:leading-[70px]  lg:leading-[50px] text-white  min-[991px]:pt-20 max-w-[662px] w-full  leading-[1.3]' >
