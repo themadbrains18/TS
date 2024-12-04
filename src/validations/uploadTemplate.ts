@@ -143,8 +143,6 @@ export const uploadTemplateSchema = uploadTemplateBase.extend({
   .superRefine((data, ctx) => {
 
     const { subCategory } = data; // Correctly access parent data via ctx.data
-    console.log(subCategory,"=subcat");
-    
 
     // If subCategory includes 'mobile', we allow previewImages to be undefined
     if (subCategory?.includes('Mobile')) {
@@ -186,7 +184,6 @@ export const uploadTemplateUpdateSchema = uploadTemplateBase.extend({
 }).superRefine((data, ctx) => {
 
   const { subCategory, subCategoryId } = data; // Correctly access parent data via ctx.data
-  console.log(data,"=subcat");
   // If subCategory includes 'mobile', we allow previewImages to be undefined
   if (subCategory?.includes('Mobile')) {
     return; // No validation needed if subCategory is 'mobile'

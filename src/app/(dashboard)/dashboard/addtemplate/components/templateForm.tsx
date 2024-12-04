@@ -74,6 +74,8 @@ interface TemplateFormProps {
 
 const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) => {
 
+    const errorRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
     /**
      * Fetch data hooks for template types, subcategories, and industries
      */
@@ -90,7 +92,9 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     const [images, setImages] = useState<Font[]>([{ name: '', url: '' }]);
     const [icons, setIcons] = useState<Font[]>([{ name: '', url: '' }]);
     const [illustrations, setIllustrations] = useState<Font[]>([{ name: '', url: '' }]);
+
     const [loader, setLoader] = useState(false)
+
     const [deleteAllImages, setDeleteAllImages] = useState<string[]>([])
 
     // type edit 
@@ -152,8 +156,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
      */
 
     const handleTemplateSelect = (value: string) => {
-        // console.log(value,"==value");
-        if(value){
+        if (value) {
             setShowSoftwareType(value);
             setSelectedValue(value);
             setValue("templateTypeId", value)
@@ -188,8 +191,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
 
     useEffect(() => {
-        console.log(initialData,"==initialData?.previewImages");
-        
+
         if (initialData) {
             setValue('techDetails', initialData?.techDetails);
             handleTemplateSelect(initialData?.templateTypeId)
@@ -291,7 +293,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     const renderInputFields = (items: Font[], setter: React.Dispatch<React.SetStateAction<Font[]>>, title: string) => (
         <div className='pb-3'>
             <h4 className='text-lg font-semibold capitalize pb-4'>{title}</h4>
-            <div className="p-5 border-b border-neutral-400">
+            <div className=" p-2 md:p-5 border-b border-neutral-400">
                 {items?.map((item, index) => (
                     <div key={index} className="flex items-center gap-x-3 pb-3">
 
@@ -358,7 +360,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
     const renderTechnicalDetailsFields = () => (
         <div className='pb-3'>
-            <div className="p-5 border-b border-neutral-400">
+            <div className="p-2 md:p-5 border-b border-neutral-400">
                 {technicalDetails?.map((detail: string, index: number) => (
                     <div key={index} className="flex items-center gap-x-3 pb-3">
                         <DashInput
@@ -387,9 +389,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
     const router = useRouter();
 
-    console.log(errors,"==errors");
-    console.log(getValues('previewImages'),"==previewImages");
-    
 
     const [errorvalidaiton, seterrorvalidaiton] = useState<string | null>(null);
     const errorRef = useRef<HTMLDivElement | null>(null);
@@ -485,7 +484,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                         method: 'DELETE',
                         headers: {
                             'Authorization': `Bearer ${session?.token}`,
-                            'ngrok-skip-browser-warning':'true'
+                            'ngrok-skip-browser-warning': 'true'
                         }
                     });
 
@@ -499,7 +498,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                 body: formData,
                 headers: {
                     'Authorization': `Bearer ${session?.token}`, // Adding Authorization header with Bearer token
-                    'ngrok-skip-browser-warning':'true'
+                    'ngrok-skip-browser-warning': 'true'
                 },
             });
 
@@ -507,6 +506,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
             if (!response.ok) {
                 toast.error(result.message, { autoClose: 1500 });
+                setLoader(false);
             } else {
                 toast.success(result.message, { autoClose: 1500 });
                 router.push('/dashboard');
@@ -514,7 +514,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         } catch (error) {
             console.error("An error occurred during submission:", error);
         } finally {
-            setLoader(false);
+            // setLoader(false);
         }
     };
 
@@ -524,9 +524,11 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     }
 
     const [tags, setTags] = useState<string[]>(initialData?.seoTags || []);
+    const [inputValue, setInputValue] = useState<string>('');
 
+    // Function to handle keydown events (comma for desktop)
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === ',') {
+        if (event.key === ',' || event.key === 'Enter') {
             event.preventDefault(); // Prevent default space or comma behavior
             const value = event.currentTarget.value.trim(); // Get trimmed value
 
@@ -535,17 +537,33 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                 const newTags = [...tags, value];
                 setTags(newTags);
                 setValue('seoTags', newTags); // Ensure the form value is updated as an array
+                setInputValue(''); // Clear the input field after adding the tag
             }
 
+            // Clear the input field even if invalid value is entered
             event.currentTarget.value = ''; // Clear the input field
         }
-    }
+    };
 
+    // Function to add tag via button click (for mobile)
+    const addTag = () => {
+        const value = inputValue.trim();
+        if (value.length >= 2 && !tags.includes(value)) {
+            const newTags = [...tags, value];
+            setTags(newTags);
+            setValue('seoTags', newTags); // Update the form value as an array
+            setInputValue(''); // Clear the input field
+        }
+    };
+
+    // Function to remove a tag
     const removeTag = (index: number) => {
         const updatedTags = tags.filter((_, i) => i !== index);
         setTags(updatedTags);
         setValue('seoTags', updatedTags); // Update the form value as an array
     };
+
+
 
     const [otherIndustry, setOtherIndustry] = useState<string>();
 
@@ -561,14 +579,13 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         setSelectedIndustry(value);
     };
 
-
     const deleteSliderImage = async (id: string, name: string) => {
         try {
             const response = await fetch(`${process?.env?.NEXT_PUBLIC_APIURL}/${name}/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${session?.token}`,
-                    'ngrok-skip-browser-warning':'true'
+                    'ngrok-skip-browser-warning': 'true'
                 }
             });
             if (response.ok) {
@@ -581,11 +598,38 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         }
     };
 
+    /**
+      * Scroll to the first error
+      */
 
+    useEffect(() => {
+        if (errors && Object.keys(errors).length > 0) {
+            const firstErrorKey = Object.keys(errors)[0] as keyof FormData;
+            const firstErrorElement = errorRefs.current[firstErrorKey];
+            if (firstErrorElement) {
+                firstErrorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+    }, [errors]);
+
+    useEffect(() => {
+        if (loader) {
+            window.scrollTo(0, 0);
+        }
+    }, [loader])
 
     return (
-
         <>
+
+            {/* Loader Overlay */}
+            {loader && (
+                <div className="fixed inset-0  bg-[#28204699] flex items-center justify-center z-50">
+                    <div className="text-white text-2xl font-bold animate-zoom-out">
+                        Please wait
+                    </div>
+                </div>
+            )}
+
             <section className='pb-10 md:pb-20'>
                 <div className='py-10 border-b border-divider-200 bg-[#ffffff80]' >
                     <div className="container">
@@ -699,7 +743,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                             <h3 className='text-xl font-semibold capitalize '>Industry</h3>
                             <div className='flex flex-col mb-3'>
 
-                                <div className='grid grid-cols-4 justify-between gap-x-3 max-w-full   py-2'>
+                                <div className='grid grid-cols-2 lg:grid-cols-4 justify-between gap-3 lg:gap-x-3 max-w-full   py-2'>
                                     {industryData?.map((item) => (
                                         <Controller
                                             key={item?.id}
@@ -796,14 +840,14 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                 <h3 className='text-xl font-semibold capitalize  pb-4'>Description</h3>
                                 <QuillEditor setValue={setValue} clearErrors={clearErrors} setError={setError} initialValue={initialData?.description} />
                                 {errors.description &&
-                                    <p ref={errorRef} style={{ color: 'red', marginTop: "10px" }}>{errors.description.message}</p>
+                                    <p ref={(el: any) => (errorRefs.current.description = el)} style={{ color: 'red', marginTop: "10px" }}>{errors.description.message}</p>
                                 }
                             </div>
 
 
                             <div className='pt-5'>
                                 <h3 className='text-xl font-semibold capitalize  pb-4'>Credits</h3>
-                                <div className='p-5 border border-neutral-400 rounded-md'>
+                                <div className=' p-2 md:p-5 border border-neutral-400 rounded-md'>
                                     {renderInputFields(fonts, setFonts, 'fonts')}
                                     {renderInputFields(images, setImages, 'images',)}
                                     {renderInputFields(icons, setIcons, 'icons',)}
@@ -816,7 +860,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                 {/*  technical details */}
                                 <div className='pt-5'>
                                     <h3 className='text-xl font-semibold capitalize  pb-4'>Technical Details</h3>
-                                    <div className='p-5 border border-neutral-400 rounded-md'>
+                                    <div className='p-2 md:p-5 border border-neutral-400 rounded-md'>
                                         {renderTechnicalDetailsFields()}
                                     </div>
                                     {errors.techDetails && <p style={{ color: 'red' }}>Required</p>}
@@ -872,7 +916,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                 {/* Slider Images  */}
                                 <div className='pt-5'>
                                     <h3 className='text-xl font-semibold capitalize pb-4'>Slider Images</h3>
-                                    <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
+                                    <div className='p-2 md:p-5 border border-neutral-400 border-dashed rounded-md'>
                                         <Controller
                                             name="sliderImages"
                                             control={control}
@@ -901,7 +945,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                             )}
                                         />
                                     </div>
-                                    {errors.sliderImages && <p ref={errorRef} style={{ color: 'red' }}>{errors.sliderImages.message}</p>}
+                                    {errors.sliderImages && <p ref={(el: any) => (errorRefs.current.sliderImages = el)} style={{ color: 'red' }}>{errors.sliderImages.message}</p>}
                                 </div>
 
                                 {/* Deskto preview images */}
@@ -910,7 +954,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                     !isMobileSelected &&
                                     <div className='pt-5'>
                                         <h3 className='text-xl font-semibold capitalize pb-4'>Desktop Preview Images</h3>
-                                        <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
+                                        <div className='p-2 md:p-5 border border-neutral-400 border-dashed rounded-md'>
                                             <Controller
                                                 name="previewImages"
                                                 control={control}
@@ -946,7 +990,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                 {/* movilePreview Iamges */}
                                 <div className='pt-5'>
                                     <h3 className='text-xl font-semibold capitalize pb-4'>Mobile Preview Images</h3>
-                                    <div className='p-5 border border-neutral-400 border-dashed rounded-md'>
+                                    <div className='p-2 md:p-5 border border-neutral-400 border-dashed rounded-md'>
                                         <Controller
                                             name="previewMobileImages"
                                             control={control}
@@ -969,7 +1013,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                         />
                                     </div>
                                     {errors.previewMobileImages && <p ref={errorRef} style={{ color: 'red' }}>{errors.previewMobileImages.message}</p>}
-
                                 </div>
 
                                 {/* SEO tags and price component */}
@@ -981,10 +1024,10 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                         <Controller
                                             name="seoTags"
                                             control={control}
-                                            render={({ }) => (
+                                            render={() => (
                                                 <>
                                                     <div className="flex flex-wrap items-center gap-2 mb-2 pt-3">
-                                                        {tags && tags.length > 0 && tags?.map((tag, index) => (
+                                                        {tags && tags.length > 0 && tags.map((tag, index) => (
                                                             <span
                                                                 key={index}
                                                                 className="bg-blue-100 text-blue-700 px-2 py-1 rounded-md flex items-center"
@@ -1001,22 +1044,36 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                         ))}
                                                     </div>
 
-                                                    <input
-                                                        id="seoTags"
-                                                        type="text"
-                                                        className={`py-[18px] px-5 border border-neutral-400 rounded-md outline-none placeholder:text-neutral-400 bg-white ${tags?.length >= 5 && 'bg-neutral-400 cursor-not-allowed'}`}
-                                                        placeholder="Type comma to add tags"
-                                                        disabled={tags?.length >= 5}
-                                                        onKeyDown={handleKeyDown}
-                                                    />
+                                                    <div className="flex items-center gap-2 flex-col ">
+                                                        <input
+                                                            id="seoTags"
+                                                            type="text"
+                                                            className={`flex-1 w-full py-[18px] px-5 border border-neutral-400 rounded-md outline-none placeholder:text-neutral-400 bg-white ${tags?.length >= 5 && 'bg-neutral-400 cursor-not-allowed'}`}
+                                                            placeholder="Type a keyword"
+                                                            value={inputValue}
+                                                            onChange={(e) => setInputValue(e.target.value)}
+                                                            onKeyDown={handleKeyDown}
+                                                            disabled={tags?.length >= 5}
+                                                        />
+                                                        {/* Add Tag button (only visible on mobile) */}
+                                                        <button
+                                                            type="button"
+                                                            className={`py-2 w-full px-4 text-white bg-primary-700 rounded-md ${tags?.length >= 5 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-primary-100'} md:hidden`}
+                                                            onClick={addTag}
+                                                            disabled={tags?.length >= 5 || !inputValue.trim()}
+                                                        >
+                                                            Add Tag
+                                                        </button>
+                                                    </div>
                                                 </>
                                             )}
                                         />
-                                        <p className='text-xs'>*Note: 5 keywords are allowed</p>
+                                        <p className="text-xs pt-2">*Note: 5 keywords are allowed</p>
                                         {errors.seoTags && (
                                             <p ref={errorRef} style={{ color: 'red' }}>{errors.seoTags.message}</p>
                                         )}
                                     </div>
+
 
                                     <div className='pt-5'>
                                         <StaticCheckBox onClick={() => { setStaticCheck(!staticcheck), setValue('isPaid', !staticcheck) }} checked={staticcheck} label='Paid' />
@@ -1046,13 +1103,21 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                             </div>
                                         }
                                     </div>
-                                    {
-                                        loading || loader ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='py-3 mt-5' hideChild='hidden'  >
 
-                                        </Button> : <Button type='submit' variant='primary' className='py-3 mt-5' >
-                                            upload
-                                        </Button>
-                                    }
+                                    <div className='flex gap-6' >
+                                        {
+                                            loading || loader ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='py-3 mt-5' hideChild='hidden'  >
+
+                                            </Button> : <Button type='submit' variant='primary' className='py-3 mt-5' >
+                                                upload
+                                            </Button>
+                                        }
+
+                                        {/* <Button type='button' variant='secondary' className='py-3 mt-5' >
+                                            Draft Template
+                                        </Button> */}
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1064,6 +1129,3 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 };
 
 export default TemplateForm;
-
-
-

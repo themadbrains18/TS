@@ -29,7 +29,7 @@ const FilePreview = ({
   onRemove: () => void;
 }) => {
   return (
-    <div className="relative border p-2 mb-2 z-50">
+    <div className="relative border p-2 mb-2 z-20">
       <Image
         src={previewUrl}
         width={128}

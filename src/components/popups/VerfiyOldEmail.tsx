@@ -41,7 +41,6 @@ const VerfiyOldEmail: FC<verifyoldemail> = ({
     const [resendData, setResendData] = useState<savedData>();
     const [initialSend, setInitialSend] = useState(true);
 
-    // console.log(resendData,"=resendData");
 
     /**
      * This function handles the form submission for updating user email and handling OTP validation.

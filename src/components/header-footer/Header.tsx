@@ -277,7 +277,7 @@ const Header = () => {
                     <div ref={profileRef} className={`absolute ${profile ? "opacity-100 visible" : "invisible opacity-0"}  transition-all  duration-[0.5s] top-[94%]  max-[1678px]:right-0 right-[-73px] mt-2 w-[216px] z-60 bg-white shadow-lg rounded-lg`}>
                       <div className="pt-[6px] mt-[-6px]">
                         <div className="py-2.5 ">
-                          <h2 className="leading-6 text-[16px] font-semibold text-textheading py-2 pl-[30px] pr-[27px] mb-2.5 max-w-60 truncate">
+                          <h2 className="leading-6 text-[16px] font-semibold text-textheading py-2 pl-[30px] pr-[27px] mb-2.5 max-w-60 truncate" title={session?.email} >
                             {session?.email}
                           </h2>
                           <div className="px-[30px] mb-2.5 " >
