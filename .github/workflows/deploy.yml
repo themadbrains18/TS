@@ -53,7 +53,7 @@ jobs:
     - name: Sync files using rsync
       run: |
         echo "Attempting to sync files using rsync"
-        rsync -avz --delete --exclude 'node_modules' --exclude 'TsAPi' --exclude '.git' --exclude '.next' --exclude '.github' -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" ./ root@46.202.163.196:/var/www/templatestudio.ai || exit 1
+        rsync -avz --delete --exclude 'node_modules' --exclude 'TsAPi' --exclude 'StagingApi' --exclude '.git' --exclude '.next' --exclude '.github' -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" ./ root@46.202.163.196:/var/www/templatestudio.ai || exit 1
 
     # Alternative option: Using tarball compression if you want to use this instead of rsync
     # Uncomment the following block if you want to use tarball compression instead of rsync
