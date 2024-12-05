@@ -9,6 +9,8 @@ import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { authOptions } from "@/libs/auth";
 import NextTopLoader from 'nextjs-toploader';
+import { GoogleAnalytics } from '@next/third-parties/google'
+
 
 import { redirect } from 'next/navigation';
 
@@ -43,7 +45,7 @@ export default async function RootLayout({ children, }: Readonly<{ children: Rea
     <html lang="en">
       <head>
         <meta name="google-site-verification" content="WukHyBqs1sIjRy0uoRgOkoY-3clXUzFM5kfJaRSQiZY" />
-        <meta name="robots" content="noindex, nofollow"/>
+        <meta name="robots" content="noindex, nofollow" />
       </head>
       <body
         className={`${openSans.variable} ${inter.variable} antialiased`}
@@ -67,6 +69,7 @@ export default async function RootLayout({ children, }: Readonly<{ children: Rea
             {children}
           </StoreProvider>
         </SessionProvider>
+        <GoogleAnalytics gaId="G-R45FZ1KSKT" />
       </body>
     </html>
   );
