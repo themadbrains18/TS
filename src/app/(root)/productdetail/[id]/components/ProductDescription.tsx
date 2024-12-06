@@ -6,7 +6,7 @@ import DescriptionTab from './DescriptionTab'
 import CreditTab from './CreditTab'
 import WhatsNewTab from './WhatsNewTab'
 import AuthorTab from './AuthorTab'
-import { ProductDetailProps } from '@/types/type'
+import { TechTemplate } from '@/types/type'
 
 
 
@@ -18,13 +18,15 @@ import { ProductDetailProps } from '@/types/type'
  * @returns {JSX.Element} The rendered ProductDescription component.
  */
 
+interface ProductDescriptiontype {
+    template: TechTemplate
+    activetab: any
+    setActivetab: any
+}
 
 
-const ProductDescription: React.FC<ProductDetailProps> = ({ template }) => {
-    /**
-     * State to manage the active tab index
-     */
-    const [activetab, setActivetab] = useState(0);
+const ProductDescription = ({ template, activetab, setActivetab }: ProductDescriptiontype) => {
+
 
 
 
@@ -46,6 +48,7 @@ const ProductDescription: React.FC<ProductDetailProps> = ({ template }) => {
     *
     * @returns {JSX.Element|null} The rendered tab content or null if no tab is active.
     */
+
     const renderTabContent = () => {
         switch (activetab) {
             case 0:
@@ -81,7 +84,7 @@ const ProductDescription: React.FC<ProductDetailProps> = ({ template }) => {
                         ))}
                     </div>
 
-                    <div className='tab-content mt-10'>
+                    <div className='tab-content  shadow-lg '>
                         {renderTabContent()} {/* Only render the active tab content */}
                     </div>
                 </div>

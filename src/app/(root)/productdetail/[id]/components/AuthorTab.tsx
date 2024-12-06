@@ -43,7 +43,7 @@ const AuthorTab: React.FC<UserDetailProps> = ({ userDetail }) => {
 
 
   return (
-    <div className="mt-10 lg:mt-20">
+    <div className="md:p-20 p-8 ">
       <div className="flex justify-between flex-col md:flex-row items-center md:items-end">
         <div className="flex items-start md:items-end gap-x-5 w-full md:w-auto">
           <div className="p-[1px] border-2 border-divider-100 inline-block">
@@ -87,9 +87,9 @@ const AuthorTab: React.FC<UserDetailProps> = ({ userDetail }) => {
             view all products
           </Button>
         </div>
-        <div className="max-w-[1560px] overflow-scroll hiddenscroll">
-          <div className="flex items-center    gap-x-[10px] md:gap-x-[20px] mt-5">
-            {data && data?.data?.length > 0 && data?.data?.map((item) => (
+        <div className="">
+          <div className="grid grid-cols-6 gap-x-[10px] md:gap-x-[20px] mt-5">
+            {data && data?.data?.length > 0 && data?.data?.slice(0, 6).map((item) => (
               <Fragment key={item?.id}>
                 <NavCard
                   id={item?.id}

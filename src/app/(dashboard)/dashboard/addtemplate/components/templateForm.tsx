@@ -19,6 +19,7 @@ import { toast } from 'react-toastify';
 import Link from 'next/link';
 import Image from 'next/image';
 import NotFound from '@/app/not-found';
+import { any } from 'zod';
 
 /**
  * Define types for data structures
@@ -145,10 +146,54 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     const [staticcheck, setStaticCheck] = useState<boolean>(initialData?.isPaid || false);
     const [showSoftwareType, setShowSoftwareType] = useState('')
 
+    // upload 
     const { register, handleSubmit, control, formState: { errors }, setValue, clearErrors, setError, getValues } = useForm<FormData>({
         defaultValues: { ...initialData, seoTags: [] },
         resolver: zodResolver(type == "create" ? uploadTemplateSchema : uploadTemplateUpdateSchema)
     });
+
+    // Form for Draft (without validation)
+    const {
+        register: registerDraft,
+        handleSubmit: handleSubmitDraft,
+        control: controlDraft,
+        formState: { errors: draftErrors },
+        setValue: setValueDraft,
+        clearErrors: clearErrorsDraft,
+        setError: setErrorDraft,
+        getValues: getValuesDraft
+    } = useForm<FormData>({
+        defaultValues: { ...initialData },
+    });
+
+    const [isDraft, setIsDraft] = useState(false);
+
+    // Dynamically use the appropriate form handlers
+    const activeRegister = isDraft ? registerDraft : register;
+    const activeErrors = isDraft ? draftErrors : errors;
+    const activeSetValue = isDraft ? setValueDraft : setValue;
+    const activeHandleSubmit = handleSubmitDraft
+    const activeClearErrors = isDraft ? clearErrorsDraft : clearErrors;
+    const activeSetError = isDraft ? setErrorDraft : setError;
+    const activeGetValues = isDraft ? getValuesDraft : getValues;
+    const activeControl = isDraft ? controlDraft : control;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     /**
@@ -159,7 +204,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         if (value) {
             setShowSoftwareType(value);
             setSelectedValue(value);
-            setValue("templateTypeId", value)
+            activeSetValue("templateTypeId", value)
             fetchTemplateData(`/sub-categories/${value}`);
         }
     };
@@ -193,13 +238,13 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     useEffect(() => {
 
         if (initialData) {
-            setValue('techDetails', initialData?.techDetails);
+            activeSetValue('techDetails', initialData?.techDetails);
             handleTemplateSelect(initialData?.templateTypeId)
-            setValue('industry', initialData.industryTypeId)
-            setValue('seoTags', initialData?.seoTags)
-            setValue('sliderImages', initialData?.sliderImages)
-            setValue('previewImages', initialData?.previewImages)
-            setValue('previewMobileImages', initialData?.previewMobileImages)
+            activeSetValue('industry', initialData.industryTypeId)
+            activeSetValue('seoTags', initialData?.seoTags)
+            activeSetValue('sliderImages', initialData?.sliderImages)
+            activeSetValue('previewImages', initialData?.previewImages)
+            activeSetValue('previewMobileImages', initialData?.previewMobileImages)
 
             if (initialData?.subCategoryId === "cm48et4wn0004qnnxptj5ioaz") {
                 setIsMobileSelected(true)
@@ -245,7 +290,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
         // Clear the form fields for all items in the `name` array
         name.forEach((item: any) => {
-            setValue(item, []); // Assuming `item` is a valid field name
+            activeSetValue(item, []); // Assuming `item` is a valid field name
         });
     };
 
@@ -266,10 +311,10 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
     const removeInputField = (setter: any, index: number, values: any[]) => {
 
-        // let technicalDetails = getValues("techDetails")
+        // let technicalDetails = activeGetValues("techDetails")
         // technicalDetails?.splice(index, 1)
         // setter(technicalDetails);
-        // setValue('techDetails', technicalDetails)
+        // activeSetValue('techDetails', technicalDetails)
 
         if (values.length > 1) {
 
@@ -281,7 +326,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             if (setter == setTechnicalDetails) {
                 newValues.forEach((detail: any, i) => {
                 }); // Correct the field path
-                setValue(`techDetails`, newValues)
+                activeSetValue(`techDetails`, newValues)
             }
         }
     };
@@ -346,11 +391,11 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             return prevState;
         });
 
-        let images: any = getValues(imgData?.imgName)
+        let images: any = activeGetValues(imgData?.imgName)
 
         images = images.filter((item: any) => item.id !== imgData.imgId)
 
-        setValue(imgData?.imgName, images)
+        activeSetValue(imgData?.imgName, images)
 
     };
 
@@ -367,7 +412,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                             type='text'
                             placeholder='Detail Name'
                             value={detail}
-                            onChange={(e) => { handleInputChange(setTechnicalDetails, index, e.target.value, technicalDetails); setValue(`techDetails.${index}`, e.target.value); }}
+                            onChange={(e) => { handleInputChange(setTechnicalDetails, index, e.target.value, technicalDetails); activeSetValue(`techDetails.${index}`, e.target.value); }}
                         />
                         {technicalDetails.length > 4 && (
                             <button
@@ -379,16 +424,14 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                         )}
                     </div>
                 ))}
-                <Button onClick={() => { addInputFields(setTechnicalDetails, technicalDetails, false), setValue(`techDetails.${technicalDetails.length}`, ""); }} variant='primary' className='py-2 mt-2'>
+                <Button onClick={() => { addInputFields(setTechnicalDetails, technicalDetails, false), activeSetValue(`techDetails.${technicalDetails.length}`, ""); }} variant='primary' className='py-2 mt-2'>
                     Add more
                 </Button>
             </div>
         </div>
     );
 
-
     const router = useRouter();
-
 
     const [errorvalidaiton, seterrorvalidaiton] = useState<string | null>(null);
     const errorRef = useRef<HTMLDivElement | null>(null);
@@ -402,7 +445,79 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         [key: string]: any; // Define a dynamic type for the form data fields
     }
 
-    const onSubmit: SubmitHandler<FormDataObject> = async (data) => {
+
+    // draft data
+
+    const draftsubmit = async (data: any) => {
+
+        console.log(data, "dataF")
+
+        try {
+            const formData = new FormData();
+
+            // Append form fields to FormData
+            Object.entries(data).forEach(([key, value]) => {
+                if (Array.isArray(value)) {
+                    value.forEach((item) => formData.append(key, item));
+                } else {
+                    formData.append(key, value);
+                }
+            });
+
+            formData.delete("industry");
+            formData.append('industry', data?.industry);
+
+            const credits = [
+                {
+                    fonts: fonts?.map(font => ({ name: font.name, url: font.url })),
+                    images: images?.map(image => ({ name: image.name, url: image.url })),
+                    icons: icons?.map(icon => ({ name: icon.name, url: icon.url })),
+                    illustrations: illustrations?.map(illustration => ({ name: illustration.name, url: illustration.url })),
+                }
+            ];
+            formData.append("credits", JSON.stringify(credits));
+
+
+            // Send the request
+            const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/drafttemplates`, {
+                method: "POST", // Assuming POST for drafts
+                body: formData,
+                headers: {
+                    Authorization: `Bearer ${session?.token}`,
+                    "ngrok-skip-browser-warning": "true",
+                },
+            });
+
+            // Handle response
+            const result = await response.json();
+
+            if (!response.ok) {
+                toast.error(result.message || "Failed to save draft", { autoClose: 1500 });
+            } else {
+                toast.success(result.message || "Draft saved successfully", { autoClose: 1500 });
+                router.push("/dashboard");
+            }
+        } catch (error) {
+            console.error("An error occurred while saving draft:", error);
+            toast.error("An unexpected error occurred.", { autoClose: 1500 });
+        }
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+    const onSubmit: SubmitHandler<FormDataObject> = async (data, status: any) => {
+
+        console.log(data, "real data")
+
 
         if (type == "edit") {
             editimagedata?.map((item) => {
@@ -459,6 +574,14 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         ];
         formData.append("credits", JSON.stringify(credits));
 
+
+        // Add status field to the form data
+
+        if (status === "DRAFT") {
+            formData.append("status", status);
+        }
+
+
         const endpoint = type === 'edit'
             ? `${process.env.NEXT_PUBLIC_APIURL}/templates/${id}`
             : `${process.env.NEXT_PUBLIC_APIURL}/templates`;
@@ -491,7 +614,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                 })
             }
 
-
             // Submit the form data
             const response = await fetch(endpoint, {
                 method,
@@ -518,7 +640,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         }
     };
 
-
     const goback = () => {
         router?.back()
     }
@@ -536,7 +657,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             if (value.length >= 2 && !tags.includes(value)) {
                 const newTags = [...tags, value];
                 setTags(newTags);
-                setValue('seoTags', newTags); // Ensure the form value is updated as an array
+                activeSetValue('seoTags', newTags); // Ensure the form value is updated as an array
                 setInputValue(''); // Clear the input field after adding the tag
             }
 
@@ -551,7 +672,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         if (value.length >= 2 && !tags.includes(value)) {
             const newTags = [...tags, value];
             setTags(newTags);
-            setValue('seoTags', newTags); // Update the form value as an array
+            activeSetValue('seoTags', newTags); // Update the form value as an array
             setInputValue(''); // Clear the input field
         }
     };
@@ -560,7 +681,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     const removeTag = (index: number) => {
         const updatedTags = tags.filter((_, i) => i !== index);
         setTags(updatedTags);
-        setValue('seoTags', updatedTags); // Update the form value as an array
+        activeSetValue('seoTags', updatedTags); // Update the form value as an array
     };
 
 
@@ -570,7 +691,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     const handleInputChangeindustryvalue = (e: any) => {
         setOtherIndustry(e.target.value); // Correctly updating state
         if (otherIndustry !== "") {
-            clearErrors('industryName')
+            activeClearErrors('industryName')
         }
     };
 
@@ -603,14 +724,14 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
       */
 
     useEffect(() => {
-        if (errors && Object.keys(errors).length > 0) {
-            const firstErrorKey = Object.keys(errors)[0] as keyof FormData;
+        if (activeErrors && Object.keys(activeErrors).length > 0) {
+            const firstErrorKey = Object.keys(activeErrors)[0] as keyof FormData;
             const firstErrorElement = errorRefs.current[firstErrorKey];
             if (firstErrorElement) {
                 firstErrorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         }
-    }, [errors]);
+    }, [activeErrors]);
 
     useEffect(() => {
         if (loader) {
@@ -658,7 +779,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                 <label className='text-xl font-semibold capitalize' htmlFor="templateType">Template Type</label>
                                 <Controller
                                     name="templateTypeId"
-                                    control={control}
+                                    control={activeControl}
                                     render={({ field }) => (
                                         <select
                                             className='custom-dropdown-template'
@@ -680,8 +801,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                         </select>
                                     )}
                                 />
-                                {errors?.templateTypeId && (
-                                    <p ref={errorRef} style={{ color: 'red' }}>{errors?.templateTypeId.message}</p>
+                                {activeErrors?.templateTypeId && (
+                                    <p ref={errorRef} style={{ color: 'red' }}>{activeErrors?.templateTypeId.message}</p>
                                 )}
                             </div>
 
@@ -690,12 +811,12 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                 <label className='text-xl font-semibold capitalize' htmlFor="subCategoryId">Template SubCategory</label>
                                 <Controller
                                     name="subCategoryId"
-                                    control={control}
+                                    control={activeControl}
                                     // defaultValue={"Please select category"} // Set a valid default or empty string
                                     render={({ field }) => (
                                         <select className='custom-dropdown-template' id="subCategoryId"  {...field}
                                             defaultValue=""
-                                            onChange={(e) => { setValue('subCategory', e.target.options[e.target.selectedIndex].text); handleSelectChange(e.target.value); field.onChange(e.target.value); handleCategorySelect(e.target.value) }}
+                                            onChange={(e) => { activeSetValue('subCategory', e.target.options[e.target.selectedIndex].text); handleSelectChange(e.target.value); field.onChange(e.target.value); handleCategorySelect(e.target.value) }}
                                             // onChange={(e) => { field.onChange(e.target.value); handleSelectChange(e.target.value); handleCategorySelect(e.target.value) }}
                                             disabled={type === "edit"}>
                                             <option value="" disabled>Select SubCategory</option>
@@ -709,7 +830,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                         </select>
                                     )}
                                 />
-                                {errors.subCategoryId && <p ref={errorRef} style={{ color: 'red' }}>{errors.subCategoryId.message}</p>}
+                                {activeErrors.subCategoryId && <p ref={errorRef} style={{ color: 'red' }}>{activeErrors.subCategoryId.message}</p>}
                             </div>
 
                             {/* Software Type Dropdown */}
@@ -717,7 +838,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                 <label className='text-xl font-semibold capitalize' htmlFor="softwareTypeId">Software Type</label>
                                 <Controller
                                     name="softwareTypeId"
-                                    control={control}
+                                    control={activeControl}
                                     // defaultValue="" // Set a valid default or empty string
                                     render={({ field }) => (
                                         <select defaultValue="" className='custom-dropdown-template' id="softwareTypeId" {...field} onChange={(e) => { field.onChange(e.target.value); handleCategorySelect(e.target.value) }}
@@ -734,7 +855,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                     )}
                                 />
 
-                                {errors.softwareTypeId && <p ref={errorRef} style={{ color: 'red' }}>{errors.softwareTypeId.message}</p>}
+                                {activeErrors.softwareTypeId && <p ref={errorRef} style={{ color: 'red' }}>{activeErrors.softwareTypeId.message}</p>}
 
                             </div>}
                         </div>
@@ -748,7 +869,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                         <Controller
                                             key={item?.id}
                                             name="industry"
-                                            control={control}
+                                            control={activeControl}
                                             render={({ field }) => (
                                                 <label htmlFor={item?.id} className="my-custom-radio-label capitalize cursor-pointer flex items-center">
                                                     <input
@@ -771,8 +892,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                     ))}
                                 </div>
 
-                                {errors.industry && (
-                                    <p ref={errorRef} style={{ color: 'red' }}>{errors.industry.message}</p>
+                                {activeErrors.industry && (
+                                    <p ref={errorRef} style={{ color: 'red' }}>{activeErrors.industry.message}</p>
                                 )}
 
                                 {/* Conditional rendering of input box when "Other" is selected */}
@@ -781,7 +902,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                     <div>
                                         <div className="mt-3 flex items-center gap-2">
                                             <input
-                                                {...register("industryName")}
+                                                {...activeRegister("industryName")}
                                                 type="text"
                                                 placeholder="Please specify"
                                                 name="industryName"
@@ -790,8 +911,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                 className="border h-[50px] rounded p-2 w-full outline-none"
                                             />
                                         </div>
-                                        {errors.industryName && (
-                                            <p ref={errorRef} style={{ color: 'red' }}>{errors.industryName.message}</p>
+                                        {activeErrors.industryName && (
+                                            <p ref={errorRef} style={{ color: 'red' }}>{activeErrors.industryName.message}</p>
                                         )}
                                     </div>
                                 )}
@@ -802,7 +923,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                     <label className='text-xl font-semibold capitalize' htmlFor="name">Title</label>
                                     <Controller
                                         name="title"
-                                        control={control}
+                                        control={activeControl}
                                         defaultValue="" // Set default value
                                         render={({ field }) => (
                                             <input
@@ -814,23 +935,23 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                             />
                                         )}
                                     />
-                                    {errors.title && (
-                                        <p ref={errorRef} style={{ color: 'red' }}>{errors.title.message}</p>
+                                    {activeErrors.title && (
+                                        <p ref={errorRef} style={{ color: 'red' }}>{activeErrors.title.message}</p>
                                     )}
                                 </div>
 
                                 <div className='flex flex-col'>
                                     <label className='text-xl font-semibold capitalize' htmlFor="version">Version</label>
                                     <input
-                                        {...register("version")}
+                                        {...activeRegister("version")}
                                         id='version'
                                         type="text"
                                         name='version'
                                         className='py-[18px] px-5 border border-neutral-400 p-3 rounded-md outline-none placeholder:text-neutral-400 bg-white'
                                         placeholder='version'
                                     />
-                                    {errors.version &&
-                                        <p ref={errorRef} style={{ color: 'red' }}>{errors.version.message}</p>
+                                    {activeErrors.version &&
+                                        <p ref={errorRef} style={{ color: 'red' }}>{activeErrors.version.message}</p>
                                     }
                                 </div>
 
@@ -838,9 +959,9 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
                             <div className='mt-5'>
                                 <h3 className='text-xl font-semibold capitalize  pb-4'>Description</h3>
-                                <QuillEditor setValue={setValue} clearErrors={clearErrors} setError={setError} initialValue={initialData?.description} />
-                                {errors.description &&
-                                    <p ref={(el: any) => (errorRefs.current.description = el)} style={{ color: 'red', marginTop: "10px" }}>{errors.description.message}</p>
+                                <QuillEditor setValue={activeSetValue} clearErrors={activeClearErrors} setError={activeSetError} initialValue={initialData?.description} />
+                                {activeErrors.description &&
+                                    <p ref={(el: any) => (errorRefs.current.description = el)} style={{ color: 'red', marginTop: "10px" }}>{activeErrors.description.message}</p>
                                 }
                             </div>
 
@@ -863,7 +984,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                     <div className='p-2 md:p-5 border border-neutral-400 rounded-md'>
                                         {renderTechnicalDetailsFields()}
                                     </div>
-                                    {errors.techDetails && <p style={{ color: 'red' }}>Required</p>}
+                                    {activeErrors.techDetails && <p style={{ color: 'red' }}>Required</p>}
                                 </div>
 
                                 {/* File Uploads */}
@@ -894,7 +1015,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
                                     <Controller
                                         name="sourceFiles"
-                                        control={control}
+                                        control={activeControl}
                                         render={({ field }) => (
                                             <input
                                                 {...field}
@@ -907,8 +1028,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                         )}
                                     />
 
-                                    {errors.sourceFiles && (
-                                        <p ref={errorRef} style={{ color: "red" }}>{errors.sourceFiles.message}</p>
+                                    {activeErrors.sourceFiles && (
+                                        <p ref={errorRef} style={{ color: "red" }}>{activeErrors.sourceFiles.message}</p>
                                     )}
 
                                 </div>
@@ -919,7 +1040,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                     <div className='p-2 md:p-5 border border-neutral-400 border-dashed rounded-md'>
                                         <Controller
                                             name="sliderImages"
-                                            control={control}
+                                            control={activeControl}
                                             rules={{ required: false }}
                                             render={({ field: { onChange, value = [] } }) => (
                                                 <FileUpload
@@ -937,7 +1058,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                     supportedfiles="jpg,png,jpeg"
                                                     multiple={true}
                                                     id="2"
-                                                    register={register}
+                                                    register={activeRegister}
                                                     initialUrls={initialData?.sliderImages ? initialData?.sliderImages
                                                         : []} // Pass URLs here
                                                     title='Upload Slider Images Here Upto 5'
@@ -945,7 +1066,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                             )}
                                         />
                                     </div>
-                                    {errors.sliderImages && <p ref={(el: any) => (errorRefs.current.sliderImages = el)} style={{ color: 'red' }}>{errors.sliderImages.message}</p>}
+                                    {activeErrors.sliderImages && <p ref={(el: any) => (errorRefs.current.sliderImages = el)} style={{ color: 'red' }}>{activeErrors.sliderImages.message}</p>}
                                 </div>
 
                                 {/* Deskto preview images */}
@@ -957,7 +1078,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                         <div className='p-2 md:p-5 border border-neutral-400 border-dashed rounded-md'>
                                             <Controller
                                                 name="previewImages"
-                                                control={control}
+                                                control={activeControl}
                                                 rules={{ required: false }}
                                                 render={({ field: { onChange, value = [] } }) => (
                                                     <FileUpload
@@ -971,7 +1092,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                         //   }}
                                                         onFileSelect={(file: any) => { onChange(file) }}
                                                         setDeleteAll={deleteAll}
-                                                        register={register}
+                                                        register={activeRegister}
                                                         type={type}
                                                         supportedfiles="jpg,png,jpeg"
                                                         multiple={true}
@@ -982,7 +1103,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                 )}
                                             />
                                         </div>
-                                        {errors.previewImages && <p ref={errorRef} style={{ color: 'red' }}>{errors.previewImages.message}</p>}
+                                        {activeErrors.previewImages && <p ref={errorRef} style={{ color: 'red' }}>{activeErrors.previewImages.message}</p>}
                                     </div>
                                 }
 
@@ -993,14 +1114,14 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                     <div className='p-2 md:p-5 border border-neutral-400 border-dashed rounded-md'>
                                         <Controller
                                             name="previewMobileImages"
-                                            control={control}
+                                            control={activeControl}
                                             rules={{ required: false }}
                                             render={({ field: { onChange, value = [] } }) => (
                                                 <FileUpload
                                                     deleteimages={deleteimages}
                                                     setDeleteAll={deleteAll}
                                                     type={type}
-                                                    register={register}
+                                                    register={activeRegister}
                                                     name='previewMobileImages'
                                                     onFileSelect={(file: any) => { onChange(file) }}
                                                     supportedfiles="jpg,png,jpeg"
@@ -1012,7 +1133,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                             )}
                                         />
                                     </div>
-                                    {errors.previewMobileImages && <p ref={errorRef} style={{ color: 'red' }}>{errors.previewMobileImages.message}</p>}
+                                    {activeErrors.previewMobileImages && <p ref={errorRef} style={{ color: 'red' }}>{activeErrors.previewMobileImages.message}</p>}
                                 </div>
 
                                 {/* SEO tags and price component */}
@@ -1023,7 +1144,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                         </label>
                                         <Controller
                                             name="seoTags"
-                                            control={control}
+                                            control={activeControl}
                                             render={() => (
                                                 <>
                                                     <div className="flex flex-wrap items-center gap-2 mb-2 pt-3">
@@ -1069,21 +1190,21 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                             )}
                                         />
                                         <p className="text-xs pt-2">*Note: 5 keywords are allowed</p>
-                                        {errors.seoTags && (
-                                            <p ref={errorRef} style={{ color: 'red' }}>{errors.seoTags.message}</p>
+                                        {activeErrors.seoTags && (
+                                            <p ref={errorRef} style={{ color: 'red' }}>{activeErrors.seoTags.message}</p>
                                         )}
                                     </div>
 
 
                                     <div className='pt-5'>
-                                        <StaticCheckBox onClick={() => { setStaticCheck(!staticcheck), setValue('isPaid', !staticcheck) }} checked={staticcheck} label='Paid' />
+                                        <StaticCheckBox onClick={() => { setStaticCheck(!staticcheck), activeSetValue('isPaid', !staticcheck) }} checked={staticcheck} label='Paid' />
                                         {
                                             (initialData?.isPaid || staticcheck) &&
                                             <div className='flex flex-col'>
                                                 <label className='text-xl font-semibold capitalize' htmlFor="price">price in dollar</label>
                                                 <Controller
                                                     name="price"
-                                                    control={control} // Make sure you have `control` passed from `useForm`
+                                                    control={activeControl} // Make sure you have `control` passed from `useForm`
                                                     render={({ field }) => (
                                                         <input
                                                             {...field} // This spreads the necessary props like onChange and value
@@ -1096,15 +1217,15 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                 />
 
                                                 {
-                                                    errors.price &&
-                                                    <p ref={errorRef} style={{ color: 'red' }}>{errors.price.message}</p>
+                                                    activeErrors.price &&
+                                                    <p ref={errorRef} style={{ color: 'red' }}>{activeErrors.price.message}</p>
                                                 }
 
                                             </div>
                                         }
                                     </div>
 
-                                    <div className='flex gap-6' >
+                                    {/* <div className='flex gap-6' >
                                         {
                                             loading || loader ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='py-3 mt-5' hideChild='hidden'  >
 
@@ -1113,9 +1234,38 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                             </Button>
                                         }
 
-                                        {/* <Button type='button' variant='secondary' className='py-3 mt-5' >
+                                        <Button type='button' variant='secondary' className='py-3 mt-5' >
                                             Draft Template
-                                        </Button> */}
+                                        </Button>
+
+                                    </div> */}
+
+                                    <div className='flex gap-6' >
+
+                                        {
+                                            loading || loader ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='py-3 mt-5' hideChild='hidden' >
+
+                                            </Button> : <Button type='submit' variant='primary' className='py-3 mt-5' >
+                                                upload
+                                            </Button>
+                                        }
+
+                                        {/* {
+                                            isDraft &&
+                                            <div onClick={handleSubmitDraft(draftsubmit)}  >
+                                                <Button
+                                                    type='button'
+                                                    variant='secondary'
+                                                    className='py-3 mt-5'
+                                                >
+                                                    Save as Draft
+                                                </Button>
+                                            </div>
+                                        }
+
+                                        <div onClick={() => setIsDraft(!isDraft)} className='cursor-pointer'>
+                                            change state
+                                        </div> */}
 
                                     </div>
                                 </div>

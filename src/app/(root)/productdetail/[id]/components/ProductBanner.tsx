@@ -21,8 +21,12 @@ import { ProductDetailProps, TechTemplate } from '@/types/type';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
-const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
+interface ProductBannertype {
+    template: TechTemplate
+    setActivetab: any
+}
 
+const ProductBanner = ({ template, setActivetab }: ProductBannertype) => {
 
     const [showFullDescription, setShowFullDescription] = useState(true);
     const [showPreviews, setShowPreviews] = useState<boolean>(false)
@@ -177,7 +181,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                     }}
                                     className=' text-[14px] md:text-[16px] font-normal leading-6 text-subparagraph'
                                 />
-                                <Link href="#description" className=" text-[14px] font-normal leading-5 text-primary-100">
+                                <Link onClick={() => setActivetab(0)} href="#description" className=" text-[14px] font-normal leading-5 text-primary-100">
                                     Read More
                                 </Link>
                                 <div className=' py-5 md:py-10 flex gap-2.5 md:gap-[18px] flex-col' >
@@ -197,9 +201,7 @@ const ProductBanner: React.FC<ProductDetailProps> = ({ template }) => {
                                     </div>
                                 </div>
                                 <Button onClick={openPopup} className='w-full mb-2.5 mt-5  md:mt-[30px] md:mb-5 justify-center py-2 md:py-[13px]' variant='primary' > Download </Button>
-
                                 <Button link={`/preview/${template?.id}`} className='w-full justify-center' variant='liquid' >Preview</Button>
-
                                 {
                                     isPopupOpen &&
                                     <DownloadTemplete poster={template.previewImages[0]?.imageUrl} tittle={template.title} isFirstPopupOpen={isFirstPopupOpen} setIsFirstPopupOpen={setIsFirstPopupOpen} id={template?.id} url={template?.sourceFiles} />
