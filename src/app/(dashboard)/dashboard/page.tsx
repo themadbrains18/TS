@@ -20,6 +20,8 @@ const page = async () => {
 
     return (
         <>
+        console.log("");
+        
             {/* <div className='flex items-center flex-col py-10 justify-between'>
                 <h2 className='text-4xl font-bold leading-10 text-center'>Welcome Template Studio</h2>
                 <div className='flex items-center gap-x-5 justify-center mt-5'>
