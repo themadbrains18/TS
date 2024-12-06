@@ -60,9 +60,6 @@ jobs:
     # - name: Compress files
     #   run: tar -czf deployment.tar.gz . test
 
-    # - name: Copy tarball to server
-    #   run: scp -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no deployment.tar.gz root@46.202.163.196:/var/www/templatestudio.ai
-
     # - name: Extract tarball on server test  
     #   run: |
     #     ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no root@46.202.163.196 'cd /var/www/templatestudio.ai && tar -xzf deployment.tar.gz && rm deployment.tar.gz'
