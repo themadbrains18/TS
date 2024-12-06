@@ -1,4 +1,4 @@
-name: Deploy to AWS EC2
+  name: Deploy to AWS EC2
 
 on:
   push:
@@ -84,4 +84,4 @@ jobs:
 
     - name: Deploy to AWS
       run: |
-        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no root@46.202.163.196 'cd /var/www/templatestudio.ai && rsync --exclude 'TsAPi' --exclude 'StagingApi' && npm install && npm run build && pm2 restart all' || exit 1
+        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no root@46.202.163.196 'cd /var/www/templatestudio.ai && rsync -av --exclude=TsAPi/ . /var/www/templatestudio.ai && --exclude=StagingApi/ . /var/www/templatestudio.ai && npm install && npm run build && pm2 restart all' || exit 1
