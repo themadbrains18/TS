@@ -144,7 +144,7 @@ const AddTemplate = () => {
               <table className="min-w-full border-collapse table-auto">
                 <thead>
                   <tr className="bg-gray-100">
-                    {templateheading.map((item, index) => (
+                    {templateheading?.map((item, index) => (
                       <Fragment key={index}>
                         <th className="text-nowrap px-6 py-5 text-left text-sm md:text-base font-semibold text-subheading capitalize">
                           {item.heading}

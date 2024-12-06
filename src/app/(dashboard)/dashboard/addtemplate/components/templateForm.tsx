@@ -179,23 +179,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     const activeControl = isDraft ? controlDraft : control;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * Handle template dropdown selection
      */
@@ -209,13 +192,14 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         }
     };
 
+
     /**
      * Handle category dropdown selection
      */
-
     const handleCategorySelect = (value: string) => {
         setCategoryValue(value);
     };
+
 
     // State to check if "Mobile" is selected
     const [isMobileSelected, setIsMobileSelected] = useState(false);
@@ -504,16 +488,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     };
 
 
-
-
-
-
-
-
-
-
-
-
     const onSubmit: SubmitHandler<FormDataObject> = async (data, status: any) => {
 
         console.log(data, "real data")
@@ -561,6 +535,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             }
         });
 
+        
         formData.delete("industry");
         formData.append('industry', data?.industry);
 
@@ -940,6 +915,37 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                     )}
                                 </div>
 
+
+                                {/* Title split in frontend */}
+                                {/* <div className='flex flex-col'>
+                                    <label className='text-xl font-semibold capitalize' htmlFor="name">Title</label>
+                                    <Controller
+                                        name="title"
+                                        control={activeControl}
+                                        defaultValue="" // Set default value
+                                        render={({ field }) => (
+                                            <input
+                                                {...field}
+                                                id='title'
+                                                type="text"
+                                                className='py-[18px] px-5 border border-neutral-400 rounded-md outline-none placeholder:text-neutral-400 bg-white'
+                                                placeholder='Template Name'
+                                                onChange={(e) => {
+                                                    const value = e.target.value;
+                                                    const [title, titleInfo] = value.split('-').map(str => str.trim());
+                                                    field.onChange(value); // Update the full value in the form state
+                                                    console.log("Title:", title || ""); // Save `title` part
+                                                    console.log("Title Information:", titleInfo || ""); // Save `title information` part
+                                                }}
+                                            />
+                                        )}
+                                    />
+                                    {activeErrors.title && (
+                                        <p ref={errorRef} style={{ color: 'red' }}>{activeErrors.title.message}</p>
+                                    )}
+                                </div> */}
+
+
                                 <div className='flex flex-col'>
                                     <label className='text-xl font-semibold capitalize' htmlFor="version">Version</label>
                                     <input
@@ -1005,7 +1011,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                     multiple={false}
                                                     id="1"
                                                     register={register}
-                                                    fileNameUrl={initialData?.sourceFiles ? initialData?.sourceFiles.map((img: any) => img.fileUrl) : []}
+                                                    fileNameUrl={initialData?.sourceFiles ? initialData?.sourceFiles?.map((img: any) => img.fileUrl) : []}
                                                     title='Upload Source File Here only 1'
                                                 />
                                             )}
@@ -1148,7 +1154,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                             render={() => (
                                                 <>
                                                     <div className="flex flex-wrap items-center gap-2 mb-2 pt-3">
-                                                        {tags && tags.length > 0 && tags.map((tag, index) => (
+                                                        {tags && tags?.length > 0 && tags?.map((tag, index) => (
                                                             <span
                                                                 key={index}
                                                                 className="bg-blue-100 text-blue-700 px-2 py-1 rounded-md flex items-center"
@@ -1164,7 +1170,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                             </span>
                                                         ))}
                                                     </div>
-
                                                     <div className="flex items-center gap-2 flex-col ">
                                                         <input
                                                             id="seoTags"
