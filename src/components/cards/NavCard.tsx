@@ -28,7 +28,7 @@ const NavCard: React.FC<navcardprops> = ({
   image,
   title,
   data,
-  classname, classnamemain, themeicon
+  classname, classnamemain, themeicon, slug
 }) => {
   const [imgSrc, setImgSrc] = useState(image ? image : '/images/featureimg.png');
   /**
@@ -52,7 +52,7 @@ const NavCard: React.FC<navcardprops> = ({
               className="  w-full h-auto object-cover"
             />
           </div>
-          <Link href={`/productdetail/${id}`} >
+          <Link href={`/product/${slug}`} >
             <div className="group">
               <div className="absolute group-hover/item:bg-[#28204699] max-[500px]:bg-[#28204699] transition-all duration-[0.5s] top-0 right-0 left-0 bottom-0 flex justify-center items-center">
                 <p className="text-white group-hover/item:opacity-100 sm:opacity-0 duration-[0.5s] leading-5 font-semibold capitalize relative z-10">

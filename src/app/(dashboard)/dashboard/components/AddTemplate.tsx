@@ -85,7 +85,7 @@ const AddTemplate = () => {
     try {
       await fetchData(`/templates/${id}`, { method: 'DELETE' });
       // Optionally refetch templates after deletion
-      await fetchData(`/all-templates`, { method: "GET" });
+      await fetchData(`/all-templatesdashboard`, { method: "GET" });
     } catch (error) {
       console.log('Error deleting template:', error);
     }
@@ -157,13 +157,19 @@ const AddTemplate = () => {
                   {response?.templates && response?.templates.length > 0 ? (
                     <>
                       {response?.templates?.map((template: any, index: number) => (
-                        <tr key={index} className="hover:bg-gray-50">
+                        <tr key={index} className={`  ${template?.isdraft ? "bg-yellow-50 group hover:bg-yellow-100" : "hover:bg-gray-50"} `}>
                           <td className="px-6 py-5 text-sm  md:text-base text-subparagraph capitalize  md:max-w-full font-semibold">
                             {index + 1}
                           </td>
                           <td className="   px-6 py-5 text-sm  md:text-base text-subparagraph capitalize  md:max-w-full font-semibold">
                             <h2 className='max-w-[300px] truncate'>
+
                               {template.title}
+                              <span className={`  group-hover:text-red-400 text-yellow-700`} >
+                                {
+                                  template?.isdraft && `  (Draft)`
+                                }
+                              </span>
                             </h2>
                           </td>
                           <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">

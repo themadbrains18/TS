@@ -42,6 +42,7 @@ type Template = {
         id: string,
         profileImg: string
     }
+    slug: string
 };
 
 type ApiResponse = {
@@ -107,6 +108,7 @@ const PopularSection = () => {
                                                 currentimage={1}
                                                 totalimages={item.sliderImages?.length}
                                                 isPaid={true}
+                                                slug={item?.slug}
                                             />
                                         </Fragment>
                                     ))

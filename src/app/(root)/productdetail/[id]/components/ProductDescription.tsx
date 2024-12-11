@@ -84,7 +84,7 @@ const ProductDescription = ({ template, activetab, setActivetab }: ProductDescri
                         ))}
                     </div>
 
-                    <div className='tab-content  shadow-lg '>
+                    <div className='tab-content  border border-[#e8e8e8] rounded-[5px]'>
                         {renderTabContent()} {/* Only render the active tab content */}
                     </div>
                 </div>

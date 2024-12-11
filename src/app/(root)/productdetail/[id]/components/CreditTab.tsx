@@ -32,7 +32,6 @@ interface CreditsProps {
 }
 
 const CreditTab: React.FC<CreditsProps> = ({ credits }) => {
-    console.log(credits, "creditscredits")
 
     return (
         <>
@@ -52,7 +51,7 @@ const CreditTab: React.FC<CreditsProps> = ({ credits }) => {
                                 <div className="grid md:grid-cols-2 grid-cols-1 mb-[10px] pb-[10px] md:pb-5 md:mb-5 border-b border-divider-200 list-disc list-outside">
                                     {credit && credit?.fonts[0]?.name !== "" && (
                                         <div>
-                                            <h3 className="text-subparagraph leading-6 mb-5 text-sm tab:text-base">Fonts Used</h3>
+                                            <h3 className=" text-subparagraph leading-6 mb-5 text-sm tab:text-base font-medium ">Fonts Used</h3>
                                             <ul className='list-disc list-outside marker:text-[#5D5775]' >
                                                 {credit?.fonts?.map((font, fontIndex) => (
                                                     <li key={fontIndex} className=" group relative text-xs tab:text-[16px] leading-5 text-[#1496F5] cursor-pointer ">
@@ -66,7 +65,7 @@ const CreditTab: React.FC<CreditsProps> = ({ credits }) => {
                                     )}
                                     {credit?.icons[0]?.name !== "" && (
                                         <div>
-                                            <h3 className="text-subparagraph leading-6 mb-5 text-sm tab:text-base">Icons Used</h3>
+                                            <h3 className="text-subparagraph leading-6 mb-5 text-sm tab:text-base font-medium ">Icons Used</h3>
                                             <ul className='list-disc list-outside  marker:text-[#5D5775]' >
                                                 {credit?.icons?.map((icon, iconIndex) => (
                                                     <li key={iconIndex} className="text-xs tab:text-[16px] leading-5 text-[#1496F5]   cursor-pointer ">
@@ -82,7 +81,7 @@ const CreditTab: React.FC<CreditsProps> = ({ credits }) => {
                                 <div className="grid md:grid-cols-2 grid-cols-1">
                                     {credit.images[0]?.name !== "" && (
                                         <div>
-                                            <h3 className="text-subparagraph leading-6 mb-5 text-sm tab:text-base">Images Used</h3>
+                                            <h3 className="text-subparagraph leading-6 mb-5 text-sm tab:text-base font-medium ">Images Used</h3>
                                             <ul className='list-disc list-outside marker:text-[#5D5775]' >
                                                 {credit?.images?.map((image, imageIndex) => (
                                                     <li key={imageIndex} className="text-xs tab:text-[16px] leading-5 text-[#1496F5]   cursor-pointer ">
@@ -96,7 +95,7 @@ const CreditTab: React.FC<CreditsProps> = ({ credits }) => {
                                     )}
                                     {credit.illustrations[0]?.name !== "" && (
                                         <div>
-                                            <h3 className="text-subparagraph leading-6 mb-5 text-sm tab:text-base">Illustrations Used</h3>
+                                            <h3 className="text-subparagraph leading-6 mb-5 text-sm tab:text-base font-medium ">Illustrations Used</h3>
                                             <ul className='list-disc list-outside marker:text-[#5D5775] ' >
                                                 {credit?.illustrations?.map((illustration, illustrationIndex) => (
                                                     <li key={illustrationIndex} className="text-xs tab:text-[16px] leading-5 text-[#1496F5]  cursor-pointer ">

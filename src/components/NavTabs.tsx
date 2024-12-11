@@ -7,14 +7,13 @@ import { navtabprops, subCat, TechTemplate, TemplateResponse } from "@/types/typ
 import { useSearchParams } from "next/navigation";
 import useFetch from "@/hooks/useFetch";
 
+
 /**
  * NavTabs component displays a set of navigation tabs for product categories.
  * It allows users to select a tab and view related products.
  *
  * @returns {JSX.Element} The rendered NavTabs component.
  */
-
-
 
 
 const NavTabs: React.FC<navtabprops> = ({ subCat, setSidebar, classname }) => {
@@ -116,6 +115,7 @@ const NavTabs: React.FC<navtabprops> = ({ subCat, setSidebar, classname }) => {
                       icon="/icons/figma.svg"
                       themeicon={item?.softwareType?.name}
                       classnamemain="md:min-w-[248px] w-[148px]"
+                      slug={item?.slug}
                     />
                   </Fragment>
                 ))

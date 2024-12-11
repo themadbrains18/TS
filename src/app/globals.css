@@ -27,7 +27,10 @@
    min-height: 200px !important;
   }
 
-
+  ::selection {
+    color: #F2EEFE;
+    background: #AD54F2;
+  }
 
   /* banner animation css */
 

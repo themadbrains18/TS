@@ -38,6 +38,7 @@ const RelatedProducts = () => {
                                                 currentimage={1}
                                                 totalimages={item?.sliderImages?.length}
                                                 isPaid={item?.isPaid}
+                                                slug={item?.slug}
                                             />
                                         </Fragment>
                                     ))

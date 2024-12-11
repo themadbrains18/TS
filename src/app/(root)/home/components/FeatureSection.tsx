@@ -32,6 +32,7 @@ type Template = {
         id: string,
         profileImg: string
     }
+    slug: string
 };
 
 type ApiResponse = {
@@ -88,6 +89,7 @@ const FeatureSection = () => {
                                             poster={item?.sliderImages[0]?.imageUrl}
                                             totalimages={item?.sliderImages?.length}
                                             isPaid={true}
+                                            slug={item?.slug}
                                         />
                                     </Fragment>
                                 )

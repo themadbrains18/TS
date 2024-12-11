@@ -99,6 +99,7 @@ const AuthorTab: React.FC<UserDetailProps> = ({ userDetail }) => {
                   icon="/icons/figma.svg"
                   themeicon={item?.softwareType?.name}
                   classname='w-[218px]'
+                  slug={item?.slug}
                 />
               </Fragment>
             ))}

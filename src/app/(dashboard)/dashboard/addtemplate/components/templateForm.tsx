@@ -19,11 +19,11 @@ import { toast } from 'react-toastify';
 import Link from 'next/link';
 import Image from 'next/image';
 import NotFound from '@/app/not-found';
-import { any } from 'zod';
 
 /**
  * Define types for data structures
  */
+
 export interface TemplateType {
     id: string;
     name: string;
@@ -39,6 +39,7 @@ interface Font {
     name: string;
     url: string;
 }
+
 interface FormData {
     title: string;
     version: string;
@@ -58,8 +59,10 @@ interface FormData {
     industry: string
     techDetails: string[]
     isPaid: boolean
+    metatitle: string,
+    slug: string,
+    metadescription: string
 }
-
 
 interface Font {
     name: string;
@@ -149,7 +152,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     // upload 
     const { register, handleSubmit, control, formState: { errors }, setValue, clearErrors, setError, getValues } = useForm<FormData>({
         defaultValues: { ...initialData, seoTags: [] },
-        resolver: zodResolver(type == "create" ? uploadTemplateSchema : uploadTemplateUpdateSchema)
+        resolver: zodResolver(type == "create" ? uploadTemplateSchema : uploadTemplateUpdateSchema),
+        mode: "onChange",
     });
 
     // Form for Draft (without validation)
@@ -430,68 +434,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     }
 
 
-    // draft data
-
-    const draftsubmit = async (data: any) => {
-
-        console.log(data, "dataF")
-
-        try {
-            const formData = new FormData();
-
-            // Append form fields to FormData
-            Object.entries(data).forEach(([key, value]) => {
-                if (Array.isArray(value)) {
-                    value.forEach((item) => formData.append(key, item));
-                } else {
-                    formData.append(key, value);
-                }
-            });
-
-            formData.delete("industry");
-            formData.append('industry', data?.industry);
-
-            const credits = [
-                {
-                    fonts: fonts?.map(font => ({ name: font.name, url: font.url })),
-                    images: images?.map(image => ({ name: image.name, url: image.url })),
-                    icons: icons?.map(icon => ({ name: icon.name, url: icon.url })),
-                    illustrations: illustrations?.map(illustration => ({ name: illustration.name, url: illustration.url })),
-                }
-            ];
-            formData.append("credits", JSON.stringify(credits));
-
-
-            // Send the request
-            const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/drafttemplates`, {
-                method: "POST", // Assuming POST for drafts
-                body: formData,
-                headers: {
-                    Authorization: `Bearer ${session?.token}`,
-                    "ngrok-skip-browser-warning": "true",
-                },
-            });
-
-            // Handle response
-            const result = await response.json();
-
-            if (!response.ok) {
-                toast.error(result.message || "Failed to save draft", { autoClose: 1500 });
-            } else {
-                toast.success(result.message || "Draft saved successfully", { autoClose: 1500 });
-                router.push("/dashboard");
-            }
-        } catch (error) {
-            console.error("An error occurred while saving draft:", error);
-            toast.error("An unexpected error occurred.", { autoClose: 1500 });
-        }
-    };
-
-
     const onSubmit: SubmitHandler<FormDataObject> = async (data, status: any) => {
-
-        console.log(data, "real data")
-
 
         if (type == "edit") {
             editimagedata?.map((item) => {
@@ -535,7 +478,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             }
         });
 
-        
+
         formData.delete("industry");
         formData.append('industry', data?.industry);
 
@@ -555,6 +498,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         if (status === "DRAFT") {
             formData.append("status", status);
         }
+
 
 
         const endpoint = type === 'edit'
@@ -659,8 +603,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         activeSetValue('seoTags', updatedTags); // Update the form value as an array
     };
 
-
-
     const [otherIndustry, setOtherIndustry] = useState<string>();
 
     const handleInputChangeindustryvalue = (e: any) => {
@@ -714,6 +656,75 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         }
     }, [loader])
 
+
+
+    const [draft, setdraftloader] = useState(false)
+
+    // save as draft option 2
+    const handleSaveAsDraft = async () => {
+        try {
+            setdraftloader(true)
+            // Step 1: Get Draft Data
+            const draftData = getValues();
+
+            // Step 2: Initialize FormData
+            const formData = new FormData();
+
+            // Step 3: Populate FormData with draftData
+            Object.entries(draftData).forEach(([key, value]) => {
+                if (Array.isArray(value)) {
+                    value.forEach((item) => formData.append(key, item));
+                } else {
+                    formData.append(key, value);
+                }
+            });
+
+            // Step 4: Handle special case for "industry"
+            formData.delete("industry");
+            formData.append('industry', draftData?.industry);
+
+            // Step 5: Construct and append "credits"
+            const credits = [
+                {
+                    fonts: fonts?.map(font => ({ name: font.name, url: font.url })),
+                    images: images?.map(image => ({ name: image.name, url: image.url })),
+                    icons: icons?.map(icon => ({ name: icon.name, url: icon.url })),
+                    illustrations: illustrations?.map(illustration => ({ name: illustration.name, url: illustration.url })),
+                }
+            ];
+
+            formData.append("credits", JSON.stringify(credits));
+
+            // Step 6: Make API call
+            const response = await fetch(`${process?.env?.NEXT_PUBLIC_APIURL}/draftemplate`, {
+                method: 'POST', // Or another method depending on your API
+                body: formData,
+                headers: {
+                    'Authorization': `Bearer ${session?.token}`,
+                    'ngrok-skip-browser-warning': 'true',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to save draft: ${response.statusText}`);
+            }
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                toast.error(result.message, { autoClose: 1500 });
+                setdraftloader(false);
+            } else {
+                toast.success(result.message, { autoClose: 1500 });
+                router.push('/dashboard');
+            }
+
+        } catch (error) {
+            console.error("Error saving draft:", error);
+        }
+    };
+
+
     return (
         <>
 
@@ -727,6 +738,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             )}
 
             <section className='pb-10 md:pb-20'>
+
                 <div className='py-10 border-b border-divider-200 bg-[#ffffff80]' >
                     <div className="container">
                         <div className='flex justify-between items-center' >
@@ -1142,6 +1154,54 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                     {activeErrors.previewMobileImages && <p ref={errorRef} style={{ color: 'red' }}>{activeErrors.previewMobileImages.message}</p>}
                                 </div>
 
+                                {/* meta info */}
+                                <div className='pt-5' >
+                                    <label >
+                                        Meta Title
+                                    </label>
+                                    <input
+                                        id="metaTitle"
+                                        {...activeRegister("metatitle")}
+                                        className="w-full border px-2 py-3  rounded mt-1 outline-none"
+                                        placeholder="Enter meta title"
+                                    />
+                                    {activeErrors?.metatitle && (
+                                        <p ref={errorRef} className="text-red-500 text-sm mt-1">{activeErrors?.metatitle.message}</p>
+                                    )}
+                                </div>
+
+                                <div className='pt-5' >
+                                    <label htmlFor="metaDescription" className="block font-medium">
+                                        Meta Description
+                                    </label>
+                                    <textarea
+                                        id="metaDescription"
+                                        {...activeRegister("metadescription")}
+                                        className=" h-[200px] w-full border px-2 py-3  rounded mt-1 outline-none"
+                                        placeholder="Enter meta description"
+                                    />
+                                    {activeErrors?.metadescription && (
+                                        <p ref={errorRef} className="text-red-500 text-sm mt-1">{activeErrors.metadescription.message}</p>
+                                    )}
+                                </div>
+
+                                <div className='pt-5' >
+                                    <label htmlFor="slug" className="block font-medium">
+                                        Slug
+                                    </label>
+                                    <input
+                                        id="slug"
+                                        {...activeRegister("slug")}
+                                        className="w-full border px-2 py-3 rounded mt-1 outline-none"
+                                        placeholder="Enter slug"
+                                    />
+                                    {activeErrors?.slug && (
+                                        <p ref={errorRef} className="text-red-500 text-sm mt-1">{activeErrors.slug.message}</p>
+                                    )}
+                                </div>
+
+                                {/* meta info */}
+
                                 {/* SEO tags and price component */}
                                 <div className='mt-5'>
                                     <div className="flex flex-col">
@@ -1238,15 +1298,12 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                 upload
                                             </Button>
                                         }
-
                                         <Button type='button' variant='secondary' className='py-3 mt-5' >
                                             Draft Template
                                         </Button>
-
                                     </div> */}
 
                                     <div className='flex gap-6' >
-
                                         {
                                             loading || loader ? <Button disabled type='submit' loadingbtn={true} iconClass='w-7 h-7' variant='primary' className='py-3 mt-5' hideChild='hidden' >
 
@@ -1254,6 +1311,10 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                                 upload
                                             </Button>
                                         }
+
+                                        <button type="button" onClick={handleSaveAsDraft}>
+                                            Save as Draft
+                                        </button>
 
                                         {/* {
                                             isDraft &&
@@ -1271,7 +1332,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                                         <div onClick={() => setIsDraft(!isDraft)} className='cursor-pointer'>
                                             change state
                                         </div> */}
-
                                     </div>
                                 </div>
                             </div>

@@ -220,6 +220,7 @@ const ProductMain = () => {
                                                             currentimage={1}
                                                             totalimages={item?.sliderImages?.length}
                                                             isPaid={true}
+                                                            slug={item?.slug}
                                                         />
                                                     </Fragment>
                                                 </>

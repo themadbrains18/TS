@@ -7,7 +7,7 @@ import Button from '../ui/Button'
 import Link from 'next/link'
 
 
-const FeatureCard: React.FC<featurecardprops> = ({ id, buttonprops, category, currentimage, poster, themeicon, title, totalimages, uploadericon, uploadername, isPaid }) => {
+const FeatureCard: React.FC<featurecardprops> = ({ id, slug, buttonprops, category, currentimage, poster, themeicon, title, totalimages, uploadericon, uploadername, isPaid }) => {
 
     const [imgSrc, setImgSrc] = useState(poster ? poster : '/images/featureimg.png');
 
@@ -30,7 +30,7 @@ const FeatureCard: React.FC<featurecardprops> = ({ id, buttonprops, category, cu
                         alt='productimg'
                     />
 
-                    <Link href={`/productdetail/${id}`}>
+                    <Link href={`/product/${slug}`}>
                         <div className='absolute top-0 right-0 left-0 bottom-0 group-hover:bg-[#28204699]  max-[500px]:bg-[#28204699] transition-all duration-[0.5s] flex items-center justify-center gap-x-1 cursor-pointer'>
                             <div className='flex items-center justify-center cursor-pointer z-10 group-hover:opacity-100 sm:opacity-0 duration-[0.5s]'>
                                 <h3 className='capitalize text-white text-lg font-bold leading-7'>view details</h3>
@@ -69,7 +69,7 @@ const FeatureCard: React.FC<featurecardprops> = ({ id, buttonprops, category, cu
                     </div>
                     <div className='flex items-center justify-between bg-white p-[10px] md:px-5 md:py-3'>
                         <div className='flex items-center gap-x-2'>
-                            <Image src={`${uploadericon ? uploadericon : '/icons/mdb.svg'}`} width={20} height={20} alt='uploadericon' />
+                            <Image className='w-5 h-5 object-cover rounded-full ' src={`${uploadericon ? uploadericon : '/icons/mdb.svg'}`} width={20} height={20} alt='uploadericon' />
                             <p className='text-subparagraph text-xs leading-5 capitalize text-nowrap text-ellipsis overflow-hidden flex'>
                                 <span className='text-subheading pr-[4px] '>by </span>
                                 <span className='text-xs text-subheading font-semibold leading-5 capitalize  pr-[6px]'>{uploadername ? uploadername : "The Mad Brains"}</span>
@@ -87,7 +87,7 @@ const FeatureCard: React.FC<featurecardprops> = ({ id, buttonprops, category, cu
                                 </>)
                                 : (
                                     <>
-                                        <span className='md:text-[14px] text-[12px] font-semibold leading-5'>{"Free"}</span>
+                                        <span className='md:text-[14px] text-[12px] font-semibold leading-5'>{"Free Download"}</span>
                                     </>
                                 )
                             }

@@ -63,7 +63,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
     };
 
     const { data: response, loading, fetchData } = useFetch<any>();
-    const { data: userresponse, loading : userloading, fetchData : getuser } = useFetch<any>();
+    const { data: userresponse, loading: userloading, fetchData: getuser } = useFetch<any>();
 
     // const { data: imagersponse, loading:imageloading, fetchData:fetchimage } = useFetch<any>();
     const { error: deleteerror, loading: deleteloading, fetchData: deleteuser } = useFetch<any>();
@@ -280,7 +280,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                 <div className=' flex items-end justify-between'>
                                     <div className='relative max-w-[115px] md:max-w-[168px] w-full h-[116px] md:h-[168px] '>
                                         <Image
-                                            className='rounded-full h-[116px] md:h-[168px] '
+                                            className='rounded-full h-[116px] md:h-[168px]  object-cover'
                                             src={profileImage}
                                             height={168}
                                             width={168}
@@ -380,9 +380,11 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                                     </Button>
                                             }
                                         </div>
+
                                         {
                                             phoneNumberError && <p className='text-red-500'> {phoneNumberError}</p>
                                         }
+
                                     </div>
 
                                     <div className='flex items-end gap-x-[10px]'>
@@ -395,8 +397,8 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                             type='email'
                                             value={session?.email}
                                         />
+                                        
                                         {
-
                                             <Button
                                                 hideChild='hidden md:block'
                                                 direction='flex-row-reverse gap-x-[10px]'
@@ -412,12 +414,14 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                                 edit
                                             </Button>
                                         }
+
                                     </div>
 
                                     <div className='py-[18px] px-5 border border-divider-100 flex items-center justify-between'>
                                         <h3 className='text-neutral-900 font-semibold capitalize leading-6'>Daily Download Balance :</h3>
                                         <p className='text-neutral-900 font-semibold capitalize leading-6'>{userData?.user?.freeDownloads || 0}</p>
                                     </div>
+
                                 </div>
                             </div>
                         </div>

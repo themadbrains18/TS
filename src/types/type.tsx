@@ -16,8 +16,9 @@ export interface navcardprops {
   imageclass?: string; // Additional CSS classes for the image
   classname?: string; // CSS class for the card container
   classnamemain?: string; // Main CSS class for the card container
-  data?:TechTemplate;
+  data?: TechTemplate;
   themeicon?: string; // Icon for the theme
+  slug: string
 
 }
 
@@ -68,7 +69,7 @@ export interface navtabprops {
   mainclass?: string; // Main CSS class
   searchresults?: string; // Search result content
   resinputoff?: () => void; // Function to disable input
-  setSidebar?:() => void;
+  setSidebar?: () => void;
 }
 
 /**
@@ -121,6 +122,10 @@ export interface featurecardprops {
   totalimages?: number; // Total number of images in the feature
   currentimage?: number; // Currently displayed image index
   isPaid?: boolean; // Whether the feature is paid or free
+  slug?: string;
+  metatitle?: string;
+  metadesscription?: string;
+  seotag?: string[];
 }
 
 /**
@@ -327,6 +332,9 @@ export interface TechTemplate {
   subCategory: SubCategory; // Subcategory information
   templateType: SubCategory; // Template type information
   user: User; // User who created the template
+  slug: string;
+  metatitle?: string;
+  metadescription: string
 }
 
 /**
@@ -399,7 +407,7 @@ export interface Industry {
 interface User {
   name: string; // User's name
   id?: string; // User's ID
-  profileImg?:string
+  profileImg?: string
 }
 
 /**

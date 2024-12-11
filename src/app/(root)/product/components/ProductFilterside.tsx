@@ -63,7 +63,7 @@ const ProductFilterside = ({ items, setItems, closefilter, setSelectedFilters }:
             <div className='overflow-y-scroll  h-[calc(100%_-_100px)] custom-scrollbar-horizon   ' >
                 {filterData?.map((filterSection, index) => (
                     <Accordion
-                        key={index}
+                        key={index + Date.now() + "filterSection"}
                         title={filterSection?.title}
                         isOpen={openIndexes.includes(index)}
                         onToggle={() => toggleAccordion(index)}
@@ -74,7 +74,7 @@ const ProductFilterside = ({ items, setItems, closefilter, setSelectedFilters }:
                             {filterSection && filterSection?.items?.map((item, itemIndex) => (
                                 <div className='md:pl-5 md:pr-2  py-[5px]' >
                                     <CheckboxFilter
-                                        key={itemIndex}
+                                        key={itemIndex + Date.now() + "filterSection"}
                                         value={item?.name}
                                         id={`${item?.id},${filterSection?.title},${item?.name}`}
                                         setItems={setItems}
