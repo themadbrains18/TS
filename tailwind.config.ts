@@ -87,6 +87,7 @@ const config: Config = {
     },
 
     keyframes: {
+
       spinCustom: {
         '0%': { transform: 'rotate(0deg)' },
         '50%': { transform: 'rotate(180deg)' },
@@ -131,10 +132,13 @@ const config: Config = {
         "100%": { transform: "scale(1)", opacity: "1" },
       },
 
+      // zoom out  
       zoomOut: {
         '0%': { transform: 'scale(1)', opacity: '1' },
         '100%': { transform: 'scale(2)', opacity: '0.5' },
       },
+
+      
     }
 
   },

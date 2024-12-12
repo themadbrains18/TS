@@ -103,12 +103,11 @@ const AddTemplate = () => {
     // if (value === "") {
     //   fetchTemplates()
     // }
-    await fetchData(`/templates/search?query=${value}`)
+    await fetchData(`/templateswithdraft/search?query=${value}`)
   }
 
 
-
-  return (
+  return (      
     <>
       <section className="py-5">
         {isPopupOpen && (

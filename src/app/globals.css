@@ -200,6 +200,9 @@
   @apply text-sm tab:text-lg text-subheading leading-7 font-semibold  
 }
   
+.fade_in_up {
+  @apply opacity-0 transition-all duration-700 translate-y-5;
+}
 
 
 }

@@ -567,7 +567,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                             variant='primary'
                                             className='w-[200px] justify-center'
                                         >
-                                            author
+                                            submit
                                         </Button>
                                     </div>
                                 }

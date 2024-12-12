@@ -21,6 +21,7 @@ export default function customerLayout({
     }>) {
     return (
         <>
+          
             <DownloadProvider>
                 <Header />
                 <div className="lg:pt-[130px] pt-[68px]">
