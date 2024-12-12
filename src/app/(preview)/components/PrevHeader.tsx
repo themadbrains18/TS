@@ -15,7 +15,7 @@ const PrevHeader = () => {
     };
 
     return (
-        <div className='bg-bgcolor border-b border-divider-100 backdrop:blur-xl sticky top-0 z-20'>
+        <div className='bg-[#F2EEFE] border-b border-divider-100 backdrop:blur-xl sticky top-0 z-20'>
             <div className='container'>
                 <div className='py-[30px] flex flex-col md:flex-row justify-center gap-y-5 md:gap-0 md:justify-between items-center'>
                     <div>

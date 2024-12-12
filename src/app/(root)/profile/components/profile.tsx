@@ -35,28 +35,19 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
     const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
     const [profileImage, setProfileImage] = useState<string>(userData?.user?.profileImg || "/images/userdummy.png");
     const [name, setName] = useState(userData?.user ? userData?.user?.name : '');
-
-
-
     const [isDeletepopup, setisDeletepopup] = useState<boolean>(false);
     const [isDeleteUSer, setIsDeleteUser] = useState<boolean>(false);
     const [nameError, setNameeror] = useState<string>();
     const [number, setNumber] = useState(userData?.user ? userData?.user.number : '');
     const [phoneNumberError, setPhoneNumberError] = useState<string>();
     const { fetchDailyDownloads } = useDownload()
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
 
     const closePopup = () => {
         setIsPopupOpen(false);
         setisDeletepopup(false);
     }
-
-    // const namedit = () => {
-    //     if (!isNameDisabled)
-    //         setName(userData?.user ? userData?.user?.name : '')
-    //     else {
-    //         setName('')
-    //     }
-    // }
 
     const openPopup = () => {
         setIsPopupOpen(true);
@@ -69,9 +60,103 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
     const { error: deleteerror, loading: deleteloading, fetchData: deleteuser } = useFetch<any>();
     const { loading: updateLoading, fetchData: updateFetchData } = useFetch<any>();
     const { loading: updateloadingNumber, fetchData: updateNumber } = useFetch<any>();
+    const { data: responseauthor, loading: authorloading, fetchData: authorapi } = useFetch<any>();
+    console.log(responseauthor, "responseauthorresponseauthorresponseauthor")
     const { fetchData: updatePassword } = useFetch<any>();
 
 
+    /**
+     * Author Info Management
+     *
+     * This code manages author information input, validation, and submission. It includes state management,
+     * input handling, validation, and API interaction for updating author details.
+     */
+
+
+    // Author info state management ================================================================
+    const [authorinfo, setAuthorinfo] = useState({
+        authortitle: "", // Stores the title of the author
+        authordesscription: "" // Stores the description of the author
+    });
+
+    const [authorerror, setAuthorerror] = useState<any>({
+        authortitle: "", // Error message for the author title field
+        authordesscription: "" // Error message for the author description field
+    });
+
+    /**
+     * Handles input changes for the author info form fields.
+     * Updates the state for authorinfo dynamically based on input name and value.
+     * Clears any existing error for the input field being edited.
+     * 
+     * @param {Object} e - The event object triggered by input change.
+     */
+
+    const handleInputauthor = (e: any) => {
+        const { name, value } = e.target;
+        setAuthorinfo((prev) => ({
+            ...prev,
+            [name]: value // Update the specific field dynamically
+        }));
+        setAuthorerror((pre: any) => ({
+            ...pre,
+            [name]: "" // Clear any existing error for the field
+        }));
+    };
+
+    /**
+     * Validates the author info fields to ensure all required fields are filled.
+     * Sets error messages for any missing fields.
+     * 
+     * @returns {boolean} - Returns true if all fields are valid, otherwise false.
+     */
+
+
+    const validateFields = () => {
+        const newErrors: { [key: string]: string } = {};
+        if (!authorinfo.authortitle.trim()) {
+            newErrors.authortitle = "Author title is required."; // Error for missing author title
+        }
+        if (!authorinfo.authordesscription.trim()) {
+            newErrors.authordesscription = "Author description is required."; // Error for missing description
+        }
+        setAuthorerror(newErrors);
+        return Object.keys(newErrors).length === 0; // Check if there are no errors
+    };
+
+
+    /**
+     * Handles the submission of the author info.
+     * Validates the fields and sends the data to the API endpoint if valid.
+     * Shows a loading indicator during the submission process.
+     * 
+     * @async
+     */
+
+    const handleauthorsubmit = async () => {
+        if (!validateFields()) {
+            return; // Exit if validation fails
+        }
+        try {
+            setIsSubmitting(true); // Set submitting state to true
+            await authorapi("/update-details", {
+                method: "PUT",
+                body: JSON.stringify(authorinfo), // Convert author info to JSON string
+                headers: {
+                    'Content-Type': 'application/json', // Set header for JSON content
+                },
+            });
+
+
+
+        } catch (error) {
+            console.error("Error in handleauthorsubmit:", error); // Log submission error
+        } finally {
+            setTimeout(() => {
+                setIsSubmitting(false); // Reset submitting state after a delay
+            }, 2100); // Delay for UI feedback
+        }
+    };
 
 
 
@@ -81,6 +166,8 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
      * 
      * @param event - The change event triggered by the input field when a user selects a file.
      */
+
+
 
     const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -155,6 +242,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
      *
      * @throws {Error} - If an error occurs during the phone number update operation, it will be logged to the console.
      */
+
     const handlePhonenumberUpdate = async () => {
         try {
 
@@ -181,6 +269,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                     'Content-Type': 'application/json',
                 },
             });
+
             setPhoneNumberError("")
         } catch (error) {
             console.error("Error updating number:", error);
@@ -195,6 +284,8 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
      *
      * @throws {Error} - If an error occurs during the password update operation, it will be logged to the console.
      */
+
+
     const handlepasswordUpdate = async () => {
         try {
             await updatePassword('/update-details', {
@@ -248,6 +339,18 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
             setuserInfo(response)
         }
     }, [response])
+    useEffect(() => {
+        if (responseauthor) {
+            setAuthorinfo({
+                authortitle: "", // Reset title to empty
+                authordesscription: "" // Reset description to empty
+            });
+            setAuthorerror({
+                authortitle: "", // Clear title error
+                authordesscription: "" // Clear description error
+            });
+        }
+    }, [responseauthor])
 
     useEffect(() => {
         if (nameError) {
@@ -397,7 +500,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                             type='email'
                                             value={session?.email}
                                         />
-                                        
+
                                         {
                                             <Button
                                                 hideChild='hidden md:block'
@@ -421,8 +524,54 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                         <h3 className='text-neutral-900 font-semibold capitalize leading-6'>Daily Download Balance :</h3>
                                         <p className='text-neutral-900 font-semibold capitalize leading-6'>{userData?.user?.freeDownloads || 0}</p>
                                     </div>
-
                                 </div>
+
+                                {
+                                    userData?.user?.role === "ADMIN" &&
+                                    <div className='mt-5 flex flex-col gap-y-4 lg:gap-y-[30px] pt-4 '>
+                                        <h2 className='text-[30px] text-subheading font-semibold' >Author Information</h2>
+
+                                        <div>
+                                            <label className={`font-openSans antialiased text-sm font-medium text-gray-700 mb-1 `}>
+                                                Author Title
+                                            </label>
+                                            <input
+                                                className='flex text-subparagraph w-full outline-none sm:text-sm placeholder:text-sm placeholder:leading-5 placeholder:text-neutral-400 py-3 md:py-[18px] px-5 bg-divider-100 placeholder:capitalize border border-divider-100'
+                                                placeholder='Author Title'
+                                                name='authortitle'
+                                                type='text'
+                                                onChange={(e) => handleInputauthor(e)}
+                                                value={authorinfo?.authortitle}
+                                            />
+                                            <p className='text-red-500'> {authorerror?.authortitle}</p>
+                                        </div>
+
+                                        <div>
+                                            <label className={`font-openSans antialiased text-sm font-medium text-gray-700 mb-1 `}>
+                                                Author Description
+                                            </label>
+                                            <input
+                                                className='flex text-subparagraph w-full outline-none sm:text-sm placeholder:text-sm placeholder:leading-5 placeholder:text-neutral-400 py-3 md:py-[18px] px-5 bg-divider-100 placeholder:capitalize border border-divider-100'
+                                                placeholder='Author Description'
+                                                name='authordesscription'
+                                                type='text'
+                                                value={authorinfo?.authordesscription}
+                                                onChange={(e) => handleInputauthor(e)}
+                                            />
+                                            <p className='text-red-500'> {authorerror?.authordesscription}</p>
+                                        </div>
+
+                                        <Button
+                                            disabled={authorloading || isSubmitting}
+                                            onClick={handleauthorsubmit}
+                                            variant='primary'
+                                            className='w-[200px] justify-center'
+                                        >
+                                            author
+                                        </Button>
+                                    </div>
+                                }
+
                             </div>
                         </div>
                         <div className='py-4 md:py-[50px] border-y border-[#D9D9D9] flex flex-col md:flex-row items-start md:items-end justify-between'>

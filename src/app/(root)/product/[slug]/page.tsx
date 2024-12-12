@@ -12,8 +12,7 @@ const page = async ({ params }: { params: Params }) => {
   const { slug } = params;
 
   const templateid = await TemplateFetcher(slug);
-  console.log(templateid,"==templateid");
-  
+
 
   let id = templateid
 
@@ -36,6 +35,7 @@ const page = async ({ params }: { params: Params }) => {
 
   // Parse the template data
   const template = await response.json();
+  // console.log(template, "templatetemplatetemplate")
 
 
   // Custom Spinner Component

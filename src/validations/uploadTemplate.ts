@@ -91,6 +91,7 @@ const isFileSizeValid = (file: any) => {
 
 const uploadTemplateBase = z.object({
   title: z.string().min(1, { message: "Enter template name" }).max(100),
+  titleinfo: z.string().optional().nullable(),
   templateTypeId: z.string().max(200, { message: "Select Template Type" }),
   subCategory: z.string().nullable().optional(),
   subCategoryId: z.string().max(200, { message: "Select Category" }),
@@ -106,7 +107,6 @@ const uploadTemplateBase = z.object({
     .max(5, { message: "Only 5 tags are allowed." }),
   isPaid: z.boolean().optional().default(false),
   price: z.string().optional(),
-
   metatitle: z
     .string()
     .min(5, "Meta title must be at least 5 characters long.")

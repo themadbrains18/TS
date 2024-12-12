@@ -49,6 +49,7 @@ const FeatureSection = () => {
         fetchData("/feature-templates");
     }, []);
 
+    
 
     useEffect(() => {
         if (response) {

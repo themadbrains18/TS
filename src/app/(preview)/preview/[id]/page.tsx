@@ -32,7 +32,6 @@ const Page = async ({ params }: { params: Params }) => {
     }
     const res = await response.json()
 
-
     return (
         <>
             <Previewcom previewImages={res?.previewImages} previewMobileImages={res?.previewMobileImages} />

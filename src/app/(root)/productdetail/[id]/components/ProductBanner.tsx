@@ -108,9 +108,11 @@ const ProductBanner = ({ template, setActivetab }: ProductBannertype) => {
                                     <div className="p-[10px]  md:p-5 h-full group overflow-hidden border border-divider-100">
                                         <div className="overflow-hidden relative h-full">
                                             <div className='absolute z-[1] top-0 left-0 right-0 bottom-0 group-hover:bg-[#28204699]  duration-[0.5s] cursor-pointer'>
-                                                <div className='w-full h-full flex justify-center items-center overflow-hidden  '>
-                                                    <Link href={`/preview/${template?.id}`} className='text-white text-[18px] font-bold leading-7 opacity-0 group-hover:opacity-100'>Preview</Link>
-                                                </div>
+                                                <Link href={`/preview/${template?.id}`} >
+                                                    <div className='w-full h-full flex justify-center items-center overflow-hidden  '>
+                                                        <span className='text-white text-[18px] font-bold leading-7 opacity-0 group-hover:opacity-100'>Preview</span>
+                                                    </div>
+                                                </Link>
                                             </div>
                                             <Image
                                                 src={`${activeImage || "/images/product1.png"}`}

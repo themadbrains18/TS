@@ -30,7 +30,7 @@ const AddTemplate = () => {
   const { data: response, loading, fetchData } = useFetch<Template>();
 
   const fetchTemplates = async () => {
-    await fetchData(`/all-templates`, { method: "GET" });
+    await fetchData(`/all-templatesdashboard`, { method: "GET" });
   };
   useEffect(() => {
 

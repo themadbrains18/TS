@@ -17,8 +17,10 @@ export default function preview({
     children: React.ReactNode;
 }>) {
     return <>
-    <PrevHeader/>
-    {children}
-    <PrevFooter/>
+        <PrevHeader />
+        <div className="bg-bgcolor" >
+            {children}
+        </div>
+        <PrevFooter />
     </>;
 }

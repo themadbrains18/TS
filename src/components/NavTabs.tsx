@@ -25,6 +25,7 @@ const NavTabs: React.FC<navtabprops> = ({ subCat, setSidebar, classname }) => {
   /**
    * useEffect Hook: This effect runs when either `searchParams` or `subCat` changes.
    */
+  
   useEffect(() => {
 
     const subCatId = searchParams.get('subcat');
@@ -38,6 +39,7 @@ const NavTabs: React.FC<navtabprops> = ({ subCat, setSidebar, classname }) => {
   /**
    * Handle the activation of a sub-category tab and fetch the corresponding templates.
    */
+
   const handleActive = (item: subCat | any, index: number) => {
     setActivetab(index)
     setSubCategory(item)

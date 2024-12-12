@@ -8,8 +8,9 @@ import ProductTags from './ProductTags';
 import useOnClickOutside from '@/hooks/useOnClickOutside';
 import Button from '@/components/ui/Button';
 import { useSearchParams } from 'next/navigation';
+
 import useFetch from '@/hooks/useFetch';
-// import NotFoundProduct from './NotFoundProduct';
+
 import { TechTemplate, TemplateResponse } from '@/types/type';
 import useDebounce from '@/hooks/useDebounce'; // Import the useDebounce hook
 import FeatureSkeleton from '@/components/skeletons/FeatureSkeleton';
@@ -99,9 +100,9 @@ const ProductMain = () => {
             if (sort) {
                 apiUrl += `&sortBy=${sort}`;
             }
-            const response = await fetch(apiUrl,{
-                headers:{
-                    'ngrok-skip-browser-warning':'true'
+            const response = await fetch(apiUrl, {
+                headers: {
+                    'ngrok-skip-browser-warning': 'true'
                 }
             });
             const data: TemplateResponse = await response.json();

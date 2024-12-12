@@ -408,6 +408,8 @@ interface User {
   name: string; // User's name
   id?: string; // User's ID
   profileImg?: string
+  authortitle?: string
+  authordesscription?: string
 }
 
 /**
