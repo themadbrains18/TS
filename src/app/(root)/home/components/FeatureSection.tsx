@@ -46,6 +46,9 @@ const FeatureSection = () => {
     const { data: response, error, loading, fetchData } = useFetch<ApiResponse>();
 
 
+
+    console.log(items, "itemsitemsitems")
+
     // Effect to fetch data when the component mounts
     useEffect(() => {
         fetchData("/feature-templates");

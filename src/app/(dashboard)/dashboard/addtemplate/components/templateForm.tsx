@@ -534,10 +534,6 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
     const onSubmit: SubmitHandler<FormDataObject> = async (data, status: any) => {
 
-
-
-
-
         if (type == "edit") {
             editimagedata?.map((item) => {
                 data[item?.imgName] = data[item?.imgName].filter((e: any) => e.id !== item?.imgId)
