@@ -31,14 +31,33 @@ const Page = () => {
     const [otpPath, setOtppath] = useState(false);
     const [formData, setFormData] = useState({});
 
+    /**
+ * State to indicate whether the form is currently being submitted.
+ */
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+
+    /**
+ * React Hook Form setup with Zod validation schema.
+ * @type {import('react-hook-form').UseFormReturn<FormData>}
+ */
     const { control, handleSubmit, formState: { errors } } = useForm<FormData>({
         resolver: zodResolver(signupSchema),
     });
 
+    /**
+  * Custom hook to fetch API data.
+  * @type {{ data: ApiResponse | undefined; loading: boolean; fetchData: Function; }}
+  */
     const { data: response, loading, fetchData } = useFetch<ApiResponse>();
 
+
+    /**
+ * Form submission handler.
+ * Sends form data to the "/register" endpoint.
+ * @param {FormData} data - The form data to be submitted.
+ * @returns {Promise<void>}
+ */
     const onSubmit: SubmitHandler<FormData> = async (data) => {
         if (isSubmitting) return;
         setIsSubmitting(true);
@@ -60,6 +79,11 @@ const Page = () => {
 
     };
 
+
+
+    /**
+ * Handler to reset OTP path state.
+ */
     const backstate = () => {
         setOtppath(false);
     };
@@ -68,6 +92,11 @@ const Page = () => {
         if (response?.otp) {
             setOtppath(true);
         }
+
+        /**
+     * Prevent default "Enter" key behavior.
+     * @param {KeyboardEvent} event - The keyboard event.
+     */
         const handleKeyDown = (event: KeyboardEvent) => {
             if (event.key === 'Enter') {
                 event.preventDefault(); // Disable default "Enter" behavior

@@ -50,6 +50,8 @@ const NavTabs: React.FC<navtabprops> = ({ subCat, setSidebar, classname }) => {
     fetchData(`/templates?templateTypeId=${subCat?.[0]?.templateTypeId}&subCatId=${subCat?.[0]?.id}&page=1&limit=4`, { next: { revalidate: 0 } })
   }, [])
 
+
+  
   return (
     <>
       {/* Tabs Section */}

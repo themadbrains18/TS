@@ -29,7 +29,7 @@ const TechnicalTab: React.FC<techDetailProps> = ({ technicalDetails }) => {
                             )
                         })}
 
-                        {technicalDetails.length % 2 !== 0
+                        {technicalDetails?.length % 2 !== 0
                             &&
                             <li className='text-sm md:text-base leading-6 py-5 border-b border-divider-200 list-none' >
                             </li>

@@ -69,14 +69,6 @@ const Page = async ({ params }: { params: Params }) => {
     <>
       <Suspense fallback={<CustomSpinner />}>
         <MainSection template={template} />
-        {/* <div>
-          <div className=' relative xl:after:h-full xl:after:w-full xl:after:absolute xl:after:top-0 xl:after:left-0 xl:after:bg-[url(/images/bgeffect.png)] after:z-[-1] ' >
-            <BreadCrumbs />
-            <ProductBanner template={template} />
-            <ProductDescription template={template} />
-          </div>
-          <RelatedProducts />
-        </div> */}
       </Suspense>
 
     </>

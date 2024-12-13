@@ -115,22 +115,48 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     const [technicalDetails, setTechnicalDetails] = useState(
         initialData?.techDetails?.length > 0 ? initialData?.techDetails : Array(4).fill("")
     );
+
+
     const { data: session } = useSession()
 
+
+    /**
+ * Renders a `NotFound` component if the type is "edit" and the initial data indicates the template is not found.
+ */
     if (type === "edit" && initialData?.error == "Template not found.") {
         return <NotFound />
     }
 
+
     /**
      * Dropdown selection states
      */
-
     const [selectedValue, setSelectedValue] = useState<string | null>(null);
     const [categoryValue, setCategoryValue] = useState<string | null>(null);
     const [staticcheck, setStaticCheck] = useState<boolean>(initialData?.isPaid || false);
     const [showSoftwareType, setShowSoftwareType] = useState('')
 
-    // upload 
+
+
+
+    /**
+  * React Hook Form initialization with Zod schema validation.
+  * 
+  * @type {import('react-hook-form').UseFormReturn<FormData>}
+  * @property {Function} register - Registers the input field to the form.
+  * @property {Function} handleSubmit - Handles the form submission process.
+  * @property {Function} control - Controls the form inputs (used for advanced features like custom components).
+  * @property {object} formState - Contains metadata about the form's state.
+  * @property {object} formState.errors - Contains validation errors for form fields.
+  * @property {Function} setValue - Dynamically sets the value of a form field.
+  * @property {Function} clearErrors - Clears specific or all errors in the form.
+  * @property {Function} setError - Sets a specific error message for a form field.
+  * @property {Function} getValues - Retrieves the current values of form fields.
+  * 
+  * @param {FormData} defaultValues - The initial default values for the form.
+  * @param {string} type - Specifies the form type ("create" or "update") to select the appropriate validation schema.
+  * @returns {UseFormReturn<FormData>} The initialized form instance.
+  */
     const { register, handleSubmit, control, formState: { errors }, setValue, clearErrors, setError, getValues } = useForm<FormData>({
         defaultValues: { ...initialData, seoTags: [] },
         resolver: zodResolver(type == "create" ? uploadTemplateSchema : uploadTemplateUpdateSchema),
@@ -139,9 +165,16 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
 
     /**
-     * Handle template dropdown selection
-     */
-
+  * Handles the selection of a template.
+  *
+  * @param {string} value - The ID of the selected template.
+  * @returns {void}
+  *
+  * @description
+  * - Updates the UI by setting the selected software type and value.
+  * - Sets the "templateTypeId" field in the form state.
+  * - Fetches sub-category data for the selected template using the provided endpoint.
+  */
     const handleTemplateSelect = (value: string) => {
         if (value) {
             setShowSoftwareType(value);
@@ -152,17 +185,29 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     };
 
 
+
     /**
-     * Handle category dropdown selection
-     */
+ * Handles the selection of a category by updating the category value state.
+ *
+ * @param {string} value - The selected category value.
+ */
     const handleCategorySelect = (value: string) => {
         setCategoryValue(value);
     };
 
 
-    // State to check if "Mobile" is selected
+    /**
+   * State to track if "Mobile" is selected.
+   * @type {boolean}
+   */
     const [isMobileSelected, setIsMobileSelected] = useState(false);
 
+
+    /**
+ * Handles changes in the selected category and updates the "Mobile" selection state.
+ *
+ * @param {any} value - The selected category ID or value.
+ */
     const handleSelectChange = (value: any) => {
         // Call the provided category select handler
         handleCategorySelect(value);
@@ -171,6 +216,14 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         setIsMobileSelected(isMobile);
     };
 
+
+
+
+    /**
+ * Fetches template types and industry types when the component mounts.
+ * 
+ * Dependencies: [fetchData, fetchIndustryData]
+ */
     useEffect(() => {
         fetchData(`/template-types`);
         fetchIndustryData(`/industry-type`);
@@ -178,6 +231,12 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
 
 
+
+    /**
+ * Populates the form with initial data and updates related states when initial data or industry data changes.
+ * 
+ * Dependencies: [initialData, industryData]
+ */
     useEffect(() => {
 
         if (initialData) {
@@ -210,19 +269,26 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
     }, [initialData, industryData])
 
-    /**
-     * Generalized function to add new input fields
-     */
 
+    /**
+    * Adds a new input field to the provided state array, either as an object or a string.
+    *
+    * @template T - The type of elements in the state array.
+    * @param {React.Dispatch<React.SetStateAction<T[]>>} setter - The state setter function to update the array.
+    * @param {T[]} values - The current array of values.
+    * @param {boolean} isObject - Determines whether the new field should be an object or a string.
+    */
     const addInputFields = <T,>(setter: React.Dispatch<React.SetStateAction<T[]>>, values: T[], isObject: boolean) => {
         const newValue = isObject ? { name: '', url: '' } : '';
         setter([...values, newValue as T]);
     };
 
+
     /**
-     * delete all images
-     *  
-     */
+ * Deletes all specified items by updating the state and clearing the form fields.
+ *
+ * @param {string[]} name - An array of field names to be cleared and added to the delete list.
+ */
 
     const deleteAll = (name: string[]) => {
         // Update deleteAllImages with new data
@@ -238,19 +304,34 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     };
 
 
-    /**
-     * Function to handle input field changes
-     */
 
+
+
+    /**
+ * Handles changes to an input field in an array of values by updating the specified index.
+ *
+ * @template T - The type of the values in the array.
+ * @param {React.Dispatch<React.SetStateAction<T[]>>} setter - The state setter function to update the array.
+ * @param {number} index - The index of the value to be updated.
+ * @param {T} value - The new value to set at the specified index.
+ * @param {T[]} values - The current array of values.
+ */
     const handleInputChange = <T,>(setter: React.Dispatch<React.SetStateAction<T[]>>, index: number, value: T, values: T[]) => {
         const newValues = [...values];
         newValues[index] = value;
         setter(newValues);
     };
 
+
+
+
     /**
-     * Function to remove input fields
-     */
+ * Removes an input field at the specified index from the given values array and updates the state.
+ *
+ * @param {React.Dispatch<React.SetStateAction<any[]>>} setter - The state setter function to update the array.
+ * @param {number} index - The index of the input field to be removed.
+ * @param {any[]} values - The current array of values.
+ */
 
     const removeInputField = (setter: any, index: number, values: any[]) => {
 
@@ -274,9 +355,17 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         }
     };
 
+
+
+
     /**
-     * Function to render input fields
-     */
+ * Renders a dynamic list of input fields for managing an array of items with "name" and "url" properties.
+ *
+ * @param {Font[]} items - The current array of items to render input fields for.
+ * @param {React.Dispatch<React.SetStateAction<Font[]>>} setter - The state setter function to update the array of items.
+ * @param {string} title - The title of the input group, used for placeholders and headings.
+ * @returns {JSX.Element} A JSX element containing the rendered input fields and controls.
+ */
 
     const renderInputFields = (items: Font[], setter: React.Dispatch<React.SetStateAction<Font[]>>, title: string) => (
         <div className='pb-3'>
@@ -322,6 +411,14 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
     );
 
 
+
+
+    /**
+ * Handles the deletion of an image by updating the edit state and removing it from the form values.
+ *
+ * @param {any} imgData - The data of the image to be deleted, including its `imgId` and `imgName`.
+ */
+
     const deleteimages = (imgData: any) => {
         setEditImageData((prevState: any) => {
             // Check if the data with the same id already exists in the state
@@ -342,6 +439,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
     };
 
+
+
     /**
      * Render technical details fields
      */
@@ -357,7 +456,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                             value={detail}
                             onChange={(e) => { handleInputChange(setTechnicalDetails, index, e.target.value, technicalDetails); setValue(`techDetails.${index}`, e.target.value); }}
                         />
-                        {technicalDetails.length > 4 && (
+                        {technicalDetails?.length > 4 && (
                             <button
                                 type='button'
                                 onClick={() => removeInputField(setTechnicalDetails, index, technicalDetails)}
@@ -376,6 +475,14 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
     const router = useRouter();
 
+
+
+
+    /**
+ * Manages error validation state and handles scrolling to the error message.
+ *
+ * @param {string | null} errorvalidaiton - The error message to display, if any.
+ */
     const [errorvalidaiton, seterrorvalidaiton] = useState<string | null>(null);
     const errorRef = useRef<HTMLDivElement | null>(null);
     useEffect(() => {
@@ -383,6 +490,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             errorRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     }, [errorvalidaiton]);
+
+
 
     interface FormDataObject {
         [key: string]: any; // Define a dynamic type for the form data fields
@@ -397,6 +506,14 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         title: initialData?.title || '', // Use initialData?.title if available, otherwise use an empty string
     });
 
+
+
+    /**
+ * Handles input changes by updating the corresponding field in the form data.
+ *
+ * @param {React.ChangeEvent<HTMLInputElement>} e - The change event from the input element.
+ */
+
     const handleInputChangee = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData((prev) => ({
@@ -404,6 +521,16 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             [name]: value, // Update the specific field dynamically
         }));
     };
+
+
+
+
+    /**
+ * Handles form submission, validation, and data processing for both create and edit operations.
+ *
+ * @param {FormDataObject} data - The form data object containing all input fields and values.
+ * @param {any} status - The current status or state associated with the form submission.
+ */
 
     const onSubmit: SubmitHandler<FormDataObject> = async (data, status: any) => {
 
@@ -547,6 +674,23 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         }
     };
 
+
+
+
+
+    /**
+ * Handles the editing of a template by sending a PUT request to update the template.
+ *
+ * @async
+ * @function editTemplate
+ * @description Sends a PUT request to the API to update the template data.
+ *              The function constructs the request URL using the template title,
+ *              sends the form data, and handles the API response.
+ * 
+ * @returns {Promise<void>} A Promise that resolves when the template is successfully edited, or rejects with an error.
+ * 
+ * @throws Will throw an error if the request fails or if the response is not successful.
+ */
     const editTemplate = async () => {
         if (type === "edit") {
             try {
@@ -566,8 +710,24 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             }
         }
     };
+
+
+
     useEffect(() => {
     }, [onSubmit, editTemplate])
+
+
+
+
+    /**
+ * Navigates the user back to the previous page in the browser history.
+ *
+ * @function goback
+ * @description Uses the `router.back()` method to navigate one step back in the browser history stack.
+ *              This is useful for users to return to the previous page without refreshing.
+ *
+ * @returns {void}
+ */
 
     const goback = () => {
         router?.back()
@@ -575,6 +735,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
 
     const [tags, setTags] = useState<string[]>(initialData?.seoTags || []);
     const [inputValue, setInputValue] = useState<string>('');
+
+
 
     // Function to handle keydown events (comma for desktop)
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -595,6 +757,8 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         }
     };
 
+
+
     // Function to add tag via button click (for mobile)
     const addTag = () => {
         const value = inputValue.trim();
@@ -606,12 +770,16 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
         }
     };
 
+
+
     // Function to remove a tag
     const removeTag = (index: number) => {
         const updatedTags = tags.filter((_, i) => i !== index);
         setTags(updatedTags);
         setValue('seoTags', updatedTags); // Update the form value as an array
     };
+
+
 
     const [otherIndustry, setOtherIndustry] = useState<string>();
 
@@ -667,6 +835,9 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             window.scrollTo(0, 0);
         }
     }, [loader])
+
+
+
 
     // save as draft option 2
     const handleSaveAsDraft = async () => {
@@ -744,7 +915,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
             {/* Loader Overlay */}
             {(loader || draft) && (
                 <div className="fixed inset-0  bg-[#28204699] flex items-center justify-center z-50">
-                    <div className="text-white text-2xl font-bold animate-zoom-out">
+                    <div className="text-white text-2xl font-bold animate-zoom-out  ">
                         Please wait
                     </div>
                 </div>

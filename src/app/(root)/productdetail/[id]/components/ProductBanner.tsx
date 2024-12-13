@@ -33,7 +33,6 @@ const ProductBanner = ({ template, setActivetab }: ProductBannertype) => {
     const { data: session, status } = useSession();
 
 
-
     const maxLength = 300;
     const description = template?.description || '';
     const isLongDescription = description.length > maxLength;
@@ -41,6 +40,7 @@ const ProductBanner = ({ template, setActivetab }: ProductBannertype) => {
     /**
      * swiper images
      */
+
     const images = template?.sliderImages
 
 
@@ -179,7 +179,7 @@ const ProductBanner = ({ template, setActivetab }: ProductBannertype) => {
                                 </h2>
                                 <div
                                     dangerouslySetInnerHTML={{
-                                        __html: showFullDescription || !isLongDescription ? template?.description.slice(0, maxLength) : ""
+                                        __html: showFullDescription || !isLongDescription ? template?.description?.slice(0, maxLength) : ""
                                     }}
                                     className=' text-[14px] md:text-[16px] font-normal leading-6 text-subparagraph'
                                 />

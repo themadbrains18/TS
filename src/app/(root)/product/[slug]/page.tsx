@@ -2,7 +2,6 @@ import React, { Suspense } from 'react';
 import MainSection from '../../productdetail/[id]/components/MainSection';
 import NotFound from '@/app/not-found';
 import { Metadata } from 'next';
-import TemplateFetcher from '@/helper/TemplateFetcher';
 
 interface Params {
   slug: string;
@@ -11,14 +10,9 @@ interface Params {
 const page = async ({ params }: { params: Params }) => {
   const { slug } = params;
 
-  const templateid = await TemplateFetcher(slug);
-
-
-  let id = templateid
-
-  // Fetch the specific template by ID
+  // Fetch the specific template by slug
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_APIURL}/templates-by-id/${id}`,
+    `${process.env.NEXT_PUBLIC_APIURL}/templates-by-slug/${slug}`,
     {
       method: 'GET',
       headers: {
@@ -35,7 +29,6 @@ const page = async ({ params }: { params: Params }) => {
 
   // Parse the template data
   const template = await response.json();
-  // console.log(template, "templatetemplatetemplate")
 
 
   // Custom Spinner Component
@@ -56,15 +49,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const { slug } = params;
 
   try {
-    // Use `await` to get the ID from the async function
-    const id = await TemplateFetcher(slug);
-
-    if (!id) {
-      throw new Error("Failed to retrieve template ID");
-    }
-
-    // Fetch the product details using the retrieved ID
-    const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/templates-by-id/${id}`, {
+    // Fetch the product details using the retrieved slug
+    const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/templates-by-slug/${slug}`, {
       headers: {
         "Content-Type": "application/json",
         "ngrok-skip-browser-warning": "true",

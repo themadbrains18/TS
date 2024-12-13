@@ -34,6 +34,9 @@ const Previewcom: FC<PreviewImagesProps> = ({ previewImages = [], previewMobileI
     }, [activeButton, previewImages, previewMobileImages]);
 
 
+       /**
+     * Function to toggle the full-screen mode off.
+     */
     const handleGoBack = () => {
         setShowFullScreen(false)
     }

@@ -4,6 +4,7 @@ import Button from '@/components/ui/Button';
 import CheckBox from '@/components/ui/checkbox';
 import Input from '@/components/ui/Input';
 import useFetch from '@/hooks/useFetch';
+import { FormValuesnewpassword } from '@/types/type';
 import { newChangePassword } from '@/validations/NewPassword';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
@@ -18,26 +19,17 @@ const NewPassword = ({ formdata }: any) => {
     const router = useRouter();
     const [isChecked1, setIsChecked1] = useState(false);
 
-    /**
-     *  Interface defining the form values
-     */
-    interface FormValues {
-        newPassword: string;
-        confirmPassword: string;
-        otp: string;
-        success: boolean;
-    }
 
     /**
      * Fetch hook to handle API request
      */
-    const { data: response, loading, fetchData } = useFetch<FormValues>();
+    const { data: response, loading, fetchData } = useFetch<FormValuesnewpassword>();
 
 
     /**
      * React hook form setup with validation using zod
      */
-    const { handleSubmit, control, formState: { errors } } = useForm<FormValues>({
+    const { handleSubmit, control, formState: { errors } } = useForm<FormValuesnewpassword>({
         resolver: zodResolver(newChangePassword),
     });
 
@@ -46,7 +38,7 @@ const NewPassword = ({ formdata }: any) => {
      * Submit handler for form data
      */
 
-    const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    const onSubmit: SubmitHandler<FormValuesnewpassword> = async (data) => {
         formdata.newPassword = data.newPassword;
         formdata.confirmPassword = data.confirmPassword;
 

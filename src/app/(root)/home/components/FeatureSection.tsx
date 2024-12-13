@@ -45,12 +45,13 @@ const FeatureSection = () => {
     const [items, setItems] = useState<Template[]>([]);
     const { data: response, error, loading, fetchData } = useFetch<ApiResponse>();
 
+
+    // Effect to fetch data when the component mounts
     useEffect(() => {
         fetchData("/feature-templates");
     }, []);
 
-    
-
+    // Effect to update the `items` state when the response is received
     useEffect(() => {
         if (response) {
             setItems(response.templates);

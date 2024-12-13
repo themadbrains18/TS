@@ -510,3 +510,13 @@ export interface UserDetail {
 export interface NotFoundinter {
   clearall: () => void
 }
+
+
+
+
+export interface FormValuesnewpassword {
+  newPassword: string;
+  confirmPassword: string;
+  otp: string;
+  success: boolean;
+}
