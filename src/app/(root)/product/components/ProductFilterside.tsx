@@ -7,13 +7,17 @@ import CheckboxFilter from './ProductFilterchekbox';
 import useFetch from '@/hooks/useFetch';
 const ProductFilterside = ({ items, setItems, closefilter, setSelectedFilters }: ProductFiltersidetype) => {
     const [openIndexes, setOpenIndexes] = useState<number[]>([0]);
+
     const { data: industryData, fetchData: fetchIndustryData } = useFetch<Industry[]>();
     const { data: softwareData, fetchData: fetchSoftwareData } = useFetch<SoftwareType[]>();
     useEffect(() => {
         fetchIndustryData('/industry-type');
         fetchSoftwareData('/software-types');
-
     }, []);
+
+
+    
+    
     const filterData = [
         {
             title: "Price Range",

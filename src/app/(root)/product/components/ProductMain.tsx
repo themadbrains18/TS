@@ -8,9 +8,6 @@ import ProductTags from './ProductTags';
 import useOnClickOutside from '@/hooks/useOnClickOutside';
 import Button from '@/components/ui/Button';
 import { useSearchParams } from 'next/navigation';
-
-import useFetch from '@/hooks/useFetch';
-
 import { TechTemplate, TemplateResponse } from '@/types/type';
 import useDebounce from '@/hooks/useDebounce'; // Import the useDebounce hook
 import FeatureSkeleton from '@/components/skeletons/FeatureSkeleton';
@@ -49,14 +46,16 @@ const ProductMain = () => {
     const openFilter = () => setFilter(true);
     const closefilter = () => setFilter(false);
     const [sort, setSort] = useState(false);
+    console.log(sort, "setsort")
     const [selectedSort, setSelectedSort] = useState("Sort by");
+
     const sorthandledropdown = () => setSort(!sort);
     const handleItemClick = (itemTitle: string) => {
         setSelectedSort(itemTitle);
         setSort(false);
     };
-    const dropdownRef = useRef<HTMLDivElement>(null);
-    useOnClickOutside(dropdownRef, sorthandledropdown);
+    // const dropdownRef = useRef<HTMLDivElement>(null);
+    // useOnClickOutside(dropdownRef, sorthandledropdown);
     const fetchProducts = async (page: number, filters: string[] = [], sort: string): Promise<TemplateResponse> => {
         try {
             setLoading(true);
@@ -174,7 +173,7 @@ const ProductMain = () => {
                                             <h3 className='lg:text-[18px] leading-[28px] font-normal text-subparagraph'>Filters</h3>
                                         </div>
                                         <div className='relative cursor-pointer' onMouseEnter={() => setSort(true)} onMouseLeave={() => setSort(false)}>
-                                            <div onClick={sorthandledropdown} className={`border duration-[0.5s] ${sort ? "border-primary-100" : "border-divider-100"} group pr-[15px] pl-5 py-[8px] flex gap-[6px] items-center`}>
+                                            <div className={`border duration-[0.5s] ${sort ? "border-primary-100" : "border-divider-100"} group pr-[15px] pl-5 py-[8px] flex gap-[6px] items-center`}>
                                                 <h2 className={`text-primary text-4 font-semibold leading-6 duration-[0.2s] ${sort ? "text-primary-100" : "text-subheading"} text-nowrap`}>
                                                     {selectedSort}
                                                 </h2>

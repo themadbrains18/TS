@@ -10,6 +10,7 @@ interface Template {
     templates:
     {
         id: string; // Add ID to template
+        slug: string;
         title: string;
         templateType: string;
         version: string;
@@ -37,6 +38,9 @@ const SearchComponent: React.FC<navtabprops> = ({ subCat, classname, opensearch,
     }, [searchQuery, selectedCategory]);
 
 
+
+
+    console.log(templates, "templatestemplatestemplates")
     return (
         <div className={` ${mainclass} flex items-center relative justify-end`}>
             <div className="p-[10px]">
@@ -79,7 +83,7 @@ const SearchComponent: React.FC<navtabprops> = ({ subCat, classname, opensearch,
 
                 {/* Display the templates */}
                 {templates?.templates?.map((template) => (
-                    <Link href={`/product/${template?.id}`} key={template?.id}>
+                    <Link href={`/product/${template?.slug}`} key={template?.id}>
                         <div onClick={resinputoff} className=" cursor-pointer border-b w-full last:border-b-0">
                             <p className="text-subparagraph text-start  leading-6 py-2 px-[30px] capitalize  cursor-pointer  text-nowrap hover:bg-primary-200 border-l-[2px] hover:border-primary-100 text-sm font-medium truncate md:max-w-[200px] ">
                                 {template?.title}
