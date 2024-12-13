@@ -31,6 +31,9 @@ const AddTemplate = () => {
   const { loading: deletealltemplateloading, fetchData: deletealltemplate } = useFetch<Template>();
 
 
+
+  
+  
   /**
  * Fetches all templates for the dashboard using a GET request.
  *
@@ -250,6 +253,7 @@ const AddTemplate = () => {
           <div className="">
             <div className="overflow-x-scroll w-full mt-10 hiddenscroll">
               <table className="min-w-full border-collapse table-auto">
+
                 <thead>
                   <tr className="bg-gray-100">
                     {templateheading?.map((item, index) => (
@@ -261,6 +265,7 @@ const AddTemplate = () => {
                     ))}
                   </tr>
                 </thead>
+                
                 <tbody className="divide-y divide-gray-200">
                   {response?.templates && response?.templates.length > 0 ? (
                     <>
