@@ -61,7 +61,6 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
     const { loading: updateLoading, fetchData: updateFetchData } = useFetch<any>();
     const { loading: updateloadingNumber, fetchData: updateNumber } = useFetch<any>();
     const { data: responseauthor, loading: authorloading, fetchData: authorapi } = useFetch<any>();
-    console.log(responseauthor, "responseauthorresponseauthorresponseauthor")
     const { fetchData: updatePassword } = useFetch<any>();
 
 

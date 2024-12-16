@@ -47,7 +47,6 @@ const FeatureSection = () => {
 
 
 
-    console.log(items, "itemsitemsitems")
 
     // Effect to fetch data when the component mounts
     useEffect(() => {
@@ -105,7 +104,7 @@ const FeatureSection = () => {
                                     }
                                 </div></>
                                 :
-                                <><p className='text-[20px] text-subheading'>
+                                <><p className='text-[20px] text-subheading text-center'>
                                     Template Not Found
                                 </p></>
                         }

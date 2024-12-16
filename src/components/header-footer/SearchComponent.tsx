@@ -40,7 +40,6 @@ const SearchComponent: React.FC<navtabprops> = ({ subCat, classname, opensearch,
 
 
 
-    console.log(templates, "templatestemplatestemplates")
     return (
         <div className={` ${mainclass} flex items-center relative justify-end`}>
             <div className="p-[10px]">

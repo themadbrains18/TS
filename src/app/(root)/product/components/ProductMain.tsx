@@ -46,7 +46,6 @@ const ProductMain = () => {
     const openFilter = () => setFilter(true);
     const closefilter = () => setFilter(false);
     const [sort, setSort] = useState(false);
-    console.log(sort, "setsort")
     const [selectedSort, setSelectedSort] = useState("Sort by");
 
     const sorthandledropdown = () => setSort(!sort);
