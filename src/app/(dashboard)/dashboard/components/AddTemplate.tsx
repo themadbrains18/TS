@@ -261,11 +261,6 @@ const AddTemplate = () => {
     }
   };
 
-
-  console.log(response?.templates[0]?.active, "=====")
-
-
-
   return (
     <>
       {confirmationpopup && (
