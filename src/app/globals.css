@@ -86,7 +86,7 @@
   /* scroll */
 
   ::-webkit-scrollbar {
-    @apply w-2; /* Width of the scrollbar */
+    @apply w-1; /* Width of the scrollbar */
   }
   ::-webkit-scrollbar-thumb {
     @apply  rounded-[10px] bg-primary-800 ; /* Color of the scroll thumb */ /* Rounded corners for the thumb */
