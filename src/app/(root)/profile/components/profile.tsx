@@ -447,8 +447,8 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                             <Input
                                                 disabled={isUserDisabled}
                                                 className='px-4 py-[13px] md:py-[13px]'
-                                                label='Number'
-                                                placeholder='Number'
+                                                label='Phone Number'
+                                                placeholder='Phone Number'
                                                 name='number'
                                                 type='text'
                                                 value={userresponse?.user ? userresponse?.user?.number : number}

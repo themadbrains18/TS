@@ -69,8 +69,8 @@ const HeroSection = () => {
                             <Image className='absolute top-0 left-0 lg:max-w-[230px] w-[50%] h-[100%]' src={'/images/purplebg.png'} width={230} height={587} alt='purplebg' />
                             <div className='lg:max-w-[635px] w-full relative'>
                                 <div className='p-[10px] rounded-2xl bg-white relative z-[4] inline-block max-w-[262px] tab:max-w-full mt-[50px] lg:mt-0 md:w-[70%] lg:max-w-[490px] lg:w-full  group cursor-pointer'>
-                                    <div className='overflow-hidden h-[187px] tab:h-[344px]'>
-                                        <Image className='relative z-[4] max-w-full lg:max-w-[470px] w-full transition-all ease-in-out duration-[7s] group-hover:translate-y-[-81%]' src={'/images/heroscroll.png'} width={470} height={324} alt='purplebg' />
+                                    <div className='overflow-hidden h-[187px] tab:h-[344px] border-[6px] border-[#FFF6FF] rounded-2xl'>
+                                        <Image className='relative z-[4] max-w-full lg:max-w-[470px] w-full transition-all ease-in-out duration-[7s] group-hover:translate-y-[-81%]' src={'/images/longscroll.png'} width={470} height={324} alt='purplebg' />
                                     </div>
 
                                 </div>

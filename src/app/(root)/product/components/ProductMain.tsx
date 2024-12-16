@@ -46,7 +46,6 @@ const ProductMain = () => {
     const openFilter = () => setFilter(true);
     const closefilter = () => setFilter(false);
     const [sort, setSort] = useState(false);
-    console.log(sort, "setsort")
     const [selectedSort, setSelectedSort] = useState("Sort by");
 
     const sorthandledropdown = () => setSort(!sort);
@@ -172,7 +171,7 @@ const ProductMain = () => {
                                             <Icon name='filter' />
                                             <h3 className='lg:text-[18px] leading-[28px] font-normal text-subparagraph'>Filters</h3>
                                         </div>
-                                        <div className='relative cursor-pointer' onMouseEnter={() => setSort(true)} onMouseLeave={() => setSort(false)}>
+                                        <div onClick={()=>setSort(!sort)} className='relative cursor-pointer' onMouseEnter={() => setSort(true)} onMouseLeave={() => setSort(false)}>
                                             <div className={`border duration-[0.5s] ${sort ? "border-primary-100" : "border-divider-100"} group pr-[15px] pl-5 py-[8px] flex gap-[6px] items-center`}>
                                                 <h2 className={`text-primary text-4 font-semibold leading-6 duration-[0.2s] ${sort ? "text-primary-100" : "text-subheading"} text-nowrap`}>
                                                     {selectedSort}

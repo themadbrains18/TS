@@ -22,6 +22,7 @@ import DownloadTemplete from '@/components/popups/DownloadTemplete';
 import { ProductDetailProps, TechTemplate } from '@/types/type';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { cn } from '@/libs/utils';
 
 interface ProductBannertype {
     template: TechTemplate
@@ -90,19 +91,6 @@ const ProductBanner = ({ template, setActivetab }: ProductBannertype) => {
         "ReactJs": { image: '/icons/reactjs.svg', label: "ReactJs Design File" },
     };
     const sliderRef = useRef<Slider>(null); // Ref to control the slider
-    // const settings = {
-    //     speed: 500,
-    //     slidesToShow: images.length,
-    //     slidesToScroll: 1,
-    //     swipeToSlide: false
-    // };
-    // const handlePrevious = () => {
-    //     sliderRef.current?.slickPrev(); // Go to the previous slide
-    // };
-
-    // const handleNext = () => {
-    //     sliderRef.current?.slickNext(); // Go to the next slide
-    // };
 
     const [nav1, setNav1] = useState<Slider | null>(null);
     const [nav2, setNav2] = useState<Slider | null>(null);
@@ -250,25 +238,6 @@ const ProductBanner = ({ template, setActivetab }: ProductBannertype) => {
                             <div>
                                 <div className="lg:max-w-[874px] w-full relative z-10 bg-[#FFFFFF] select-none">
 
-                                    {/* <div className="p-[10px]  md:p-5 h-full group overflow-hidden border border-divider-100">
-                                        <div className="overflow-hidden relative h-full">
-                                            <div className='absolute z-[1] top-0 left-0 right-0 bottom-0 group-hover:bg-[#28204699]  duration-[0.5s] cursor-pointer'>
-                                                <Link href={`/preview/${template?.id}`} >
-                                                    <div className='w-full h-full flex justify-center items-center overflow-hidden  '>
-                                                        <span className='text-white text-[18px] font-bold leading-7 opacity-0 group-hover:opacity-100'>Preview</span>
-                                                    </div>
-                                                </Link>
-                                            </div>
-                                            <Image
-                                                src={`${activeImage || "/images/product1.png"}`}
-                                                width={850}
-                                                height={500}
-                                                alt="Selected"
-                                                className="overflow-hidden group-hover:scale-[1.1] duration-[0.5s]  w-full h-full lg:object-cover rounded-lg shadow-md"
-                                            />
-                                        </div>
-                                    </div> */}
-
                                     <div className="slider-container">
                                         <Slider
                                             asNavFor={nav2 || undefined} // Syncs with the second slider
@@ -285,7 +254,7 @@ const ProductBanner = ({ template, setActivetab }: ProductBannertype) => {
                                                                 </div>
                                                             </Link>
                                                         </div>
-                                                        <Image className="overflow-hidden group-hover:scale-[1.1] duration-[0.5s]  w-full h-full lg:object-cover rounded-lg shadow-md sm:max-h-[490px] object-contain" src={`${imageUrl}`} height={500} width={850} alt={`selectedImage`} />
+                                                        <Image className="overflow-hidden scale-105 group-hover:scale-[1] duration-[0.5s]  w-full h-full lg:object-cover rounded-lg shadow-md sm:max-h-[490px] object-contain" src={`${imageUrl}`} height={500} width={850} alt={`selectedImage`} />
                                                     </div>
                                                 </div>
                                             ))}
@@ -311,9 +280,9 @@ const ProductBanner = ({ template, setActivetab }: ProductBannertype) => {
                                                 <div onClick={() => setActiveImageId(id)} className='w-full' key={id}>
                                                     <div
                                                         // Set active image by ID
-                                                        className={`cursor-pointer min-w-[50px] w-full border-2 overflow-hidden p-[5px] h-[88px] ${activeImageId === id ? 'border-primary-900 border-[0.5px] md:border-[2px]' : 'border-transparent'} animate-zoom`}
+                                                        className={`cursor-pointer min-w-[50px] flex justify-center w-full  overflow-hidden p-[5px] h-[88px]  animate-zoom `}
                                                     >
-                                                        <Image className="w-full object-contain h-[76px]" src={`${imageUrl}`} height={76} width={120} alt={`Thumbnail ${id}`} />
+                                                        <Image className={cn`${activeImageId === id ? 'border-primary-900 border-[0.5px] md:border-[2px]' : 'border-none'}  object-contain h-[76px] transition-all duration-500 hover:scale-[0.92]`} src={`${imageUrl}`} height={76} width={120} alt={`Thumbnail ${id}`} />
                                                     </div>
                                                 </div>
                                             ))}
@@ -351,7 +320,7 @@ const ProductBanner = ({ template, setActivetab }: ProductBannertype) => {
                                     </div>
                                 </div>
                                 <Button onClick={openPopup} className='w-full mb-2.5 mt-5  md:mt-[30px] md:mb-5 justify-center py-2 md:py-[13px]' variant='primary' > Download </Button>
-                                <Button link={`/preview/${template?.id}`} className='w-full justify-center' variant='liquid' >Preview</Button>
+                                <Button link={`/preview/${template?.id}`} className='w-full justify-center text-primary-100 border-primary-100 hover:bg-primary-100 hover:text-white' variant='liquid' >Preview</Button>
                                 {
                                     isPopupOpen &&
                                     <DownloadTemplete poster={template.previewImages[0]?.imageUrl} tittle={template.title} isFirstPopupOpen={isFirstPopupOpen} setIsFirstPopupOpen={setIsFirstPopupOpen} id={template?.id} url={template?.sourceFiles} />
