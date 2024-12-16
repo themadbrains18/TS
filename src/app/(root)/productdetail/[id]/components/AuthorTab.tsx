@@ -91,7 +91,7 @@ const AuthorTab: React.FC<UserDetailProps> = ({ userDetail }) => {
           </Button>
         </div>
         <div className="">
-          <div className="grid grid-cols-6 gap-x-[10px] md:gap-x-[20px] mt-5">
+          <div className="grid min-[500px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-[10px] md:gap-[20px] mt-5">
             {data && data?.data?.length > 0 && data?.data?.slice(0, 6).map((item) => (
               <Fragment key={item?.id}>
                 <NavCard
@@ -101,7 +101,7 @@ const AuthorTab: React.FC<UserDetailProps> = ({ userDetail }) => {
                   data={item}
                   icon="/icons/figma.svg"
                   themeicon={item?.softwareType?.name}
-                  classname='w-[218px]'
+                  // classname='w-[218px]'
                   slug={item?.slug}
                 />
               </Fragment>
