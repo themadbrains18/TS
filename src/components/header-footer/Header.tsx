@@ -310,11 +310,11 @@ const Header = () => {
                 {!isLoggedIn && (
                   <>
                     <Link href='/login'>
-                      <button className="text-textheading text-start capitalize border-b-2 border-transparent hover:border-primary-100 ">
+                      <button className="text-textheading lowercase text-start transition-all duration-300  border-b-2 border-transparent hover:border-primary-100 ">
                         Log In
                       </button>
                     </Link>
-                    <Button link="/register">Sign Up</Button>
+                    <Button className="lowercase" link="/register">Sign Up</Button>
                   </>
                 )}
               </div>
