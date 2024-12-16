@@ -398,25 +398,6 @@ const AddTemplate = () => {
                     </tr>
                   ) : (
                     <></>
-                    // <tr className="hover:bg-gray-50 animate-pulse">
-                    //   <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize max-w-[200px] truncate md:max-w-full font-semibold">
-                    //     <div className="h-4 bg-gray-200 rounded w-full"></div>
-                    //   </td>
-                    //   <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">
-                    //     <div className="h-4 bg-gray-200 rounded w-full"></div>
-                    //   </td>
-                    //   <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">
-                    //     <div className="h-4 bg-gray-200 rounded w-full"></div>
-                    //   </td>
-                    //   <td className="px-6 py-5 text-sm md:text-base text-subparagraph capitalize">
-                    //     <div className="h-4 bg-gray-200 rounded w-full"></div>
-                    //   </td>
-                    //   <td className="px-6 py-5 text-sm md:text-base text-subparagraph flex gap-x-2 flex-nowrap">
-                    //     <div className="w-6 h-6 bg-gray-200 rounded mr-2"></div>
-                    //     <div className="w-6 h-6 bg-gray-200 rounded mr-2"></div>
-                    //     <div className="w-6 h-6 bg-gray-200 rounded mr-2"></div>
-                    //   </td>
-                    // </tr>
                   )}
                 </tbody>
               </table>
