@@ -161,8 +161,6 @@ const Header = () => {
     }
   }, [])
 
-
-
   const handleSignOut = async () => {
     setIsLoading(true);
     await signOut();

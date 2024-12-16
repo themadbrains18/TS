@@ -114,7 +114,7 @@ const FeatureSection = () => {
 
                 )}
                 {
-                    items?.length > 0 &&
+                    items && items?.length > 5 &&
                     <div className='mt-10 flex w-full items-center justify-center'>
                         <Button link='/product' linkclass='w-full md:w-auto' className='w-full' variant='secondary'>
                             View All Products

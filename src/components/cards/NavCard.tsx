@@ -40,7 +40,7 @@ const NavCard: React.FC<navcardprops> = ({
 
   return (
     <>
-      <div className={` ${classnamemain} cursor-pointer border border-divider-100 group/item animate-zoom `}>
+      <div className={` ${classnamemain} cursor-pointer border border-divider-100 group/item `}>
         <div className={`relative ${classname}`}>
           <div className=" h-auto  object-cover" >
             <Image

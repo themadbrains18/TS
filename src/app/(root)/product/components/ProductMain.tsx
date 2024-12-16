@@ -181,7 +181,7 @@ const ProductMain = () => {
                                                     <Icon className={`p-1 ${sort ? "[&>*]:fill-primary-100" : "[&>*]:fill-[#5D5775]"}`} name="sortaroow" />
                                                 </div>
                                             </div>
-                                            <div className={`absolute right-0 ${sort ? "opacity-1 visible" : "opacity-0 invisible"} duration-[0.5s] top-[45px] z-10 bg-white`}>
+                                            <div className={`absolute right-0 ${sort ? "opacity-1 visible" : "opacity-0 invisible"} shadow-md duration-[0.5s] top-[45px] z-10 bg-white`}>
                                                 {Sortdata?.map((item, index) => (
                                                     <h4 key={index + item?.title} onClick={() => handleItemClick(item?.title)} className={`text-subparagraph text-start leading-6 py-2 px-[30px] capitalize cursor-pointer text-nowrap hover:bg-primary-200 border-l-[2px] hover:border-primary-100`}>
                                                         {item?.title}

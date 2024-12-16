@@ -61,7 +61,6 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
     const { loading: updateLoading, fetchData: updateFetchData } = useFetch<any>();
     const { loading: updateloadingNumber, fetchData: updateNumber } = useFetch<any>();
     const { data: responseauthor, loading: authorloading, fetchData: authorapi } = useFetch<any>();
-    console.log(responseauthor, "responseauthorresponseauthorresponseauthor")
     const { fetchData: updatePassword } = useFetch<any>();
 
 
@@ -219,6 +218,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                 return
             }
 
+            console.log("first")
             await updateFetchData('/update-details', {
                 method: 'PUT',
                 body: JSON.stringify({ name, id: userData?.user?.id }),
@@ -355,17 +355,14 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
     useEffect(() => {
         if (nameError) {
             setTimeout(() => {
-                setNameeror("")
+
             }, 1000)
         }
         if (phoneNumberError) {
             setTimeout(() => {
-                setPhoneNumberError("")
             }, 2000)
         }
-
     }, [phoneNumberError, nameError])
-
 
 
     return (
