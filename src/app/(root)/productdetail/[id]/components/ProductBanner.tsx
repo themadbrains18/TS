@@ -22,6 +22,7 @@ import DownloadTemplete from '@/components/popups/DownloadTemplete';
 import { ProductDetailProps, TechTemplate } from '@/types/type';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { cn } from '@/libs/utils';
 
 interface ProductBannertype {
     template: TechTemplate
@@ -279,9 +280,9 @@ const ProductBanner = ({ template, setActivetab }: ProductBannertype) => {
                                                 <div onClick={() => setActiveImageId(id)} className='w-full' key={id}>
                                                     <div
                                                         // Set active image by ID
-                                                        className={`cursor-pointer min-w-[50px] w-full border-2 overflow-hidden p-[5px] h-[88px] ${activeImageId === id ? 'border-primary-900 border-[0.5px] md:border-[2px]' : 'border-transparent'} animate-zoom`}
+                                                        className={`cursor-pointer min-w-[50px] flex justify-center w-full  overflow-hidden p-[5px] h-[88px]  animate-zoom `}
                                                     >
-                                                        <Image className="w-full object-contain h-[76px] transition-all duration-500 hover:scale-[0.92]" src={`${imageUrl}`} height={76} width={120} alt={`Thumbnail ${id}`} />
+                                                        <Image className={cn`${activeImageId === id ? 'border-primary-900 border-[0.5px] md:border-[2px]' : 'border-none'}  object-contain h-[76px] transition-all duration-500 hover:scale-[0.92]`} src={`${imageUrl}`} height={76} width={120} alt={`Thumbnail ${id}`} />
                                                     </div>
                                                 </div>
                                             ))}
