@@ -7,17 +7,13 @@ import CheckboxFilter from './ProductFilterchekbox';
 import useFetch from '@/hooks/useFetch';
 const ProductFilterside = ({ items, setItems, closefilter, setSelectedFilters }: ProductFiltersidetype) => {
     const [openIndexes, setOpenIndexes] = useState<number[]>([0]);
-
     const { data: industryData, fetchData: fetchIndustryData } = useFetch<Industry[]>();
     const { data: softwareData, fetchData: fetchSoftwareData } = useFetch<SoftwareType[]>();
     useEffect(() => {
         fetchIndustryData('/industry-type');
         fetchSoftwareData('/software-types');
+
     }, []);
-
-
-    
-    
     const filterData = [
         {
             title: "Price Range",
@@ -67,7 +63,7 @@ const ProductFilterside = ({ items, setItems, closefilter, setSelectedFilters }:
             <div className='overflow-y-scroll  h-[calc(100%_-_100px)] custom-scrollbar-horizon   ' >
                 {filterData?.map((filterSection, index) => (
                     <Accordion
-                        key={index + Date.now() + "filterSection"}
+                        key={index}
                         title={filterSection?.title}
                         isOpen={openIndexes.includes(index)}
                         onToggle={() => toggleAccordion(index)}
@@ -78,7 +74,7 @@ const ProductFilterside = ({ items, setItems, closefilter, setSelectedFilters }:
                             {filterSection && filterSection?.items?.map((item, itemIndex) => (
                                 <div className='md:pl-5 md:pr-2  py-[5px]' >
                                     <CheckboxFilter
-                                        key={itemIndex + Date.now() + "filterSection"}
+                                        key={itemIndex}
                                         value={item?.name}
                                         id={`${item?.id},${filterSection?.title},${item?.name}`}
                                         setItems={setItems}

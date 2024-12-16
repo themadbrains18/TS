@@ -53,8 +53,8 @@ const ProductMain = () => {
         setSelectedSort(itemTitle);
         setSort(false);
     };
-    // const dropdownRef = useRef<HTMLDivElement>(null);
-    // useOnClickOutside(dropdownRef, sorthandledropdown);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+    useOnClickOutside(dropdownRef, sorthandledropdown);
     const fetchProducts = async (page: number, filters: string[] = [], sort: string): Promise<TemplateResponse> => {
         try {
             setLoading(true);
