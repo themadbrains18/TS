@@ -77,30 +77,40 @@ const FeatureSection = () => {
                         <FeatureSkeleton />
                     </div>
                 ) : (
-                    <div className='mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-[30px]'>
+                    <>
                         {
-                            items?.map((item, index) => {
-                                return (
-                                    <Fragment key={index}>
-                                        <FeatureCard
-                                            id={item?.id}
-                                            buttonprops={item?.price}
-                                            category={item?.templateType?.name}
-                                            themeicon={item?.softwareType?.name}
-                                            title={item?.title}
-                                            uploadericon={item?.user?.profileImg}
-                                            uploadername={item?.user?.name}
-                                            currentimage={1}
-                                            poster={item?.sliderImages[0]?.imageUrl}
-                                            totalimages={item?.sliderImages?.length}
-                                            isPaid={true}
-                                            slug={item?.slug}
-                                        />
-                                    </Fragment>
-                                )
-                            })
+                            items && items.length > 0 ?
+                                <><div className='mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-[30px]'>
+                                    {
+                                        items && items.length > 0 && items?.map((item, index) => {
+                                            return (
+                                                <Fragment key={index}>
+                                                    <FeatureCard
+                                                        id={item?.id}
+                                                        buttonprops={item?.price}
+                                                        category={item?.templateType?.name}
+                                                        themeicon={item?.softwareType?.name}
+                                                        title={item?.title}
+                                                        uploadericon={item?.user?.profileImg}
+                                                        uploadername={item?.user?.name}
+                                                        currentimage={1}
+                                                        poster={item?.sliderImages[0]?.imageUrl}
+                                                        totalimages={item?.sliderImages?.length}
+                                                        isPaid={true}
+                                                        slug={item?.slug}
+                                                    />
+                                                </Fragment>
+                                            )
+                                        })
+                                    }
+                                </div></>
+                                :
+                                <><p className='text-[20px] text-subheading'>
+                                    Template Not Found
+                                </p></>
                         }
-                    </div>
+                    </>
+
 
                 )}
                 {

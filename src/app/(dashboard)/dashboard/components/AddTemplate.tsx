@@ -22,6 +22,7 @@ interface Template {
     version: string;
     price: number;
     deleted: boolean
+    active: boolean
   }[]
 
 }
@@ -30,10 +31,6 @@ const AddTemplate = () => {
   const { data: response, loading, fetchData } = useFetch<Template>();
   const { loading: deletealltemplateloading, fetchData: deletealltemplate } = useFetch<Template>();
 
-
-
-  
-  
   /**
  * Fetches all templates for the dashboard using a GET request.
  *
@@ -54,8 +51,6 @@ const AddTemplate = () => {
     fetchTemplates();
   }, [fetchData]);
 
-
-
   /**
  * Array representing the headings for the templates table.
  *
@@ -63,6 +58,7 @@ const AddTemplate = () => {
  * @description This array holds objects with heading labels for columns in a templates table.
  *              Each object contains a `heading` key with the column name as the value.
  */
+
   const templateheading = [
     { heading: "No." },
     { heading: "template name" },
@@ -73,11 +69,78 @@ const AddTemplate = () => {
   ];
 
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
+
   const [currentTemplateIndex, setCurrentTemplateIndex] = useState<number | null>(null);
   const [hideIconStates, setHideIconStates] = useState<boolean[]>(Array(response?.templates?.length).fill(false));
   const [deletePopupIndex, setDeletePopupIndex] = useState<number | null>(null);
   const router = useRouter();
 
+  // template status active and inactive 
+  /**
+ * State variable to store the status of the template.
+ * @type {boolean | undefined}
+ */
+  const [templateStatus, setTemplateStatus] = useState<boolean>()
+
+  /**
+   * State variable to store the ID of the template.
+   * @type {any}
+   */
+  const [templateid, setTemplateid] = useState<any>()
+  /**
+ * State variable to indicate whether the status update loader is active.
+ * @type {boolean}
+ */
+  const [templateStatusLoader, setTemplateStatusLoader] = useState(false)
+
+
+
+  /**
+ * Handles updating the status of a template by sending a POST request to the server.
+ * 
+ * - Retrieves the `templateid` and sends it along with the `templateStatus` to the API.
+ * - Displays a loader while the update is in progress.
+ * - Logs the response on success or error.
+ * - Calls additional functions (`fetchTemplates` and `closePopup`) after a successful update.
+ *
+ * @async
+ * @function handleupdatestatus
+ * @returns {Promise<void>} - Resolves when the status update operation completes.
+ */
+  const handleupdatestatus = async () => {
+    const id = templateid
+    setTemplateStatusLoader(true)
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/templatestatus/${id}`, {
+        method: "POST",
+        body: JSON.stringify({
+          "active": templateStatus
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!res.ok) {
+        const errorResponse = await res.json();
+        console.error("Failed to update template status:", errorResponse);
+        return;
+      }
+
+      const data = await res.json();
+      console.log("Template status updated successfully:", data);
+      fetchTemplates();
+      closePopup();
+
+    } catch (error) {
+      console.error("Error updating template status:", error);
+    }
+    finally {
+      setTimeout(() => {
+        setTemplateStatusLoader(false)
+      }, 1500);
+    }
+  };
 
   /**
  * Opens a popup dialog by setting the current template index and displaying the popup.
@@ -86,12 +149,11 @@ const AddTemplate = () => {
  * @param {number} index - The index of the template to display in the popup.
  * @description This function sets the `currentTemplateIndex` and opens the popup by setting `isPopupOpen` to `true`.
  */
+
   const openPopup = (index: number) => {
     setCurrentTemplateIndex(index);
     setIsPopupOpen(true);
   };
-
-
 
   /**
    * Closes the popup dialog by resetting the relevant state variables.
@@ -99,21 +161,23 @@ const AddTemplate = () => {
    * @function closePopup
    * @description This function sets `isPopupOpen` to `false`, clears `currentTemplateIndex` and `deletePopupIndex`.
    */
+
   const closePopup = () => {
     setIsPopupOpen(false);
     setCurrentTemplateIndex(null);
     setDeletePopupIndex(null);
   };
 
-
   /**
- * Confirms the action to hide or unhide an icon associated with a template.
- *
- * @function confirmHide
- * @description This function toggles the visibility state of an icon based on the current template index.
- *              It then closes the popup using `closePopup()`.
- */
+   * Confirms the action to hide or unhide an icon associated with a template.
+   *
+   * @function confirmHide
+   * @description This function toggles the visibility state of an icon based on the current template index.
+   *              It then closes the popup using `closePopup()`.
+   */
+
   const confirmHide = () => {
+    handleupdatestatus()
     if (currentTemplateIndex !== null) {
       setHideIconStates((prev) => {
         const newStates = [...prev];
@@ -121,9 +185,7 @@ const AddTemplate = () => {
         return newStates;
       });
     }
-    closePopup();
   };
-
 
 
 
@@ -199,6 +261,11 @@ const AddTemplate = () => {
     }
   };
 
+
+  console.log(response?.templates[0]?.active, "=====")
+
+
+
   return (
     <>
       {confirmationpopup && (
@@ -212,9 +279,11 @@ const AddTemplate = () => {
       )}
 
       <section className="py-5">
+
         {isPopupOpen && (
-          <HideTemplate isPopupOpen={isPopupOpen} setHide={confirmHide} closePopup={closePopup} />
+          <HideTemplate templateStatusLoader={templateStatusLoader} isPopupOpen={isPopupOpen} setHide={confirmHide} closePopup={closePopup} />
         )}
+
         {deletePopupIndex !== null && (
           <DeleteTemplate
             loading={loading}
@@ -222,11 +291,12 @@ const AddTemplate = () => {
             isPopupOpen={deletePopupIndex !== null}
             closePopup={closePopup} />
         )}
+
         <div className="container">
           <div>
             <div>
               <div className='flex justify-between gap-x-2 items-center pt-5 py-10'>
-                <div className=''>  <Link className="w-[276px]" href={'/'}>
+                <div className=''><Link className="w-[276px]" href={'/'}>
                   <Image
                     src={"/icons/Logo.svg"}
                     width={276}
@@ -265,7 +335,7 @@ const AddTemplate = () => {
                     ))}
                   </tr>
                 </thead>
-                
+
                 <tbody className="divide-y divide-gray-200">
                   {response?.templates && response?.templates.length > 0 ? (
                     <>
@@ -295,24 +365,27 @@ const AddTemplate = () => {
                             {template.price}
                           </td>
                           <td className="px-6 py-5 text-sm md:text-base text-subparagraph flex gap-x-2 flex-nowrap">
-                            {/* {hideIconStates[index] ? (
-                              <Icon
-                                onClick={() => openPopup(index)}
-                                className="w-6 h-6 fill-subheading cursor-pointer"
-                                name="hideicon"
-                              />
-                            ) : (
-                              <Icon
-                                onClick={() => openPopup(index)}
-                                className="w-6 h-6 fill-subheading cursor-pointer"
-                                name="showicon"
-                              />
-                            )} */}
+                            {
+                              !template?.isdraft && (
+                                <>
+                                  <Icon
+                                    onClick={() => {
+                                      openPopup(index);
+                                      setTemplateid(template?.id);
+                                      setTemplateStatus(!template?.active);
+                                    }}
+                                    className="w-6 h-6 fill-subheading cursor-pointer"
+                                    name={template?.active == true ? "showicon" : "hideicon"}
+                                  />
+                                </>
+                              )
+                            }
                             <Icon
                               onClick={() => setDeletePopupIndex(index)}
                               className="w-6 h-6 fill-subheading cursor-pointer"
                               name="deleteicon"
                             />
+
                             <Icon
                               onClick={() => { router.push(`/dashboard/edit/${template.id}`); router.refresh(); }}
                               className="w-5 h-6 fill-subheading cursor-pointer"
