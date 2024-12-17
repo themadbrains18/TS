@@ -238,7 +238,7 @@ const ProductBanner = ({ template, setActivetab }: ProductBannertype) => {
                             <div>
                                 <div className="lg:max-w-[874px] w-full relative z-10 bg-[#FFFFFF] select-none">
 
-                                    <div className="slider-container">
+                                    <div>
                                         <Slider
                                             asNavFor={nav2 || undefined} // Syncs with the second slider
                                             ref={(slider: any) => (sliderRef1.current = slider)}
@@ -254,7 +254,7 @@ const ProductBanner = ({ template, setActivetab }: ProductBannertype) => {
                                                                 </div>
                                                             </Link>
                                                         </div>
-                                                        <Image className="overflow-hidden scale-105 group-hover:scale-[1] duration-[0.5s]  w-full h-full lg:object-cover rounded-lg shadow-md sm:max-h-[490px] object-contain" src={`${imageUrl}`} height={500} width={850} alt={`selectedImage`} />
+                                                        <Image className="overflow-hidden scale-105 group-hover:scale-[1] duration-[0.5s]  w-full max-h-[184px] min-[450px]:max-h-full  h-full lg:object-cover rounded-lg shadow-md sm:max-h-[490px] object-cover" src={`${imageUrl}`} height={500} width={850} alt={`selectedImage`} />
                                                     </div>
                                                 </div>
                                             ))}
@@ -263,10 +263,11 @@ const ProductBanner = ({ template, setActivetab }: ProductBannertype) => {
                                             asNavFor={nav1 || undefined} // Syncs with the first slider
                                             ref={(slider: any) => (sliderRef2.current = slider)}
                                             infinite={true}  // Enables infinite looping (loops from 6th slide to 1st)
-                                            slidesToShow={4}  // Show 6 slides at a time
+                                            slidesToShow={images.length}  // Show 6 slides at a time
                                             focusOnSelect={true}
                                             swipe={false}
                                             arrows={false}
+                                        
                                             responsive={[
                                                 {
                                                     breakpoint: 500,
@@ -280,9 +281,9 @@ const ProductBanner = ({ template, setActivetab }: ProductBannertype) => {
                                                 <div onClick={() => setActiveImageId(id)} className='w-full' key={id}>
                                                     <div
                                                         // Set active image by ID
-                                                        className={`cursor-pointer min-w-[50px] flex justify-center w-full  overflow-hidden p-[5px] h-[88px]  animate-zoom `}
+                                                        className={`cursor-pointer  flex justify-center w-full  overflow-hidden   `}
                                                     >
-                                                        <Image className={cn`${activeImageId === id ? 'border-primary-900 border-[0.5px] md:border-[2px]' : 'border-none'}  object-contain h-[76px] transition-all duration-500 hover:scale-[0.92]`} src={`${imageUrl}`} height={76} width={120} alt={`Thumbnail ${id}`} />
+                                                        <Image className={cn`${activeImageId === id ? 'border-primary-900 border-[0.5px] sm:border-2' : 'border-[#F5EAFD] border-[0.5px] sm:border-2'} p-[3px]   object-cover w-[60px] min-[450px]:w-[120px] h-[50px] min-[450px]:h-[80px] transition-all duration-500 hover:scale-[0.92]`} src={`${imageUrl}`} height={76} width={120} alt={`Thumbnail ${id}`} />
                                                     </div>
                                                 </div>
                                             ))}

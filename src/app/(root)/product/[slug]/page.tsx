@@ -30,8 +30,6 @@ const page = async ({ params }: { params: Params }) => {
   // Parse the template data
   const template = await response.json();
 
-  console.log(template, "template template ")
-
   // Custom Spinner Component
   const CustomSpinner = () => (
     <div className="flex justify-center items-center h-screen">
