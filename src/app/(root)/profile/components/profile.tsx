@@ -593,7 +593,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                         </div> */}
                         <div className='max-w-[670px] mt-4 md:mt-[50px]'>
                             <Button className='py-[13px] text-lg px-[30px]' variant='secondary' type='button' onClick={() => { setIsDeleteUser(true) }}>delete account</Button>
-                            <p className='pt-5 text-textparagraph'><strong>Note:</strong> As you have an active paid plan, you can't delete your account directly. Please contact <Link href="#" className='text-primary-100 '>support@templatestudio.ai</Link> for assistance </p>
+                            <p className='pt-5 text-textparagraph'><strong>Note:</strong> As you have an active paid plan, you can't delete your account directly. Please contact <Link href="mailto:someone@example.com" className='text-primary-100 '>support@templatestudio.ai</Link> for assistance </p>
                         </div>
                     </div>
                 </div>
