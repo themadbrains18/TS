@@ -17,6 +17,7 @@ const FeatureCard: React.FC<featurecardprops> = ({ id, slug, buttonprops, catego
     const handleImageError = () => {
         setImgSrc('/images/featureimg.png');
     };
+    console.log(themeicon,"heloooooooooooooooooooo")
     return (
         <>
             <div className='group  border border-divider-100 animate-zoom'>
@@ -54,7 +55,7 @@ const FeatureCard: React.FC<featurecardprops> = ({ id, slug, buttonprops, catego
                                 themeicon === "Sketch" ? <Icon className='max-w-6 w-full h-6' name='sketch' /> : ""
                             }
                             {
-                                themeicon === "PhotoShop" ? <Icon className='max-w-6 w-full h-6' name='photoshop' /> : ""
+                                themeicon === "Photoshop" ? <Icon className='max-w-6 w-full h-6' name='photoshop' /> : ""
                             }
                             {
                                 themeicon === "ReactJs" ? <Icon className='max-w-6 w-full h-6' name='reactjs' /> : ""
@@ -65,6 +66,7 @@ const FeatureCard: React.FC<featurecardprops> = ({ id, slug, buttonprops, catego
                             {
                                 themeicon === "NextJs" ? <Icon className='max-w-6 w-full h-6  fill-black' name="nextjs" /> : ""
                             }
+                            
                         </div>
                     </div>
                     <div className='flex items-center justify-between bg-white p-[10px] md:px-5 md:py-3'>
