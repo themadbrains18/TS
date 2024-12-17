@@ -201,7 +201,7 @@ const Download = () => {
             ))
           ) : (
             <div className="text-center col-span-full text-gray-500">
-              Oops! the content you looking for was not found
+              Files you download appear here
             </div>
           )}
         </div>

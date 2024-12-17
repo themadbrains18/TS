@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Icon from "./Icon";
 import { cn } from "@/libs/utils";
-import { navtabprops, subCat } from "@/types/type";
+import { navtabprops, subCat } from "@/types/type"
 
 /**
  * SearchDropdown component allows users to select a product category from a dropdown menu.
@@ -16,6 +16,7 @@ const SearchDropdown: React.FC<navtabprops> = ({ subCat, onSelect }) => {
   const [prodcuts, setProducts] = useState("all products");
 
 
+  const subCatdata = [...(subCat ?? []), { id: "", name: "All Products", templateTypeId: "" }];
 
   return (
     <>
@@ -37,7 +38,7 @@ const SearchDropdown: React.FC<navtabprops> = ({ subCat, onSelect }) => {
           className={cn`absolute max-h-[420px] overflow-y-scroll z-[999] scroll-smooth shadow-1 transition-all duration-[0.3s] navsearch bg-white ${open !== false ? "visible opacity-[1]" : "opacity-0 invisible"
             } `}
         >
-          {subCat && subCat?.length > 0 && subCat?.map((item: subCat, index: number) => {
+          {subCatdata && subCatdata?.length > 0 && subCatdata?.map((item: subCat, index: number) => {
 
             return (
               <h4
