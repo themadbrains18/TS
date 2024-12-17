@@ -43,7 +43,6 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
     const { fetchDailyDownloads } = useDownload()
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-
     const closePopup = () => {
         setIsPopupOpen(false);
         setisDeletepopup(false);
@@ -401,7 +400,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                         <div className='flex items-end gap-x-[10px]'>
                                             <Input
                                                 disabled={isNameDisabled}
-                                                className='px-4 py-[13px] md:py-[13px]'
+                                                className={`px-4 py-[13px] md:py-[13px] ${isNameActive && 'border border-primary-100'}`}
                                                 label='Name'
                                                 placeholder='Name'
                                                 name='name'
@@ -446,7 +445,7 @@ const Profile: React.FC<sessionProps> = ({ session, userData }) => {
                                         <div className='flex items-end gap-x-[10px]'>
                                             <Input
                                                 disabled={isUserDisabled}
-                                                className='px-4 py-[13px] md:py-[13px]'
+                                                className={`px-4 py-[13px] md:py-[13px] ${isUsernameActive && 'border border-primary-100'}`}
                                                 label='Phone Number'
                                                 placeholder='Phone Number'
                                                 name='number'
