@@ -67,7 +67,7 @@ const Button: React.FC<ButtonProps> = ({
                 ""
               )}
               {downloadicon ? (
-                <Icon className={cn`${iconClass}`} name="downloadIcon" />
+                <Icon className={cn`${iconClass}`} name="downloadlogo" />
               ) : (
                 ""
               )}

@@ -151,7 +151,7 @@ const Download = () => {
                   {selectedSort}
                 </h2>
                 <Icon
-                  className={`p-1 w-5 h-5 transition-all duration-300 ${sort ? "[&>*]:fill-primary-100 rotate-180 " : " rotate-0 [&>*]:fill-[#5D5775]"
+                  className={`p-1 w-5 h-5 transition-all duration-300 ${sort ? "[&>*]:fill-primary-100 rotate-0 " : " rotate-180 [&>*]:fill-[#5D5775]"
                     }`}
                   name="sortaroow"
                 />
