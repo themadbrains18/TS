@@ -23,6 +23,7 @@ import { ProductDetailProps, TechTemplate } from '@/types/type';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/libs/utils';
+import BreadCrumbs from './BreadCrumbs';
 
 interface ProductBannertype {
     template: TechTemplate
@@ -106,6 +107,7 @@ const ProductBanner = ({ template, setActivetab }: ProductBannertype) => {
 
     return (
         <>
+        <BreadCrumbs title={template.title}/>
             {/* <section className='pb-10'>
                 <div className="container">
                     <div>

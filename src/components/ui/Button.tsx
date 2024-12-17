@@ -41,7 +41,7 @@ const Button: React.FC<ButtonProps> = ({
       {
         link === undefined ?
           <button
-            className={cn`${buttonClasses} ${className}  lowercase  flex items-center gap-x-[2px] cursor-pointer  ${disabled ? 'cursor-not-allowed opacity-80' : "cursor-pointer opacity-100"}`}
+            className={cn`${buttonClasses} ${className}  capitalize  flex items-center gap-x-[2px] cursor-pointer  ${disabled ? 'cursor-not-allowed opacity-80' : "cursor-pointer opacity-100"}`}
             onClick={onClick}
             disabled={isLoading || disabled}
             type={type}
@@ -80,7 +80,7 @@ const Button: React.FC<ButtonProps> = ({
           </button>
           :
           <Link href={`${link}`} className={cn`${linkclass}`}>  <button
-            className={cn`${buttonClasses} ${className} lowercase  flex items-center gap-x-[2px] cursor-pointer justify-center`}
+            className={cn`${buttonClasses} ${className} capitalize  flex items-center gap-x-[2px] cursor-pointer justify-center`}
             onClick={onClick}
             disabled={isLoading}
           >

@@ -3,7 +3,11 @@ import Icon from '@/components/Icon'
 import Link from 'next/link'
 import React from 'react'
 
-const BreadCrumbs = () => {
+interface breadcrumbs{
+  title:string
+}
+
+const BreadCrumbs: React.FC<breadcrumbs> = ({title}) => {
 
   return (
     <>
@@ -11,7 +15,8 @@ const BreadCrumbs = () => {
         <div className='flex items-center justify-between pb-[20px] md:pb-[40px] pt-[40px]'>
           <h2 className='text-[16px] font-normal leading-6 text-subparagraph'>
             <Link href="/">Home</Link> /
-            <Link href="/product"> Products</Link> /
+            <Link href="/product"> {`Product / ${title}`}</Link> 
+            {/* <Link href={`/product/`}></Link> */}
             {/* <Link href="/product/"> Product Details</Link> */}
           </h2>
           <div className='relative group flex gap-[6px] items-center cursor-pointer'>
