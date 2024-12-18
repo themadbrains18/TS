@@ -75,7 +75,7 @@ const SearchComponent: React.FC<navtabprops> = ({ subCat, classname, opensearch,
             </div>
 
             {/* Render search results */}
-            {showSearch && <div className={cn`${searchresults} search-results absolute top-[104%] mt-2 w-full min-w-[180px] duration-100 bg-white shadow-lg rounded-md overflow-y-auto z-[99] custom-scrollbar-horizon  `}>
+            {showSearch && searchQuery.length > 0 && <div className={cn`${searchresults} search-results absolute top-[104%] mt-2 w-full min-w-[180px] duration-100 bg-white shadow-lg rounded-md overflow-y-auto z-[99] custom-scrollbar-horizon  `}>
                 {loading && <p className="p-4 text-gray-500 text-center">Loading...</p>}
 
                 {/* Display results or no results found */}
