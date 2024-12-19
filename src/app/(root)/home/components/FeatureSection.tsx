@@ -32,6 +32,7 @@ type Template = {
         id: string,
         profileImg: string
     }
+    slug: string
 };
 
 type ApiResponse = {
@@ -44,11 +45,15 @@ const FeatureSection = () => {
     const [items, setItems] = useState<Template[]>([]);
     const { data: response, error, loading, fetchData } = useFetch<ApiResponse>();
 
+
+
+
+    // Effect to fetch data when the component mounts
     useEffect(() => {
         fetchData("/feature-templates");
     }, []);
 
-
+    // Effect to update the `items` state when the response is received
     useEffect(() => {
         if (response) {
             setItems(response.templates);
@@ -71,33 +76,44 @@ const FeatureSection = () => {
                         <FeatureSkeleton />
                     </div>
                 ) : (
-                    <div className='mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-[30px]'>
+                    <>
                         {
-                            items?.map((item, index) => {
-                                return (
-                                    <Fragment key={index}>
-                                        <FeatureCard
-                                            id={item?.id}
-                                            buttonprops={item?.price}
-                                            category={item?.templateType?.name}
-                                            themeicon={item?.softwareType?.name}
-                                            title={item?.title}
-                                            uploadericon={item?.user?.profileImg}
-                                            uploadername={item?.user?.name}
-                                            currentimage={1}
-                                            poster={item?.sliderImages[0]?.imageUrl}
-                                            totalimages={item?.sliderImages?.length}
-                                            isPaid={true}
-                                        />
-                                    </Fragment>
-                                )
-                            })
+                            items && items.length > 0 ?
+                                <><div className='mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-[30px]'>
+                                    {
+                                        items && items.length > 0 && items?.map((item, index) => {
+                                            return (
+                                                <Fragment key={index}>
+                                                    <FeatureCard
+                                                        id={item?.id}
+                                                        buttonprops={item?.price}
+                                                        category={item?.templateType?.name}
+                                                        themeicon={item?.softwareType?.name}
+                                                        title={item?.title}
+                                                        uploadericon={item?.user?.profileImg}
+                                                        uploadername={item?.user?.name}
+                                                        currentimage={1}
+                                                        poster={item?.sliderImages[0]?.imageUrl}
+                                                        totalimages={item?.sliderImages?.length}
+                                                        isPaid={true}
+                                                        slug={item?.slug}
+                                                    />
+                                                </Fragment>
+                                            )
+                                        })
+                                    }
+                                </div></>
+                                :
+                                <><p className='text-[20px] text-subheading text-center'>
+                                    Template Not Found
+                                </p></>
                         }
-                    </div>
+                    </>
+
 
                 )}
                 {
-                    items?.length > 0 &&
+                    items && items?.length > 5 &&
                     <div className='mt-10 flex w-full items-center justify-center'>
                         <Button link='/product' linkclass='w-full md:w-auto' className='w-full' variant='secondary'>
                             View All Products

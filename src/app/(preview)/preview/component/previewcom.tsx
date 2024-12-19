@@ -34,6 +34,9 @@ const Previewcom: FC<PreviewImagesProps> = ({ previewImages = [], previewMobileI
     }, [activeButton, previewImages, previewMobileImages]);
 
 
+       /**
+     * Function to toggle the full-screen mode off.
+     */
     const handleGoBack = () => {
         setShowFullScreen(false)
     }
@@ -43,7 +46,7 @@ const Previewcom: FC<PreviewImagesProps> = ({ previewImages = [], previewMobileI
             {showFullScreen ? (
                 <FullScreen handleGoBack={handleGoBack} previewImages={previewImages} previewMobileImages={previewMobileImages} />
             ) : (
-                <section className="pt-10 md:pt-20 bg-bgcolor">
+                <section className="pt-10 md:pt-20 bg-bgcolor min-h-screen">
                     <div className="container">
                         <div className="flex items-center gap-x-5">
                             {views?.map((item, index) => (
@@ -69,13 +72,12 @@ const Previewcom: FC<PreviewImagesProps> = ({ previewImages = [], previewMobileI
                                     {
                                         previewImages && previewImages.length > 0 ?
                                             <div className='grid gap-y-5  tab:grid-cols-2 sm:grid-cols-3 xl:grid-cols-4  gap-x-[30px]'>
-
                                                 {
                                                     previewImages?.map((item, index) => (
                                                         <Fragment key={`desktop-${index}`}>
                                                             <Image
                                                                 onClick={() => setShowFullScreen(true)}
-                                                                className="cursor-pointer"
+                                                                className="cursor-pointer animate-zoom"
                                                                 src={item.imageUrl}
                                                                 width={358}
                                                                 height={1000}
@@ -87,19 +89,19 @@ const Previewcom: FC<PreviewImagesProps> = ({ previewImages = [], previewMobileI
                                                 }
                                             </div>
                                             :
-                                            <div className='grid gap-y-5  tab:grid-cols-2 sm:grid-cols-3 xl:grid-cols-4  gap-x-[30px]'>
-                                                <Skeleton />
-                                                <Skeleton />
-                                                <Skeleton />
-                                                <Skeleton />
-                                            </div>
+                                            previewImages && previewImages.length === 0 ?
+                                                <p className='text-subparagraph font-medium items-center text-[30px]'>Template not found</p>
+                                                :
+                                                <div className='grid gap-y-5  tab:grid-cols-2 sm:grid-cols-3 xl:grid-cols-4  gap-x-[30px]'>
+                                                    <Skeleton />
+                                                    <Skeleton />
+                                                    <Skeleton />
+                                                    <Skeleton />
+                                                </div>
                                     }
                                 </>)
-
-
                                 :
                                 (<>
-
                                     {
                                         previewMobileImages && previewMobileImages.length > 0 ?
                                             <div className='grid gap-y-5  tab:grid-cols-2 sm:grid-cols-3 xl:grid-cols-4  gap-x-[30px]'>
@@ -108,7 +110,7 @@ const Previewcom: FC<PreviewImagesProps> = ({ previewImages = [], previewMobileI
                                                         <Fragment key={`mobile-${index}`}>
                                                             <Image
                                                                 onClick={() => setShowFullScreen(true)}
-                                                                className="cursor-pointer"
+                                                                className="cursor-pointer animate-zoom"
                                                                 src={item.imageUrl}
                                                                 width={358}
                                                                 height={1000}
@@ -127,9 +129,7 @@ const Previewcom: FC<PreviewImagesProps> = ({ previewImages = [], previewMobileI
                                                 <Skeleton />
                                             </div>
                                     }
-
                                 </>)
-
                             }
                         </div>
                     </div>

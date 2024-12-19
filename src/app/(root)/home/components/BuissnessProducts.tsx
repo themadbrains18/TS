@@ -66,7 +66,7 @@ const BuissnessProducts = () => {
     ]
     return (
         <>
-            <section className='py-10 lg:py-[100px] bg-[url("/images/buissnessbg.png")] bg-no-repeat bg-contain bg-right'>
+            <section className='py-10 lg:py-[100px] bg-[url("/images/buissnessbg.png")] bg-no-repeat bg-contain bg-right '>
                 <div className="container">
                     <div>
                         <h2 className='text-subheading sm:leading-9 font-bold text-[22px] tab:text-[28px]'>Free to Download</h2>

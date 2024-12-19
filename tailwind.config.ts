@@ -71,7 +71,6 @@ const config: Config = {
     animation: {
 
       spinCustom: 'spinCustom 1.5s ease-in-out infinite',
-
       // Fade up and down
       "fade-up": "fade-up 0.5s",
       "fade-down": "fade-down 0.5s",
@@ -83,9 +82,12 @@ const config: Config = {
       "shake": "shake 0.3s ease-in-out",
       "zoom": "zoom 0.4s",
       // "zoom": "zoom 0.5s cubic-bezier(0.19, 1, 0.22, 1)",
+      'zoom-out': 'zoomOut 2s  ease-in-out infinite alternate ',
     },
 
     keyframes: {
+
+
       spinCustom: {
         '0%': { transform: 'rotate(0deg)' },
         '50%': { transform: 'rotate(180deg)' },
@@ -129,6 +131,14 @@ const config: Config = {
         "0%": { transform: "scale(0.9)", opacity: "0" },
         "100%": { transform: "scale(1)", opacity: "1" },
       },
+
+      // zoom out  
+      zoomOut: {
+        '0%': { transform: 'scale(1)', opacity: '1' },
+        '100%': { transform: 'scale(2)', opacity: '0.5' },
+      },
+
+
     }
 
   },

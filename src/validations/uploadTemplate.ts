@@ -91,6 +91,7 @@ const isFileSizeValid = (file: any) => {
 
 const uploadTemplateBase = z.object({
   title: z.string().min(1, { message: "Enter template name" }).max(100),
+  titleinfo: z.string().optional().nullable(),
   templateTypeId: z.string().max(200, { message: "Select Template Type" }),
   subCategory: z.string().nullable().optional(),
   subCategoryId: z.string().max(200, { message: "Select Category" }),
@@ -106,6 +107,20 @@ const uploadTemplateBase = z.object({
     .max(5, { message: "Only 5 tags are allowed." }),
   isPaid: z.boolean().optional().default(false),
   price: z.string().optional(),
+  metatitle: z
+    .string()
+    .min(5, "Meta title must be at least 5 characters long.")
+    .max(70, "Meta title must be no more than 70 characters."),
+  metadescription: z
+    .string()
+    .min(10, "Meta description must be at least 10 characters long.")
+    .max(250, "Meta description must be no more than 250 characters."),
+  slug: z
+    .string()
+    .regex(/^[a-z0-9-]+$/, "Slug must contain only lowercase letters, numbers, and hyphens.")
+    .min(3, "Slug must be at least 3 characters long.")
+    .max(70, "Slug must be no more than 70 characters."),
+
 });
 
 
@@ -143,8 +158,6 @@ export const uploadTemplateSchema = uploadTemplateBase.extend({
   .superRefine((data, ctx) => {
 
     const { subCategory } = data; // Correctly access parent data via ctx.data
-    console.log(subCategory,"=subcat");
-    
 
     // If subCategory includes 'mobile', we allow previewImages to be undefined
     if (subCategory?.includes('Mobile')) {
@@ -186,12 +199,11 @@ export const uploadTemplateUpdateSchema = uploadTemplateBase.extend({
 }).superRefine((data, ctx) => {
 
   const { subCategory, subCategoryId } = data; // Correctly access parent data via ctx.data
-  console.log(data,"=subcat");
   // If subCategory includes 'mobile', we allow previewImages to be undefined
   if (subCategory?.includes('Mobile')) {
     return; // No validation needed if subCategory is 'mobile'
   }
-  if (subCategoryId !=="cm48et4wn0004qnnxptj5ioaz" && data?.previewImages && data?.previewImages.length <= 0) {
+  if (subCategoryId !== "cm48et4wn0004qnnxptj5ioaz" && data?.previewImages && data?.previewImages.length <= 0) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
       message: "At least 1 preview image is required.",

@@ -3,17 +3,24 @@ import Icon from '@/components/Icon'
 import Link from 'next/link'
 import React from 'react'
 
-const BreadCrumbs = () => {
+interface breadcrumbs{
+  title:string
+}
+
+const BreadCrumbs: React.FC<breadcrumbs> = ({title}) => {
+
   return (
     <>
       <div className='container'>
         <div className='flex items-center justify-between pb-[20px] md:pb-[40px] pt-[40px]'>
           <h2 className='text-[16px] font-normal leading-6 text-subparagraph'>
             <Link href="/">Home</Link> /
-            <Link href="/product"> Products</Link> /
-            <Link href="/productdetail"> Product Details</Link>
+            <Link href="/product"> Product / </Link> 
+            <span >{title}</span>
+            {/* <Link href="/product/"> Product Details</Link> */}
           </h2>
           <div className='relative group flex gap-[6px] items-center cursor-pointer'>
+
             {/* <p className='text-sm   :text-subparagraph leading-5'>4.9</p> */}
             {/* <Icon className='inline-block w-6 h-6' name='star' /> */}
 

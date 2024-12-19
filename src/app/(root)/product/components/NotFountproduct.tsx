@@ -25,7 +25,7 @@ const NotFoundProduct = ({ clearall }: NotFoundinter): JSX.Element => {
             <div className='flex justify-between w-full lg:flex-row flex-col gap-5 items-center '>
                 {/* Suggest clearing filters */}
                 <h3 className='text-[16px] font-normal leading-6 text-subparagraph'>
-                    Try <span onClick={clearall} className='text-primary-100 cursor-pointer '>clearing some filters</span> and try again.
+                    Try <span onClick={clearall} className='text-primary-100 cursor-pointer underline '>clearing some filters</span> and try again.
                 </h3>
 
                 {/* Button to find more products */}

@@ -53,7 +53,7 @@ const DownloadCard: FC<downloadcard> = ({
                             variant='primary'
                             className={cn`p-2 max-w-[66px] w-full flex justify-center ${downloadClass}`}
                             downloadicon={true}
-                            iconClass='w-5 h-5'
+                            iconClass='w-[30px] h-[26px]'
                         />
                     </Link>
                 </div>

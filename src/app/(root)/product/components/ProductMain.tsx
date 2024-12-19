@@ -8,8 +8,6 @@ import ProductTags from './ProductTags';
 import useOnClickOutside from '@/hooks/useOnClickOutside';
 import Button from '@/components/ui/Button';
 import { useSearchParams } from 'next/navigation';
-import useFetch from '@/hooks/useFetch';
-// import NotFoundProduct from './NotFoundProduct';
 import { TechTemplate, TemplateResponse } from '@/types/type';
 import useDebounce from '@/hooks/useDebounce'; // Import the useDebounce hook
 import FeatureSkeleton from '@/components/skeletons/FeatureSkeleton';
@@ -49,6 +47,7 @@ const ProductMain = () => {
     const closefilter = () => setFilter(false);
     const [sort, setSort] = useState(false);
     const [selectedSort, setSelectedSort] = useState("Sort by");
+
     const sorthandledropdown = () => setSort(!sort);
     const handleItemClick = (itemTitle: string) => {
         setSelectedSort(itemTitle);
@@ -99,9 +98,9 @@ const ProductMain = () => {
             if (sort) {
                 apiUrl += `&sortBy=${sort}`;
             }
-            const response = await fetch(apiUrl,{
-                headers:{
-                    'ngrok-skip-browser-warning':'true'
+            const response = await fetch(apiUrl, {
+                headers: {
+                    'ngrok-skip-browser-warning': 'true'
                 }
             });
             const data: TemplateResponse = await response.json();
@@ -172,8 +171,8 @@ const ProductMain = () => {
                                             <Icon name='filter' />
                                             <h3 className='lg:text-[18px] leading-[28px] font-normal text-subparagraph'>Filters</h3>
                                         </div>
-                                        <div className='relative cursor-pointer' onMouseEnter={() => setSort(true)} onMouseLeave={() => setSort(false)}>
-                                            <div onClick={sorthandledropdown} className={`border duration-[0.5s] ${sort ? "border-primary-100" : "border-divider-100"} group pr-[15px] pl-5 py-[8px] flex gap-[6px] items-center`}>
+                                        <div onClick={()=>setSort(!sort)} className='relative cursor-pointer' onMouseEnter={() => setSort(true)} onMouseLeave={() => setSort(false)}>
+                                            <div className={`border duration-[0.5s] ${sort ? "border-primary-100" : "border-divider-100"} group pr-[15px] pl-5 py-[8px] flex gap-[6px] items-center`}>
                                                 <h2 className={`text-primary text-4 font-semibold leading-6 duration-[0.2s] ${sort ? "text-primary-100" : "text-subheading"} text-nowrap`}>
                                                     {selectedSort}
                                                 </h2>
@@ -181,7 +180,7 @@ const ProductMain = () => {
                                                     <Icon className={`p-1 ${sort ? "[&>*]:fill-primary-100" : "[&>*]:fill-[#5D5775]"}`} name="sortaroow" />
                                                 </div>
                                             </div>
-                                            <div className={`absolute right-0 ${sort ? "opacity-1 visible" : "opacity-0 invisible"} duration-[0.5s] top-[45px] z-10 bg-white`}>
+                                            <div className={`absolute right-0 ${sort ? "opacity-1 visible" : "opacity-0 invisible"} shadow-md duration-[0.5s] top-[45px] z-10 bg-white`}>
                                                 {Sortdata?.map((item, index) => (
                                                     <h4 key={index + item?.title} onClick={() => handleItemClick(item?.title)} className={`text-subparagraph text-start leading-6 py-2 px-[30px] capitalize cursor-pointer text-nowrap hover:bg-primary-200 border-l-[2px] hover:border-primary-100`}>
                                                         {item?.title}
@@ -220,6 +219,7 @@ const ProductMain = () => {
                                                             currentimage={1}
                                                             totalimages={item?.sliderImages?.length}
                                                             isPaid={true}
+                                                            slug={item?.slug}
                                                         />
                                                     </Fragment>
                                                 </>

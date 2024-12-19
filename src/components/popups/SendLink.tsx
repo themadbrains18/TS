@@ -71,6 +71,7 @@ const SendLink = ({ isPopupOpen, closePopup, openthirdpopup, id, url, tittle }: 
         } catch (err) {
             console.error('Error:', err);
         }
+        reset()
     };
 
     /**

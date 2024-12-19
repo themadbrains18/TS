@@ -151,13 +151,13 @@ const Download = () => {
                   {selectedSort}
                 </h2>
                 <Icon
-                  className={`p-1 w-5 h-5 transition-all duration-300 ${sort ? "[&>*]:fill-primary-100 rotate-180 " : " rotate-0 [&>*]:fill-[#5D5775]"
+                  className={`p-1 w-5 h-5 transition-all duration-300 ${sort ? "[&>*]:fill-primary-100 rotate-0 " : " rotate-180 [&>*]:fill-[#5D5775]"
                     }`}
                   name="sortaroow"
                 />
               </div>
 
-              {/* Sort Dropdown Items */}
+  
 
               <div
                 className={`absolute shadow-lg w-[208px] right-0 max-[640px]:left-0 ${sort ? "opacity-1 visible" : "opacity-0 invisible"
@@ -201,7 +201,7 @@ const Download = () => {
             ))
           ) : (
             <div className="text-center col-span-full text-gray-500">
-              Oops! the content you looking for was not found
+              Files you download appear here
             </div>
           )}
         </div>

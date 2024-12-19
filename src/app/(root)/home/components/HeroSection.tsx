@@ -34,13 +34,14 @@ const HeroSection = () => {
                             <div className='lg:max-w-[570px] w-full mt-[10px] tab:mt-5'>
                                 <h1 className='text-darkpureple text-4xl leading-[43px] md:text-[55px] md:leading-[70px] font-extrabold' >Free High-quality UI kits and design resources</h1>
                             </div>
+
                             <div className='lg:max-w-[517px] w-full border-l md:border-l-[4px] border-[#CCE0A5] pl-1 md:pl-4 my-5 md:my-[30px]'>
                                 <p className='text-subheading text-sm md:text-xl font-normal md:leading-7'>
                                     Template Studio is the place to find high-quality design resources for designers, creative agencies and developers
                                 </p>
                             </div>
-                            <div className='max-w-[200px] w-full overflow-hidden slider'>
 
+                            <div className='max-w-[200px] w-full overflow-hidden slider'>
                                 <div className='flex gap-x-5 slide-track'>
                                     <div className='py-[10px] px-4 bg-[#cce0a519] slide'>
                                         <Icon className='w-[14px] h-6' name='figma' />
@@ -63,12 +64,13 @@ const HeroSection = () => {
                                 </div>
                             </div>
                         </div>
+
                         <div className='relative pl-5 flex lg:max-w-[657px] w-full items-end mt-[30px] lg:mt-0 '>
                             <Image className='absolute top-0 left-0 lg:max-w-[230px] w-[50%] h-[100%]' src={'/images/purplebg.png'} width={230} height={587} alt='purplebg' />
                             <div className='lg:max-w-[635px] w-full relative'>
-                                <div className='p-[10px] rounded-2xl  bg-white relative z-[4] inline-block max-w-[262px] tab:max-w-full mt-[50px] lg:mt-0 md:w-[70%] lg:max-w-[490px] lg:w-full  group cursor-pointer'>
-                                    <div className='overflow-hidden h-[187px] tab:h-[344px]'>
-                                        <Image className='relative z-[4] max-w-full lg:max-w-[470px] w-full transition-all ease-in-out duration-[7s] group-hover:translate-y-[-81%]' src={'/images/heroscroll.png'} width={470} height={324} alt='purplebg' />
+                                <div className='p-[10px] rounded-2xl bg-white relative z-[4] inline-block max-w-[262px] tab:max-w-full mt-[50px] lg:mt-0 md:w-[70%] lg:max-w-[490px] lg:w-full  group cursor-pointer'>
+                                    <div className='overflow-hidden h-[187px] tab:h-[344px] border-[6px] border-[#FFF6FF] rounded-2xl'>
+                                        <Image className='relative z-[4] max-w-full lg:max-w-[470px] w-full transition-all ease-in-out duration-[7s] group-hover:translate-y-[-81%]' src={'/images/longscroll.png'} width={470} height={324} alt='purplebg' />
                                     </div>
 
                                 </div>

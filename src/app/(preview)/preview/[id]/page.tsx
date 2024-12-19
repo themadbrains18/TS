@@ -14,6 +14,16 @@ interface Params {
     id: string;
 }
 
+
+
+/**
+ * The `Page` component fetches data based on the provided template ID and renders a preview of the template.
+ * 
+ * @param {Object} params - The route parameters.
+ * @param {Params} params.id - The template ID to fetch data for.
+ * 
+ * @returns {JSX.Element} - A preview of the template or a NotFound component if the response is not valid.
+ */
 const Page = async ({ params }: { params: Params }) => {
     const { id } = params;
 
@@ -22,7 +32,7 @@ const Page = async ({ params }: { params: Params }) => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'ngrok-skip-browser-warning':'true'
+            'ngrok-skip-browser-warning': 'true'
         },
         next: { revalidate: 0 }
     })
@@ -30,9 +40,11 @@ const Page = async ({ params }: { params: Params }) => {
     if (!response.ok) {
         return < NotFound />
     }
+
+    // Parse the response as JSON
     const res = await response.json()
 
-
+    // Render the preview component with the fetched data
     return (
         <>
             <Previewcom previewImages={res?.previewImages} previewMobileImages={res?.previewMobileImages} />
@@ -45,7 +57,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
     const { id } = params;
 
     try {
-        const siteData = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/templates-by-id/${id}`,{headers:{'ngrok-skip-browser-warning':'true'}}).then((res) => res.json());
+        const siteData = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/templates-by-id/${id}`, { headers: { 'ngrok-skip-browser-warning': 'true' } }).then((res) => res.json());
 
         return {
             title: siteData.title || 'Template Studio - Product Details',

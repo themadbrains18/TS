@@ -187,7 +187,7 @@ const Footer = () => {
                   {
                     agreements?.map((item, index) => {
                       return (<Fragment key={index}>
-                        <li className="h-6  overflow-hidden group inline-block">
+                        <li className="h-6  overflow-hidden group inline-block cursor-pointer">
                           <p className="flex flex-col transition-all duration-500 group-hover:-translate-y-[26px]">
                             <span className="text-[14px] md:text-[16px] text-subparagraph leading-6 capitalize text-nowrap ">{item}</span>
                             <span className=" capitalize transition-all duration-500 text-subheading group-hover:border-b-[1px] group-hover:border-subheading text-nowrap">{item}</span>

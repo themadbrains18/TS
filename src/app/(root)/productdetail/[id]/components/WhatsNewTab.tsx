@@ -31,7 +31,7 @@ const WhatsNewTab: React.FC<whatsNewProps> = ({ details }) => {
     ]
     return (
         <>
-            <div className='mt-10 lg:mt-20'>
+            <div className='md:p-20 p-8p-20'>
                 <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-y-[10px] gap-x-[30px]'>
                     {
                         carddata?.map((item, index) => {

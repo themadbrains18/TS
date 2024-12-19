@@ -1,3 +1,5 @@
+import Icon from '@/components/Icon';
+import Link from 'next/link';
 import React from 'react';
 /*
  * Represents a resource with a URL and a name.
@@ -42,30 +44,34 @@ const CreditTab: React.FC<CreditsProps> = ({ credits }) => {
                     credit.illustrations.some(illustration => illustration.name !== "");
 
                 return (
-                    <div key={index} className="mt-10 lg:mt-20">
+                    <div key={index} className="md:p-20 p-8">
                         <h3 className="text-xl font-bold leading-7">Sources</h3>
                         {hasContent ? (
                             <div className="mt-5 py-5 px-[10px] md:py-10 md:px-[50px] border border-divider-200">
-                                <div className="grid md:grid-cols-2 grid-cols-1 mb-[10px] pb-[10px] md:pb-5 md:mb-5 border-b border-divider-200">
-                                    {credit.fonts[0]?.name !== "" && (
+                                <div className="grid md:grid-cols-2 grid-cols-1 mb-[10px] pb-[10px] md:pb-5 md:mb-5 border-b border-divider-200 list-disc list-outside">
+                                    {credit && credit?.fonts[0]?.name !== "" && (
                                         <div>
-                                            <h3 className="text-subparagraph leading-6 mb-5 text-sm tab:text-base">Fonts Used</h3>
-                                            <ul className="list-inside list-disc m-0 p-0">
-                                                {credit.fonts.map((font, fontIndex) => (
-                                                    <li key={fontIndex} className="line-clamp-2 text-xs tab:text-sm leading-5">
-                                                        {font.name}
+                                            <h3 className=" text-subparagraph leading-6 mb-5 text-sm tab:text-base font-medium ">Fonts Used</h3>
+                                            <ul className='list-disc list-outside marker:text-[#5D5775]' >
+                                                {credit?.fonts?.map((font, fontIndex) => (
+                                                    <li key={fontIndex} className=" group relative text-xs tab:text-[16px] leading-5 text-[#1496F5] cursor-pointer ">
+                                                        <Link className=' max-w-[550px] w-full' target='_blank' href={`${font?.url}`}>
+                                                            {font?.name}
+                                                        </Link>
                                                     </li>
                                                 ))}
                                             </ul>
                                         </div>
                                     )}
-                                    {credit.icons[0]?.name !== "" && (
+                                    {credit?.icons[0]?.name !== "" && (
                                         <div>
-                                            <h3 className="text-subparagraph leading-6 mb-5 text-sm tab:text-base">Icons Used</h3>
-                                            <ul className="list-inside list-disc m-0 p-0">
-                                                {credit.icons.map((icon, iconIndex) => (
-                                                    <li key={iconIndex} className="line-clamp-2 text-xs tab:text-sm leading-5">
-                                                        {icon.name}
+                                            <h3 className="text-subparagraph leading-6 mb-5 text-sm tab:text-base font-medium ">Icons Used</h3>
+                                            <ul className='list-disc list-outside  marker:text-[#5D5775]' >
+                                                {credit?.icons?.map((icon, iconIndex) => (
+                                                    <li key={iconIndex} className="text-xs tab:text-[16px] leading-5 text-[#1496F5]   cursor-pointer ">
+                                                        <Link className='max-w-[550px] w-full' target='_blank' href={`${icon?.url}`}>
+                                                            {icon?.name}
+                                                        </Link>
                                                     </li>
                                                 ))}
                                             </ul>
@@ -75,11 +81,13 @@ const CreditTab: React.FC<CreditsProps> = ({ credits }) => {
                                 <div className="grid md:grid-cols-2 grid-cols-1">
                                     {credit.images[0]?.name !== "" && (
                                         <div>
-                                            <h3 className="text-subparagraph leading-6 mb-5 text-sm tab:text-base">Images Used</h3>
-                                            <ul className="list-inside list-disc m-0 p-0">
-                                                {credit.images.map((image, imageIndex) => (
-                                                    <li key={imageIndex} className="line-clamp-2 text-xs tab:text-sm leading-5">
-                                                        {image.name}
+                                            <h3 className="text-subparagraph leading-6 mb-5 text-sm tab:text-base font-medium ">Images Used</h3>
+                                            <ul className='list-disc list-outside marker:text-[#5D5775]' >
+                                                {credit?.images?.map((image, imageIndex) => (
+                                                    <li key={imageIndex} className="text-xs tab:text-[16px] leading-5 text-[#1496F5]   cursor-pointer ">
+                                                        <Link className='max-w-[550px] w-full' target='_blank' href={`${image?.url}`}>
+                                                            {image?.name}
+                                                        </Link>
                                                     </li>
                                                 ))}
                                             </ul>
@@ -87,11 +95,14 @@ const CreditTab: React.FC<CreditsProps> = ({ credits }) => {
                                     )}
                                     {credit.illustrations[0]?.name !== "" && (
                                         <div>
-                                            <h3 className="text-subparagraph leading-6 mb-5 text-sm tab:text-base">Illustrations Used</h3>
-                                            <ul className="list-inside list-disc m-0 p-0">
-                                                {credit.illustrations.map((illustration, illustrationIndex) => (
-                                                    <li key={illustrationIndex} className="line-clamp-2 text-xs tab:text-sm leading-5">
-                                                        {illustration.name}
+                                            <h3 className="text-subparagraph leading-6 mb-5 text-sm tab:text-base font-medium ">Illustrations Used</h3>
+                                            <ul className='list-disc list-outside marker:text-[#5D5775] ' >
+                                                {credit?.illustrations?.map((illustration, illustrationIndex) => (
+                                                    <li key={illustrationIndex} className="text-xs tab:text-[16px] leading-5 text-[#1496F5]  cursor-pointer ">
+                                                        <Link className='max-w-[550px] w-full' target='_blank' href={`${illustration?.url}`}>
+                                                            {illustration?.name}
+                                                        </Link>
+
                                                     </li>
                                                 ))}
                                             </ul>

@@ -20,7 +20,7 @@ const DescriptionTab: React.FC<DescriptionTabProps> = ({ description }) => {
     const descriptions = description || '';
     const isLongDescription = descriptions.length > maxLength;
     return (
-        <div className='mt-10 lg:mt-20'>
+        <div className=' md:p-20 p-8'>
             <h3 className='text-xl font-bold leading-7'>Overview</h3>
             <div className='flex flex-col items-start gap-y-5 pt-[15px] md:pt-5 '>
                 <div
@@ -36,7 +36,6 @@ const DescriptionTab: React.FC<DescriptionTabProps> = ({ description }) => {
                         {showFullDescription ? 'Read Less' : 'Read More'}
                     </button>
                 )}
-
             </div>
         </div>
     );

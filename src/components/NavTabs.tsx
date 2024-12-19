@@ -7,14 +7,13 @@ import { navtabprops, subCat, TechTemplate, TemplateResponse } from "@/types/typ
 import { useSearchParams } from "next/navigation";
 import useFetch from "@/hooks/useFetch";
 
+
 /**
  * NavTabs component displays a set of navigation tabs for product categories.
  * It allows users to select a tab and view related products.
  *
  * @returns {JSX.Element} The rendered NavTabs component.
  */
-
-
 
 
 const NavTabs: React.FC<navtabprops> = ({ subCat, setSidebar, classname }) => {
@@ -26,6 +25,7 @@ const NavTabs: React.FC<navtabprops> = ({ subCat, setSidebar, classname }) => {
   /**
    * useEffect Hook: This effect runs when either `searchParams` or `subCat` changes.
    */
+  
   useEffect(() => {
 
     const subCatId = searchParams.get('subcat');
@@ -39,6 +39,7 @@ const NavTabs: React.FC<navtabprops> = ({ subCat, setSidebar, classname }) => {
   /**
    * Handle the activation of a sub-category tab and fetch the corresponding templates.
    */
+
   const handleActive = (item: subCat | any, index: number) => {
     setActivetab(index)
     setSubCategory(item)
@@ -49,6 +50,8 @@ const NavTabs: React.FC<navtabprops> = ({ subCat, setSidebar, classname }) => {
     fetchData(`/templates?templateTypeId=${subCat?.[0]?.templateTypeId}&subCatId=${subCat?.[0]?.id}&page=1&limit=4`, { next: { revalidate: 0 } })
   }, [])
 
+
+  
   return (
     <>
       {/* Tabs Section */}
@@ -116,6 +119,7 @@ const NavTabs: React.FC<navtabprops> = ({ subCat, setSidebar, classname }) => {
                       icon="/icons/figma.svg"
                       themeicon={item?.softwareType?.name}
                       classnamemain="md:min-w-[248px] w-[148px]"
+                      slug={item?.slug}
                     />
                   </Fragment>
                 ))

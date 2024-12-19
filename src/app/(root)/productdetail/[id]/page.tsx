@@ -5,6 +5,7 @@ import ProductDescription from './components/ProductDescription';
 import BreadCrumbs from './components/BreadCrumbs';
 import { Metadata } from 'next';
 import NotFound from '@/app/not-found';
+import MainSection from './components/MainSection';
 
 /**
  * Page component renders the product detail page, including the breadcrumbs,
@@ -36,7 +37,7 @@ const Page = async ({ params }: { params: Params }) => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'ngrok-skip-browser-warning':'true'
+      'ngrok-skip-browser-warning': 'true'
     },
     next: { revalidate: 0 }
   });
@@ -67,14 +68,7 @@ const Page = async ({ params }: { params: Params }) => {
   return (
     <>
       <Suspense fallback={<CustomSpinner />}>
-        <div>
-          <div className=' relative xl:after:h-full xl:after:w-full xl:after:absolute xl:after:top-0 xl:after:left-0 xl:after:bg-[url(/images/bgeffect.png)] after:z-[-1] ' >
-            <BreadCrumbs />
-            <ProductBanner template={template} />
-            <ProductDescription template={template} />
-          </div>
-          <RelatedProducts />
-        </div>
+        <MainSection template={template} />
       </Suspense>
 
     </>
@@ -87,7 +81,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const { id } = params;
 
   try {
-    const siteData = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/templates-by-id/${id}`,{headers:{'ngrok-skip-browser-warning':'true'}}).then((res) => res.json());
+    const siteData = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/templates-by-id/${id}`, { headers: { 'ngrok-skip-browser-warning': 'true' } }).then((res) => res.json());
 
     return {
       title: siteData.title || 'Template Studio - Product Details',

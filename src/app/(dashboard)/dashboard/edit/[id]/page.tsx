@@ -8,27 +8,38 @@ import { authOptions } from '@/libs/auth';
 const page = async ({ params }: { params: { id: string } }) => {
 
   const template = async (): Promise<TechTemplate | any | number> => {
+    // Get server session
     let session: Session | null = await getServerSession(authOptions)
+    // Check if user session exists
     if (!session?.user) return 'Unauthorize'
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/templates-by-id/${params.id}`, {
 
-      method: 'GET',
+    // Fetch template data by ID
+    const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/templates-by-id/${params.id}`, {
+      method: 'GET', // HTTP GET method for fetching data
       headers: {
-        'Content-Type': 'application/json',
-        'ngrok-skip-browser-warning':'true'
+        'Content-Type': 'application/json', // Specify content type
+        'ngrok-skip-browser-warning': 'true' // Skip browser warning for ngrok
       },
 
     });
+
+
+    // Return null if no response is received
+
     if (!response) return null
 
+    // Parse and return JSON data from the response
     return await response.json();
   };
 
-  const getData = await template();
+  const getData = await template();// Execute the template function
 
+
+
+  // Check if the fetched data is null
   if (getData == null) {
-    return <NotFound />
+    return <NotFound />  // Render NotFound component if no data is found
   }
 
 
