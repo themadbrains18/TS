@@ -108,7 +108,7 @@ const ProductBanner = ({ template, setActivetab }: ProductBannertype) => {
     return (
         <>
         <BreadCrumbs title={template.title}/>
-            {/* <section className='pb-10'>
+            <section className='pb-10'>
                 <div className="container">
                     <div>
                         <div className='flex items-center gap-x-2 pt-2.5 md:pt-5 border-t  mb-5'>
@@ -134,7 +134,7 @@ const ProductBanner = ({ template, setActivetab }: ProductBannertype) => {
                                                 width={850}
                                                 height={500}
                                                 alt="Selected"
-                                                className="overflow-hidden group-hover:scale-[1.1] duration-[0.5s]  w-full h-full lg:object-cover rounded-lg shadow-md"
+                                                className="overflow-hidden scale-105 group-hover:scale-[1] duration-[0.5s]  w-full lg:object-cover rounded-lg shadow-md "
                                             />
                                         </div>
                                     </div>
@@ -148,12 +148,12 @@ const ProductBanner = ({ template, setActivetab }: ProductBannertype) => {
                                         <Swiper
                                             navigation={false}
                                             modules={[Navigation]}
-                                            slidesPerView={6}
+                                            slidesPerView={5}
                                             spaceBetween={10}
                                             loop={true}
                                             breakpoints={{
                                                 315: {
-                                                    slidesPerView: 3,
+                                                    slidesPerView: 5,
                                                 },
                                                 500: {
                                                     slidesPerView: 5,
@@ -171,9 +171,10 @@ const ProductBanner = ({ template, setActivetab }: ProductBannertype) => {
                                                 <SwiperSlide className='w-full' key={id}>
                                                     <div
                                                         onClick={() => setActiveImageId(id)} // Set active image by ID
-                                                        className={`cursor-pointer min-w-[50px] w-full border-2 overflow-hidden p-[5px] h-[88px] ${activeImageId === id ? 'border-primary-900 border-[0.5px] md:border-[2px]' : 'border-transparent'} animate-zoom`}
+                                                        className={`cursor-pointer   overflow-hidden  `}
                                                     >
-                                                        <Image className="w-full object-contain h-[76px]" src={`${imageUrl}`} height={76} width={120} alt={`Thumbnail ${id}`} />
+                                                        {/* <Image className="w-full object-contain h-[76px]" src={`${imageUrl}`} height={76} width={120} alt={`Thumbnail ${id}`} /> */}
+                                                        <Image className={cn`${activeImageId === id ? 'border-primary-900 border-[0.5px] sm:border-2' : 'border-[#F5EAFD] border-[0.5px] sm:border-2'} p-[3px]   object-cover w-[60px] min-[450px]:w-[120px] h-[50px] min-[450px]:h-[80px] transition-all duration-500 hover:scale-[0.92]`} src={`${imageUrl}`} height={76} width={120} alt={`Thumbnail ${id}`} />
                                                     </div>
                                                 </SwiperSlide>
                                             ))}
@@ -226,8 +227,8 @@ const ProductBanner = ({ template, setActivetab }: ProductBannertype) => {
                         </div>
                     </div>
                 </div >
-            </section > */}
-            <section className='pb-10'>
+            </section >
+            {/* <section className='pb-10'>
                 <div className="container">
                     <div>
                         <div className='flex items-center gap-x-2 pt-2.5 md:pt-5 border-t  mb-5'>
@@ -235,7 +236,6 @@ const ProductBanner = ({ template, setActivetab }: ProductBannertype) => {
                             <p className='text-subparagraph text-sx leading-5 capitalize text-nowrap text-ellipsis overflow-hidden'>by <span className='text-[12px] font-semibold leading-5 text-subheading  capitalize'>{template?.user?.name}</span> <span className='text-primary-100' >|</span> <span className='text-xs text-subheading font-semibold leading-5 capitalize'>{`UI templates`}</span></p>
                         </div>
 
-                        {/* Main Grid Section */}
                         <div className="grid grid-cols-1 gap-5 lg:grid-cols-[57.5%,40.5%] lg:gap-x-[30px] animate-fade-up">
                             <div>
                                 <div className="lg:max-w-[874px] w-full relative z-10 bg-[#FFFFFF] select-none">
@@ -332,7 +332,7 @@ const ProductBanner = ({ template, setActivetab }: ProductBannertype) => {
                         </div>
                     </div>
                 </div >
-            </section >
+            </section > */}
 
         </>
     )
