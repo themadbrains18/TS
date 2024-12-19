@@ -157,7 +157,6 @@ const Download = () => {
                 />
               </div>
 
-  
 
               <div
                 className={`absolute shadow-lg w-[208px] right-0 max-[640px]:left-0 ${sort ? "opacity-1 visible" : "opacity-0 invisible"

@@ -1463,7 +1463,7 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                     </form>
                 </div>
             </section>
-            <div className="fixed flex gap-3 bottom-5 right-5 z-10 ">
+            {/* <div className="hidden fixed lg:flex gap-3 bottom-5 right-5 z-10">
                 <Button
                     variant='primary'
                     onClick={scrollToTop}
@@ -1478,7 +1478,15 @@ const TemplateForm: React.FC<TemplateFormProps> = ({ initialData, type, id }) =>
                 >
                     Scroll to Bottom
                 </Button>
+            </div> */}
+
+            <div className='hidden fixed lg:flex flex-col justify-start items-center gap-4 bottom-5 right-5 z-10' >
+                <Icon size={12} className='text-center' onClick={scrollToTop} name='arrow' />
+                <div className='rotate-180'>
+                    <Icon size={12} onClick={scrollToBottom} name='arrow' />
+                </div>
             </div>
+
         </>
     );
 };
