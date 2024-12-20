@@ -49,7 +49,8 @@ import Linevertical from '@/../public/icons/linevertical.svg'
 import Bouncingcircles from '@/../public/icons/bouncingcircles.svg'
 import Dashboard2 from '@/../public/icons/dashboard2.svg'
 import DownloadLogo from '@/../public/icons/downloadLogo.svg'
-import { cn } from "@/libs/utils";
+import { cn } from "@/libs/utils"
+import TopArrow from "@/../public/icons/toparrow.svg"
 
 // Map icon names to components
 const icons = {
@@ -100,7 +101,8 @@ const icons = {
   linevertical: Linevertical,
   bouncingcircles: Bouncingcircles,
   dashboard2: Dashboard2,
-  downloadlogo:DownloadLogo
+  downloadlogo:DownloadLogo,
+  toparrow:TopArrow
 };
 
 export type IconName = keyof typeof icons;
