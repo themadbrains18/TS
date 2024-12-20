@@ -17,10 +17,10 @@ const FeatureCard: React.FC<featurecardprops> = ({ id, slug, buttonprops, catego
     const handleImageError = () => {
         setImgSrc('/images/featureimg.png');
     };
-    console.log(themeicon,"heloooooooooooooooooooo")
+    console.log(themeicon, "heloooooooooooooooooooo")
     return (
         <>
-            <div className='group  border border-divider-100 animate-zoom'>
+            <div className='group  border border-divider-100 animate-zoom flex flex-col bg-white justify-between'>
                 <div className='relative h-auto'>
                     <Image
                         src={imgSrc}
@@ -41,10 +41,10 @@ const FeatureCard: React.FC<featurecardprops> = ({ id, slug, buttonprops, catego
                         </div>
                     </Link>
                 </div>
+                <div className='flex flex-col h-full justify-between'>
 
-                <div>
                     <div className='px-[10px] pt-[10px] md:px-5 md:pt-3 bg-white'>
-                        <div className='flex items-center justify-between w-full border-b border-divider-100 pb-[10px] md:pb-5'>
+                        <div className='flex items-start justify-between w-full  pb-[10px] md:pb-5'>
                             <h3 className='text-subparagraph font-semibold leading-6 capitalize text-xs tab:text-[15px] max-w-[190px] sm:max-w-[400px] '>{title}</h3>
                             {
                                 themeicon === "Figma" ? <Icon className='max-w-6 w-full h-6' name='figma' /> : ""}
@@ -66,10 +66,10 @@ const FeatureCard: React.FC<featurecardprops> = ({ id, slug, buttonprops, catego
                             {
                                 themeicon === "NextJs" ? <Icon className='max-w-6 w-full h-6  fill-black' name="nextjs" /> : ""
                             }
-                            
+
                         </div>
                     </div>
-                    <div className='flex items-center justify-between bg-white p-[10px] md:px-5 md:py-3'>
+                    <div className='flex items-center justify-between bg-white p-[10px] md:px-5 md:py-3 border-t border-divider-100 '>
                         <div className='flex items-center gap-x-2'>
                             <Image className='w-5 h-5 object-cover rounded-full ' src={`${uploadericon ? uploadericon : '/icons/mdb.svg'}`} width={20} height={20} alt='uploadericon' />
                             <p className='text-subparagraph text-xs leading-5 capitalize text-nowrap text-ellipsis overflow-hidden flex'>
@@ -102,3 +102,5 @@ const FeatureCard: React.FC<featurecardprops> = ({ id, slug, buttonprops, catego
 };
 
 export default FeatureCard;
+
+
