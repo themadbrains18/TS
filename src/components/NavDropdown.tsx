@@ -31,7 +31,7 @@ const NavDropdown: React.FC<navdropdownprops> = ({ title, subCat }) => {
           <NavTabs subCat={subCat} />
         </div>
       </section>
-      <div className="overflow-hidden h-0 duration-[0.5s]">dsfdefdsfdfdfgd</div>
+      {/* <div className="overflow-hidden h-0 duration-[0.5s]">dsfdefdsfdfdfgd</div> */}
     </>
   );
 };

@@ -8,7 +8,10 @@
 
 const nextConfig = {
   images: {
-    domains: ['firebasestorage.googleapis.com'], // Add the Firebase Storage domain here
+    domains: [
+      'firebasestorage.googleapis.com', // Firebase Storage domain
+      'lightseagreen-sparrow-175522.hostingersite.com', // WordPress blog images domain
+    ],
   },
   eslint: {
     ignoreDuringBuilds: true,

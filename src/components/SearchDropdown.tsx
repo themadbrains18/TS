@@ -11,12 +11,12 @@ import { navtabprops, subCat } from "@/types/type"
  */
 
 
-const SearchDropdown: React.FC<navtabprops> = ({ subCat, onSelect }) => {
+const SearchDropdown: React.FC<navtabprops & { onSelect?: (id: string, name?: string) => void }> = ({ subCat, onSelect }) => {
   const [open, setOpen] = useState(false);
   const [prodcuts, setProducts] = useState("all products");
 
 
-  const subCatdata = [...(subCat ?? []), { id: "", name: "All Products", templateTypeId: "" }];
+  const subCatdata = [...(subCat ?? []), { id: "", name: "All Products", templateTypeId: "" }, { id: "blogs", name: "Blogs", templateTypeId: "" }];
 
   return (
     <>
@@ -47,7 +47,7 @@ const SearchDropdown: React.FC<navtabprops> = ({ subCat, onSelect }) => {
                 onClick={() => {
                   setProducts(item?.name)
                   setOpen(!open)
-                  onSelect && onSelect(item?.id); // Call onSelect if it exists
+                  onSelect && onSelect(item?.id, item?.name); // Call onSelect with id and name
                 }
                 }
               >

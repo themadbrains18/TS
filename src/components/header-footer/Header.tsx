@@ -215,8 +215,8 @@ const Header = () => {
         <div className="relative " >
           {/* Destop header */}
           <div className="container hidden min-[1028px]:block">
-            <div className={` transition-all duration-500 ${isScrolled ? "py-5" : "py-10"}  flex items-center justify-between animate-zoom`}>
-              <div className="flex items-center justify-between xl:max-w-[809px] max-w-[690px] w-full cursor-pointer animate-fade-up">
+            <div className={` transition-all duration-500 ${isScrolled ? "py-5" : "py-10"}  flex items-center animate-zoom`}>
+              <div className="flex items-center  xl:max-w-[809px] max-w-[690px] w-full cursor-pointer animate-fade-up">
                 <Link className="w-[276px]" href={'/'}>
                   <Image
                     src={"/icons/Logo.svg"}
@@ -225,7 +225,7 @@ const Header = () => {
                     alt="Logo"
                   />
                 </Link>
-                <div className="flex xl:gap-5 items-center xl:max-w-[550px] max-w-[500px] w-full justify-center xl:pl-[60px] pl-5 ">
+                <div className="flex xl:gap-5 items-center xl:max-w-[550px] max-w-[500px] w-full  xl:pl-[60px] pl-5 ">
                   {loadingdata ?
                     <>
                       <div className="flex items-center animate-pulse w-full">
@@ -246,6 +246,9 @@ const Header = () => {
                           )
                         })
                       }
+                      <Link href="/blog" className="text-textheading capitalize text-start transition-all duration-300 border-b-2 border-transparent hover:text-primary-100 hover:border-primary-100">
+                        Blog
+                      </Link>
                     </>}
                 </div>
               </div>
@@ -427,6 +430,13 @@ const Header = () => {
                       </Fragment>)
                     })
                   }
+                  <Link 
+                    href="/blog" 
+                    onClick={() => setSidebar(false)}
+                    className="text-textheading capitalize text-start transition-all duration-300 py-3 px-2.5 border-b border-gray-200 hover:text-primary-100"
+                  >
+                    Blog
+                  </Link>
                 </div>
               </div>
               <div className="flex justify-center items-center mt-8 gap-2 px-5">
