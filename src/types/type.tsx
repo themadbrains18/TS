@@ -61,7 +61,7 @@ export interface navdropdownprops {
  */
 export interface navtabprops {
   subCat?: subCat[]; // List of subcategories for the tab
-  onSelect?: (id: string) => void; // Callback function to handle selection
+  onSelect?: (id: string, name?: string) => void; // Callback function to handle selection
   classname?: string; // CSS class for the tab
   opensearch?: boolean; // Whether the search is open
   setOpensearch?: React.Dispatch<React.SetStateAction<boolean>>; // State setter to toggle search

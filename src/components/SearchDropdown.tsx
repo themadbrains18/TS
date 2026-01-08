@@ -11,7 +11,7 @@ import { navtabprops, subCat } from "@/types/type"
  */
 
 
-const SearchDropdown: React.FC<navtabprops & { onSelect?: (id: string, name?: string) => void }> = ({ subCat, onSelect }) => {
+const SearchDropdown: React.FC<navtabprops> = ({ subCat, onSelect }) => {
   const [open, setOpen] = useState(false);
   const [prodcuts, setProducts] = useState("all products");
 
